@@ -1,0 +1,24 @@
+﻿<md-tabs md-dynamic-height md-border-bottom md-selected="mdTabs.selectedIndex">
+    <md-tab id="dateTab" >
+        <md-tab-label>Date</md-tab-label>
+        <md-tab-body>
+            <md-card ng-include="'Scripts/app/annotation-item/time/templates/date.template.html'"></md-card>
+        </md-tab-body>
+    </md-tab>
+    <md-tab id="geologicTab">
+        <md-tab-label>Geologic</md-tab-label>
+        <md-tab-body>
+            <div class="alert alert-warning alert-dismissible ai-help" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <span class="glyphicon glyphicon-info-sign"></span>Set the desired combination and click "Add combination to list"-button at the bottom to add it to the list. You can also extend the existing vocabulary by clicking the "plus"-button.
+            </div>
+            <md-card ng-include="'Scripts/app/annotation-item/time/templates/geologic.template.html'"></md-card>
+        </md-tab-body>
+    </md-tab>
+    <md-tab id="resolutionTab">
+        <md-tab-label>Resolution</md-tab-label>
+        <md-tab-body>
+            <md-card ng-include="'Scripts/app/annotation-item/time/templates/resolution.template.html'"></md-card>
+        </md-tab-body>
+    </md-tab>
+</md-tabs>

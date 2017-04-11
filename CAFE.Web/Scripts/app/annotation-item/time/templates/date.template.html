@@ -1,0 +1,39 @@
+﻿<md-content layout="column" layout-padding>
+    <div layout="row">
+        <div layout><mdp-date-picker mdp-format="YYYY-MM-DD" mdp-placeholder="Start Date(YYYY-MM-DD)" mdp-disabled="!isAccessible" ng-change="TimeRangeChanged('rangeStart')" ng-model="timeRange.rangeStart.dateTime"></mdp-date-picker></div>
+        <div layout><mdp-time-picker mdp-placeholder="Start Time" mdp-disabled="!isAccessible" ng-change="TimeRangeChanged('rangeStart')" ng-model="timeRange.rangeStart.dateTime"></mdp-time-picker></div>
+        <div layout style="margin: 10px 0px 18px 15px;">
+            <md-autocomplete
+                             md-selected-item="timeRange.rangeStart.timezone"
+                             md-search-text="autocompleteFields.rangeStart"
+                             md-items="subItem in querySearch(autocompleteFields.rangeStart, vocabularies.timeZonesVocabulary)"
+                             md-item-text="GetNormalizedTimeZoneNames(subItem.value)"
+                             placeholder="Search for a Timezone"
+                             md-require-match="true"
+                             md-selected-item-change="TimeRangeChanged('rangeStart')"
+                             md-min-length="0"
+                             ng-disabled="!isAccessible" >
+                <span md-highlight-text="functionAutocomplete.searchText">{{GetNormalizedTimeZoneNames(subItem.value)}}</span>
+            </md-autocomplete>
+        </div>
+    </div>
+    <div layout="row">
+        <div layout><mdp-date-picker mdp-format="YYYY-MM-DD" mdp-placeholder="End Date(YYYY-MM-DD)" mdp-disabled="!isAccessible" ng-change="TimeRangeChanged('rangeEnd')" ng-model="timeRange.rangeEnd.dateTime"></mdp-date-picker></div>
+        <div layout><mdp-time-picker mdp-placeholder="End Time" mdp-disabled="!isAccessible" ng-change="TimeRangeChanged('rangeEnd')" ng-model="timeRange.rangeEnd.dateTime"></mdp-time-picker></div>
+        <div layout style="margin: 10px 0px 18px 15px;">
+            <md-autocomplete md-selected-item="timeRange.rangeEnd.timezone"
+                             md-search-text="autocompleteFields.rangeEnd"
+                             md-items="subItem in querySearch(autocompleteFields.rangeEnd, vocabularies.timeZonesVocabulary)"
+                             md-item-text="GetNormalizedTimeZoneNames(subItem.value)"
+                             placeholder="Search for a Timezone"
+                             md-require-match="true"
+                             md-selected-item-change="TimeRangeChanged('rangeEnd')"
+                             md-min-length="0" ng-disabled="!isAccessible" >
+                <span md-highlight-text="functionAutocomplete.searchText">{{GetNormalizedTimeZoneNames(subItem.value)}}</span>
+            </md-autocomplete>
+         </div>
+    </div>
+</md-content>
+
+
+

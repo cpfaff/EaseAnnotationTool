@@ -1,0 +1,57 @@
+﻿@using CAFE.Core.Misc
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - EASE</title>
+    @Scripts.Render("~/bundles/modernizr")
+    @Styles.Render("~/Content/admin/css")
+    @RenderSection("styles", required: false)
+    @Styles.Render("~/Content/css")
+</head>
+<body>
+    <div class="navbar navbar-fixed-top main-navbar">
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/"><img src="/Content/images/logo.png" style="height: 100%;"></a>
+            </div>
+            <div class="navbar-collapse collapse" id="navbar-collapse" style="padding-right: 15px;">
+                <ul class="nav navbar-nav">
+                    @if (Request.IsAuthenticated)
+                    {
+                        <li>@Html.ActionLink("Dashboard", "Index", "Dashboard")</li>
+                        <li>@Html.ActionLink("New Annotation Item", "Index", "AnnotationItem")</li>
+                    }
+                    <li>@Html.ActionLink("Data search", "Index", "Search")</li>
+                    @if (User.IsInRole(Constants.AdminRoleName))
+                    {
+                        <li>@Html.ActionLink("Administration", "Index", "Home", routeValues: new { area = "Admin" }, htmlAttributes: new object())</li>
+                    }
+                </ul>
+                @Html.Partial("_LoginPartial")
+            </div>
+        </div>
+    </div>
+
+    @*<div class="container body-content">*@
+    @RenderBody()
+    <hr />
+    @*<footer>
+            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+        </footer>*@
+    @*</div>*@
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/global")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

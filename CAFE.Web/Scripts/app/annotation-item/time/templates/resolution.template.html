@@ -1,0 +1,90 @@
+﻿<div layout="row" flex>
+    <div layout="column" layout-margin flex="30">
+        <div layout="column" layout-margin>
+            <div layout="column" layout-padding flex="60">
+                <h4>
+                    Temporal Duration
+                    <md-button class="md-icon-button md-primary" aria-label="{{simpleTypesVocabularies.temporalExtentType}}" ng-show="simpleTypesVocabularies.temporalExtentType">
+                        <md-tooltip class="tt-multiline" md-direction="right">{{simpleTypesVocabularies.temporalExtentType}}</md-tooltip>
+                        <i class="material-icons">help_outline</i>
+                    </md-button>
+                </h4>
+                <div layout="row">
+                    <md-autocomplete flex="80"
+                                     md-selected-item="resolutionsModel.temporalExtentType"
+                                     md-search-text="autocompleteFields.temporalExtentType"
+                                     md-items="subItem in querySearch(autocompleteFields.temporalExtentType, vocabularies.temporalExtentTypeVocabulary)"
+                                     md-item-text="subItem.value"
+                                     placeholder="Search for a Temporal Duration"
+                                     md-require-match="true"
+                                     md-selected-item-change="changed()"
+                                     md-min-length="0" ng-disabled="!isAccessible">
+                        <md-item-template>
+                            <span md-highlight-text="autocompleteFields.temporalExtentType">{{subItem.value}}</span>
+                            <md-button class="md-icon-button md-primary" aria-label="{{subItem.description}}" ng-show="subItem.description">
+                                <md-tooltip class="tt-multiline" md-direction="right">{{subItem.description}}</md-tooltip>
+                                <i class="material-icons">help_outline</i>
+                            </md-button>
+                        </md-item-template>
+                    </md-autocomplete>
+                    <md-button ng-if="isAccessible" flex="20" class="md-icon-button import" aria-label="Add/Import new" ng-click="ImportDialogOpen('temporalExtentType', vocabularies.temporalExtentTypeVocabulary, $event)">
+                        <i class="material-icons md-24" title="Add/Import new">library_add</i>
+                    </md-button>
+                </div>
+            </div>
+        </div>
+        <div layout="column" layout-margin>
+            <div layout="column" layout-padding flex="60">
+                <h4>
+                    Temporal Resolution
+                    <md-button class="md-icon-button md-primary" aria-label="{{simpleTypesVocabularies.temporalResolutionType}}" ng-show="simpleTypesVocabularies.temporalResolutionType">
+                        <md-tooltip class="tt-multiline" md-direction="right">{{simpleTypesVocabularies.temporalResolutionType}}</md-tooltip>
+                        <i class="material-icons">help_outline</i>
+                    </md-button>
+                </h4>
+                <div layout="row">
+                    <md-autocomplete flex="80"
+                                     md-selected-item="resolutionsModel.temporalResolutionType"
+                                     md-search-text="autocompleteFields.temporalResolutionType"
+                                     md-items="subItem in querySearch(autocompleteFields.temporalResolutionType, vocabularies.temporalResolutionTypeVocabulary)"
+                                     md-item-text="subItem.value"
+                                     placeholder="Search for a Temporal Resolution"
+                                     md-require-match="true"
+                                     md-selected-item-change="changed()"
+                                     md-min-length="0" ng-disabled="!isAccessible">
+                        <md-item-template>
+                            <span md-highlight-text="autocompleteFields.temporalResolutionType">{{subItem.value}}</span>
+                            <md-button class="md-icon-button md-primary" aria-label="{{subItem.description}}" ng-show="subItem.description">
+                                <md-tooltip class="tt-multiline" md-direction="right">{{subItem.description}}</md-tooltip>
+                                <i class="material-icons">help_outline</i>
+                            </md-button>
+                        </md-item-template>
+                    </md-autocomplete>
+                    <md-button ng-if="isAccessible" flex="20" class="md-icon-button import" aria-label="Add/Import new" ng-click="ImportDialogOpen('temporalResolutionType', vocabularies.temporalResolutionTypeVocabulary, $event)">
+                        <i class="material-icons md-24" title="Add/Import new">library_add</i>
+                    </md-button>
+                </div>
+            </div>
+        </div>
+        <md-divider></md-divider>
+        <div layout="row" layout-align="center">
+            <md-button ng-disabled="!isAccessible" ng-click="addResolution()">Add combination to list</md-button>
+        </div>
+    </div>
+
+    <div layout="column" flex="30" style="margin-left: 10px;" ng-show="timeModule.temporalResolutions.length > 0" layout-margin>
+        <md-content>
+            <md-list layout-margin>
+                <md-list-item ng-repeat="temporalResolution in timeModule.temporalResolutions track by $index" style="margin-bottom: 15px;">
+                    <div class="md-list-item-text" layout="column" style="width: 300px;">
+                        <p><b>Temporal Duration:</b> {{ temporalResolution.temporalExtentType.value }}</p>
+                        <p><b>Temporal Resolution:</b> {{ temporalResolution.temporalResolutionType.value }}</p>
+                    </div>
+                    <md-button ng-if="isAccessible" class="md-icon-button secondary" ng-click="timeModule.temporalResolutions.splice($index, 1)">
+                        <i class="material-icons">delete</i>
+                    </md-button>
+                </md-list-item>
+            </md-list>
+        </md-content>
+    </div>
+</div>

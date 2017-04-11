@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<realestates:houseType xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:realestates="http://rest.immobilienscout24.de/schema/offer/realestates/1.0">
+    <title>Immobilienscout24 Testobjekt! +++BITTE+++ NICHT kontaktieren - Typenhaus</title>
+    <address>
+    </address>
+    <showAddress>true</showAddress>
+    <price>
+        <value>948.687</value>
+        <currency>EUR</currency>
+        <marketingType>PURCHASE</marketingType>
+        <priceIntervalType>ONE_TIME_CHARGE</priceIntervalType>
+    </price>
+    <livingSpace>143.603</livingSpace>
+    <courtage>
+        <hasCourtage>YES</hasCourtage>
+        <courtage>courtage</courtage>
+    </courtage>
+    <buildingType>APARTMENT_BUILDING</buildingType>
+</realestates:houseType>

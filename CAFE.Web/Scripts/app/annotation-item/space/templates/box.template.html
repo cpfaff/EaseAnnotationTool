@@ -1,0 +1,82 @@
+﻿<div class="row" style="min-height: 800px;">
+    <div class="alert alert-warning alert-dismissible ai-help" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <span class="glyphicon glyphicon-info-sign"></span> <span>Click on the map to add a point to COORDINATE-list&nbsp;&nbsp;</span><span class="glyphicon glyphicon-info-sign"></span><span >Pull/resize the box to select the desired area and click "ADD AREA TO LIST"</span> 
+    </div>
+    <div class="col-xs-7">
+        <leaflet id="mainMap" width="100%" height="560px"></leaflet>
+    </div>
+    <div class="col-xs-5">
+        <div class="col-lg-5">
+            <div style="margin-bottom: 15px;">Bounding box</div>
+            <div>
+                <md-input-container flex>
+                    <label>North</label>
+                    <input ng-disabled="!isAccessible" type="number" ng-change="SetBoundingBoxPostion()" ng-model="editModel.boundingBox.northBoundingCoordinate">
+                </md-input-container>
+                <md-input-container flex>
+                    <label>South</label>
+                    <input ng-disabled="!isAccessible" type="number" ng-change="SetBoundingBoxPostion()" ng-model="editModel.boundingBox.southBoundingCoordinate">
+                </md-input-container>
+                <md-input-container flex>
+                    <label>East</label>
+                    <input ng-disabled="!isAccessible" type="number" ng-change="SetBoundingBoxPostion()" ng-model="editModel.boundingBox.eastBoundingCoordinate">
+                </md-input-container>
+                <md-input-container flex>
+                    <label>West</label>
+                    <input ng-disabled="!isAccessible" type="number" ng-change="SetBoundingBoxPostion()" ng-model="editModel.boundingBox.westBoundingCoordinate">
+                </md-input-container>
+                <md-button ng-click="onbbdded()">Add</md-button>
+                <md-list ng-cloak ng-show="spaceContext.boundingBoxes.length > 0" style="background-color: #f9f9f9">
+                    <md-list-item ng-repeat="bb in spaceContext.boundingBoxes track by $index">
+                        <p>n:{{ bb.northBoundingCoordinate }}, s:{{ bb.southBoundingCoordinate }}, e:{{ bb.eastBoundingCoordinate }}, w:{{ bb.westBoundingCoordinate }}</p>
+                        <md-button ng-if="isAccessible" class="md-icon-button secondary" ng-click="onbbremove(bb)">
+                            <i class="material-icons">delete</i>
+                        </md-button>
+                    </md-list-item>
+                </md-list>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div style="margin-bottom: 15px;">Elevation <input type="checkbox" style="vertical-align: baseline;" ng-model="settings.elevationEnabled" ng-change="elevationChanged()">
+            </div>
+            <div ng-show="settings.elevationEnabled">
+                <rzslider style="height: 320px; margin-top: 10px;" ng-disabled="!isAccessible || !settings.elevationEnabled"
+                          rz-slider-model="elevation.minValue"
+                          rz-slider-high="elevation.maxValue"
+                          rz-slider-options="elevation.options"></rzslider>
+                <md-input-container flex style="position: absolute;">
+                    <label>Max</label>
+                    <input type="number" ng-model="elevation.maxValue" ng-disabled="!isAccessible || !settings.elevationEnabled">
+                </md-input-container>
+                <md-input-container flex style="position: absolute; bottom: 178px;">
+                    <label>UOM</label>
+                    <md-select ng-disabled="!isAccessible || !settings.elevationEnabled" ng-model="elevationUom.uom" name="ElevationMin" required>
+                        <md-option ng-value="opt" ng-repeat="opt in elevationUoms">{{ opt }}</md-option>
+                    </md-select>
+                </md-input-container>
+                <md-input-container flex style="position: absolute; bottom: 85px;">
+                    <label>Datum</label>
+                    <md-select ng-disabled="!isAccessible || !settings.elevationEnabled" ng-model="elevationUom.datum" name="ElevationDatum">
+                        <md-option ng-value="opt" ng-repeat="opt in datums">{{ opt }}</md-option>
+                    </md-select>
+                </md-input-container>
+                <md-input-container flex style="position: absolute; bottom: -15px;">
+                    <label>Min</label>
+                    <input type="number" ng-disabled="!isAccessible || !settings.elevationEnabled" ng-model="elevation.minValue">
+                </md-input-container>
+                <div flex style="position: absolute;">
+                    <md-button ng-click="onelevationdded()">Add area to list</md-button>
+                    <md-list ng-cloak ng-show="spaceContext.elevations.length > 0" style="background-color: #f9f9f9">
+                        <md-list-item ng-repeat="elevation in spaceContext.elevations track by $index">
+                            <p>max:{{ elevation.maximumElevation }}, min:{{ elevation.minimumElevation }}, uom:{{ elevation.maximumElevationUnit.value }}, datum:{{ elevation.elevationDatum.value }}</p>
+                            <md-button ng-if="isAccessible" class="md-icon-button secondary" ng-click="onelevationremove(elevation)">
+                                <i class="material-icons">delete</i>
+                            </md-button>
+                        </md-list-item>
+                    </md-list>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

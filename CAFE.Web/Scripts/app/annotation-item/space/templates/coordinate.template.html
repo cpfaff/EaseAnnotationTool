@@ -1,0 +1,81 @@
+﻿<div layout="row">
+    <div layout="column" layout-margin flex="50">
+        <div layout="row" layout-margin ng-if="isAccessible">
+            <!--<md-button class="md-raised md-primary" ng-click="OpenMap()"><i class="material-icons md-18"  style="vertical-align: middle;">place</i> Select on map</md-button>-->
+            <md-button class="md-raised md-primary" ng-click="CollectionsImportDialogOpen($event, spaceContext.coordinates, coordinatesModel.utmCoordinate, 'UtmCoordinate', 'utmCoordinate', AddNewCoordinatesToMap)"><i class="material-icons md-18" style="vertical-align: middle;">backup</i> Import from CSV</md-button>
+
+        </div>
+
+        <div layout="row" layout-margin>
+            <md-input-container flex="50">
+                <label>Zone</label>
+                <input ng-disabled="!isAccessible" type="number" ng-model="coordinatesModel.utmCoordinate.utmCoordinateZone">
+            </md-input-container>
+            <md-input-container flex="50">
+                <label>Sub Zone</label>
+                <input ng-disabled="!isAccessible" ng-model="coordinatesModel.utmCoordinate.utmCoordinateSubZone">
+            </md-input-container>
+        </div>
+
+        <div layout="row" layout-margin>
+            <md-input-container flex="50">
+                <label>Northing</label>
+                <input ng-disabled="!isAccessible" type="number" ng-model="coordinatesModel.utmCoordinate.utmCoordinateNorthing">
+            </md-input-container>
+            <md-input-container flex="50">
+                <label>Northing unit</label>
+                <md-select ng-disabled="!isAccessible" ng-model="coordinatesModel.utmCoordinate.utmCoordinateNorthingUnit" ng-model-options="{trackBy: '$value.value'}" placeholder="Select a Northing unit">
+                    <md-option ng-value="opt" ng-repeat="opt in vocabularies.coordinate.utmCoordinateNorthingUnit">{{ opt.value  }}</md-option>
+                </md-select>
+            </md-input-container>
+        </div>
+
+        <div layout="row" layout-margin>
+            <md-input-container flex="50">
+                <label>Easting</label>
+                <input ng-disabled="!isAccessible" type="number" ng-model="coordinatesModel.utmCoordinate.utmCoordinateEasting">
+            </md-input-container>
+            <md-input-container flex="50">
+                <label>Easting unit</label>
+                <md-select ng-disabled="!isAccessible" ng-model="coordinatesModel.utmCoordinate.utmCoordinateEastingUnit" ng-model-options="{trackBy: '$value.value'}" placeholder="Select an Easting unit">
+                    <md-option ng-value="opt" ng-repeat="opt in vocabularies.coordinate.utmCoordinateEastingUnit">{{ opt.value }}</md-option>
+                </md-select>
+            </md-input-container>
+        </div>
+
+        <div layout="row" layout-margin style="margin-top: -5px;">
+            <md-input-container flex="50">
+                <label>Hemisphere</label>
+                <md-select ng-disabled="!isAccessible" ng-model="coordinatesModel.utmCoordinate.utmCoordinateHemisphere" ng-model-options="{trackBy: '$value.value'}" placeholder="Select a Hemisphere">
+                    <md-option ng-value="opt" ng-repeat="opt in vocabularies.coordinate.utmCoordinateHemisphere">{{ opt.value }}</md-option>
+                </md-select>
+            </md-input-container>
+        </div>
+
+        <div layout="column" layout-margin ng-if="isAccessible">
+            <md-divider style="margin: 10px 5px 5px 10px;"></md-divider>
+            <div layout="row" layout-align="center">
+                <md-button ng-click="AddCoordinate()">Add combination to list</md-button>
+            </div>
+        </div>
+    </div>
+    <div layout="column" layout-margin ng-show="spaceContext.coordinates.length > 0" flex="30">
+        <md-content>
+            <md-list layout-margin>
+                <md-list-item ng-repeat="coordinate in spaceContext.coordinates track by $index" style="margin-bottom: 15px;">
+                    <div class="md-list-item-text" layout="column" flex="90">
+                        <p><b>Zone:</b> {{ coordinate.utmCoordinate.utmCoordinateZone }}</p>
+                        <p><b>Sub Zone:</b> {{ coordinate.utmCoordinate.utmCoordinateSubZone }}</p>
+                        <p><b>Northing:</b> {{ coordinate.utmCoordinate.utmCoordinateNorthing }} ({{ coordinate.utmCoordinate.utmCoordinateNorthingUnit.value }})</p>
+                        <p><b>Easting:</b> {{ coordinate.utmCoordinate.utmCoordinateEasting }} ({{ coordinate.utmCoordinate.utmCoordinateEastingUnit.value }})</p>
+                        <p><b>Hemisphere:</b> {{ coordinate.utmCoordinate.utmCoordinateHemisphere.value }}</p>
+                    </div>
+                    <md-button ng-if="isAccessible" class="md-icon-button secondary" ng-click="DeleteCoordinateByMarkerId(coordinate.utmCoordinate.markerid)">
+                        <i class="material-icons">delete</i>
+                    </md-button>
+                </md-list-item>
+            </md-list>
+        </md-content>
+    </div>
+</div>
+

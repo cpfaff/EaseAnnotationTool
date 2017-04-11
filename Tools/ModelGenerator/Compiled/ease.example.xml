@@ -1,0 +1,427 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Ease>
+  <Object>
+    <Contexts>
+      <Context>
+        <TimeContext>
+          <TimeRanges>
+            <TimeRange>
+              <RangeStart>
+                <DateTime>
+                  <date>2012-12-13</date>
+                  <time>12:12:12</time>
+                  <timezone uri="http://www.xsd2xml.com">str1234</timezone>
+                </DateTime>
+              </RangeStart>
+              <RangeEnd>
+                <DateTime>
+                  <date>2012-12-13</date>
+                  <time>12:12:12</time>
+                  <timezone uri="http://www.xsd2xml.com">str1234</timezone>
+                </DateTime>
+              </RangeEnd>
+            </TimeRange>
+          </TimeRanges>
+          <TimePeriods>
+            <TimePeriod>
+              <GeologicalTimePeriod>
+                <geologicalEon uri="http://www.xsd2xml.com">str1234</geologicalEon>
+                <geologicalEra uri="http://www.xsd2xml.com">str1234</geologicalEra>
+                <geologicalPeriod uri="http://www.xsd2xml.com">str1234</geologicalPeriod>
+                <geologicalEpoch uri="http://www.xsd2xml.com">str1234</geologicalEpoch>
+                <geologicalAge uri="http://www.xsd2xml.com">str1234</geologicalAge>
+              </GeologicalTimePeriod>
+            </TimePeriod>
+          </TimePeriods>
+          <TemporalResolutions>
+            <TemporalResolution>
+              <temporalExtentType uri="http://www.xsd2xml.com" modifyer="1234">str1234</temporalExtentType>
+              <temporalResolutionType uri="http://www.xsd2xml.com" modifyer="1234">str1234</temporalResolutionType>
+            </TemporalResolution>
+          </TemporalResolutions>
+        </TimeContext>
+        <SpaceContext>
+          <BoundingBoxes>
+            <BoundingBox>
+              <northBoundingCoordinate>123.45</northBoundingCoordinate>
+              <southBoundingCoordinate>123.45</southBoundingCoordinate>
+              <eastBoundingCoordinate>123.45</eastBoundingCoordinate>
+              <westBoundingCoordinate>123.45</westBoundingCoordinate>
+            </BoundingBox>
+          </BoundingBoxes>
+          <Elevations>
+            <Elevation>
+              <maximumElevation>123.45</maximumElevation>
+              <maximumElevationUnit uri="http://www.xsd2xml.com">str1234</maximumElevationUnit>
+              <minimumElevation>123.45</minimumElevation>
+              <minimumElevationUnit uri="http://www.xsd2xml.com">str1234</minimumElevationUnit>
+              <elevationDatum uri="http://www.xsd2xml.com">str1234</elevationDatum>
+            </Elevation>
+          </Elevations>
+          <Coordinates>
+            <Coordinate>
+              <UtmCoordinate>
+                <utmCoordinateZone>1234</utmCoordinateZone>
+                <utmCoordinateSubZone>1234</utmCoordinateSubZone>
+                <utmCoordinateHemisphere uri="http://www.xsd2xml.com">str1234</utmCoordinateHemisphere>
+                <utmCoordinateEasting>123.45</utmCoordinateEasting>
+                <utmCoordinateEastingUnit uri="http://www.xsd2xml.com">str1234</utmCoordinateEastingUnit>
+                <utmCoordinateNorthing>123.45</utmCoordinateNorthing>
+                <utmCoordinateNorthingUnit uri="http://www.xsd2xml.com">str1234</utmCoordinateNorthingUnit>
+                <utmCoordinateGeodeticDatum uri="http://www.xsd2xml.com">str1234</utmCoordinateGeodeticDatum>
+              </UtmCoordinate>
+            </Coordinate>
+          </Coordinates>
+          <Locations>
+            <Location>
+              <locationName>str1234</locationName>
+              <locationType uri="http://www.xsd2xml.com">str1234</locationType>
+              <countryName uri="http://www.xsd2xml.com">str1234</countryName>
+              <continentName uri="http://www.xsd2xml.com">str1234</continentName>
+            </Location>
+          </Locations>
+          <SpatialResolutions>
+            <SpatialResolution>
+              <spatialExtentType uri="http://www.xsd2xml.com">str1234</spatialExtentType>
+              <spatialResolutionType uri="http://www.xsd2xml.com">str1234</spatialResolutionType>
+            </SpatialResolution>
+          </SpatialResolutions>
+        </SpaceContext>
+        <SphereContext>
+          <Spheres>
+            <Sphere>
+              <Atmosphere>
+                <NamedAtmosphereLayers>
+                  <NamedAtmosphereLayer>
+                    <atmosphereLayerName uri="http://www.xsd2xml.com">str1234</atmosphereLayerName>
+                  </NamedAtmosphereLayer>
+                </NamedAtmosphereLayers>
+                <NumericAtmosphereLayers>
+                  <NumericAtmosphereLayer>
+                    <minimumAtmosphereHeight>123.45</minimumAtmosphereHeight>
+                    <minimumAtmosphereHeightUnit uri="http://www.xsd2xml.com">str1234</minimumAtmosphereHeightUnit>
+                    <maximumAtmosphereHeight>123.45</maximumAtmosphereHeight>
+                    <maximumAtmosphereHeightUnit uri="http://www.xsd2xml.com">str1234</maximumAtmosphereHeightUnit>
+                  </NumericAtmosphereLayer>
+                </NumericAtmosphereLayers>
+              </Atmosphere>
+              <Hydrosphere>
+                <HydrosphereCompartments>
+                  <HydrosphereCompartment>
+                    <River>
+                      <NamedRiverZones>
+                        <NamedRiverZone>
+                          <longitudinalRiverZone uri="http://www.xsd2xml.com">str1234</longitudinalRiverZone>
+                          <verticalRiverZone uri="http://www.xsd2xml.com">str1234</verticalRiverZone>
+                        </NamedRiverZone>
+                      </NamedRiverZones>
+                    </River>
+                    <Lake>
+                      <NamedLakeZones>
+                        <NamedLakeZone>
+                          <benthicLakeZone uri="http://www.xsd2xml.com">str1234</benthicLakeZone>
+                          <pelagicLakeZone uri="http://www.xsd2xml.com">str1234</pelagicLakeZone>
+                        </NamedLakeZone>
+                      </NamedLakeZones>
+                    </Lake>
+                    <Sea>
+                      <NamedSeaZones>
+                        <NamedSeaZone>
+                          <benthicSeaZone uri="http://www.xsd2xml.com">str1234</benthicSeaZone>
+                          <pelagicSeaZone uri="http://www.xsd2xml.com">str1234</pelagicSeaZone>
+                        </NamedSeaZone>
+                      </NamedSeaZones>
+                    </Sea>
+                  </HydrosphereCompartment>
+                </HydrosphereCompartments>
+              </Hydrosphere>
+              <Pedosphere>
+                <PedosphereCompartments>
+                  <PedosphereCompartment>
+                    <Soil>
+                      <NamedSoilLayers>
+                        <NamedSoilLayer>
+                          <soilHorizon uri="http://www.xsd2xml.com">str1234</soilHorizon>
+                        </NamedSoilLayer>
+                      </NamedSoilLayers>
+                      <NumericSoilLayers>
+                        <NumericSoilLayer>
+                          <minimumSoilDepth>123.45</minimumSoilDepth>
+                          <minimumSoilDepthUnit uri="http://www.xsd2xml.com">str1234</minimumSoilDepthUnit>
+                          <maximumSoilDepth>123.45</maximumSoilDepth>
+                          <maximumSoilDepthUnit uri="http://www.xsd2xml.com">str1234</maximumSoilDepthUnit>
+                        </NumericSoilLayer>
+                      </NumericSoilLayers>
+                      <SoilTextures>
+                        <SoilTexture>
+                          <sandPercent>1234</sandPercent>
+                          <siltPercent>1234</siltPercent>
+                          <loamPercent>1234</loamPercent>
+                        </SoilTexture>
+                      </SoilTextures>
+                      <SoilMorphologies>
+                        <SoilMorphology>
+                          <soilMorphologyType uri="http://www.xsd2xml.com">str1234</soilMorphologyType>
+                        </SoilMorphology>
+                      </SoilMorphologies>
+                      <SoilAcidities>
+                        <SoilAcidity>
+                          <soilAcidityType uri="http://www.xsd2xml.com">str1234</soilAcidityType>
+                        </SoilAcidity>
+                      </SoilAcidities>
+                    </Soil>
+                  </PedosphereCompartment>
+                </PedosphereCompartments>
+              </Pedosphere>
+              <Ecosphere>
+                <NamedEcosphereLayers>
+                  <NamedEcosphereLayer>
+                    <ecosphereLayerName uri="http://www.xsd2xml.com">str1234</ecosphereLayerName>
+                  </NamedEcosphereLayer>
+                </NamedEcosphereLayers>
+                <NumericEcosphereLayers>
+                  <NumericEcosphereLayer>
+                    <minimumVegetationHeight>123.45</minimumVegetationHeight>
+                    <minimumVegetationHeightUnit uri="http://www.xsd2xml.com">str1234</minimumVegetationHeightUnit>
+                    <maximumVegetationHeight>123.45</maximumVegetationHeight>
+                    <maximumVegetationHeightUnit uri="http://www.xsd2xml.com">str1234</maximumVegetationHeightUnit>
+                  </NumericEcosphereLayer>
+                </NumericEcosphereLayers>
+                <OrganizationalHierarchies>
+                  <OrganizationalHierarchy>
+                    <organizationHierarchyName uri="http://www.xsd2xml.com">str1234</organizationHierarchyName>
+                  </OrganizationalHierarchy>
+                </OrganizationalHierarchies>
+              </Ecosphere>
+            </Sphere>
+          </Spheres>
+        </SphereContext>
+        <BiomeContext>
+          <ZonoBiomes>
+            <ZonoBiome>
+              <biomeType uri="http://www.xsd2xml.com">str1234</biomeType>
+              <biomeZone uri="http://www.xsd2xml.com">str1234</biomeZone>
+              <biomeHumidityType uri="http://www.xsd2xml.com">str1234</biomeHumidityType>
+              <biomeContinentalityType uri="http://www.xsd2xml.com">str1234</biomeContinentalityType>
+              <biomeHemisphere uri="http://www.xsd2xml.com">str1234</biomeHemisphere>
+            </ZonoBiome>
+          </ZonoBiomes>
+          <OroBiomes>
+            <OroBiome>
+              <oroBiomeType uri="http://www.xsd2xml.com">str1234</oroBiomeType>
+            </OroBiome>
+          </OroBiomes>
+          <PedoBiomes>
+            <PedoBiome>
+              <pedoBiomeType uri="http://www.xsd2xml.com">str1234</pedoBiomeType>
+            </PedoBiome>
+          </PedoBiomes>
+          <Physiognomies>
+            <Physiognomy>
+              <PhysiognomyTypes>
+                <PhysiognomyType>
+                  <TerrestrialPhysiognomies>
+                    <TerrestrialPhysiognomy>
+                      <terrestrialPhysiognomyType uri="http://www.xsd2xml.com">str1234</terrestrialPhysiognomyType>
+                    </TerrestrialPhysiognomy>
+                  </TerrestrialPhysiognomies>
+                  <SemiAquaticPhysiognomies>
+                    <SemiAquaticPhysiognomy>
+                      <semiAquaticPhysiognomyType uri="http://www.xsd2xml.com">str1234</semiAquaticPhysiognomyType>
+                    </SemiAquaticPhysiognomy>
+                  </SemiAquaticPhysiognomies>
+                  <AquaticPhysiognomies>
+                    <AquaticPhysiognomy>
+                      <plantCharacterizedAquaticPhysiognomyType uri="http://www.xsd2xml.com">str1234</plantCharacterizedAquaticPhysiognomyType>
+                      <habitatCharacterizedAquaticPhysiognomy uri="http://www.xsd2xml.com">str1234</habitatCharacterizedAquaticPhysiognomy>
+                    </AquaticPhysiognomy>
+                  </AquaticPhysiognomies>
+                </PhysiognomyType>
+              </PhysiognomyTypes>
+            </Physiognomy>
+          </Physiognomies>
+          <LandUses>
+            <LandUse>
+              <landUseType uri="http://www.xsd2xml.com">str1234</landUseType>
+              <landUseForm uri="http://www.xsd2xml.com">str1234</landUseForm>
+            </LandUse>
+          </LandUses>
+        </BiomeContext>
+        <OrganismContext>
+          <Organisms>
+            <Organism>
+              <Taxonomy>
+                <domain uri="http://www.xsd2xml.com">str1234</domain>
+                <kingdom uri="http://www.xsd2xml.com">str1234</kingdom>
+                <division uri="http://www.xsd2xml.com">str1234</division>
+                <order uri="http://www.xsd2xml.com">str1234</order>
+                <family uri="http://www.xsd2xml.com">str1234</family>
+                <name>str1234</name>
+                <OrganismName>
+                  <BacterialName>
+                    <fullBacterialName>str1234</fullBacterialName>
+                    <genusOrMonomial>str1234</genusOrMonomial>
+                    <subgenus>str1234</subgenus>
+                    <subgenusAuthorAndYear>str1234</subgenusAuthorAndYear>
+                    <speciesEpithet>str1234</speciesEpithet>
+                    <subspeciesEpithet>str1234</subspeciesEpithet>
+                    <parentheticalAuthorTeamAndYear>str1234</parentheticalAuthorTeamAndYear>
+                    <authorTeamAndYear>str1234</authorTeamAndYear>
+                    <nameApprobation>str1234</nameApprobation>
+                  </BacterialName>
+                  <FungalName>
+                    <fullFungalName>str1234</fullFungalName>
+                  </FungalName>
+                  <BotanicalName>
+                    <fullBotanicalName>str1234</fullBotanicalName>
+                    <genusOrMonomial>str1234</genusOrMonomial>
+                    <firstEpithet>str1234</firstEpithet>
+                    <infraspecificEpithet>str1234</infraspecificEpithet>
+                    <rank>subgen.</rank>
+                    <hybridFlag insertionpoint="1234">str1234</hybridFlag>
+                    <authorTeamParenthesis>str1234</authorTeamParenthesis>
+                    <authorTeam>str1234</authorTeam>
+                    <cultivarGroupName>str1234</cultivarGroupName>
+                    <cultivarName>str1234</cultivarName>
+                    <tradeDesignationNames>
+                      <tradeDesignationName>str1234</tradeDesignationName>
+                    </tradeDesignationNames>
+                  </BotanicalName>
+                  <ZoologicalName>
+                    <fullZoologicalName>str1234</fullZoologicalName>
+                    <genusOrMonomial>str1234</genusOrMonomial>
+                    <subgenus>str1234</subgenus>
+                    <speciesEpithet>str1234</speciesEpithet>
+                    <subspeciesEpithet>str1234</subspeciesEpithet>
+                    <authorTeamOriginalAndYear>str1234</authorTeamOriginalAndYear>
+                    <authorTeamParenthesisAndYear>str1234</authorTeamParenthesisAndYear>
+                    <combinationAuthorTeamAndYear>str1234</combinationAuthorTeamAndYear>
+                    <breed>str1234</breed>
+                    <namedIndividual>str1234</namedIndividual>
+                  </ZoologicalName>
+                  <ViralName>
+                    <fullViralName>str1234</fullViralName>
+                    <genusOrMonomial>str1234</genusOrMonomial>
+                    <viralSpeciesDesignation>str1234</viralSpeciesDesignation>
+                    <acronym>str1234</acronym>
+                  </ViralName>
+                </OrganismName>
+              </Taxonomy>
+            </Organism>
+          </Organisms>
+        </OrganismContext>
+        <ProcessContext>
+          <Processes>
+            <Process>
+              <processName uri="http://www.xsd2xml.com">str1234</processName>
+              <processSubject uri="http://www.xsd2xml.com">str1234</processSubject>
+            </Process>
+          </Processes>
+          <Interactions>
+            <Interaction>
+              <interactionName>str1234</interactionName>
+              <interactionPartnerOne uri="http://www.xsd2xml.com">str1234</interactionPartnerOne>
+              <interactionDirection uri="http://www.xsd2xml.com">str1234</interactionDirection>
+              <interactionQuality uri="http://www.xsd2xml.com">str1234</interactionQuality>
+              <interactionPartnerTwo uri="http://www.xsd2xml.com">str1234</interactionPartnerTwo>
+            </Interaction>
+          </Interactions>
+        </ProcessContext>
+        <ChemicalContext>
+          <Elements>
+            <Element>
+              <elementName uri="http://www.xsd2xml.com">str1234</elementName>
+            </Element>
+          </Elements>
+          <Isotopes>
+            <Isotope>
+              <isotopeName uri="http://www.xsd2xml.com">str1234</isotopeName>
+            </Isotope>
+          </Isotopes>
+          <Compounds>
+            <Compound>
+              <compoundName>str1234</compoundName>
+              <compoundClass uri="http://www.xsd2xml.com">str1234</compoundClass>
+              <compoundType uri="http://www.xsd2xml.com">str1234</compoundType>
+            </Compound>
+          </Compounds>
+          <Functions>
+            <Function>
+              <chemicalFunctionType uri="http://www.xsd2xml.com">str1234</chemicalFunctionType>
+            </Function>
+          </Functions>
+        </ChemicalContext>
+        <MethodContext>
+          <Approaches>
+            <Approach>
+              <approachType uri="http://www.xsd2xml.com">str1234</approachType>
+              <approachLocalization uri="http://www.xsd2xml.com">str1234</approachLocalization>
+            </Approach>
+          </Approaches>
+          <Factors>
+            <Factor>
+              <factorName uri="http://www.xsd2xml.com" was="manipulated">str1234</factorName>
+              <factorType uri="http://www.xsd2xml.com">str1234</factorType>
+            </Factor>
+          </Factors>
+        </MethodContext>
+      </Context>
+    </Contexts>
+    <References>
+      <Hosters>
+        <Hoster>
+          <hosterName uri="http://www.xsd2xml.com">str1234</hosterName>
+        </Hoster>
+      </Hosters>
+      <Persons>
+        <Person>
+          <position uri="http://www.xsd2xml.com">str1234</position>
+          <salutation>str1234</salutation>
+          <givenName>str1234</givenName>
+          <surName>str1234</surName>
+          <emailAddress>str1234</emailAddress>
+          <phoneNumber>str1234</phoneNumber>
+        </Person>
+      </Persons>
+      <Descriptions>
+        <Description>
+          <title>str1234</title>
+          <abstract>str1234</abstract>
+        </Description>
+      </Descriptions>
+    </References>
+    <Resources>
+      <Resource>
+        <OnlineResources>
+          <OnlineResource>
+            <downloadUrl>http://www.xsd2xml.com</downloadUrl>
+            <referenceUrl>http://www.xsd2xml.com</referenceUrl>
+            <dataFormat uri="http://www.xsd2xml.com">str1234</dataFormat>
+          </OnlineResource>
+        </OnlineResources>
+        <OfflineResources>
+          <OfflineResource>
+            <fileID>1234</fileID>
+            <fileName>str1234</fileName>
+            <filePath>str1234</filePath>
+            <mimeType>???</mimeType>
+            <dataFormat uri="http://www.xsd2xml.com">str1234</dataFormat>
+          </OfflineResource>
+        </OfflineResources>
+        <EmbeddedResources>
+          <EmbeddedResource>
+            <Base64Resource>
+              <fileName>str1234</fileName>
+              <mimeType>???</mimeType>
+              <data>AAAAZg==</data>
+              <encodingDate>2012-12-13</encodingDate>
+              <encodingTime>12:12:12</encodingTime>
+              <sha2hash>str1234</sha2hash>
+              <dataFormat uri="http://www.xsd2xml.com">str1234</dataFormat>
+            </Base64Resource>
+          </EmbeddedResource>
+        </EmbeddedResources>
+      </Resource>
+    </Resources>
+  </Object>
+</Ease>

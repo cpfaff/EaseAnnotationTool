@@ -1,0 +1,40 @@
+﻿<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.8.5/css/selectize.default.css">
+<md-content style="padding: 20px;" class="md-whiteframe-z2" layout-fill flex>
+    <div layout="row" flex style="margin-top:20px;">
+        <div layout="row" layout-wrap flex="80">
+            <p flex='15'><b>Grouping:</b></p>
+            <md-checkbox flex='15'
+                         ng-repeat="item in gridOptions.columnDefs"
+                         layout="row"
+                         ng-checked="columnsForGrouping.indexOf(item.name) > -1"
+                         ng-click="changeGrouping(item.name, columnsForGrouping)"
+                         aria-label={{item.displayName}}>
+                {{item.displayName}}
+            </md-checkbox>
+            <md-button type="button" id="remove" class="md-raised " style="margin: 0; padding: 0;" ng-click="removeSelectedRows()">Remove</md-button>
+            <md-button type="button" id="addNew" class="md-raised " style="margin: 0; padding: 0;" ng-click="addNewValue()">Add</md-button>
+        </div>
+        <div layout="row" flex="30">
+            <div layout-align="center end">
+                <md-button style="margin-top: 0" md-no-ink class="md-raised md-primary" ng-click="AddSelelectionToVocabulary()">copy selection to common vocabulary</md-button>
+            </div>
+        </div>
+    </div>
+
+    <div layout="row" id="grid1" ui-grid="gridOptions" ui-grid-grouping ui-grid-selection ui-grid-auto-resize ui-grid-edit ui-grid-row-edit class="grid"></div>
+
+    <script type="text/ng-template" id="uiSelect">
+        <ui-select-wrap>
+            <md-autocomplete 
+                    md-selected-item="MODEL_COL_FIELD" 
+                    ng-disabled="disabled" 
+                    md-items="item in col.colDef.editDropdownOptionsFunction(functionAK.text)"  
+                    class="master-data-autocomplete"
+                    md-search-text="functionAK.text"
+                    md-selected-item-change="itemChanged(MODEL_COL_FIELD)"
+                >
+                <span>{{ item }}</span>
+            </md-autocomplete>
+        </ui-select-wrap>
+    </script>
+</md-content>

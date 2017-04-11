@@ -1,0 +1,38 @@
+<div class="p-r no-outline">
+    <mdt-chips-column-filter
+        ng-if="headerRowData.columnFilter.isActive && headerRowData.columnFilter.type === 'chips'"
+        confirm-callback="columnFilterFeature.confirmFilterDialog"
+        cancel-callback="columnFilterFeature.cancelFilterDialog(event)"
+        header-row-data="headerRowData">
+    </mdt-chips-column-filter>
+
+    <mdt-dropdown-column-filter
+        ng-if="headerRowData.columnFilter.isActive && headerRowData.columnFilter.type === 'dropdown'"
+        confirm-callback="columnFilterFeature.confirmFilterDialog"
+        cancel-callback="columnFilterFeature.cancelFilterDialog(event)"
+        header-row-data="headerRowData">
+    </mdt-dropdown-column-filter>
+
+
+    <mdt-checkbox-column-filter
+        ng-if="headerRowData.columnFilter.isActive && headerRowData.columnFilter.type === 'checkbox'"
+        confirm-callback="columnFilterFeature.confirmFilterDialog"
+        cancel-callback="columnFilterFeature.cancelFilterDialog(event)"
+        header-row-data="headerRowData">
+    </mdt-checkbox-column-filter>
+
+    <div ng-if="sortableColumns">
+        <md-tooltip ng-show="headerRowData.columnDefinition">{{headerRowData.columnDefinition}}</md-tooltip>
+
+        <span ng-show="headerRowData.alignRule == 'right'" ng-include src="'/main/templates/cells/generateSortingIcons.html'"></span>
+
+        <span ng-include src="'/main/templates/cells/generateCellValue.html'" ng-click="columnClickHandler()"></span>
+
+        <span ng-show="headerRowData.alignRule == 'left'" ng-include src="'/main/templates/cells/generateSortingIcons.html'"></span>
+    </div>
+    <div ng-if="!sortableColumns">
+        <md-tooltip ng-show="headerRowData.columnDefinition">{{headerRowData.columnDefinition}}</md-tooltip>
+
+        <span ng-include src="'/main/templates/cells/generateCellValue.html'" ng-click="columnClickHandler()" class="no-outline"></span>
+    </div>
+</div>

@@ -1,0 +1,42 @@
+﻿<div ng-show="!requests.length" class="no-data-block">no items found ...</div>
+<div ng-show="requests.length > 0">
+    <md-toolbar class="md-table-toolbar md-default" ng-hide="selected.length || filter.show">
+        <div class="md-toolbar-tools">
+            <h2 class="md-title"></h2>
+            <div flex></div>
+            <md-button class="md-button" ng-click="filter = {}">All</md-button>
+            <md-button class="md-button" ng-click="filter = {status: 'Open'}">Active</md-button>
+            <md-button class="md-button" ng-click="filter = {type: 0}">Incoming</md-button>
+            <md-button class="md-button" ng-click="filter = {type: 1}">Outgoing</md-button>
+        </div>
+    </md-toolbar>
+    <md-table-container>
+        <table md-table md-progress="promise">
+            <thead md-head md-order="query.order" md-on-reorder="getAcceptRequsts">
+                <tr md-row>
+                    <th md-column md-order-by="type"><span>Type</span></th>
+                    <th md-column md-order-by="status"><span>Status</span></th>
+                    <th md-column md-order-by="subject"><span>Subject</span></th>
+                    <th md-column md-order-by="messages[0].text"><span>Message</span></th>
+                    <th md-column md-order-by="requester"><span>Requesting person</span></th>
+                    <th md-column md-order-by="creationDate"><span>Date</span></th>
+                    <th md-column></th>
+                </tr>
+            </thead>
+            <tbody md-body>
+                <tr md-row ng-repeat="request in requests | orderBy: query.order | limitTo: query.limit: (query.page - 1) * query.limit| filter: filter">
+                    <td md-cell>{{request.type == 0 ? 'Incoming' : 'Outgoing'}}</td>
+                    <td md-cell>{{request.status}}</td>
+                    <td md-cell>{{request.subject}}</td>
+                    <td md-cell>{{request.messages[0].text}}</td>
+                    <td md-cell>{{request.requester}}</td>
+                    <td md-cell>{{GetNormalizedDate(request.creationDate)}}</td>
+                    <td md-cell>
+                        <md-button class="md-primary" ng-click="showMessages($event, $index)">Show conversation</md-button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </md-table-container>
+    <md-table-pagination md-limit="query.limit" md-limit-options="[10, 20, 50]" md-page="query.page" md-total="{{requests.length}}" md-page-select></md-table-pagination>
+</div>

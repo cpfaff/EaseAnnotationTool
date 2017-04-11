@@ -1,0 +1,18 @@
+﻿@using CAFE.Web.Controllers
+@using CAFE.Web.Shared.Extensions;
+
+
+<div class="panel panel-warning">
+    <div class="panel-heading"><h2>Please confirm your email</h2></div>
+    <div class="panel-body">
+        <h3>Please follow the link within the email which was sent to You to activate your account.</h3>
+        <p>If the email doesn't arrive within the next five minutes check the spam folder in your email program. The message is sent automatically, so spam filters sometimes catch it by mistake.</p>
+        <p>
+            If You cannot find the email, You can  <a href=@Url.Action(nameof(AccountController.ResendRegistrationEmail), this.ControllerNameForRouting<AccountController>())> click here to resend it</a><br>
+            Please keep in mind that only the last sent email can be used for the confirmation.
+        </p>
+    </div>
+
+</div>
+
+

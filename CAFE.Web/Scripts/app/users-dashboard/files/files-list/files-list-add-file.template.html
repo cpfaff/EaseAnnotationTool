@@ -1,0 +1,57 @@
+﻿<md-dialog add-item-dialog style="min-width: 840px;max-height: 100%; height: 60%;">
+    <md-dialog-content class="md-dialog-content" style="height: 100%;"> 
+        <h2 class="md-title" >{{editingMode ? 'Edit' : 'Add'}} file <b>{{editingMode ? newFile.Name : ''}}</b></h2>
+
+        <p ng-if="fileForm.$submitted && fileForm.$invalid" class="md-warn" layout="row" layout-align="start center">
+            <i class="material-icons">error_outline</i>
+            <span>&nbsp; All fields are required.</span>
+        </p>
+
+        <form name="fileForm" id="fileForm">
+            <div layout="row" class="input-row">
+                <md-input-container flex>
+                    <label>Description</label>
+                    <input name="Description" ng-model="newFile.Description">
+                </md-input-container>
+            </div>
+            <div layout="row" class="input-row" ng-show="!editingMode">
+                <md-input-container flex>
+                    <div layout="column" ng-show="errorMessage" style="color:red;margin-bottom: 10px;" ng-bind="errorMessage"></div>
+                    <lf-ng-md-file-input lf-files="files" multiple progress></lf-ng-md-file-input>
+                </md-input-container>
+            </div>
+            <div layout="row" class="input-row">
+                <md-input-container flex>
+                    <label>Access Mode</label>
+                    <md-select ng-model="newFile.AccessMode" name="AccessMode" required>
+                        <md-option ng-value="$index" ng-repeat="opt in filesAccesModes">{{ opt }}</md-option>
+                    </md-select>
+                </md-input-container>
+            </div>
+            <div layout="row" class="input-row" ng-show="newFile.AccessMode == 1">
+                <md-input-container flex>
+                    <md-chips ng-model="newFile.SelectedUsersAndGroups" md-require-match="true">
+                        <md-autocomplete md-search-text="functionAutocomplete.searchText1"
+                                         md-items="item in loadTags(functionAutocomplete.searchText1)"
+                                         md-item-text="item.name"
+                                         md-min-length="1"
+                                         placeholder="Enter name of user or group">
+                            <md-item-template>
+                                {{item.name}}
+                            </md-item-template>
+                        </md-autocomplete>
+                        <md-chip-template>
+                            <span>
+                                <strong>{{$chip.name}}</strong>
+                            </span>
+                        </md-chip-template>
+                    </md-chips>
+                </md-input-container>
+            </div>
+        </form>
+    </md-dialog-content>
+    <div class="md-actions">
+        <md-button class="md-primary" ng-click="ctrl.save()" ng-disabled="fileForm.$invalid" ng-bind="editingMode ? 'Save' : 'Add'"></md-button>
+        <md-button class="md-primary" ng-click="ctrl.cancel()">Cancel</md-button>
+    </div>
+</md-dialog>

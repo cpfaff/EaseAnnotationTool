@@ -1,0 +1,11 @@
+D:\CollabFlex\Development\Sources\CAFE\CAFE\CAFE.Plugins.TestVocabularyPlugin\bin\Debug\CAFE.Plugins.TestVocabularyPlugin.dll
+D:\CollabFlex\Development\Sources\CAFE\CAFE\CAFE.Plugins.TestVocabularyPlugin\bin\Debug\CAFE.Plugins.TestVocabularyPlugin.pdb
+D:\CollabFlex\Development\Sources\CAFE\CAFE\CAFE.Plugins.TestVocabularyPlugin\bin\Debug\AutoMapper.dll
+D:\CollabFlex\Development\Sources\CAFE\CAFE\CAFE.Plugins.TestVocabularyPlugin\bin\Debug\CAFE.Core.dll
+D:\CollabFlex\Development\Sources\CAFE\CAFE\CAFE.Plugins.TestVocabularyPlugin\bin\Debug\Microsoft.AspNet.Identity.Core.dll
+D:\CollabFlex\Development\Sources\CAFE\CAFE\CAFE.Plugins.TestVocabularyPlugin\bin\Debug\CAFE.Core.pdb
+D:\CollabFlex\Development\Sources\CAFE\CAFE\CAFE.Plugins.TestVocabularyPlugin\bin\Debug\AutoMapper.xml
+D:\CollabFlex\Development\Sources\CAFE\CAFE\CAFE.Plugins.TestVocabularyPlugin\bin\Debug\Microsoft.AspNet.Identity.Core.xml
+D:\CollabFlex\Development\Sources\CAFE\CAFE\CAFE.Plugins.TestVocabularyPlugin\obj\Debug\CAFE.Plugins.TestVocabularyPlugin.csprojResolveAssemblyReference.cache
+D:\CollabFlex\Development\Sources\CAFE\CAFE\CAFE.Plugins.TestVocabularyPlugin\obj\Debug\CAFE.Plugins.TestVocabularyPlugin.dll
+D:\CollabFlex\Development\Sources\CAFE\CAFE\CAFE.Plugins.TestVocabularyPlugin\obj\Debug\CAFE.Plugins.TestVocabularyPlugin.pdb

@@ -1,0 +1,51 @@
+﻿<div class="panel panel-default panel-margin-bottom" ng-if="unacceptedUsers != null">
+    <div class="panel-heading">User acceptance</div>
+    <div class="panel-body">
+        <div ng-show="!unacceptedUsers.length" class="no-data-block">no items found ...</div>
+        <div ng-show="unacceptedUsers.length > 0">
+            <md-toolbar class="md-table-toolbar md-default" ng-hide="filter.show">
+                <div class="md-toolbar-tools">
+                    <div flex></div>
+                    <md-button class="md-icon-button" ng-click="filter.show = true">
+                        <md-icon>filter_list</md-icon>
+                    </md-button>
+                </div>
+            </md-toolbar>
+
+            <md-toolbar class="md-table-toolbar md-default" ng-show="filter.show">
+                <div class="md-toolbar-tools">
+                    <md-icon>search</md-icon>
+                    <form flex name="filter.form">
+                        <input type="text" ng-model="query.filter" ng-model-options="filter.options" placeholder="search">
+                    </form>
+                    <md-button class="md-icon-button" ng-click="removeFilter()">
+                        <md-icon>close</md-icon>
+                    </md-button>
+                </div>
+            </md-toolbar>
+
+            <md-table-container>
+                <table md-table md-progress="promise">
+                    <thead md-head md-order="query.order" md-on-reorder="getUsers">
+                        <tr md-row>
+                            <th md-column md-order-by="name"><span>Name</span></th>
+                            <th md-column md-order-by="email">Email</th>
+                            <th md-column md-order-by="acceptanceDate">Acceptance Date</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody md-body>
+                        <tr md-row ng-repeat="user in unacceptedUsers | orderBy: query.order | limitTo: query.limit: (query.page - 1) * query.limit">
+                            <td md-cell>{{user.name}}</td>
+                            <td md-cell>{{user.email}}</td>
+                            <td md-cell>{{user.acceptanceDate}}</td>
+                            <td md-cell><md-button class="md-primary" ng-click="accept($index)">Accept</md-button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </md-table-container>
+
+            <md-table-pagination md-limit="query.limit" md-limit-options="[10, 20, 50]" md-page="query.page" md-total="{{unacceptedUsers.length}}" md-page-select></md-table-pagination>
+        </div>
+    </div>
+</div>

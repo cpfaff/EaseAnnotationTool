@@ -1,0 +1,8 @@
+<span ng-if="!headerRowData.columnFilter.isEnabled">
+    {{headerRowData.columnName}}
+</span>
+
+<span class="filter-select" ng-class="{'is-active': headerRowData.columnFilter.filtersApplied.length}" ng-if="headerRowData.columnFilter.isEnabled">
+     {{headerRowData.columnName}}
+     <ng-md-icon icon="arrow_drop_down" size="24"></ng-md-icon>
+</span>

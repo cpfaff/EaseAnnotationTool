@@ -1,0 +1,225 @@
+﻿@using CAFE.Web.Controllers
+@model CAFE.Web.Models.Manage.UserEditViewModel
+@{
+    ViewBag.Title = "Edit My profile";
+}
+
+<style>
+    .user-row {
+        margin-bottom: 14px;
+    }
+
+        .user-row:last-child {
+            margin-bottom: 0;
+        }
+
+    .dropdown-user {
+        margin: 13px 0;
+        padding: 5px;
+        height: 100%;
+    }
+
+        .dropdown-user:hover {
+            cursor: pointer;
+        }
+
+    .table-user-information > tbody > tr {
+        border-top: 1px solid rgb(221, 221, 221);
+    }
+
+        .table-user-information > tbody > tr:first-child {
+            border-top: 0;
+        }
+
+
+        .table-user-information > tbody > tr > td {
+            border-top: 0;
+        }
+
+    .toppad {
+        margin-top: 20px;
+    }
+</style>
+
+<div class="container">
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xs-offset-0 col-sm-offset-0 col-md-offset-3 col-lg-offset-3 toppad">
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Edit My Profile</h3>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="alert alert-danger" style="margin: 15px;display:none;" id="error"></div>
+                        <div class="col-md-3 col-lg-3 " align="center">
+                            @using (Html.BeginForm("UploadAvatar", "Manage", null, FormMethod.Post, new { enctype = "multipart/form-data", id = "uploadAvatarForm" }))
+                            {
+                                if (string.IsNullOrEmpty(Model.PhotoUrl))
+                                {
+                                    <img alt="User Pic" src="https://cdn1.iconfinder.com/data/icons/user-pictures/101/malecostume-512.png" class="img-circle img-responsive">
+                                }
+                                else
+                                {
+                                    <img alt="User Pic" src="@Model.PhotoUrl" class="img-circle img-responsive">
+                                }
+                                <a href="#" id="selectAvatar">change avatar</a>
+                                <input type="file" name="avatar" id="avatar" data-max-size="4" accept="image/jpeg,image/jpg,image/png">
+                            }
+                        </div>
+                        <div class="col-md-9 col-lg-9 ">
+                            @using (Html.BeginForm("Edit", "Manage", FormMethod.Post, new { @class = "form-horizontal" }))
+                            {
+                                <div class="form-group">
+                                    @Html.LabelFor(l => l.Name, new { @class = "col-sm-3 control-label" })
+                                    <div class="col-sm-9">
+                                        @Html.EditorFor(m => m.Name, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    @Html.LabelFor(l => l.Surname, new { @class = "col-sm-3 control-label" })
+                                    <div class="col-sm-9">
+                                        @Html.EditorFor(m => m.Surname, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.Surname, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    @Html.LabelFor(l => l.Email, new { @class = "col-sm-3 control-label" })
+                                    <div class="col-sm-9">
+                                        @Html.DisplayTextFor(m => m.Email)
+                                        @*@Html.EditorFor(m => m.Email, new {htmlAttributes = new {@class = "form-control", @type = "email"}})
+                                            @Html.ValidationMessageFor(model => model.Email, "", new {@class = "text-danger"})*@
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    @Html.LabelFor(l => l.Phone, new { @class = "col-sm-3 control-label" })
+                                    <div class="col-sm-9">
+                                        @Html.EditorFor(m => m.Phone, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.Phone, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-sm-3 control-label"><strong>Postal address:</strong></div>
+                                    @*@Html.LabelFor(l => l.PostalAddress, new {@class = "col-sm-3 control-label"})*@
+                                    <div class="col-sm-9">
+                                        @Html.EditorFor(m => m.PostalAddress, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.PostalAddress, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-sm-3 control-label"><strong>Salutation:</strong></div>
+                                    @*@Html.LabelFor(l => l.PostalAddress, new {@class = "col-sm-3 control-label"})*@
+                                    <div class="col-sm-9">
+                                        @Html.EditorFor(m => m.Salutation, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.Salutation, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                @Html.HiddenFor(m => m.PhotoUrl)
+                                <div style="text-align: right;">
+                                    <button type="submit" class="btn btn-success">Save</button>
+                                    <a href="/Manage/Details" class="btn btn-default">Cancel</a>
+                                </div>
+                            }
+                        </div>
+
+                    </div>
+                    <div class="row" style="padding-left: 1em; padding-right: 1em; margin-top: 2em;">
+                        @if (ViewBag.Message == PasswordChangeResult.SuccessChangePassword)
+                        {
+                            {
+                                ViewBag.Message = null;
+                            }
+                            <div class="alert alert-success alert-dismissible" role="alert">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                Password has been changed successfully
+                            </div>
+                        }
+                        <div class="panel panel-default">
+                            <div class="panel-heading" role="tab" id="headingOne">
+                                <h4 class="panel-title">
+                                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                        Change password
+                                    </a>
+                                </h4>
+                            </div>
+
+                            <div id="collapseOne" class="panel-collapse @(ViewData.ModelState.IsValid ? "collapse" : "")" role="tabpanel" aria-labelledby="headingOne">
+                                <div class="panel-body">
+
+                                    @using (Html.BeginForm("ChangePassword", "Manage", FormMethod.Post, new { @class = "form-horizontal" }))
+                                    {
+                                        @Html.AntiForgeryToken()
+                                        @Html.ValidationSummary(excludePropertyErrors: true)
+
+                                        <div class="form-group">
+                                            <div class="col-sm-3 control-label">Old password:</div>
+                                            @*@Html.LabelFor(l => l.OldPassword, new {@class = "col-sm-3 control-label"})*@
+                                            <div class="col-sm-9">
+                                                @Html.EditorFor(m => m.OldPassword, new { htmlAttributes = new { @class = "form-control", @type = "password" } })
+                                                @Html.ValidationMessageFor(model => model.OldPassword, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-sm-3 control-label">New password:</div>
+                                            @*@Html.LabelFor(l => l.NewPassword, new {@class = "col-sm-3 control-label"})*@
+                                            <div class="col-sm-9">
+                                                @Html.EditorFor(m => m.NewPassword, new { htmlAttributes = new { @class = "form-control", @type = "password" } })
+                                                @Html.ValidationMessageFor(model => model.NewPassword, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-sm-3 control-label">Confirm password:</div>
+                                            @*@Html.LabelFor(l => l.ConfirmPassword, new {@class = "col-sm-3 control-label"})*@
+                                            <div class="col-sm-9">
+                                                @Html.EditorFor(m => m.ConfirmPassword, new { htmlAttributes = new { @class = "form-control", @type = "password" } })
+                                                @Html.ValidationMessageFor(model => model.ConfirmPassword, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+                                        <div style="text-align: right;">
+                                            <button type="submit" class="btn btn-primary">Change</button>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts
+{
+    <script type="text/javascript">
+
+        $("#avatar").css('display', 'none');
+
+        $("#selectAvatar").click(function (e) {
+            e.preventDefault();
+            $("#avatar").trigger('click');
+        });
+
+        $("#avatar").on('change', function (e)
+        {
+            $("#error").hide();
+            var fileInput = $('#avatar');
+            var maxSize = fileInput.data('max-size');
+
+            if ($('#avatar').get(0).files.length)
+            {
+                var fileSize = ((fileInput.get(0).files[0].size / 1024) / 1024).toFixed(4); // MB
+
+                if (fileSize > maxSize) {
+                    $("#error").text("The image cannot be larger as "+ maxSize + " MBs.").show();
+                    return false;
+                } else {
+                    $("#uploadAvatarForm").submit();
+                }
+            }
+        });
+
+    </script>
+}

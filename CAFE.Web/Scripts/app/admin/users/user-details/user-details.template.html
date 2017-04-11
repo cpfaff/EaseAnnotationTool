@@ -1,0 +1,171 @@
+﻿<md-dialog add-item-dialog style="min-width: 840px;">
+    <md-dialog-content class="md-dialog-content">
+
+        <h2 class="md-title">{{user.name}} {{user.surname}}</h2>
+
+        <p ng-if="item.form.$submitted && item.form.$invalid" class="md-warn" layout="row" layout-align="start center">
+            <i class="material-icons">error_outline</i>
+            <span>&nbsp; All fields are required.</span>
+        </p>
+
+        <form name="item.form" ng-submit="ctrl.addItem()">
+            <div layout="row" class="input-row">
+                <md-input-container flex>
+                    <label>Name</label>
+                    <input name="name" ng-model="user.name" required>
+                </md-input-container>
+                <md-input-container flex>
+                    <md-checkbox ng-model="user.isActive" name="isActive">Is Active</md-checkbox>
+                </md-input-container>
+            </div>
+            <div layout="row" class="input-row">
+                <md-input-container flex>
+                    <label>Surname</label>
+                    <input name="surname" ng-model="user.surname" required>
+                </md-input-container>
+                <md-input-container flex>
+                    <label>Role</label>
+                    <md-select ng-model="user.role" name="role" placeholder="Role" required>
+                        <md-option value="Administrator">Administrator</md-option>
+                        <md-option value="User">User</md-option>
+                        <md-option value="Curator">Curator</md-option>
+                    </md-select> 
+                </md-input-container>
+            </div>
+            <div layout="row" class="input-row">
+                <md-input-container flex>
+                    <label>Email</label>
+                    <input name="email" ng-model="user.email" required>
+                </md-input-container>
+                <md-input-container flex>
+                    <label>Phone</label>
+                    <input name="phoneNumber" ng-model="user.phoneNumber">
+                </md-input-container>                                
+            </div>
+            <div layout="row" class="input-row">
+                <md-input-container flex>
+                    <label>Postal address</label>
+                    <input name="postalAddress" ng-model="user.postalAddress">
+                </md-input-container>                
+            </div>
+        </form>
+        <md-tabs md-dynamic-height md-border-bottom>
+            <md-tab id="filesTab" md-on-select="getUserAnnotationItems()">
+                <md-tab-label>Annotation Items</md-tab-label>
+                <md-tab-body>
+
+                    <md-toolbar class="md-table-toolbar md-default" ng-hide="selectedAI.length">
+                        <div class="md-toolbar-tools">
+                            <md-icon>search</md-icon>
+                            <form flex name="AIfilter.form">
+                                <input type="text" ng-model="AIquery.filter" ng-model-options="AIfilter.options" placeholder="Search for user's Annotation Items...">
+                            </form>
+                            <md-button class="md-icon-button" ng-click="clearAIFilter()">
+                                <md-icon>clear</md-icon>
+                            </md-button>
+                        </div>
+                    </md-toolbar>
+
+                    <md-toolbar class="md-table-toolbar alternate" ng-show="selectedAI.length">
+                        <div class="md-toolbar-tools" layout-align="space-between">
+                            <div>{{selectedAI.length}} {{selectedAI.length > 1 ? 'items' : 'item'}} selected</div>
+                            <div flex></div>
+                            <md-button class="md-button" md-no-ink ng-click="AccessLevelDialog($event, true)">
+                                Set Access mode
+                            </md-button>
+                        </div>
+                    </md-toolbar>
+
+
+                    <md-table-container>
+                        <table md-table md-row-select multiple ng-model="selectedAI" md-progress="promise">
+                            <thead md-head md-order="query.order" md-on-reorder="getAnnotationITems">
+                                <tr  md-row>
+                                    <th md-column md-order-by="nameToLower"><span>Name</span></th>
+                                    <th md-column md-order-by="descriptionToLower">Description</th>
+                                    <th md-column md-order-by="descriptionToLower">Access mode</th>
+                                    <th md-column md-order-by="creationDateToLower">Creation Date</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody md-body>
+                                <tr md-row md-auto-select="false" md-select="annotationItem" ng-repeat="annotationItem in userAIFiltered">
+                                    <td md-cell>{{annotationItem.name}}</td>
+                                    <td md-cell><p class="max-height-ln4">{{annotationItem.description}}</p></td>
+                                    <td md-cell>{{annotationItem.accessModeName}}</td>
+                                    <td md-cell>{{GetNormalizedDate(annotationItem.creationDate)}} </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </md-table-container>
+                </md-tab-body>
+            </md-tab>
+            <md-tab id="filesTab" md-on-select="getUserFiles()">
+                <md-tab-label>Files</md-tab-label>
+                <md-tab-body>
+                    <div class="alert alert-danger" ng-show="errorMessage" ng-bind="errorMessage" style="margin-top: 15px;"></div>
+
+                    <md-toolbar class="md-table-toolbar md-default" ng-hide="selected.length">
+                        <div class="md-toolbar-tools">
+                            <md-icon>search</md-icon>
+                            <form flex name="filter.form">
+                                <input type="text" ng-model="query.filter" ng-model-options="filter.options" placeholder="Search for user's files...">
+                            </form>
+                            <md-button class="md-icon-button" ng-click="clearFilter()">
+                                <md-icon>clear</md-icon>
+                            </md-button>
+                        </div>
+                    </md-toolbar>
+
+                    <md-toolbar class="md-table-toolbar alternate" ng-show="selected.length">
+                        <div class="md-toolbar-tools" layout-align="space-between">
+                            <div>{{selected.length}} {{selected.length > 1 ? 'items' : 'item'}} selected</div>
+                            <div flex></div>
+                            <md-button class="md-button" md-no-ink ng-click="AccessLevelDialog($event)">
+                                Set Access mode
+                            </md-button>
+                        </div>
+                    </md-toolbar>
+
+                    <md-table-container>
+                        <table md-table md-row-select multiple ng-model="selected" md-progress="promise" >
+                            <thead md-head md-order="query.order" md-on-reorder="getUserFiles">
+                                <tr md-row>
+                                    <th md-column md-order-by="nameToLower"><span>File Name</span></th>
+                                    <th md-column md-order-by="nameToLower"><span>Access Mode</span></th>
+                                    <th md-column md-order-by="nameToLower"><span>Permission</span></th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody md-body>
+                                <tr md-row md-auto-select="false" md-select="file" md-select-id="Id" ng-repeat="file in userFilesFiltered">
+                                    <td md-cell><a href="{{file.downloadURL}}" download>{{file.name}}</a></td>
+                                    <td md-cell>{{file.accessModeName}}</td>
+                                    <td md-cell>{{file.permission}}</td>
+                                    <td md-cell>
+                                        <md-button class="md-primary" ng-click="switchOwner($event,$index)">Switch Owner</md-button>
+                                        <md-button class="md-primary" ng-click="deleteFile($index)">Delete</md-button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </md-table-container>
+                </md-tab-body>
+            </md-tab>
+            <md-tab id="groupsTab">
+                <md-tab-label>Groups</md-tab-label>
+                <md-tab-body>
+                    <ul style="margin-top: 10px;">
+                        <li ng-repeat="group in user.groups" ng-bind="group.name"></li>
+                    </ul>
+                </md-tab-body>
+            </md-tab>
+        </md-tabs>
+    </md-dialog-content>
+
+    <div class="md-actions">
+        <md-button class="md-primary" ng-click="ctrl.save()" ng-disabled="item.form.$invalid">Save</md-button>
+        <md-button class="md-primary" ng-click="ctrl.cancel()">Cancel</md-button>
+    </div>
+
+</md-dialog>

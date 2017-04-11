@@ -1,0 +1,127 @@
+﻿<div layout="row" layout-padding>
+    <div layout="column" layout-padding flex="30">
+        <md-input-container layout-margin>
+            <label>Title</label>
+            <input ng-disabled="!isAccessible" type="text" ng-model="commonModel.annotationItem.object.references.descriptions[0].title">
+        </md-input-container>
+
+        <md-input-container layout-margin>
+            <label>Abstract</label>
+            <input ng-disabled="!isAccessible" type="text" ng-model="commonModel.annotationItem.object.references.descriptions[0].abstract">
+        </md-input-container>
+
+        <md-input-container layout-margin>
+            <label>Access Mode</label>
+            <md-select ng-disabled="!isAccessible" ng-model="commonModel.annotationItem.accessMode">
+                <md-option ng-value="$index" ng-repeat="opt in AIAccessModes">{{ opt }}</md-option>
+            </md-select>
+        </md-input-container>
+        <md-input-container layout-margin>
+            <label style="margin-bottom: -15px;">Hosters</label>
+            <md-chips ng-model="commonModel.annotationItem.object.references.hosters" md-autocomplete-snap md-transform-chip="{hosterName: $chip}" md-require-match="true">
+                <md-autocomplete md-search-text="functionAutocomplete.hostersSearch"
+                                 md-items="item in querySearchStatic(functionAutocomplete.hostersSearch, commonVocabularies.hosters)"
+                                 md-item-text="item.value"
+                                 md-min-length="0"
+                                 ng-if="isAccessible"
+                                 placeholder="Search for a hoster">
+                    <md-item-template>
+                        <span md-highlight-text="functionAutocomplete.hostersSearch">{{item.value}}</span>
+                        <md-button class="md-icon-button md-primary" aria-label="{{item.description}}" ng-show="item.description">
+                            <md-tooltip class="tt-multiline" md-direction="right">{{item.description}}</md-tooltip>
+                            <i class="material-icons">help_outline</i>
+                        </md-button>
+                    </md-item-template>
+                </md-autocomplete>
+                <md-chip-template>
+                    <span>
+                        <strong>{{$chip.hosterName.value}}</strong>
+                    </span>
+                </md-chip-template>
+            </md-chips>
+        </md-input-container>
+        <md-input-container layout-margin ng-show="commonModel.annotationItem.accessMode == 1">
+            <label>Enter name of user or group</label>
+
+            <md-chips md-removable="isAccessible" ng-model="commonModel.acceptedUsersAndGroups" md-require-match="true">
+                <md-autocomplete md-search-text="functionAutocomplete.searchText"
+                                 md-items="item in querySearch(functionAutocomplete.searchText)"
+                                 md-item-text="item.name"
+                                 md-min-length="0"
+                                 ng-if="isAccessible"
+                                 placeholder="Search for a user or group">
+                    <span md-highlight-text="functionAutocomplete.searchText">{{item.name}}</span>
+                </md-autocomplete>
+                <md-chip-template>
+                    <span>
+                        <strong>{{$chip.name}}</strong>
+                    </span>
+                </md-chip-template>
+            </md-chips>
+        </md-input-container>
+        <md-input-container layout-margin>
+            <label style="margin-bottom: -15px;">Files</label>
+            <md-chips ng-model="resources" md-autocomplete-snap md-transform-chip="GetFileModel($chip)" md-require-match="true">
+                <md-autocomplete md-search-text="functionAutocomplete.searchText"
+                                 md-items="item in queryFilesSearch(functionAutocomplete.searchText, filesList)"
+                                 md-item-text="item.name"
+                                 ng-if="isAccessible"
+                                 placeholder="Search for a file">
+                    <span md-highlight-text="functionAutocomplete.searchText">{{item.name}}</span>
+                </md-autocomplete>
+                <md-chip-template>
+                    <span>
+                        <a download href="{{$chip.filePath}}"><strong>{{$chip.fileName}}</strong></a>
+                    </span>
+                </md-chip-template>
+            </md-chips>
+        </md-input-container>
+    </div>
+    <div layout="row" flex="60">
+        <div layout="column" flex="50">
+            <h4 style="margin-left: 15px;" >
+                Person
+                <md-button class="md-icon-button md-primary" aria-label="{{simpleTypesVocabularies.person}}" ng-show="simpleTypesVocabularies.person">
+                    <md-tooltip class="tt-multiline" md-direction="right">{{simpleTypesVocabularies.person}}</md-tooltip>
+                    <i class="material-icons">help_outline</i>
+                </md-button>
+            </h4>
+            <md-autocomplete layout-margin md-search-text="functionAutocomplete.personSearch"
+                             md-selected-item="personToAddModel.user"
+                             md-selected-item-change="FillPersonModel()"
+                             md-items="item in queryActiveUsersSearch(functionAutocomplete.personSearch)"
+                             md-item-text="(item.salutation == null ? '' : item.salutation)  + ' ' + item.name + ' ' + item.surname"
+                             md-min-length="3"
+                             ng-if="isAccessible"
+                             placeholder="Search by users ..." style="margin-top: 0;margin-bottom:36px;">
+                <span md-highlight-text="functionAutocomplete.personSearch">{{(item.salutation == null ? '' : item.salutation) + ' ' + item.name + ' ' + item.surname}}</span>
+            </md-autocomplete>
+            <md-input-container layout-margin>
+                <label>Position</label>
+                <input type="text" ng-model="commonVocabularies.persons.position.value">
+            </md-input-container>
+            <md-input-container layout-margin ng-if="'position' != key" ng-repeat="(key,item) in commonVocabularies.persons">
+                <label ng-bind="GetNormalizedName(key)"></label>
+                <input type="text" ng-model="commonVocabularies.persons[key]">
+            </md-input-container>
+            <md-divider style="margin: 10px 5px 5px 10px;"></md-divider>
+            <div layout="row" layout-align="center" ng-if="isAccessible">
+                <md-button ng-click="AddPerson()">Add combination to list</md-button>
+            </div>
+        </div>
+        <div layout="column" flex="40" style="margin-left: 10px;" ng-show="commonModel.annotationItem.object.references.persons.length > 0" layout-margin>
+            <md-content>
+                <md-list layout-margin>
+                    <md-list-item ng-repeat="person in commonModel.annotationItem.object.references.persons track by $index" style="margin-bottom: 15px;">
+                        <div class="md-list-item-text" layout="column" style="width: 300px;">
+                            <p ng-repeat="(key,item) in commonVocabularies.persons"><b>{{GetNormalizedName(key)}}:</b> {{ 'position' == key ? person[key][0].value : person[key][0]}}</p>
+                        </div>
+                        <md-button ng-if="isAccessible" class="md-icon-button secondary" ng-click="commonModel.annotationItem.object.references.persons.splice($index, 1)">
+                            <i class="material-icons">delete</i>
+                        </md-button>
+                    </md-list-item>
+                </md-list>
+            </md-content>
+        </div>
+    </div>
+</div>

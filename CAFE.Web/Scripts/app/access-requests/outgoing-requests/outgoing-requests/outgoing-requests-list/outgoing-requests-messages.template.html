@@ -1,0 +1,27 @@
+﻿<md-dialog add-item-dialog style="min-width: 840px;max-height: 100%; height: 70%;">
+    <md-dialog-content class="md-dialog-content" style="height:100%;">
+        <h4 class="md-title" ng-bind="description"></h4>
+        <h2 class="md-title">Subject: {{subject}}</h2>
+
+        <md-list flex style="overflow-y: scroll; height: 400px; margin-bottom: 20px;">
+            <md-list-item class="md-3-line" ng-repeat="message in messages" ng-click="null">
+                <div class="md-list-item-text" layout="column">
+                    <h4><b>{{message.sender}}:</b> {{message.text}}</h4>
+                    <p>{{message.creationDate}}</p>
+                </div>
+            </md-list-item>
+        </md-list>
+        <form name="messageForm" id="messageForm" ng-submit="ctrl.submit()">
+            <div layout="row" class="input-row">
+                <md-input-container flex>
+                    <label>Message</label>
+                    <textarea ng-model="message" required></textarea>
+                    <md-button class="md-primary" ng-click="ctrl.SendMessage() && messageForm.$setPristine()" ng-disabled="messageForm.$invalid" style="margin: 20px 0px;">Send message</md-button>
+                </md-input-container>
+        </div>
+        </form>
+    </md-dialog-content>
+    <div class="md-actions">
+        <md-button class="md-primary" ng-click="ctrl.Cancel()">Close</md-button>
+    </div>
+</md-dialog>

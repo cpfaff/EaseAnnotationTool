@@ -1,0 +1,254 @@
+﻿<md-tabs md-dynamic-height md-border-bottom class="my-container" md-selected="mdTabs.selectedIndex">
+    <md-tab id="processesTab">
+        <md-tab-label>Processes</md-tab-label>
+        <md-tab-body>
+            <div class="alert alert-warning alert-dismissible ai-help" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <span class="glyphicon glyphicon-info-sign"></span>Set the desired combination and click "Add combination to list"-button at the bottom to add it to the list. You can also extend the existing vocabulary by clicking the "plus"-button.
+            </div>
+            <div layout="row" layout-margin>
+                <div layout="column" layout-margin ng-if="isAccessible">
+                    <div layout="column" layout-margin>
+                        <h4>
+                            Name
+                            <md-button class="md-icon-button md-primary" aria-label="{{simpleTypesVocabularies.processName}}" ng-show="simpleTypesVocabularies.processName">
+                                <md-tooltip class="tt-multiline" md-direction="right">{{simpleTypesVocabularies.processName}}</md-tooltip>
+                                <i class="material-icons">help_outline</i>
+                            </md-button>
+                        </h4>
+                        <div layout="column">
+                            <md-autocomplete md-selected-item="processModel.processName"
+                                             md-search-text="autocompleteFields[name]"
+                                             md-items="subItem in querySearch(autocompleteFields[name], processNames)"
+                                             md-item-text="subItem.value"
+                                             placeholder="Search for a Name"
+                                             md-require-match="true"
+                                             ng-disabled="!isAccessible"
+                                             md-min-length="0">
+                                <md-item-template>
+                                    <span md-highlight-text="autocompleteFields[key]">{{subItem.value}}</span>
+                                    <md-button class="md-icon-button md-primary" aria-label="{{subItem.description}}" ng-show="subItem.description">
+                                        <md-tooltip class="tt-multiline" md-direction="right">{{subItem.description}}</md-tooltip>
+                                        <i class="material-icons">help_outline</i>
+                                    </md-button>
+                                </md-item-template>
+                            </md-autocomplete>
+                        </div>
+                    </div>
+                    <div layout="row" layout-margin>
+                        <md-input-container flex>
+                            <label>Object</label>
+                            <md-chips flex="90" md-removable="isAccessible" ng-model="processModel.processObject" md-autocomplete-snap md-require-match="true">
+                                <md-autocomplete md-search-text="functionAutocomplete.searchText"
+                                                 md-items="item in querySearch(functionAutocomplete.searchText, processObjects)"
+                                                 md-min-length="0"
+                                                 md-item-text="item.value"
+                                                 placeholder="Search for a object name">
+                                    <md-item-template>
+                                        <span md-highlight-text="functionAutocomplete.searchText">{{item.value}}</span>
+                                        <md-button class="md-icon-button md-primary" aria-label="{{item.description}}" ng-show="item.description">
+                                            <md-tooltip class="tt-multiline" md-direction="right">{{item.description}}</md-tooltip>
+                                            <i class="material-icons">help_outline</i>
+                                        </md-button>
+                                    </md-item-template>
+                                </md-autocomplete>
+                                <md-chip-template>
+                                    <span>
+                                        <strong>{{$chip.value}}</strong>
+                                    </span>
+                                </md-chip-template>
+                            </md-chips>
+                        </md-input-container>
+                    </div>
+                    <md-divider></md-divider>
+                    <div layout="row" layout-align="center">
+                        <md-button ng-click="addProcess()">Add combination to list</md-button>
+                    </div>
+                </div>
+                <div layout="column" flex="20" style="margin-left: 10px;" ng-show="processContext.processes.length > 0" layout-margin>
+                    <md-content>
+                        <md-list layout-margin>
+                            <md-list-item ng-repeat="process in processContext.processes track by $index" style="margin-bottom: 15px;">
+                                <div class="md-list-item-text" layout="column" style="width: 300px;">
+                                    <p>
+                                        <b>Name:</b> {{ process.processName.value }}
+                                    </p>
+                                    <p>
+                                        <b>Object:</b> <span ng-repeat="obj in process.processObject">{{GetNormalizedName(obj)}}{{$index == process.processObject.length - 1 ? '' : ', '}}</span>
+                                    </p>
+                                </div>
+                                <md-button ng-if="isAccessible" class="md-icon-button secondary" ng-click="processContext.processes.splice($index, 1)">
+                                    <i class="material-icons">delete</i>
+                                </md-button>
+                            </md-list-item>
+                        </md-list>
+                    </md-content>
+                </div>
+            </div>
+        </md-tab-body>
+    </md-tab>
+    <md-tab id="interactionsTab">
+        <md-tab-label>Interactions</md-tab-label>
+        <md-tab-body>
+            <div class="alert alert-warning alert-dismissible ai-help" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <span class="glyphicon glyphicon-info-sign"></span>Set the desired combination and click "Add combination to list"-button at the bottom to add it to the list. You can also extend the existing vocabulary by clicking the "plus"-button.
+            </div>
+            <div layout="row" layout-margin>
+                <div layout="column" layout-margin ng-if="isAccessible">
+                    <div layout="row" layout-margin>
+                        <md-input-container flex>
+                            <h4>
+                                Name
+                                <md-button class="md-icon-button md-primary" aria-label="{{simpleTypesVocabularies.interactionName}}" ng-show="simpleTypesVocabularies.interactionName">
+                                    <md-tooltip class="tt-multiline" md-direction="right">{{simpleTypesVocabularies.interactionName}}</md-tooltip>
+                                    <i class="material-icons">help_outline</i>
+                                </md-button>
+                            </h4>
+                            <input type="text" ng-model="interactionModel.name" required />
+                        </md-input-container>
+                    </div>
+
+                    <div layout="column" layout-margin>
+                        <h4>
+                            Partner One
+                            <md-button class="md-icon-button md-primary" aria-label="{{simpleTypesVocabularies.interactionPartnerOne}}" ng-show="simpleTypesVocabularies.interactionPartnerOne">
+                                <md-tooltip class="tt-multiline" md-direction="right">{{simpleTypesVocabularies.interactionPartnerOne}}</md-tooltip>
+                                <i class="material-icons">help_outline</i>
+                            </md-button>
+                        </h4>
+                        <div layout="column">
+                            <md-autocomplete md-selected-item="interactionModel.one"
+                                             md-search-text="autocompleteFields.one"
+                                             md-items="subItem in querySearch(autocompleteFields.one, interactionPartners)"
+                                             md-item-text="subItem.value"
+                                             placeholder="Search for a Partner One"
+                                             md-require-match="true"
+                                             ng-disabled="!isAccessible"
+                                             md-min-length="0">
+                                <md-item-template>
+                                    <span md-highlight-text="autocompleteFields.one">{{subItem.value}}</span>
+                                    <md-button class="md-icon-button md-primary" aria-label="{{subItem.description}}" ng-show="subItem.description">
+                                        <md-tooltip class="tt-multiline" md-direction="right">{{subItem.description}}</md-tooltip>
+                                        <i class="material-icons">help_outline</i>
+                                    </md-button>
+                                </md-item-template>
+                            </md-autocomplete>
+                        </div>
+                    </div>
+
+                    <div layout="column" layout-margin>
+                        <h4>
+                            Direction
+                            <md-button class="md-icon-button md-primary" aria-label="{{simpleTypesVocabularies.interactionDirection}}" ng-show="simpleTypesVocabularies.interactionDirection">
+                                <md-tooltip class="tt-multiline" md-direction="right">{{simpleTypesVocabularies.interactionDirection}}</md-tooltip>
+                                <i class="material-icons">help_outline</i>
+                            </md-button>
+                        </h4>
+                        <div layout="row">
+                            <md-autocomplete md-selected-item="interactionModel.direction"
+                                             md-search-text="autocompleteFields.direction"
+                                             md-items="subItem in querySearch(autocompleteFields[direction], interactionDirections)"
+                                             md-item-text="subItem.value"
+                                             placeholder="Search for a Direction"
+                                             md-require-match="true"
+                                             ng-disabled="!isAccessible"
+                                             md-min-length="0">
+                                <md-item-template>
+                                    <span md-highlight-text="autocompleteFields.direction">{{subItem.value}}</span>
+                                    <md-button class="md-icon-button md-primary" aria-label="{{subItem.description}}" ng-show="subItem.description">
+                                        <md-tooltip class="tt-multiline" md-direction="right">{{subItem.description}}</md-tooltip>
+                                        <i class="material-icons">help_outline</i>
+                                    </md-button>
+                                </md-item-template>
+                            </md-autocomplete>
+                        </div>
+                    </div>
+
+                    <div layout="column" layout-margin>
+                        <h4>
+                            Partner Two
+                            <md-button class="md-icon-button md-primary" aria-label="{{simpleTypesVocabularies.interactionPartnerTwo}}" ng-show="simpleTypesVocabularies.interactionPartnerTwo">
+                                <md-tooltip class="tt-multiline" md-direction="right">{{simpleTypesVocabularies.interactionPartnerTwo}}</md-tooltip>
+                                <i class="material-icons">help_outline</i>
+                            </md-button>
+                        </h4>
+                        <div layout="row">
+                            <md-autocomplete md-selected-item="interactionModel.two"
+                                             md-search-text="autocompleteFields.two"
+                                             md-items="subItem in querySearch(autocompleteFields.two, interactionPartners)"
+                                             md-item-text="subItem.value"
+                                             placeholder="Search for a Partner Two"
+                                             md-require-match="true"
+                                             ng-disabled="!isAccessible"
+                                             md-min-length="0">
+                                <md-item-template>
+                                    <span md-highlight-text="autocompleteFields.two">{{subItem.value}}</span>
+                                    <md-button class="md-icon-button md-primary" aria-label="{{subItem.description}}" ng-show="subItem.description">
+                                        <md-tooltip class="tt-multiline" md-direction="right">{{subItem.description}}</md-tooltip>
+                                        <i class="material-icons">help_outline</i>
+                                    </md-button>
+                                </md-item-template>
+                            </md-autocomplete>
+                        </div>
+                    </div>
+
+                    <div layout="column" layout-margin>
+                        <h4>
+                            Quality
+                            <md-button class="md-icon-button md-primary" aria-label="{{simpleTypesVocabularies.interactionQuality}}" ng-show="simpleTypesVocabularies.interactionQuality">
+                                <md-tooltip class="tt-multiline" md-direction="right">{{simpleTypesVocabularies.interactionQuality}}</md-tooltip>
+                                <i class="material-icons">help_outline</i>
+                            </md-button>
+                        </h4>
+                        <div layout="row">
+                            <md-autocomplete md-selected-item="interactionModel.quality"
+                                             md-search-text="autocompleteFields.quality"
+                                             md-items="subItem in querySearch(autocompleteFields.quality, interactionQualities)"
+                                             md-item-text="subItem.value"
+                                             placeholder="Search for a Quality"
+                                             md-require-match="true"
+                                             ng-disabled="!isAccessible"
+                                             md-min-length="0">
+                                <md-item-template>
+                                    <span md-highlight-text="autocompleteFields.quality">{{subItem.value}}</span>
+                                    <md-button class="md-icon-button md-primary" aria-label="{{subItem.description}}" ng-show="subItem.description">
+                                        <md-tooltip class="tt-multiline" md-direction="right">{{subItem.description}}</md-tooltip>
+                                        <i class="material-icons">help_outline</i>
+                                    </md-button>
+                                </md-item-template>
+                            </md-autocomplete>
+                        </div>
+                    </div>
+
+                    <md-divider></md-divider>
+                    <div layout="row" layout-align="center">
+                        <md-button ng-click="addInteraction()">Add combination to list</md-button>
+                    </div>
+                </div>
+                <div layout="column" flex="20" style="margin-left: 10px;" ng-show="processContext.interactions.length > 0" layout-margin>
+                    <md-content>
+                        <md-list layout-margin>
+                            <md-list-item ng-repeat="interaction in processContext.interactions track by $index" style="margin-bottom: 15px;">
+                                <div class="md-list-item-text" layout="column" style="width: 300px;">
+                                    <p>
+                                        <b>Name:</b> {{ interaction.name }}
+                                    </p>
+                                    <p>
+                                        Partner One <b>{{ interaction.one.value }} -></b> <b>{{ interaction.direction.value}} -></b> Partner Two <b>{{ interaction.two.value }}</b>
+                                    </p>
+                                    <p>
+                                        <b>Quality:</b> {{ interaction.quality.value }}
+                                    </p>
+                                </div>
+                                <md-button ng-if="isAccessible" class="md-icon-button secondary" ng-click="processContext.interactions.splice($index, 1)">
+                                    <i class="material-icons">delete</i>
+                                </md-button>
+                            </md-list-item>
+                        </md-list>
+                    </md-content>
+                </div>
+            </div>
+        </md-tab-body>
+    </md-tab>
+</md-tabs>

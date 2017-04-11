@@ -1,0 +1,37 @@
+﻿@using CAFE.Web.Controllers
+@using CAFE.Web.Shared.Extensions;
+@model CAFE.Web.Models.Account.ResendRegistrationEmailViewModel
+@{
+	ViewBag.Title = "Resend registration email";
+}
+
+<section class="container" id="RestorePasswordForm">
+	<section class="login-form-style">
+		@using (Html.BeginForm(
+			nameof(AccountController.ResendRegistrationEmail),
+			this.ControllerNameForRouting<AccountController>(),
+			FormMethod.Post, new { role = "login-style" })
+		)
+		{
+			<section>
+				@Html.AntiForgeryToken()
+				<h2 style="text-align: center;">@ViewBag.Title</h2>
+
+
+				<div class="form-group">
+					@Html.LabelFor(m => m.Email)
+					@Html.TextBoxFor(m => m.Email, new { @class = "form-control", required = "required" })
+					@Html.ValidationMessageFor(m => m.Email)
+				</div>
+
+				<input type="submit" class="btn btn-block btn-primary" value="Resend email" />
+
+			</section>
+			<div style="height: 10px; background-color: white;"></div>
+		}
+	</section>
+</section>
+
+@section Scripts {
+	@Scripts.Render("~/bundles/jqueryval")
+}

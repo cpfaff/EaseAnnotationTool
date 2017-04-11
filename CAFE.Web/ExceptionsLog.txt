@@ -1,0 +1,11 @@
+[4/11/2017 1:49:47 PM ]: System.IO.FileNotFoundException: Could not find file 'A:\AFolder\Afolder3\CAFE\CAFE\Tools\ModelGenerator\Compiled\ease111.xsd'.
+File name: 'A:\AFolder\Afolder3\CAFE\CAFE\Tools\ModelGenerator\Compiled\ease111.xsd'
+   at CAFE.DAL.Migrations.CafeMigrator.Migrate() in A:\AFolder\Afolder3\CAFE\CAFE\CAFE.DAL\Migrations\CafeMigrator.cs:line 27
+   at CAFE.Web.MvcApplication.Application_Start() in A:\AFolder\Afolder3\CAFE\CAFE\CAFE.Web\Global.asax.cs:line 52
+
+[11-Apr-17 23:10:27 ]: System.Data.SqlClient.SqlException (0x80131904): A network-related or instance-specific error occurred while establishing a connection to SQL Server. The server was not found or was not accessible. Verify that the instance name is correct and that SQL Server is configured to allow remote connections. (provider: Named Pipes Provider, error: 40 - Could not open a connection to SQL Server) ---> System.ComponentModel.Win32Exception (0x80004005): The system cannot find the file specified
+   at CAFE.DAL.Migrations.CafeMigrator.Migrate() in D:\CollabFlex\Development\Sources\CAFE\CAFE\CAFE.DAL\Migrations\CafeMigrator.cs:line 27
+   at CAFE.Web.MvcApplication.Application_Start() in D:\CollabFlex\Development\Sources\CAFE\CAFE\CAFE.Web\Global.asax.cs:line 52
+ClientConnectionId:00000000-0000-0000-0000-000000000000
+Error Number:2,State:0,Class:20
+

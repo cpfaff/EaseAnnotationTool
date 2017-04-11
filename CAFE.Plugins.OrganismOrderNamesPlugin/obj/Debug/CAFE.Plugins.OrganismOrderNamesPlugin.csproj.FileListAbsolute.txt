@@ -1,0 +1,15 @@
+D:\CollabFlex\Development\Sources\CAFE\CAFE\CAFE.Plugins.OrganismOrderNamesPlugin\bin\Debug\CAFE.Plugins.OrganismOrderNamesPlugin.dll
+D:\CollabFlex\Development\Sources\CAFE\CAFE\CAFE.Plugins.OrganismOrderNamesPlugin\bin\Debug\CAFE.Plugins.OrganismOrderNamesPlugin.pdb
+D:\CollabFlex\Development\Sources\CAFE\CAFE\CAFE.Plugins.OrganismOrderNamesPlugin\bin\Debug\AutoMapper.dll
+D:\CollabFlex\Development\Sources\CAFE\CAFE\CAFE.Plugins.OrganismOrderNamesPlugin\bin\Debug\CAFE.Core.dll
+D:\CollabFlex\Development\Sources\CAFE\CAFE\CAFE.Plugins.OrganismOrderNamesPlugin\bin\Debug\CAFE.Plugins.GlobalNameResolveService.dll
+D:\CollabFlex\Development\Sources\CAFE\CAFE\CAFE.Plugins.OrganismOrderNamesPlugin\bin\Debug\Newtonsoft.Json.dll
+D:\CollabFlex\Development\Sources\CAFE\CAFE\CAFE.Plugins.OrganismOrderNamesPlugin\bin\Debug\Microsoft.AspNet.Identity.Core.dll
+D:\CollabFlex\Development\Sources\CAFE\CAFE\CAFE.Plugins.OrganismOrderNamesPlugin\bin\Debug\CAFE.Core.pdb
+D:\CollabFlex\Development\Sources\CAFE\CAFE\CAFE.Plugins.OrganismOrderNamesPlugin\bin\Debug\CAFE.Plugins.GlobalNameResolveService.pdb
+D:\CollabFlex\Development\Sources\CAFE\CAFE\CAFE.Plugins.OrganismOrderNamesPlugin\bin\Debug\AutoMapper.xml
+D:\CollabFlex\Development\Sources\CAFE\CAFE\CAFE.Plugins.OrganismOrderNamesPlugin\bin\Debug\Newtonsoft.Json.xml
+D:\CollabFlex\Development\Sources\CAFE\CAFE\CAFE.Plugins.OrganismOrderNamesPlugin\bin\Debug\Microsoft.AspNet.Identity.Core.xml
+D:\CollabFlex\Development\Sources\CAFE\CAFE\CAFE.Plugins.OrganismOrderNamesPlugin\obj\Debug\CAFE.Plugins.OrganismOrderNamesPlugin.csprojResolveAssemblyReference.cache
+D:\CollabFlex\Development\Sources\CAFE\CAFE\CAFE.Plugins.OrganismOrderNamesPlugin\obj\Debug\CAFE.Plugins.OrganismOrderNamesPlugin.dll
+D:\CollabFlex\Development\Sources\CAFE\CAFE\CAFE.Plugins.OrganismOrderNamesPlugin\obj\Debug\CAFE.Plugins.OrganismOrderNamesPlugin.pdb

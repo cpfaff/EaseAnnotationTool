@@ -1,0 +1,617 @@
+<?xml version="1.0"?>
+<Ease>
+  <Object>
+    <Contexts>
+      <!--1 or more repetitions:-->
+      <Context>
+        <!--Optional:-->
+        <TimeContext>
+          <!--Optional:-->
+          <TimeRanges>
+            <TimeRange>
+              <RangeStart>
+                <DateTime>
+                  <date>2008-09-29</date>
+                  <time>01:18:33</time>
+                  <timezone uri="http://www.corp.org/temperat/per">America/Tegucigalpa</timezone>
+                </DateTime>
+              </RangeStart>
+              <RangeEnd>
+                <DateTime>
+                  <date>2017-05-15</date>
+                  <time>12:32:42+01:00</time>
+                  <timezone uri="http://www.corp.org/et/turbine">America/Argentina/Catamarca</timezone>
+                </DateTime>
+              </RangeEnd>
+            </TimeRange>
+          </TimeRanges>
+          <!--Optional:-->
+          <TimePeriods>
+            <TimePeriod>
+              <!--1 or more repetitions:-->
+              <GeologicalTimePeriod>
+                <geologicalEon uri="http://www.company.edu/profundum/bella">Archean</geologicalEon>
+                <!--Optional:-->
+                <geologicalEra uri="http://www.corp.gov/hoc/rapidum">Mesoproterozoic</geologicalEra>
+                <!--Optional:-->
+                <geologicalPeriod uri="http://www.my.org/circum/aris">Siderian</geologicalPeriod>
+                <!--Optional:-->
+                <geologicalEpoch uri="http://www.any.com/claustra/circum">Pridoli</geologicalEpoch>
+                <!--Optional:-->
+                <geologicalAge uri="http://www.test.org/et/ac">Carnian</geologicalAge>
+              </GeologicalTimePeriod>
+            </TimePeriod>
+          </TimePeriods>
+          <!--Optional:-->
+          <TemporalResolutions>
+            <!--1 or more repetitions:-->
+            <TemporalResolution>
+              <temporalExtentType uri="http://www.test.org/pectore/talia">Day</temporalExtentType>
+              <temporalResolutionType uri="http://www.sample.gov/sciret/certo">Century</temporalResolutionType>
+            </TemporalResolution>
+          </TemporalResolutions>
+        </TimeContext>
+        <!--Optional:-->
+        <SpaceContext>
+          <BoundingBoxes>
+            <BoundingBox>
+              <northBoundingCoordinate>90</northBoundingCoordinate>
+              <southBoundingCoordinate>90</southBoundingCoordinate>
+              <eastBoundingCoordinate>180</eastBoundingCoordinate>
+              <westBoundingCoordinate>180</westBoundingCoordinate>
+            </BoundingBox>
+          </BoundingBoxes>
+          <!--Optional:-->
+          <Elevations>
+            <Elevation>
+              <maximumElevation>1000.00</maximumElevation>
+              <maximumElevationUnit uri="http://www.any.com/volutans/dedit">Metre</maximumElevationUnit>
+              <minimumElevation>1000.00</minimumElevation>
+              <minimumElevationUnit uri="http://www.sample.org/ac/et">Kilometre</minimumElevationUnit>
+              <elevationDatum uri="http://www.your.com/ventos/tenens">Mean Sea Level</elevationDatum>
+            </Elevation>
+          </Elevations>
+          <!--Optional:-->
+          <Coordinates>
+            <!--1 or more repetitions:-->
+            <Coordinate>
+              <UtmCoordinate>
+                <utmCoordinateZone>100</utmCoordinateZone>
+                <utmCoordinateSubZone>100</utmCoordinateSubZone>
+                <utmCoordinateHemisphere uri="http://www.any.org/habenas/insuper">N</utmCoordinateHemisphere>
+                <utmCoordinateEasting>1000.00</utmCoordinateEasting>
+                <utmCoordinateEastingUnit uri="http://www.sample.com/in/soror">Kilometre</utmCoordinateEastingUnit>
+                <utmCoordinateNorthing>1000.00</utmCoordinateNorthing>
+                <utmCoordinateNorthingUnit uri="http://www.your.gov/adorat/ipsa">Metre</utmCoordinateNorthingUnit>
+                <utmCoordinateGeodeticDatum uri="http://www.my.org/nimborum/aris">wgs84</utmCoordinateGeodeticDatum>
+              </UtmCoordinate>
+            </Coordinate>
+          </Coordinates>
+          <!--Optional:-->
+          <Locations>
+            <!--1 or more repetitions:-->
+            <Location>
+              <locationName>string</locationName>
+              <locationType uri="http://www.any.org/insuper/molemque">Country</locationType>
+              <countryName uri="http://www.sample.edu/circum/vasto">Bosnia and Herzegovina</countryName>
+              <continentName uri="http://www.sample.org/tempestatesque/aris">North America</continentName>
+            </Location>
+          </Locations>
+          <!--Optional:-->
+          <SpatialResolutions>
+            <!--1 or more repetitions:-->
+            <SpatialResolution>
+              <spatialExtentType uri="http://www.your.org/ac/iras">Point</spatialExtentType>
+              <spatialResolutionType uri="http://www.any.edu/austris/dedit">Region</spatialResolutionType>
+            </SpatialResolution>
+          </SpatialResolutions>
+        </SpaceContext>
+        <!--Optional:-->
+        <SphereContext>
+          <Spheres>
+            <!--1 or more repetitions:-->
+            <Sphere>
+              <!--Optional:-->
+              <Atmosphere>
+                <!--Optional:-->
+                <NamedAtmosphereLayers>
+                  <!--1 or more repetitions:-->
+                  <NamedAtmosphereLayer>
+                    <atmosphereLayerName uri="http://www.test.com/imposuit/atris">Ionosphere</atmosphereLayerName>
+                  </NamedAtmosphereLayer>
+                </NamedAtmosphereLayers>
+                <!--Optional:-->
+                <NumericAtmosphereLayers>
+                  <!--1 or more repetitions:-->
+                  <NumericAtmosphereLayer>
+                    <minimumAtmosphereHeight>1000.00</minimumAtmosphereHeight>
+                    <minimumAtmosphereHeightUnit uri="http://www.my.org/sonoras/verrantque">Kilometre</minimumAtmosphereHeightUnit>
+                    <maximumAtmosphereHeight>1000.00</maximumAtmosphereHeight>
+                    <maximumAtmosphereHeightUnit uri="http://www.my.edu/dare/laxas">Metre</maximumAtmosphereHeightUnit>
+                  </NumericAtmosphereLayer>
+                </NumericAtmosphereLayers>
+              </Atmosphere>
+              <!--Optional:-->
+              <Hydrosphere>
+                <HydrosphereCompartments>
+                  <!--1 or more repetitions:-->
+                  <HydrosphereCompartment>
+                    <!--Optional:-->
+                    <River>
+                      <NamedRiverZones>
+                        <!--1 or more repetitions:-->
+                        <NamedRiverZone>
+                          <!--Optional:-->
+                          <longitudinalRiverZone uri="http://www.your.com/volutans/vasto">Potamon</longitudinalRiverZone>
+                          <!--Optional:-->
+                          <verticalRiverZone uri="http://www.sample.com/rapidum/rapidi">River Bank</verticalRiverZone>
+                        </NamedRiverZone>
+                      </NamedRiverZones>
+                    </River>
+                    <!--Optional:-->
+                    <Lake>
+                      <NamedLakeZones>
+                        <!--1 or more repetitions:-->
+                        <NamedLakeZone>
+                          <!--Optional:-->
+                          <benthicLakeZone uri="http://www.my.org/sciret/aequora">Benthic</benthicLakeZone>
+                          <!--Optional:-->
+                          <pelagicLakeZone uri="http://www.sample.org/et/aris">Metalimnion</pelagicLakeZone>
+                        </NamedLakeZone>
+                      </NamedLakeZones>
+                    </Lake>
+                    <!--Optional:-->
+                    <Sea>
+                      <NamedSeaZones>
+                        <!--1 or more repetitions:-->
+                        <NamedSeaZone>
+                          <!--Optional:-->
+                          <benthicSeaZone uri="http://www.any.com/arce/ego">Bathyal</benthicSeaZone>
+                          <!--Optional:-->
+                          <pelagicSeaZone uri="http://www.your.edu/ego/corde">Mesopelagic</pelagicSeaZone>
+                        </NamedSeaZone>
+                      </NamedSeaZones>
+                    </Sea>
+                  </HydrosphereCompartment>
+                </HydrosphereCompartments>
+              </Hydrosphere>
+              <!--Optional:-->
+              <Pedosphere>
+                <PedosphereCompartments>
+                  <!--1 or more repetitions:-->
+                  <PedosphereCompartment>
+                    <Soil>
+                      <!--Optional:-->
+                      <NamedSoilLayers>
+                        <!--1 or more repetitions:-->
+                        <NamedSoilLayer>
+                          <soilHorizon uri="http://www.my.com/temperat/rapidum">B Horizon</soilHorizon>
+                        </NamedSoilLayer>
+                      </NamedSoilLayers>
+                      <!--Optional:-->
+                      <NumericSoilLayers>
+                        <!--1 or more repetitions:-->
+                        <NumericSoilLayer>
+                          <minimumSoilDepth>1000.00</minimumSoilDepth>
+                          <minimumSoilDepthUnit uri="http://www.your.edu/altos/iunonis">Centimetre</minimumSoilDepthUnit>
+                          <maximumSoilDepth>1000.00</maximumSoilDepth>
+                          <maximumSoilDepthUnit uri="http://www.your.org/iovisque/et">Centimetre</maximumSoilDepthUnit>
+                        </NumericSoilLayer>
+                      </NumericSoilLayers>
+                      <!--Optional:-->
+                      <SoilTextures>
+                        <!--1 or more repetitions:-->
+                        <SoilTexture>
+                          <sandPercent>100</sandPercent>
+                          <siltPercent>100</siltPercent>
+                          <loamPercent>100</loamPercent>
+                        </SoilTexture>
+                      </SoilTextures>
+                      <!--Optional:-->
+                      <SoilMorphologies>
+                        <!--1 or more repetitions:-->
+                        <SoilMorphology>
+                          <soilMorphologyType uri="http://www.my.edu/murmure/rates">Chernozems</soilMorphologyType>
+                        </SoilMorphology>
+                      </SoilMorphologies>
+                      <!--Optional:-->
+                      <SoilAcidities>
+                        <!--1 or more repetitions:-->
+                        <SoilAcidity>
+                          <soilAcidityType uri="http://www.sample.org/ipsa/numen">Neutral</soilAcidityType>
+                        </SoilAcidity>
+                      </SoilAcidities>
+                    </Soil>
+                  </PedosphereCompartment>
+                </PedosphereCompartments>
+              </Pedosphere>
+              <!--Optional:-->
+              <Ecosphere>
+                <!--Optional:-->
+                <NamedEcosphereLayers>
+                  <!--1 or more repetitions:-->
+                  <NamedEcosphereLayer>
+                    <ecosphereLayerName uri="http://www.test.org/et/foedere">Herb Layer</ecosphereLayerName>
+                  </NamedEcosphereLayer>
+                </NamedEcosphereLayers>
+                <!--Optional:-->
+                <NumericEcosphereLayers>
+                  <!--1 or more repetitions:-->
+                  <NumericEcosphereLayer>
+                    <minimumVegetationHeight>1000.00</minimumVegetationHeight>
+                    <minimumVegetationHeightUnit uri="http://www.company.edu/rapidi/iaculata">Centimetre</minimumVegetationHeightUnit>
+                    <maximumVegetationHeight>1000.00</maximumVegetationHeight>
+                    <maximumVegetationHeightUnit uri="http://www.company.com/premere/premit">Centimetre</maximumVegetationHeightUnit>
+                  </NumericEcosphereLayer>
+                </NumericEcosphereLayers>
+                <!--Optional:-->
+                <OrganizationalHierarchies>
+                  <!--1 or more repetitions:-->
+                  <OrganizationalHierarchy>
+                    <organizationHierarchyName uri="http://www.sample.gov/vasto/et">Molecule Level</organizationHierarchyName>
+                  </OrganizationalHierarchy>
+                </OrganizationalHierarchies>
+              </Ecosphere>
+            </Sphere>
+          </Spheres>
+        </SphereContext>
+        <!--Optional:-->
+        <BiomeContext>
+          <!--Optional:-->
+          <ZonoBiomes>
+            <!--1 or more repetitions:-->
+            <ZonoBiome>
+              <biomeType uri="http://www.my.com/vasto/illi">Terrestrial</biomeType>
+              <biomeZone uri="http://www.your.gov/rapidum/bella">Subtropic</biomeZone>
+              <biomeHumidityType uri="http://www.your.com/imposuit/e">Arid</biomeHumidityType>
+              <biomeContinentalityType uri="http://www.my.com/vinclis/murmure">Maritime</biomeContinentalityType>
+              <biomeHemisphere uri="http://www.your.org/rapidi/soror">North</biomeHemisphere>
+            </ZonoBiome>
+          </ZonoBiomes>
+          <!--Optional:-->
+          <OroBiomes>
+            <!--1 or more repetitions:-->
+            <OroBiome>
+              <oroBiomeType uri="http://www.corp.com/transfixo/insuper">Planar</oroBiomeType>
+            </OroBiome>
+          </OroBiomes>
+          <!--Optional:-->
+          <PedoBiomes>
+            <!--1 or more repetitions:-->
+            <PedoBiome>
+              <pedoBiomeType uri="http://www.corp.gov/rates/arce">Lithobiome</pedoBiomeType>
+            </PedoBiome>
+          </PedoBiomes>
+          <!--Optional:-->
+          <Physiognomies>
+            <!--1 or more repetitions:-->
+            <Physiognomy>
+              <PhysiognomyTypes>
+                <!--1 or more repetitions:-->
+                <PhysiognomyType>
+                  <!--Optional:-->
+                  <TerrestrialPhysiognomies>
+                    <!--1 or more repetitions:-->
+                    <TerrestrialPhysiognomy>
+                      <terrestrialPhysiognomyType uri="http://www.my.gov/ventis/sonoras">Shrubland</terrestrialPhysiognomyType>
+                    </TerrestrialPhysiognomy>
+                  </TerrestrialPhysiognomies>
+                  <!--Optional:-->
+                  <SemiAquaticPhysiognomies>
+                    <!--1 or more repetitions:-->
+                    <SemiAquaticPhysiognomy>
+                      <semiAquaticPhysiognomyType uri="http://www.my.gov/auras/animos">Mire</semiAquaticPhysiognomyType>
+                    </SemiAquaticPhysiognomy>
+                  </SemiAquaticPhysiognomies>
+                  <!--Optional:-->
+                  <AquaticPhysiognomies>
+                    <!--1 or more repetitions:-->
+                    <AquaticPhysiognomy>
+                      <!--Optional:-->
+                      <plantCharacterizedAquaticPhysiognomyType uri="http://www.corp.com/secum/hic">Emergent Aquatic</plantCharacterizedAquaticPhysiognomyType>
+                      <!--Optional:-->
+                      <habitatCharacterizedAquaticPhysiognomy uri="http://www.company.com/altos/rex">Hydrothermal Vent</habitatCharacterizedAquaticPhysiognomy>
+                    </AquaticPhysiognomy>
+                  </AquaticPhysiognomies>
+                </PhysiognomyType>
+              </PhysiognomyTypes>
+            </Physiognomy>
+          </Physiognomies>
+          <!--Optional:-->
+          <LandUses>
+            <!--1 or more repetitions:-->
+            <LandUse>
+              <!--Optional:-->
+              <landUseType uri="http://www.sample.org/certo/luctantis">Urban</landUseType>
+              <!--Optional:-->
+              <landUseForm uri="http://www.corp.org/nubibus/altos">Forestry</landUseForm>
+            </LandUse>
+          </LandUses>
+        </BiomeContext>
+        <!--Optional:-->
+        <OrganismContext>
+          <Organisms>
+            <!--1 or more repetitions:-->
+            <Organism>
+              <Taxonomy>
+                <!--Optional:-->
+                <domain uri="http://www.your.gov/tot/ignem">string</domain>
+                <kingdom uri="http://www.company.com/supplex/molemque">Chromista</kingdom>
+                <!--You have a CHOICE of the next 2 items at this level-->
+                <!--Optional:-->
+                <division uri="http://www.sample.org/profundum/adorat">string</division>
+                <!--Optional:-->
+                <class uri="http://www.my.com/incedo/animos">string</class>
+                <!--Optional:-->
+                <order uri="http://www.your.edu/et/secum">string</order>
+                <!--Optional:-->
+                <family uri="http://www.test.com/transfixo/hic">string</family>
+                <!--Optional:-->
+                <OrganismName>
+                  <!--Optional:-->
+                  <BacterialName>
+                    <!--Optional:-->
+                    <fullBacterialName>string</fullBacterialName>
+                    <!--Optional:-->
+                    <genusOrMonomial>string</genusOrMonomial>
+                    <!--Optional:-->
+                    <subgenus>string</subgenus>
+                    <!--Optional:-->
+                    <subgenusAuthorAndYear>string</subgenusAuthorAndYear>
+                    <!--Optional:-->
+                    <speciesEpithet>string</speciesEpithet>
+                    <!--Optional:-->
+                    <subspeciesEpithet>string</subspeciesEpithet>
+                    <!--Optional:-->
+                    <parentheticalAuthorTeamAndYear>string</parentheticalAuthorTeamAndYear>
+                    <!--Optional:-->
+                    <authorTeamAndYear>string</authorTeamAndYear>
+                    <!--Optional:-->
+                    <nameApprobation>string</nameApprobation>
+                  </BacterialName>
+                  <!--Optional:-->
+                  <FungalName>
+                    <!--Optional:-->
+                    <fullFungalName>string</fullFungalName>
+                  </FungalName>
+                  <!--Optional:-->
+                  <BotanicalName>
+                    <!--Optional:-->
+                    <fullBotanicalName>string</fullBotanicalName>
+                    <!--Optional:-->
+                    <genusOrMonomial>string</genusOrMonomial>
+                    <!--Optional:-->
+                    <firstEpithet>string</firstEpithet>
+                    <!--Optional:-->
+                    <infraspecificEpithet>string</infraspecificEpithet>
+                    <!--Optional:-->
+                    <rank>f.spec.</rank>
+                    <!--Optional:-->
+                    <hybridFlag insertionpoint="3">string</hybridFlag>
+                    <!--Optional:-->
+                    <authorTeamParenthesis>string</authorTeamParenthesis>
+                    <!--Optional:-->
+                    <authorTeam>string</authorTeam>
+                    <!--Optional:-->
+                    <cultivarGroupName>string</cultivarGroupName>
+                    <!--Optional:-->
+                    <cultivarName>string</cultivarName>
+                    <!--Optional:-->
+                    <tradeDesignationNames>
+                      <!--Zero or more repetitions:-->
+                      <tradeDesignationName>string</tradeDesignationName>
+                    </tradeDesignationNames>
+                  </BotanicalName>
+                  <!--Optional:-->
+                  <ZoologicalName>
+                    <!--Optional:-->
+                    <fullZoologicalName>string</fullZoologicalName>
+                    <!--Optional:-->
+                    <genusOrMonomial>string</genusOrMonomial>
+                    <!--Optional:-->
+                    <subgenus>string</subgenus>
+                    <!--Optional:-->
+                    <speciesEpithet>string</speciesEpithet>
+                    <!--Optional:-->
+                    <subspeciesEpithet>string</subspeciesEpithet>
+                    <!--Optional:-->
+                    <authorTeamOriginalAndYear>string</authorTeamOriginalAndYear>
+                    <!--Optional:-->
+                    <authorTeamParenthesisAndYear>string</authorTeamParenthesisAndYear>
+                    <!--Optional:-->
+                    <combinationAuthorTeamAndYear>string</combinationAuthorTeamAndYear>
+                    <!--Optional:-->
+                    <breed>string</breed>
+                    <!--Optional:-->
+                    <namedIndividual>string</namedIndividual>
+                  </ZoologicalName>
+                  <!--Optional:-->
+                  <ViralName>
+                    <!--Optional:-->
+                    <fullViralName>string</fullViralName>
+                    <!--Optional:-->
+                    <genusOrMonomial>string</genusOrMonomial>
+                    <!--Optional:-->
+                    <viralSpeciesDesignation>string</viralSpeciesDesignation>
+                    <!--Optional:-->
+                    <acronym>string</acronym>
+                  </ViralName>
+                </OrganismName>
+              </Taxonomy>
+            </Organism>
+          </Organisms>
+        </OrganismContext>
+        <!--Optional:-->
+        <ProcessContext>
+          <!--Optional:-->
+          <Processes>
+            <!--1 or more repetitions:-->
+            <Process>
+              <processName uri="http://www.any.com/iunonis/corde">Ersosion</processName>
+              <!--1 or more repetitions:-->
+              <processSubject uri="http://www.sample.org/quae/ac">Matter</processSubject>
+              <!--1 or more repetitions:-->
+              <processType uri="http://www.my.org/sceptra/volutans">Release</processType>
+            </Process>
+          </Processes>
+          <!--Optional:-->
+          <Interactions>
+            <!--1 or more repetitions:-->
+            <Interaction>
+              <interactionName>string</interactionName>
+              <interactionPartnerOne uri="http://www.test.com/et/regemque">Plantae</interactionPartnerOne>
+              <!--Optional:-->
+              <interactionDirection uri="http://www.company.com/austris/ignem">Is Affected By</interactionDirection>
+              <!--Optional:-->
+              <interactionQuality uri="http://www.company.org/sedet/vasto">Antagonism</interactionQuality>
+              <interactionPartnerTwo uri="http://www.any.com/secum/bella">Animalia</interactionPartnerTwo>
+            </Interaction>
+          </Interactions>
+        </ProcessContext>
+        <!--Optional:-->
+        <ChemicalContext>
+          <!--Optional:-->
+          <Elements>
+            <!--1 or more repetitions:-->
+            <Element>
+              <elementName uri="http://www.any.org/nubibus/divum">Sodium</elementName>
+            </Element>
+          </Elements>
+          <!--Optional:-->
+          <Isotopes>
+            <!--1 or more repetitions:-->
+            <Isotope>
+              <isotopeName uri="http://www.any.org/imperio/dare">28Si</isotopeName>
+            </Isotope>
+          </Isotopes>
+          <!--Optional:-->
+          <Compounds>
+            <!--1 or more repetitions:-->
+            <Compound>
+              <compoundName>string</compoundName>
+              <!--1 or more repetitions:-->
+              <compoundClass uri="http://www.any.edu/claustra/illi">Functional Group</compoundClass>
+              <!--1 or more repetitions:-->
+              <compoundType uri="http://www.any.org/profundum/regina">Alloy Of Uranium</compoundType>
+            </Compound>
+          </Compounds>
+          <!--Optional:-->
+          <Functions>
+            <!--1 or more repetitions:-->
+            <Function>
+              <chemicalFunctionType uri="http://www.corp.edu/honorem/numen">Attractant</chemicalFunctionType>
+            </Function>
+          </Functions>
+        </ChemicalContext>
+        <!--Optional:-->
+        <MethodContext>
+          <!--Optional:-->
+          <Approaches>
+            <!--1 or more repetitions:-->
+            <Approach>
+              <approachType uri="http://www.any.edu/in/premit">Manipulative</approachType>
+              <approachLocalization uri="http://www.your.org/sonoras/et">Mesocosm</approachLocalization>
+            </Approach>
+          </Approaches>
+          <!--Optional:-->
+          <Factors>
+            <!--1 or more repetitions:-->
+            <Factor>
+              <factorName uri="http://www.sample.gov/iunonis/molemque" was="measured">Soil Temperature</factorName>
+              <factorType uri="http://www.company.org/tenens/ventos">Topography</factorType>
+            </Factor>
+          </Factors>
+          <DataFormats>
+            <!--1 or more repetitions:-->
+            <DataFormat>
+              <dataFormatType uri="http://www.corp.com/magno/acuto">Audio</dataFormatType>
+            </DataFormat>
+          </DataFormats>
+          <DataSources>
+            <!--1 or more repetitions:-->
+            <DataSource>
+              <dataSourceType uri="http://www.corp.edu/ac/adorat">Multimedia</dataSourceType>
+            </DataSource>
+          </DataSources>
+        </MethodContext>
+      </Context>
+    </Contexts>
+    <References>
+      <!--Optional:-->
+      <Hosters>
+        <!--1 or more repetitions:-->
+        <Hoster>
+          <hosterName uri="http://www.your.com/profundum/ipsa">DSMZ</hosterName>
+        </Hoster>
+      </Hosters>
+      <Persons>
+        <!--1 or more repetitions:-->
+        <Person>
+          <!--1 or more repetitions:-->
+          <position uri="http://www.corp.gov/frenat/dare">Contact</position>
+          <!--Zero or more repetitions:-->
+          <salutation>string</salutation>
+          <!--1 or more repetitions:-->
+          <givenName>string</givenName>
+          <!--1 or more repetitions:-->
+          <surName>string</surName>
+          <!--1 or more repetitions:-->
+          <emailAddress>string</emailAddress>
+          <!--1 or more repetitions:-->
+          <phoneNumber>string</phoneNumber>
+        </Person>
+      </Persons>
+      <Descriptions>
+        <title>string</title>
+        <abstract>string</abstract>
+      </Descriptions>
+    </References>
+    <Resources>
+      <!--1 or more repetitions:-->
+      <Resource>
+        <!--Optional:-->
+        <OnlineResources>
+          <!--Zero or more repetitions:-->
+          <OnlineResource>
+            <Uris>
+              <!--1 or more repetitions:-->
+              <Uri>
+                <downloadUrl>http://www.any.org/aeolus/talia</downloadUrl>
+                <referenceUrl>http://www.any.org/ventis/ventis</referenceUrl>
+              </Uri>
+            </Uris>
+          </OnlineResource>
+        </OnlineResources>
+        <!--Optional:-->
+        <OfflineResources>
+          <!--1 or more repetitions:-->
+          <OfflineResource>
+            <!--Optional:-->
+            <fileID>100</fileID>
+            <!--Optional:-->
+            <fileName>string</fileName>
+            <!--Optional:-->
+            <filePath>string</filePath>
+            <!--Optional:-->
+            <mimeType>viv</mimeType>
+          </OfflineResource>
+        </OfflineResources>
+        <!--Optional:-->
+        <EmbeddedResources>
+          <!--1 or more repetitions:-->
+          <EmbeddedResource>
+            <!--Optional:-->
+            <Base64Resource>
+              <fileName>string</fileName>
+              <mimeType>eml</mimeType>
+              <data>aGFiZW5hcw==</data>
+              <encodingDate>2017-06-24</encodingDate>
+              <encodingTime>18:40:25</encodingTime>
+              <sha2hash>string</sha2hash>
+            </Base64Resource>
+          </EmbeddedResource>
+        </EmbeddedResources>
+      </Resource>
+    </Resources>
+  </Object>
+</Ease>
