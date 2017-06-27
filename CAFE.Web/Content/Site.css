@@ -1,4 +1,11 @@
-﻿* {
+﻿/*Prevent md-table pager from squeezing the main content in Firefox when the items-per-page overlay is opened. 
+See Bug#211 for details*/
+html {
+    overflow-y:visible !important;
+}
+
+
+* {
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
@@ -155,7 +162,7 @@ span.field-validation-error * {
 
     .search-property-element .search-filter-property-value {
         /*width: 60%;*/
-        width: 15em;
+        width: 17em;
         display: inline-block;
     }
 
@@ -714,4 +721,14 @@ md-autocomplete md-autocomplete-wrap input, md-autocomplete md-autocomplete-wrap
 
 .tabs-min-width {
     min-width: 850px;
+}
+
+.md-table-pagination md-select .md-select-value *:first-child {
+    height: auto;
+}
+
+.extended-toolbar {
+    background-color: white!important;
+    color: black!important;
+    box-shadow: none!important;
 }

@@ -536,7 +536,7 @@ namespace CAFE.Web.Controllers
 
                 _userDataIntegrationService.ImportData(currentUser, fileData, rootPath);
             }
-            catch
+            catch(Exception ex)
             {
                 var values = new RouteValueDictionary();
                 values.Add("error", ImportErrors.FileFormatError);

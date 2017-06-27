@@ -126,7 +126,7 @@ namespace CAFE.Services.Resources
             var resultCollection = new List<VocabularyValue>();
             resultCollection.AddRange(_extensibleVocabularyService.GetAllExtenededValues(vocabularyType, userId).ToList());
 
-            resultCollection.AddRange(_extensibleVocabularyService.GetExtenededValuesBy(userId.ToString(), vocabularyType));
+            resultCollection.AddRange(_extensibleVocabularyService.GetExtenededValuesBy(userId, vocabularyType));
 
             resultCollection.AddRange(_pluginsProvider.GetPluginsFor(vocabularyType).SelectMany(s => s.GetValues()));
 

@@ -20,7 +20,7 @@
             $scope.filters = [];
             $scope.preparedFilters = '';
 
-            $scope.searchBy = 'All';
+            $scope.searchBy = 'AnnotationItem';
 
             $scope.dateOptions = {
                 //dateDisabled: disabled,
@@ -103,10 +103,6 @@
                 });
             };
 
-            $scope.selectSearchBy = function(by) {
-                $scope.searchBy = by;
-            };
-
             $scope.addFilter = function() {
                 var filter = {};
                 $scope.filters.push(filter);
@@ -127,10 +123,12 @@
             };
 
             $scope.onFilterParameterSelect = function (item) {
+                
                 if (item.property.filterType == "Select") {
                     if (item.property.value == undefined) {
                         item.property.value = '';
                     }
+
                     $http.post('/api/Search/GetSelectValuesForFilter', item.property).then(function(response) {
                         item.filterSelectionItems = response.data;
                     });
@@ -152,7 +150,7 @@
                 }
             };
 
-            $scope.applyFilters = function() {
+            $scope.applyFilters = function () {
                 var filters = $scope.filters;
                 $scope.preparedFilters = '';
                 for (var i in filters) {
@@ -169,11 +167,23 @@
                             $scope.preparedFilters += min + '-' + max;
 
                         }
-                    } else if (value.property.filterType == 'Select') {
-                        if (value.property.value == undefined) return;
+                    }
+                    else if (value.property.filterType == 'DigitalRange') {
+                        $scope.preparedFilters += value.property.min + '-' + value.property.max;
+                    }
+                    else if (value.property.filterType == 'Select') {
+                        if (value.property.value == undefined) {
+                            $scope.errorMessage = "You must fill all filter's fields or remove some filters.";
+                            $("#errorModal").modal("show");
+                            return;
+                        }
                         $scope.preparedFilters += value.property.value.value;
                     } else {
-                        if (value.property.value == undefined) return;
+                        if (value.property.value == undefined) {
+                            $scope.errorMessage = "You must fill all filter's fields or remove some filters.";
+                            $("#errorModal").modal("show");
+                            return;
+                        }
                         $scope.preparedFilters += value.property.value;
                     }
                     $scope.preparedFilters += ',';

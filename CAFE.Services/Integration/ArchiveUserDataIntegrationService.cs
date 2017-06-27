@@ -14,6 +14,7 @@ using CAFE.Core.Configuration;
 using CAFE.Core.Resources;
 using CAFE.DAL.Models.Resources;
 using IConfigurationProvider = CAFE.Core.Configuration.IConfigurationProvider;
+using System.Web;
 
 namespace CAFE.Services.Integration
 {
@@ -266,8 +267,8 @@ namespace CAFE.Services.Integration
             }
 
             //try saves all data
-            AddAnnotationItems(user, unarchivedData.AnnotationItems);
-            AddFiles(user, unarchivedData.Files, path);
+            var addedFiles = AddFiles(user, unarchivedData.Files, path);
+            AddAnnotationItems(user, unarchivedData.AnnotationItems, addedFiles);
             AddVocabularies(user, unarchivedData.Vocabularies);
 
         }
@@ -325,39 +326,45 @@ namespace CAFE.Services.Integration
 
             return result;
         }
+        private string GetBaseUrl()
+        {
+            var request = HttpContext.Current.Request;
+            var appUrl = HttpRuntime.AppDomainAppVirtualPath;
 
-        private void AddAnnotationItems(User user, Dictionary<string, string> annotationItems)
+            if (appUrl != "/")
+                appUrl = "/" + appUrl;
+
+            var baseUrl = string.Format("{0}://{1}{2}", request.Url.Scheme, request.Url.Authority, appUrl);
+
+            return baseUrl;
+        }
+
+        private void AddAnnotationItems(User user, Dictionary<string, string> annotationItems, List<UserFile> files)
         {
             foreach (var annotationItem in annotationItems)
             {
                 var deserialized = _annotationItemIntegrationService.ImportWithTransform(annotationItem.Value);
                 var mapped = Mapper.Map<DbAnnotationItem>(deserialized);
-
-                //Get first description as main
-                var firstDescription = mapped.Object.References.Descriptions.First();
-                mapped.Object.References.Descriptions.Remove(firstDescription);
-
-                _annotationItemRepository.Insert(mapped);
-
-                var ann = _annotationItemRepository.Find(u => u.Id == mapped.Id);
                 var dbUser = _usersRepository.Find(f => f.Id.ToString() == user.Id);
 
-                try
+                if (mapped.Id == Guid.Empty)
+                    mapped.Id = Guid.NewGuid();
+
+                mapped.OwnerId = user.Id;
+                mapped.OwnerName = dbUser.Name + " " + dbUser.Surname;
+
+                foreach(var resourse in mapped.Object.Resources[0].OfflineResources)
                 {
-                    _annotationUsersRepository.Insert(new DbAnnotationItemAccessibleUsers
-                    {
-                        AnnotationItem = ann,
-                        User = dbUser
-                    });
+                    var fileName = resourse.FileName;
+                    var dbFile = files.Single(r => r.Name == fileName);
+                    resourse.FilePath = GetBaseUrl() + "Api/UserFiles/GetUserFile/" + dbFile.Id;
                 }
-                finally
-                {
-                    
-                }
+
+                _annotationItemRepository.Insert(mapped);
             }
         }
 
-        private void AddFiles(User user, Dictionary<string, byte[]> files, string path)
+        private List<UserFile> AddFiles(User user, Dictionary<string, byte[]> files, string path)
         {
 
             var acceptedUsers = new List<User>();
@@ -390,6 +397,8 @@ namespace CAFE.Services.Integration
             }
 
             _userFilesService.AddUserFiles(userFilesListToAdd);
+
+            return userFilesListToAdd;
         }
 
         private void AddVocabularies(User user, Dictionary<string, IEnumerable<string>> vocabularies)

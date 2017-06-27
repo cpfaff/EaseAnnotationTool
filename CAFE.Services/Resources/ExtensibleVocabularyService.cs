@@ -91,11 +91,15 @@ namespace CAFE.Services.Resources
             Contract.Requires(vocabularyType != null);
 
             var result = new List<VocabularyValue>();
-            var userIdGuid = Guid.Parse(userId);
 
-            result.AddRange(_vocabularyUserValuesRepository.
-                FindCollection(w => w.Type == vocabularyType.Name && w.User.Id == userIdGuid).
-                Select(s => new VocabularyValue { Value = s.Value, Description = s.Description, Type = s.Type, Id = s.Id }));
+            if (!string.IsNullOrEmpty(userId))
+            {
+                var userIdGuid = Guid.Parse(userId);
+
+                result.AddRange(_vocabularyUserValuesRepository.
+                    FindCollection(w => w.Type == vocabularyType.Name && w.User.Id == userIdGuid).
+                    Select(s => new VocabularyValue { Value = s.Value, Description = s.Description, Type = s.Type, Id = s.Id }));
+            }
 
             result.AddRange(_vocabularyValuesRepository.FindCollection(w => w.Type == vocabularyType.Name).Select(s => new VocabularyValue { Value = s.Value, Description = s.Description, Type = s.Type, Id = s.Id }));
 

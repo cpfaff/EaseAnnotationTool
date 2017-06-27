@@ -108,9 +108,20 @@ namespace CAFE.Services.Searching
 
                 try
                 {
-                    var foundFilterScope = FiltersRelationConfiguration.RelatedFiltersScopes.Where(w =>
-                       resultItem.Name.Contains(w.Key)).FirstOrDefault();
+                    var foundFilterScope = FiltersRelationConfiguration.RelatedFiltersScopes.Where(w => {
 
+                        foreach (var key in w.Key.Split('_'))
+                            if (resultItem.Name.Contains(key))
+                                return true;
+
+                        return false;
+                    }).FirstOrDefault();
+                    /*
+                    if(resultItem.Name.ToLower().Contains("geological"))
+                    {
+                        var i2 = 0;
+                    }
+                    */
                     if (foundFilterScope != null)
                     {
                         var sections = resultItem.Name.Split('.');
@@ -121,7 +132,7 @@ namespace CAFE.Services.Searching
                             for (var j = sections.Length - 1; j >= 0; j--)
                             {
 
-                                var level = sections[j].ToLower();
+                                var level = sections[j].Replace("[]", "").ToLower();
                                 if (foundFilterScope.Key.ToLower() == level)
                                 {
                                     foundLevel = j;
@@ -138,8 +149,11 @@ namespace CAFE.Services.Searching
                             var keyPattern = string.Join(".", newSectionLevels);
 
                             //find related filters
+                           
                             var fndItems = result.Where(w =>
                                 w.Name.Contains(keyPattern) && w.Name != resultItem.Name).ToList();
+
+                            Debug.WriteLine(string.Join(",", fndItems.Select(fi => fi.Name)));
 
                             foreach (var fndItem in fndItems)
                             {
@@ -181,9 +195,21 @@ namespace CAFE.Services.Searching
         public async Task<IEnumerable<string>> GetSelectValuesAsync(SearchRequestFilterItem filterItem, string userId)
         {
             if (filterItem.FilterType != FilterType.Select) throw new InvalidOperationException("Filter type must be 'Select'");
-
             var result = new List<string>();
-            result.AddRange(await GetSelectValuesFromAnnotationItemsAsync(filterItem.Description, userId));
+
+            if (filterItem.Name.Contains("LocationName"))
+            {
+                var annItms = _annotationItemRepository.Select().ToList();
+
+                foreach(var ai in annItms)
+                    if(ai.Object.Contexts?[0].SpaceContext?.Locations?.Count > 0)
+                        result.AddRange(ai.Object.Contexts[0].SpaceContext.Locations.Select(l => l.LocationName));
+
+                return result.Distinct();
+            }
+
+            
+            result.AddRange(await GetSelectValuesFromAnnotationItemsAsync(filterItem.Description.Split('.').Last(), userId));
             result.AddRange(await GetSelectValuesFromFilesAsync(filterItem.Name));
 
             return result;
@@ -704,7 +730,7 @@ namespace CAFE.Services.Searching
                     pt = propertyInfo.PropertyType.GetGenericArguments()[0];
                 }
 
-                if (pt.IsBaseValueType())
+                if (pt.IsBaseValueType() && propertyInfo.Name != "LocationName")
                 {
                     if (propertyInfo.Name == "Id") continue;
 
@@ -730,8 +756,8 @@ namespace CAFE.Services.Searching
                         Description = desc
                     });
                 }
-                else if (propertyInfo.PropertyType.GetProperties().Any(p => p.Name == "Value") &&
-                         propertyInfo.PropertyType.GetProperties().Any(p => p.Name == "Uri"))
+                else if ((propertyInfo.PropertyType.GetProperties().Any(p => p.Name == "Value") &&
+                         propertyInfo.PropertyType.GetProperties().Any(p => p.Name == "Uri")) || propertyInfo.Name == "LocationName")
                 {
                     var pnArr = pn.Split('.');
                     var prevDesc = desc;
@@ -874,6 +900,13 @@ namespace CAFE.Services.Searching
                 return random.Next(min, max);
             }
         }
+
+        private bool IsSimple(Type type)
+        {
+            return type.IsPrimitive
+              || type.Equals(typeof(string));
+        }
+
         private string BuildSqlQueryFor(IEnumerable<SearchRequestFilterItem> filters, string search)
         {
             var usedKeys = new List<string>()
@@ -882,7 +915,7 @@ namespace CAFE.Services.Searching
                 "AO",
                 "CT"
             };
-            StringBuilder builder = new StringBuilder("SELECT AI.* FROM [dbo].[DbAnnotationItems] AS AI INNER JOIN [dbo].[DbAnnotationObjects] AS AO ON AI.Object_Id = AO.Id JOIN [dbo].[DbAnnotationContexts] AS CT ON AI.Object_Id = CT.DbAnnotationObject_Id INNER JOIN [dbo].[DbReferences] AS RF ON AO.References_Id = RF.Id JOIN [dbo].[DbDescriptions] AS DS ON DS.DbReferences_Id = RF.Id ");
+            StringBuilder builder = new StringBuilder("SELECT AI.* FROM [dbo].[DbAnnotationItem] AS AI INNER JOIN [dbo].[DbAnnotationObject] AS AO ON AI.Object_Id = AO.Id JOIN [dbo].[DbAnnotationContext] AS CT ON AI.Object_Id = CT.DbAnnotationObject_Id INNER JOIN [dbo].[DbReferences] AS RF ON AO.References_Id = RF.Id JOIN [dbo].[DbDescription] AS DS ON DS.DbReferences_Id = RF.Id ");
 
             var contextType = typeof(DbAnnotationContext);
             var filterStatements = new List<string>();
@@ -891,7 +924,8 @@ namespace CAFE.Services.Searching
 
             foreach (var filterItem in filters)
             {
-                var parsedFilterKey = filterItem.Name.Split('.');
+                var parsedFilterKey = ParseFiltersKey(filterItem);
+
                 var mappedPropertyTypes = new Dictionary<string, Type>();
 
                 for (int i = 1; i < parsedFilterKey.Length; i++)
@@ -922,15 +956,16 @@ namespace CAFE.Services.Searching
                         mappedPropertyTypes.Add(currentPath, propertyType);
 
                         var propertyTypeName = propertyType.Name;
-                        var endPropertyTypeName = propertyTypeName + "s";
+                        var endPropertyTypeName = propertyTypeName;// + "s";
                         //if (propertyTypeName.EndsWith("s"))
                         //{
                         //    var singledPropertyName = propertyTypeName.PadRight(propertyTypeName.Length - 1);
                         //    if (AlreadyExistType(singledPropertyName))
                         //        endPropertyTypeName += "1";
                         //}
-                        if (AlreadyExistType(endPropertyTypeName))
-                            endPropertyTypeName += "1";
+
+                        //if (AlreadyExistType(endPropertyTypeName))
+                        //    endPropertyTypeName += "1";
 
                         var propertyKey = "";
 
@@ -984,6 +1019,19 @@ namespace CAFE.Services.Searching
                         var previousTypeProperties = previousType.GetProperties(BindingFlags.Instance | BindingFlags.Public);
                         var currentProperty = previousTypeProperties
                             .Where(p => p.Name == currentKey).FirstOrDefault();
+
+                        if(null == currentProperty)
+                        {
+                            var notSimpleProperties = previousTypeProperties.Where(p => !IsSimple(p.PropertyType));
+                            foreach(var prop in notSimpleProperties)
+                            {
+                                var props = prop.PropertyType.GetProperties();
+                                currentProperty = props.Where(p => p.Name == currentKey).FirstOrDefault();
+                                if (null != currentProperty)
+                                    break;
+                            }
+                        }
+
                         var currentPropertyType = currentProperty.PropertyType;
                         var operation = "=";
 
@@ -1003,7 +1051,8 @@ namespace CAFE.Services.Searching
                                 }
                                 break;
                             case FilterType.Select:
-                                filterStatements.Add(previousKey + "." + currentKey + " " + operation + " N'" + filterItem.Value.Value + "' ");
+                                if("undefined" != (string)filterItem.Value.Value)
+                                    filterStatements.Add(previousKey + "." + currentKey + " " + operation + " N'" + filterItem.Value.Value + "' ");
                                 break;
                             case FilterType.Flag:
                                 filterStatements.Add(previousKey + "." + currentKey + " " + operation + " " + filterItem.Value.Value + " ");
@@ -1016,7 +1065,7 @@ namespace CAFE.Services.Searching
                                 }
                                 break;
                             case FilterType.DigitalRange:
-                                SearchRequestFilterRange<int> intRange;
+                                SearchRequestFilterRange<double> intRange;
                                 if (filterItem.Value.TryGetRange(out intRange))
                                 {
                                     filterStatements.Add("(" + previousKey + "." + currentKey + " BETWEEN " + intRange.Min + " AND " + intRange.Max + ") ");
@@ -1026,16 +1075,16 @@ namespace CAFE.Services.Searching
                     }
                     else
                     {
+                        string[] s1 = new string[3] {"John", "Paul", "Mary"};
+                        var s1Array = new string[i - 1];
+                        Array.Copy(parsedFilterKey, 1, s1Array, 0, i - 1);
+                        var s2 = string.Join(".", s1Array);
 
-                        var previousPathArray = new string[i - 1];
-                        Array.Copy(parsedFilterKey, 1, previousPathArray, 0, i - 1);
-                        var previousPath = string.Join(".", previousPathArray);
+                        var s3 = mappedPropertyTypes[s2];
 
-                        var previousType = mappedPropertyTypes[previousPath];
-
-                        var previousTypeProperties = previousType.GetProperties(BindingFlags.Instance | BindingFlags.Public);
-                        var foundProperty1 = previousTypeProperties
-                            .Where(p => p.Name == currentKey).FirstOrDefault();
+                        var s4 = s3.GetProperties(BindingFlags.Instance | BindingFlags.Public);
+                        var foundProperty1 = s4
+                            .Where(p => p.Name == currentKey.Replace("[]", "")).FirstOrDefault();
 
                         if (foundProperty1 == null)
                             throw new ApplicationException("Requested property not found");
@@ -1043,7 +1092,7 @@ namespace CAFE.Services.Searching
                         var propertyType1 = foundProperty1.PropertyType;
                         var isCollection1 = false;
 
-                        if (typeof(IEnumerable<>).IsAssignableFrom(propertyType1))
+                        if (propertyType1.GetInterface("IEnumerable") != null)
                         {
                             propertyType1 = propertyType1.GetGenericArguments()[0];
                             isCollection1 = true;
@@ -1053,13 +1102,13 @@ namespace CAFE.Services.Searching
 
                         var propertyTypeName1 = propertyType1.Name;
                         var endPropertyTypeName1 = propertyTypeName1;
-                        if (!endPropertyTypeName1.EndsWith("s"))
-                        {
-                            endPropertyTypeName1 += "s";
-                        }
-                        var propertyNameForCheck = propertyTypeName1 + "s";
-                        if (AlreadyExistType(propertyNameForCheck))
-                            endPropertyTypeName1 += "1";
+                        //if (!endPropertyTypeName1.EndsWith("s"))
+                        //{
+                        //    endPropertyTypeName1 += "s";
+                        //}
+                        //var propertyNameForCheck = propertyTypeName1 + "s";
+                        //if (AlreadyExistType(propertyNameForCheck))
+                        //    endPropertyTypeName1 += "1";
 
                         var propertyKey1 = "";
                         if (!mappedJoinKeys.ContainsKey(currentPath))
@@ -1076,7 +1125,7 @@ namespace CAFE.Services.Searching
                             propertyKey1 = mappedJoinKeys[currentPath];
                         }
 
-                        var previousKey = mappedJoinKeys[previousPath];
+                        var previousKey = mappedJoinKeys[s2];
 
                         if (!addedPaths.Contains(currentPath))
                         {
@@ -1085,7 +1134,6 @@ namespace CAFE.Services.Searching
                             if (isCollection1)
                             {
                                 builder.Append("JOIN ");
-                                builder.Append("INNER JOIN ");
                                 builder.Append("[dbo].[");
                                 builder.Append(endPropertyTypeName1);
                                 builder.Append("] AS ");
@@ -1093,7 +1141,7 @@ namespace CAFE.Services.Searching
                                 builder.Append(" ON ");
                                 builder.Append(propertyKey1);
                                 builder.Append(".");
-                                builder.Append(previousType.Name);
+                                builder.Append(s3.Name);
                                 builder.Append("_Id = ");
                                 builder.Append(previousKey);
                                 builder.Append(".Id ");
@@ -1142,7 +1190,37 @@ namespace CAFE.Services.Searching
                 builder.Append(search);
                 builder.Append("%')");
             }
-            return builder.ToString();
+
+            var resString = builder.ToString();
+            return resString;
+        }
+
+        private string[] ParseFiltersKey(SearchRequestFilterItem filterItem)
+        {
+            var parsedFilterKey = filterItem.Name.Split('.');
+
+            // getting last item to check
+            // if it 'Select' type and need additional join performs
+            // also it must contains 'Value' propty
+            var lastItemIsSelect = CheckIsItemIsSelectType(parsedFilterKey[parsedFilterKey.Length - 1]);
+            if (lastItemIsSelect)
+            {
+                var tempArr = new string[parsedFilterKey.Length];
+                Array.Copy(parsedFilterKey, 0, tempArr, 0, parsedFilterKey.Length);
+
+                parsedFilterKey = new string[tempArr.Length + 1];
+                Array.Copy(tempArr, 0, parsedFilterKey, 0, tempArr.Length);
+                parsedFilterKey[parsedFilterKey.Length - 1] = "Value";
+                tempArr = null;
+            }
+
+            return parsedFilterKey;
+        }
+
+        private bool CheckIsItemIsSelectType(string keyName)
+        {
+            var foundType = TryFindVocabularyType(keyName);
+            return foundType != null;
         }
 
         private bool AlreadyExistType(string multiplicatedName)

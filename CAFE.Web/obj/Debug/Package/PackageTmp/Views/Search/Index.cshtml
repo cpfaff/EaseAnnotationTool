@@ -1,0 +1,406 @@
+﻿@model CAFE.Web.Models.Search.SearchIndexViewModel
+@{
+	ViewBag.Title = "Search Page";
+}
+
+@section styles{
+	@Styles.Render("~/bundles/search/css")
+
+	<style>
+		
+		#fountainG{
+			position:relative;
+			width:234px;
+			height:28px;
+			margin:auto;
+		}
+
+		.fountainG{
+			position:absolute;
+			top:0;
+			background-color:rgb(0,0,0);
+			width:28px;
+			height:28px;
+			animation-name:bounce_fountainG;
+				-o-animation-name:bounce_fountainG;
+				-ms-animation-name:bounce_fountainG;
+				-webkit-animation-name:bounce_fountainG;
+				-moz-animation-name:bounce_fountainG;
+			animation-duration:1.5s;
+				-o-animation-duration:1.5s;
+				-ms-animation-duration:1.5s;
+				-webkit-animation-duration:1.5s;
+				-moz-animation-duration:1.5s;
+			animation-iteration-count:infinite;
+				-o-animation-iteration-count:infinite;
+				-ms-animation-iteration-count:infinite;
+				-webkit-animation-iteration-count:infinite;
+				-moz-animation-iteration-count:infinite;
+			animation-direction:normal;
+				-o-animation-direction:normal;
+				-ms-animation-direction:normal;
+				-webkit-animation-direction:normal;
+				-moz-animation-direction:normal;
+			transform:scale(.3);
+				-o-transform:scale(.3);
+				-ms-transform:scale(.3);
+				-webkit-transform:scale(.3);
+				-moz-transform:scale(.3);
+			border-radius:19px;
+				-o-border-radius:19px;
+				-ms-border-radius:19px;
+				-webkit-border-radius:19px;
+				-moz-border-radius:19px;
+		}
+
+		#fountainG_1{
+			left:0;
+			animation-delay:0.6s;
+				-o-animation-delay:0.6s;
+				-ms-animation-delay:0.6s;
+				-webkit-animation-delay:0.6s;
+				-moz-animation-delay:0.6s;
+		}
+
+		#fountainG_2{
+			left:29px;
+			animation-delay:0.75s;
+				-o-animation-delay:0.75s;
+				-ms-animation-delay:0.75s;
+				-webkit-animation-delay:0.75s;
+				-moz-animation-delay:0.75s;
+		}
+
+		#fountainG_3{
+			left:58px;
+			animation-delay:0.9s;
+				-o-animation-delay:0.9s;
+				-ms-animation-delay:0.9s;
+				-webkit-animation-delay:0.9s;
+				-moz-animation-delay:0.9s;
+		}
+
+		#fountainG_4{
+			left:88px;
+			animation-delay:1.05s;
+				-o-animation-delay:1.05s;
+				-ms-animation-delay:1.05s;
+				-webkit-animation-delay:1.05s;
+				-moz-animation-delay:1.05s;
+		}
+
+		#fountainG_5{
+			left:117px;
+			animation-delay:1.2s;
+				-o-animation-delay:1.2s;
+				-ms-animation-delay:1.2s;
+				-webkit-animation-delay:1.2s;
+				-moz-animation-delay:1.2s;
+		}
+
+		#fountainG_6{
+			left:146px;
+			animation-delay:1.35s;
+				-o-animation-delay:1.35s;
+				-ms-animation-delay:1.35s;
+				-webkit-animation-delay:1.35s;
+				-moz-animation-delay:1.35s;
+		}
+
+		#fountainG_7{
+			left:175px;
+			animation-delay:1.5s;
+				-o-animation-delay:1.5s;
+				-ms-animation-delay:1.5s;
+				-webkit-animation-delay:1.5s;
+				-moz-animation-delay:1.5s;
+		}
+
+		#fountainG_8{
+			left:205px;
+			animation-delay:1.64s;
+				-o-animation-delay:1.64s;
+				-ms-animation-delay:1.64s;
+				-webkit-animation-delay:1.64s;
+				-moz-animation-delay:1.64s;
+		}
+
+
+
+		@@keyframes bounce_fountainG{
+			0%{
+			transform:scale(1);
+				background-color:rgb(0,0,0);
+			}
+
+			100%{
+			transform:scale(.3);
+				background-color:rgb(255,255,255);
+			}
+		}
+
+		@@-o-keyframes bounce_fountainG{
+			0%{
+			-o-transform:scale(1);
+				background-color:rgb(0,0,0);
+			}
+
+			100%{
+			-o-transform:scale(.3);
+				background-color:rgb(255,255,255);
+			}
+		}
+
+		@@-ms-keyframes bounce_fountainG{
+			0%{
+			-ms-transform:scale(1);
+				background-color:rgb(0,0,0);
+			}
+
+			100%{
+			-ms-transform:scale(.3);
+				background-color:rgb(255,255,255);
+			}
+		}
+
+		@@-webkit-keyframes bounce_fountainG{
+			0%{
+			-webkit-transform:scale(1);
+				background-color:rgb(0,0,0);
+			}
+
+			100%{
+			-webkit-transform:scale(.3);
+				background-color:rgb(255,255,255);
+			}
+		}
+
+		@@-moz-keyframes bounce_fountainG{
+			0%{
+			-moz-transform:scale(1);
+				background-color:rgb(0,0,0);
+			}
+
+			100%{
+			-moz-transform:scale(.3);
+				background-color:rgb(255,255,255);
+			}
+		}
+
+        .large-Modal .modal-dialog{
+            height: 80%;
+        }
+
+        .uib-increment .btn, .uib-decrement .btn  
+        {
+            padding: 0;
+            height: 10px;
+        }
+        .uib-time input {
+            height: 26px;
+        }
+
+        .uib-decrement .btn
+        {
+            vertical-align: top;
+            margin-top: -4px;
+        }
+        
+        .search-property-element .ui-select-choices {
+            width: auto;
+        }
+
+        /*.ui-select-bootstrap>.ui-select-choices, .ui-select-bootstrap>.ui-select-no-choice*/
+    </style>
+
+    <script>
+        isUserAuthenticated = @User.Identity.IsAuthenticated.ToString().ToLower();
+    </script>
+}
+<div class="container" style="padding-top: 6em;" ng-app="search" ng-controller="SearchController" ng-cloak>
+    <div class="modal fade" tabindex="-1" role="dialog" id="errorModal">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Error</h4>
+                </div>
+                <div class="modal-body">
+                    <h4 ng-bind="errorMessage" style="color: red; text-align:center;"></h4>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+	<div class="row">
+		<div class="col-xs-12">
+			<div class="input-group">
+                <input type="text" ng-model="npSearchString" class="form-control" name="search" placeholder="Search term..." id="searchControllInput" onkeyup="onSearchInputKeyup(event);" />
+				<span class="input-group-btn">
+					<button class="btn btn-default" type="button" ng-click="search()" id="searchInputButton"><span class="glyphicon glyphicon-search"></span></button>
+				</span>
+			</div>
+            <input type="hidden" name="search_param" value="annotationItems" id="search_param">
+		</div>
+	</div>
+	<div class="row" style="margin-top: 1em;">
+		<div class="col-xs-12">
+			<div class="panel panel-default dashed-border" ng-show="filters.length > 0">
+				<div class="panel-body">
+					<div ng-repeat="filterItem in filters track by $index" class="search-property-element">
+						<div ng-show="filterItem.property" class="search-property-title">{{filterItem.property.description}}</div>
+
+						<ui-select ng-show="!filterItem.property" ng-model="filterItem.property" on-select="onFilterParameterSelect(filterItem)" theme="bootstrap" class="search-filter-property-select" >
+							<ui-select-match placeholder="Property">{{$select.property.description}}</ui-select-match>
+							<ui-select-choices repeat="item in properties | filter: $select.search">
+								<div ng-bind-html="item.description | highlight: $select.search"></div>
+							</ui-select-choices>
+						</ui-select>
+
+						<div class="search-filter-property-value" ng-show="filterItem.property" >
+						    <input ng-if="filterItem.property.filterType == 'Input'" type="text" ng-model="filterItem.property.value" style="padding-bottom: 1.7em;"/>
+                            <input ng-if="filterItem.property.filterType == 'Flag'" type="checkbox" ng-model="filterItem.property.value" style="padding-bottom: 1.7em;" />
+							<ui-select ng-if="filterItem.property.filterType == 'Select'" ng-model="filterItem.property.value" theme="bootstrap" style="padding-bottom: 1.7em;">
+								<ui-select-match placeholder="Value">{{filterItem.property.value.name}}</ui-select-match>
+								<ui-select-choices repeat="selectionValue in filterItem.filterSelectionItems | filter: $select.search">
+									<div ng-bind-html="selectionValue.name | highlight: $select.search"></div>
+								</ui-select-choices>
+							</ui-select>
+						    <div ng-if="filterItem.property.filterType == 'DateRange'" style="display: inline-block; padding-bottom: 1.7em;">
+						        <div class="input-group" style="width: 45%; display: inline-block;">
+						            <input style="width: 80%; padding-left: 3px; font-size: 9pt;" type="text" class="form-control" uib-datepicker-popup="dd.MM.yyyy" ng-model="filterItem.property.min" is-open="filterItem.property.popup1.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close"/>
+						            <span style="width: 20%; display: inline-block;" class="input-group-btn">
+						                <button style="padding-left: 4px; padding-right: 4px;" type="button" class="btn btn-default" ng-click="openDate(filterItem, 1)"><i class="glyphicon glyphicon-calendar"></i></button>
+						            </span>
+						        </div>
+						        <span>to</span>
+						        <div class="input-group" style="width: 45%; display: inline-block;">
+						            <input style="width: 80%; padding-left: 3px; font-size: 9pt;" type="text" class="form-control" uib-datepicker-popup="dd.MM.yyyy" ng-model="filterItem.property.max" is-open="filterItem.property.popup2.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" />
+						            <span style="width: 20%; display: inline-block;" class="input-group-btn">
+						                <button style="padding-left: 4px; padding-right: 4px;" type="button" class="btn btn-default" ng-click="openDate(filterItem, 2)"><i class="glyphicon glyphicon-calendar"></i></button>
+						            </span>
+						        </div>
+						    </div>
+                            <div ng-if="filterItem.property.filterType == 'DigitalRange'" style="display: inline-block; padding-bottom: 1.7em;">
+                                <div class="input-group" style="width: 45%; display: inline-block;">
+                                    <input style="width: 90%; padding-left: 3px; font-size: 9pt;" type="number" class="form-control" ng-model="filterItem.property.min" ng-required="true" />
+                                </div>
+                                <span>to</span>
+                                <div class="input-group" style="width: 45%; display: inline-block;">
+                                    <input style="width: 90%; padding-left: 3px; font-size: 9pt;" type="number" class="form-control" ng-model="filterItem.property.max" ng-required="true" />
+                                </div>
+                            </div>                            
+                            
+						    <div ng-if="filterItem.property.filterType == 'Timer'" ng-model="filterItem.property.value" uib-timepicker show-meridian="ismeridian" show-seconds="false" style="margin-top: -1em;" ></div>
+						</div>
+						<a href="#" ng-click="removeFilter(filterItem)" class="filter-link filter-remove"><i class="fa fa-times-circle" aria-hidden="true"></i></a>
+					</div>
+					<a href="#" ng-click="addFilter()" class="filter-link filter-add">add filter <i class="fa fa-plus-circle" aria-hidden="true"></i></a>
+				</div>
+			</div>
+			<a ng-show="filters.length == 0" ng-click="addFilter()" href="#" class="filter-link" style="padding-left: 0;">add filter <i class="fa fa-plus-circle" aria-hidden="true"></i></a>
+		</div>
+	</div>
+	<div class="row" style="text-align: right" ng-show="filters.length > 0">
+		<div class="col-xs-12">
+			<button class="btn btn-default" ng-click="applyFilters()">Apply filters</button>
+			<a href="#" ng-click="clearFilters()">clear filters</a>            
+		</div>
+	</div>
+	<div class="row"  style="margin-top: 3em;">
+		<div class="col-xs-12 col-md-6" style="text-align: right;" ng-show="items.length > 0">  
+			<button ng-show="@(!User.Identity.IsAuthenticated)" ng-disabled="!anySelected()" ng-click="requestAccess($event)" class="btn btn-primary pull-left"><i class="fa fa-key"></i> Request access for selected items</button>
+		</div>        
+	</div>
+	<script type="text/ng-template" id="alert.html">
+		<div ng-transclude></div>
+	</script>
+	@*<div uib-alert ng-repeat="alert in alerts" ng-class="'alert-' + (alert.type || 'warning')" dismiss-on-timeout="5000" close="closeAlert($index)">{{alert.msg}}</div>*@
+	<div class="row">
+		<section class="col-xs-12 col-sm-6 col-md-12">
+			<article ng-show="items.length > 0" ng-repeat="item in items" class="search-result row">
+				<div uib-alert ng-if="item.errmsg" dismiss-on-timeout="5000" class="alert-danger" style="margin-bottom: 0;" close="closeAlert(item)">{{item.errmsg}}</div>
+
+				@if (User.Identity.IsAuthenticated)
+				{
+				    <div ng-show="!item.isAccessible" class="col-xs-1 col-sm-1 col-md-1" title="select this item and click 'Request access' button to communicate with the owner of this data">
+				        <i class="fa fa-key"></i>
+				        <input type="checkbox" class="search-resutl-item-checkbox" ng-model="item.selected" />
+				    </div>
+				    <div ng-show="item.isAccessible" class="col-xs-1 col-sm-1 col-md-1" >
+				    </div>
+
+					<div class="col-xs-10 col-sm-10 col-md-10 excerpet">
+						<h3>
+							@*<a href="{{item.link}}" target="_blank" ng-click="haveAccess(item, $event)" title="">{{item.name}}</a>*@
+                            <a href="{{item.link}}" target="_blank" title="">{{item.name}}</a>
+						</h3>
+						<p class="max-height-ln4">{{item.description}}</p>
+						<span><strong>owner:</strong> </span><a href="@Url.Action("Details", "Account")?id={{item.userId}}"><strong>{{item.userName}}</strong></a><a href="#"><i class="fa owner-icon-link"></i></a>
+					</div>
+				}
+				else
+				{
+					<div class="col-xs-11 col-sm-11 col-md-11 excerpet">
+						<h3>
+							@*<a href="{{item.link}}" target="_blank" ng-click="haveAccess(item, $event)" title="">{{item.name}}</a>*@
+                            <a href="{{item.link}}" target="_blank" title="">{{item.name}}</a>
+						</h3>
+						<p class="max-height-ln4">{{item.description}}</p>
+						<span><strong>owner:</strong> </span><a href="@Url.Action("Details", "Account")?id={{item.userId}}"><strong>{{item.userName}}</strong></a><a href="#"><i class="fa owner-icon-link"></i></a>
+					</div>
+				}
+				<div class="col-xs-1 col-sm-1 col-md-1" style="text-align: right;">
+					<i ng-if="item.isAccessible == false" class="fa fa-lock search-result-item-access"></i>
+					<i ng-if="item.isAccessible" class="fa fa-unlock search-result-item-access"></i>
+				</div>
+				<span class="clearfix borda"></span>
+			</article>
+			<h3 ng-show="items.length == 0 && !isLoadingFirst">No search result</h3>
+			<div ng-show="isLoading" id="fountainG">
+				<div id="fountainG_1" class="fountainG"></div>
+				<div id="fountainG_2" class="fountainG"></div>
+				<div id="fountainG_3" class="fountainG"></div>
+				<div id="fountainG_4" class="fountainG"></div>
+				<div id="fountainG_5" class="fountainG"></div>
+				<div id="fountainG_6" class="fountainG"></div>
+				<div id="fountainG_7" class="fountainG"></div>
+				<div id="fountainG_8" class="fountainG"></div>
+			</div>
+		</section>
+	</div>    
+</div>
+@section scripts{
+	<script>
+		
+		$(document).ready(function(e) {
+			$('.search-panel .dropdown-menu').find('a').click(function(e) {
+				e.preventDefault();
+				var param = $(this).attr("href").replace("#", "");
+				var concept = $(this).text();
+				$('.search-panel span#search_concept').text(concept);
+				$('#search_param').val(param);
+			});
+			$('.sorting-search-result-select .dropdown-menu').find('a').click(function (e) {
+				e.preventDefault();
+				var param = $(this).attr("href").replace("#", "");
+				var concept = $(this).text();
+				$('.sorting-search-result-select span#order_concept').text(concept);
+				$('#order_param').val(param);
+			});
+			
+		});
+
+		function onSearchInputKeyup(event) {
+			if (event.code === 'Enter') {
+				//event.preventDefault();
+				$("#searchInputButton").click();
+			}
+		}
+	</script>
+
+	@Scripts.Render("~/bundles/search/angular")
+	@Scripts.Render("~/bundles/search/app")
+}

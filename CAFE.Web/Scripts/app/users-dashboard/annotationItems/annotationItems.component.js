@@ -1,4 +1,4 @@
-﻿(function() {
+﻿(function () {
     'use strict';
 
     angular
@@ -60,27 +60,24 @@
                       $scope.selectedAnnotationItems = [];
                   }
 
-                  $scope.GetNormalizedDate = function(dateString)
-                  {
+                  $scope.GetNormalizedDate = function (dateString) {
                       var date = new Date(dateString);
                       return date.toLocaleDateString() + ' ' + date.toLocaleTimeString();
                   }
 
-                  $scope.AccessLevelDialog = function (event, items)
-                  {
+                  $scope.AccessLevelDialog = function (event, items) {
                       $mdDialog.show({
                           clickOutsideToClose: false,
                           controller: 'AIAccessModeChangeController',
                           controllerAs: 'ctrl',
                           focusOnOpen: false,
                           targetEvent: event,
-                          locals: { itemsList: items, updateFunction: DeSelectAllAI},
+                          locals: { itemsList: items, updateFunction: DeSelectAllAI },
                           templateUrl: 'Scripts/app/users-dashboard/annotationITems/accessModeDialog.template.html'
                       });
                   }
 
-                  $scope.ImportDialog = function (event)
-                  {
+                  $scope.ImportDialog = function (event) {
                       $mdDialog.show({
                           clickOutsideToClose: false,
                           controller: 'AIImportController',
@@ -93,8 +90,7 @@
                   }
 
                   $scope.CloneAnnotationItem = function (event, annotationItems) {
-                      if(annotationItems.length > 1)
-                      {
+                      if (annotationItems.length > 1) {
                           var pinTo = $scope.getToastPosition();
                           $mdToast.show(
                               $mdToast.simple()
@@ -119,7 +115,7 @@
                   };
 
 
-                  $scope.removeFilter = function() {
+                  $scope.removeFilter = function () {
                       $scope.filter.show = false;
                       $scope.query.filter = '';
 
@@ -144,7 +140,7 @@
                               });
                               $scope.selectedAnnotationItems = [];
                           });
-                      }, function () {}); 
+                      }, function () { });
                   };
 
                   $scope.ExportAnnotationItems = function () {
@@ -157,7 +153,7 @@
                       });
                   };
 
-                  $scope.$watch('query.filter', function(newValue, oldValue) {
+                  $scope.$watch('query.filter', function (newValue, oldValue) {
                       if (!oldValue) {
                           bookmark = $scope.query.page;
                       }
@@ -174,7 +170,9 @@
                   });
               }
             ]
-        }).
+        });
+
+    angular.module('usersDashboard.annotationItems').
         controller('AIAccessModeChangeController', function (AnnotationItemsProvider, $scope, $mdDialog, itemsList, updateFunction) {
             'use strict';
 
@@ -196,8 +194,7 @@
 
             this.cancel = $mdDialog.cancel;
 
-            this.save = function ()
-            {
+            this.save = function () {
                 var modelToSave = {
                     ids: [],
                     usersAndGroups: $scope.model.SelectedUsersAndGroups,
@@ -215,232 +212,229 @@
 
                 });
             };
-        }).
+        });
+
+    angular.module('usersDashboard.annotationItems').
         controller('AIImportController', function (AnnotationItemsProvider, $scope, $mdDialog, UpdateFunction, $mdToast) {
-                'use strict';
-                $scope.model = {};
-                $scope.ctrl = { importType: 0, importType2: 0, itemName: '', itemDescription: '' };
-                $scope.userFiles = [];
+
+            'use strict';
+            $scope.model = {};
+            $scope.ctrl = { importType: 0, importType2: 0, itemName: '', itemDescription: '' };
+            $scope.userFiles = [];
+
             $scope.isLoading = false;
-                AnnotationItemsProvider.getUserFiles().then(function (result) {
-                    $scope.userFiles = result.data;
-                    $scope.userFiles.forEach(function (item) {
-                        item.downloadURL = window.location.origin + item.downloadURL;
-                    });
+            AnnotationItemsProvider.getUserFiles().then(function (result) {
+                $scope.userFiles = result.data;
+                $scope.userFiles.forEach(function (item) {
+                    item.downloadURL = window.location.origin + item.downloadURL;
                 });
+            });
 
-                $scope.userFilesSearch = function (query)
-                {
-                    var results = query ? $scope.userFiles.filter(createFilterFor(query)) : $scope.userFiles;
-                    return results;
+            $scope.userFilesSearch = function (query) {
+                var results = query ? $scope.userFiles.filter(createFilterFor(query)) : $scope.userFiles;
+                return results;
+            }
+
+            function createFilterFor(query) {
+                return function filterFn(item) {
+                    return (item.name.toLowerCase().indexOf(query.toLowerCase()) != -1);
+                };
+            }
+
+            function isUrl(s) {
+                var regexp = /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/
+                return regexp.test(s);
+            }
+
+            function isGuid(value) {
+                var regex = /[a-f0-9]{8}(?:-[a-f0-9]{4}){3}-[a-f0-9]{12}/i;
+                var match = regex.exec(value);
+                return match != null;
+            }
+
+            function ImportSuccess() {
+                UpdateFunction();
+                $scope.isLoading = false;
+                $mdDialog.hide();
+            }
+
+            function ImportError(result) {
+                $scope.isLoading = false;
+                $scope.ctrl.error = result.data;
+            }
+
+            function CheckFileExtension(inputText, validExtensions) {
+                var fileExtension = inputText.split('.').pop();
+
+                if (-1 != fileExtension.indexOf("?"))
+                    fileExtension = fileExtension.split('?')[0];
+
+                if (!validExtensions || -1 != validExtensions.indexOf(fileExtension.toLowerCase()))
+                    return true;
+
+                return false;
+            }
+
+            function AttachTransformationFile(data, validExtensions) {
+                var selectedData = $scope.ctrl.userLink2;
+                var inputText = $scope.ctrl.selectedLink2;
+
+                if ($scope.ctrl.importType == 0) {
+                    if (isUrl(inputText)) {
+                        data.UseTransormation = true;
+                        data.TransformationData = inputText;
+
+                        if (!CheckFileExtension(inputText, validExtensions)) {
+                            $scope.ctrl.error = "You must specify for tranformation .xml file only.";
+                            $scope.isLoading = false;
+                            return false;
+                        }
+
+                        data.TransformatioDataName = inputText.substring(inputText.lastIndexOf('/') + 1);
+                        AnnotationItemsProvider.import(data).then(ImportSuccess, ImportError);
+                    }
+                    else if (selectedData && isGuid(selectedData.id)) {
+                        data.UseTransormation = true;
+                        data.TransformationData = selectedData.id;
+                        data.TransformatioDataName = inputText;
+                        data.TransformationDataType = 2;
+
+                        if (!CheckFileExtension(inputText, validExtensions)) {
+                            $scope.ctrl.error = "You must specify for transformation .xml file only.";
+                            $scope.isLoading = false;
+                            return false;
+                        }
+
+                        AnnotationItemsProvider.import(data).then(ImportSuccess, ImportError);
+                    }
+                    else {
+                        $scope.ctrl.error = "You must enter vaild link or select own file for transformation.";
+                        $scope.isLoading = false;
+                    }
                 }
+                else {
+                    var reader = new FileReader();
+                    reader.onload = function (e) {
 
-                function createFilterFor(query) {
-                    return function filterFn(item) {
-                        return (item.name.toLowerCase().indexOf(query.toLowerCase()) != -1);
+                        data.TransformationData = e.target.result;
+                        data.UseTransormation = true;
+
+                        var fileExtension = $scope.ctrl.files2[0].lfFileName.split('.').pop();
+                        if (-1 != validExtensions.indexOf(fileExtension.toLowerCase())) {
+                            data.TransformationDataType = 0;
+                            data.TransformatioDataName = $scope.ctrl.files2[0].lfFileName;
+                        }
+                        else {
+                            $scope.ctrl.error = "You must specify .xml file only.";
+                            $scope.isLoading = false;
+                            return false;
+                        }
+
+
+                        AnnotationItemsProvider.import(data).then(ImportSuccess, ImportError);
                     };
+                    reader.readAsDataURL($scope.ctrl.files2[0].lfFile);
                 }
+            }
 
-                function isUrl(s) {
-                    var regexp = /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/
-                    return regexp.test(s);
-                }
+            $scope.Import = function () {
+                $scope.isLoading = true;
+                $scope.ctrl.error = null;
 
-                function isGuid(value) {
-                    var regex = /[a-f0-9]{8}(?:-[a-f0-9]{4}){3}-[a-f0-9]{12}/i;
-                    var match = regex.exec(value);
-                    return match != null;
-                }
+                var data = {};
 
-                function ImportSuccess() {
+                function ImportSuccess(response) {
                     UpdateFunction();
                     $scope.isLoading = false;
                     $mdDialog.hide();
                 }
 
-                function ImportError(result) {
+                function ImportError(response) {
                     $scope.isLoading = false;
-                    $scope.ctrl.error = result.data;
+                    $scope.ctrl.error = response.data.message;
                 }
 
-                function CheckFileExtension(inputText, validExtensions)
-                {
-                    var fileExtension = inputText.split('.').pop();
+                var validExtensions = ["xml"];
 
-                    if (-1 != fileExtension.indexOf("?"))
-                        fileExtension = fileExtension.split('?')[0];
+                data.SaveFileAfterUpload = $scope.ctrl.saveFilesAfterUpload;
+                if ($scope.ctrl.importType == 0) {
+                    var selectedData = $scope.ctrl.userLink;
+                    var inputText = $scope.ctrl.selectedLink1;
 
-                    if (!validExtensions || -1 != validExtensions.indexOf(fileExtension.toLowerCase()))
-                        return true;
-                    
-                    return false;
-                }
+                    if (isUrl(inputText)) {
+                        data.ExtendableData = inputText;
+                        data.UseTransormation = false;
+                        data.Name = $scope.ctrl.itemName;
+                        data.Description = $scope.ctrl.itemDescription;
+                        data.ExtendableDataName = inputText.substring(inputText.lastIndexOf('/') + 1);
+                        data.DataType = 1;
 
-                function AttachTransformationFile(data, validExtensions)
-                {
-                    var selectedData = $scope.ctrl.userLink2;
-                    var inputText = $scope.ctrl.selectedLink2;
-                    
-                    if ($scope.ctrl.importType == 0) {
-                        if (isUrl(inputText))
-                        {
-                            data.UseTransormation = true;
-                            data.TransformationData = inputText;
-
-                            if(!CheckFileExtension(inputText, validExtensions)){
-                                $scope.ctrl.error = "You must specify for tranformation .xml file only.";
-                                $scope.isLoading = false;
-                                return false;
-                            }
-
-                            data.TransformatioDataName = inputText.substring(inputText.lastIndexOf('/') + 1);
-                            AnnotationItemsProvider.import(data).then(ImportSuccess, ImportError);
-                        }
-                        else if (selectedData && isGuid(selectedData.id)) {
-                            data.UseTransormation = true;
-                            data.TransformationData = selectedData.id;
-                            data.TransformatioDataName = inputText;
-                            data.TransformationDataType = 2;
-
-                            if (!CheckFileExtension(inputText, validExtensions)) {
-                                $scope.ctrl.error = "You must specify for transformation .xml file only.";
-                                $scope.isLoading = false;
-                                return false;
-                            }
-
-                            AnnotationItemsProvider.import(data).then(ImportSuccess, ImportError);
-                        }
-                        else {
-                            $scope.ctrl.error = "You must enter vaild link or select own file for transformation.";
+                        if (!CheckFileExtension(inputText, validExtensions)) {
+                            $scope.ctrl.error = "You must specify .xml file only.";
                             $scope.isLoading = false;
+                            return false;
                         }
+
+                        if ($scope.ctrl.useTransformation) {
+                            AttachTransformationFile(data, validExtensions);
+                        } else
+                            AnnotationItemsProvider.import(data).then(ImportSuccess, ImportError);
+                    }
+                    else if (selectedData && isGuid(selectedData.id)) {
+                        data.ExtendableData = selectedData.id;
+                        data.UseTransormation = false;
+                        data.Name = $scope.ctrl.itemName;
+                        data.Description = $scope.ctrl.itemDescription;
+                        data.ExtendableDataName = inputText;
+                        data.DataType = 2;
+
+                        if (!CheckFileExtension(inputText, validExtensions)) {
+                            $scope.ctrl.error = "You must specify .xml file only.";
+                            $scope.isLoading = false;
+                            return false;
+                        }
+
+                        if ($scope.ctrl.useTransformation) {
+                            AttachTransformationFile(data, validExtensions);
+                        } else
+                            AnnotationItemsProvider.import(data).then(ImportSuccess, ImportError);
                     }
                     else {
-                        var reader = new FileReader();
-                        reader.onload = function (e) {
-
-                            data.TransformationData = e.target.result;
-                            data.UseTransormation = true;
-
-                            var fileExtension = $scope.ctrl.files2[0].lfFileName.split('.').pop();
-                            if (-1 != validExtensions.indexOf(fileExtension.toLowerCase())) {
-                                data.TransformationDataType = 0;
-                                data.TransformatioDataName = $scope.ctrl.files2[0].lfFileName;
-                            }
-                            else {
-                                $scope.ctrl.error = "You must specify .xml file only.";
-                                $scope.isLoading = false;
-                                return false;
-                            }
-
-               
-                            AnnotationItemsProvider.import(data).then(ImportSuccess, ImportError);
-                        };
-                        reader.readAsDataURL($scope.ctrl.files2[0].lfFile);
+                        $scope.ctrl.error = "You must enter vaild link or select own file";
+                        $scope.isLoading = false;
                     }
                 }
+                else {
+                    var reader = new FileReader();
+                    reader.onload = function (e) {
 
-                $scope.Import = function ()
-                {
-                    $scope.isLoading = true;
-                    $scope.ctrl.error = null;
-                    
-                    var data = {};
+                        data.ExtendableData = e.target.result;
+                        data.UseTransormation = false;
+                        data.Name = $scope.ctrl.itemName;
+                        data.Description = $scope.ctrl.itemDescription;
 
-                    function ImportSuccess(response) {
-                        UpdateFunction();
-                        $scope.isLoading = false;
-                        $mdDialog.hide();
-                    }
+                        var fileExtension = $scope.ctrl.files[0].lfFileName.split('.').pop();
 
-                    function ImportError(response) {
-                        $scope.isLoading = false;
-                        $scope.ctrl.error = response.data.message;
-                    }
-                    
-                    var validExtensions = ["xml"];
-                    
-                    data.SaveFileAfterUpload = $scope.ctrl.saveFilesAfterUpload;
-                    if ($scope.ctrl.importType == 0)
-                    {
-                        var selectedData = $scope.ctrl.userLink;
-                        var inputText = $scope.ctrl.selectedLink1;
-
-                        if (isUrl(inputText)) {
-                            data.ExtendableData = inputText;
-                            data.UseTransormation = false;
-                            data.Name = $scope.ctrl.itemName;
-                            data.Description = $scope.ctrl.itemDescription;
-                            data.ExtendableDataName = inputText.substring(inputText.lastIndexOf('/') + 1);
-                            data.DataType = 1;
-
-                            if (!CheckFileExtension(inputText, validExtensions)) {
-                                $scope.ctrl.error = "You must specify .xml file only.";
-                                $scope.isLoading = false;
-                                return false;
-                            }
-
-                            if ($scope.ctrl.useTransformation) {
-                                AttachTransformationFile(data, validExtensions);
-                            } else
-                                AnnotationItemsProvider.import(data).then(ImportSuccess, ImportError);
-                        }
-                        else if (selectedData && isGuid(selectedData.id))
-                        {
-                            data.ExtendableData = selectedData.id;
-                            data.UseTransormation = false;
-                            data.Name = $scope.ctrl.itemName;
-                            data.Description = $scope.ctrl.itemDescription;
-                            data.ExtendableDataName = inputText;
-                            data.DataType = 2;
-
-                            if (!CheckFileExtension(inputText, validExtensions)) {
-                                $scope.ctrl.error = "You must specify .xml file only.";
-                                $scope.isLoading = false;
-                                return false;
-                            }
-
-                            if ($scope.ctrl.useTransformation) {
-                                AttachTransformationFile(data, validExtensions);
-                            } else
-                                AnnotationItemsProvider.import(data).then(ImportSuccess, ImportError);
-                        }
+                        if (-1 != validExtensions.indexOf(fileExtension.toLowerCase()))
+                            data.DataType = 0;
                         else {
-                            $scope.ctrl.error = "You must enter vaild link or select own file";
+                            $scope.ctrl.error = "You must specify .xml file only.";
                             $scope.isLoading = false;
+                            return false;
                         }
-                    }
-                    else {
-                        var reader = new FileReader();
-                        reader.onload = function (e) {
-                          
-                            data.ExtendableData = e.target.result;
-                            data.UseTransormation = false;
-                            data.Name = $scope.ctrl.itemName;
-                            data.Description = $scope.ctrl.itemDescription;
 
-                            var fileExtension = $scope.ctrl.files[0].lfFileName.split('.').pop();
+                        data.ExtendableDataName = $scope.ctrl.files[0].lfFileName;
+                        if ($scope.ctrl.useTransformation) {
+                            AttachTransformationFile(data, validExtensions);
+                        }
+                        else
+                            AnnotationItemsProvider.import(data).then(ImportSuccess, ImportError);
 
-                            if (-1 != validExtensions.indexOf(fileExtension.toLowerCase()))
-                                data.DataType = 0;
-                            else {
-                                $scope.ctrl.error = "You must specify .xml file only.";
-                                $scope.isLoading = false;
-                                return false;
-                            }
-
-                            data.ExtendableDataName = $scope.ctrl.files[0].lfFileName;
-                            if ($scope.ctrl.useTransformation) {
-                                AttachTransformationFile(data, validExtensions);
-                            }
-                            else
-                                AnnotationItemsProvider.import(data).then(ImportSuccess, ImportError);
-                            
-                        };
-                        reader.readAsDataURL($scope.ctrl.files[0].lfFile);
-                    }
+                    };
+                    reader.readAsDataURL($scope.ctrl.files[0].lfFile);
                 }
+            }
 
-                $scope.dialogCancel = $mdDialog.cancel;
-            });
+            $scope.dialogCancel = $mdDialog.cancel;
+        });
 })();

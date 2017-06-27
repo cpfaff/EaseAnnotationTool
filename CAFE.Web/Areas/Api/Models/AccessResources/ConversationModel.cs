@@ -11,7 +11,7 @@ namespace CAFE.Web.Areas.Api.Models.AccessResources
         public ConversationModel()
         {
             Messages = new List<MessageModel>();
-            ResourcesNames = new List<string>();
+            Resources = new Dictionary<string, string>();
         }
 
         /// <summary>
@@ -65,6 +65,6 @@ namespace CAFE.Web.Areas.Api.Models.AccessResources
         /// <summary>
         /// Name of resources ralated with this conversation
         /// </summary>
-        public IEnumerable<string> ResourcesNames { get; set; } 
+        public Dictionary<string, string> Resources { get; set; } 
     }
 }

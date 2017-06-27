@@ -217,30 +217,32 @@
         isUserAuthenticated = @User.Identity.IsAuthenticated.ToString().ToLower();
     </script>
 }
-
 <div class="container" style="padding-top: 6em;" ng-app="search" ng-controller="SearchController" ng-cloak>
+    <div class="modal fade" tabindex="-1" role="dialog" id="errorModal">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Error</h4>
+                </div>
+                <div class="modal-body">
+                    <h4 ng-bind="errorMessage" style="color: red; text-align:center;"></h4>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
 	<div class="row">
 		<div class="col-xs-12">
 			<div class="input-group">
-				<div class="input-group-btn search-panel">
-					<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-						<span id="search_concept">Search in</span> <span class="caret"></span>
-					</button>
-					<ul class="dropdown-menu" role="menu">
-						<li><a href="#searchByAll" ng-click="selectSearchBy('All')">All</a></li>
-						<li><a href="#searchByFiles" ng-click="selectSearchBy('File')">Files only</a></li>
-						<li><a href="#searchByAnnotationItems" ng-click="selectSearchBy('AnnotationItem')">Annotation items only</a></li>
-					</ul>
-				</div>
-				<input type="hidden" name="search_param" value="all" id="search_param">
-			    @*<div np-autocomplete="npAutocompleteOptions" np-input-model="npSearchString">
-					<input type="text" class="form-control" name="search" placeholder="Search term..." id="searchControllInput" onkeyup="onSearchInputKeyup(event);"/>
-				</div>*@
                 <input type="text" ng-model="npSearchString" class="form-control" name="search" placeholder="Search term..." id="searchControllInput" onkeyup="onSearchInputKeyup(event);" />
 				<span class="input-group-btn">
 					<button class="btn btn-default" type="button" ng-click="search()" id="searchInputButton"><span class="glyphicon glyphicon-search"></span></button>
 				</span>
 			</div>
+            <input type="hidden" name="search_param" value="annotationItems" id="search_param">
 		</div>
 	</div>
 	<div class="row" style="margin-top: 1em;">
@@ -249,24 +251,23 @@
 				<div class="panel-body">
 					<div ng-repeat="filterItem in filters track by $index" class="search-property-element">
 						<div ng-show="filterItem.property" class="search-property-title">{{filterItem.property.description}}</div>
-
 						<ui-select ng-show="!filterItem.property" ng-model="filterItem.property" on-select="onFilterParameterSelect(filterItem)" theme="bootstrap" class="search-filter-property-select" >
 							<ui-select-match placeholder="Property">{{$select.property.description}}</ui-select-match>
-							<ui-select-choices repeat="item in properties | filter: $select.search">
+							<ui-select-choices repeat="item in properties | filter: $select.search" style="width: 100%;">
 								<div ng-bind-html="item.description | highlight: $select.search"></div>
 							</ui-select-choices>
 						</ui-select>
 
 						<div class="search-filter-property-value" ng-show="filterItem.property" >
-						    <input ng-if="filterItem.property.filterType == 'Input'" type="text" ng-model="filterItem.property.value" style="padding-bottom: 1.7em;"/>
-                            <input ng-if="filterItem.property.filterType == 'Flag'" type="checkbox" ng-model="filterItem.property.value" style="padding-bottom: 1.7em;" />
-							<ui-select ng-if="filterItem.property.filterType == 'Select'" ng-model="filterItem.property.value" theme="bootstrap" style="padding-bottom: 1.7em;">
+						    <input ng-if="filterItem.property.filterType == 'Input'" type="text" ng-model="filterItem.property.value" class="form-control"/>
+                            <input ng-if="filterItem.property.filterType == 'Flag'" type="checkbox" ng-model="filterItem.property.value" style="margin-bottom: 1.7em;" />
+							<ui-select ng-if="filterItem.property.filterType == 'Select'" ng-model="filterItem.property.value" theme="bootstrap" style="margin-bottom: 1.7em;">
 								<ui-select-match placeholder="Value">{{filterItem.property.value.name}}</ui-select-match>
-								<ui-select-choices repeat="selectionValue in filterItem.filterSelectionItems | filter: $select.search">
+								<ui-select-choices repeat="selectionValue in filterItem.filterSelectionItems | filter: $select.search" style="width: 100%;">
 									<div ng-bind-html="selectionValue.name | highlight: $select.search"></div>
 								</ui-select-choices>
 							</ui-select>
-						    <div ng-if="filterItem.property.filterType == 'DateRange'" style="display: inline-block; padding-bottom: 1.7em;">
+						    <div ng-if="filterItem.property.filterType == 'DateRange'" style="display: inline-block; margin-bottom: 1.7em;">
 						        <div class="input-group" style="width: 45%; display: inline-block;">
 						            <input style="width: 80%; padding-left: 3px; font-size: 9pt;" type="text" class="form-control" uib-datepicker-popup="dd.MM.yyyy" ng-model="filterItem.property.min" is-open="filterItem.property.popup1.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close"/>
 						            <span style="width: 20%; display: inline-block;" class="input-group-btn">
@@ -281,7 +282,7 @@
 						            </span>
 						        </div>
 						    </div>
-                            <div ng-if="filterItem.property.filterType == 'DigitalRange'" style="display: inline-block; padding-bottom: 1.7em;">
+                            <div ng-if="filterItem.property.filterType == 'DigitalRange'" style="display: inline-block; margin-bottom: 1.7em;">
                                 <div class="input-group" style="width: 45%; display: inline-block;">
                                     <input style="width: 90%; padding-left: 3px; font-size: 9pt;" type="number" class="form-control" ng-model="filterItem.property.min" ng-required="true" />
                                 </div>
@@ -291,7 +292,7 @@
                                 </div>
                             </div>                            
                             
-						    <div ng-if="filterItem.property.filterType == 'Timer'" ng-model="filterItem.property.value" uib-timepicker show-meridian="ismeridian" show-seconds="true" style="margin-top: -1em;" ></div>
+						    <div ng-if="filterItem.property.filterType == 'Timer'" ng-model="filterItem.property.value" uib-timepicker show-meridian="ismeridian" show-seconds="false" style="margin-top: -1em;" ></div>
 						</div>
 						<a href="#" ng-click="removeFilter(filterItem)" class="filter-link filter-remove"><i class="fa fa-times-circle" aria-hidden="true"></i></a>
 					</div>
@@ -379,7 +380,7 @@
 				var param = $(this).attr("href").replace("#", "");
 				var concept = $(this).text();
 				$('.search-panel span#search_concept').text(concept);
-				$('.input-group #search_param').val(param);
+				$('#search_param').val(param);
 			});
 			$('.sorting-search-result-select .dropdown-menu').find('a').click(function (e) {
 				e.preventDefault();

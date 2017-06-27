@@ -1,0 +1,28 @@
+﻿<div layout="column" layout-margin flex="50">
+    <div layout="row">
+        <md-chips flex="90" md-removable="isAccessible" ng-model="chemicalContext.functions" md-autocomplete-snap md-require-match="true" md-transform-chip="{ chemicalFunctionType: $chip }">
+            <md-autocomplete md-search-text="functionAutocomplete.searchText"
+                             md-items="item in querySearch(functionAutocomplete.searchText, chemicalDictionaries.chemicalFunctionTypeVocabulary)"
+                             md-item-text="item.value"
+                             md-min-length="0"
+                             ng-if="isAccessible"
+                             placeholder="Search for a function">
+                <md-item-template>
+                    <span md-highlight-text="functionAutocomplete.searchText">{{item.value}}</span>
+                    <md-button class="md-icon-button md-primary" aria-label="{{item.description}}" ng-show="item.description">
+                        <md-tooltip class="tt-multiline" md-direction="right">{{item.description}}</md-tooltip>
+                        <i class="material-icons">help_outline</i>
+                    </md-button>
+                </md-item-template>
+            </md-autocomplete>
+            <md-chip-template>
+                <span>
+                    <strong>{{$chip.chemicalFunctionType.value}}</strong>
+                </span>
+            </md-chip-template>
+        </md-chips>
+        <md-button ng-if="isAccessible" style="margin-top: 15px;" class="md-icon-button import" aria-label="Add/Import new" ng-click="ImportDialogOpen('chemicalFunctionType', chemicalDictionaries.chemicalFunctionTypeVocabulary, $event, chemicalContext.functions)">
+            <i class="material-icons md-24" title="Add/Import new">library_add</i>
+        </md-button>
+    </div>
+</div>

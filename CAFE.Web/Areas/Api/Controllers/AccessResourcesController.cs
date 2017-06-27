@@ -16,6 +16,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using Messages = CAFE.Core.Misc.Messages;
 using CAFE.Web.Areas.Api.Models;
+using CAFE.DAL.Interfaces;
 
 namespace CAFE.Web.Areas.Api.Controllers
 {
@@ -29,7 +30,7 @@ namespace CAFE.Web.Areas.Api.Controllers
         private readonly IAccessRequestService _accessRequestService;
         private readonly IConversationService _conversationService;
         private UserManager<User> _userManager;
-
+        private readonly IRepository<DAL.Models.DbAnnotationItem> _annotationRepository;
 
         /// <summary>
         /// Constructor with dependencies
@@ -42,9 +43,11 @@ namespace CAFE.Web.Areas.Api.Controllers
             ISecurityService securityService,
             ILogger logger,
             IAccessRequestService accessRequestService,
+            IRepository<DAL.Models.DbAnnotationItem> annotationRepository,
             IConversationService conversationService, UserManager<User> userManager)
                 : base(logger, securityService)
         {
+            _annotationRepository = annotationRepository;
             _userManager = userManager;
             _securityService = securityService;
             _accessRequestService = accessRequestService;
@@ -146,7 +149,7 @@ namespace CAFE.Web.Areas.Api.Controllers
                 var requestsFromMe = FillResourcesNames(GetRequestsFromMe());
                 var requestsToMe = FillResourcesNames(GetRequestsToMe());
 
-                foreach(var request in requestsFromMe)
+                foreach (var request in requestsFromMe)
                 {
                     var mappedRequest = Mapper.Map<AccessRequestsViewModel>(request);
                     mappedRequest.Type = AccessRequestsViewModel.AccessRequestsType.Outgoing;
@@ -218,24 +221,24 @@ namespace CAFE.Web.Areas.Api.Controllers
         [HttpPost]
         public IHttpActionResult AcceptRequest([FromBody] long model)
         {
-            return ExecuteExplicit(async () =>
-            {
-                var acceptingResult = _conversationService.AcceptConversation(model);
-                var conversation = acceptingResult.Key;
-                var resourcesNames = acceptingResult.Value;
+            return ExecuteExplicit(() =>
+           {
+               var acceptingResult = _conversationService.AcceptConversation(model);
+               var conversation = acceptingResult.Key;
+               var resourcesNames = acceptingResult.Value;
 
-                await _userManager.SendEmailAsync(
-                    conversation.Receiver.Id,
-                    Messages.AcessRequestAccepted_Subject,
-                    System.String.Format(
-                        Messages.AcessRequestAccepted, 
-                        conversation.Receiver.Name, 
-                        conversation.Receiver.Surname, 
-                        resourcesNames,
-                        Url.Link("Default", new { Controller = "Account", Action = "Login" })
-                    ));
+               _userManager.SendEmail(
+                   conversation.Receiver.Id,
+                   Messages.AcessRequestAccepted_Subject,
+                   System.String.Format(
+                       Messages.AcessRequestAccepted,
+                       conversation.Receiver.Name,
+                       conversation.Receiver.Surname,
+                       resourcesNames,
+                       Url.Link("Default", new { Controller = "Account", Action = "Login" })
+                   ));
 
-            }, onSuccess: Ok, onFail: Fail);
+           }, onSuccess: Ok, onFail: Fail);
         }
 
         /// <summary>
@@ -246,19 +249,19 @@ namespace CAFE.Web.Areas.Api.Controllers
         [HttpPost]
         public IHttpActionResult DeclineRequest([FromBody] DeclineAccessRequestModel model)
         {
-            return ExecuteExplicit(async () =>
+            return ExecuteExplicit(() =>
             {
                 var acceptingResult = _conversationService.DeclineConversation(model.ConversationId, model.Reason);
                 var conversation = acceptingResult.Key;
                 var resourcesNames = acceptingResult.Value;
 
-                await _userManager.SendEmailAsync(
+                _userManager.SendEmail(
                    conversation.Receiver.Id,
                    Messages.AcessRequestRejected_Subject,
                    System.String.Format(
-                       Messages.AcessRequestRejected, 
-                       conversation.Receiver.Name, 
-                       conversation.Receiver.Surname, 
+                       Messages.AcessRequestRejected,
+                       conversation.Receiver.Name,
+                       conversation.Receiver.Surname,
                        resourcesNames,
                        Url.Link("Default", new { Controller = "Account", Action = "Login" })
                    ));
@@ -344,9 +347,14 @@ namespace CAFE.Web.Areas.Api.Controllers
             {
                 var accessRequest = _accessRequestService.GetAccessRequest(conversationModel.RequestId);
                 var resources =
-                    accessRequest.RequestedResources.Where(r => r.Content.OwnerId == conversationModel.ReceiverId);
+                    accessRequest.
+                    RequestedResources.
+                    Where(r => r.Content.OwnerId == conversationModel.ReceiverId && r.Kind == AccessibleResourceKind.AnnotationItem).
+                    Select(r => new { key = r.ResourceId.ToString(), value = _annotationRepository.Find(ai => ai.Id == r.ResourceId).Object.References.Descriptions?[0]?.Title }).
+                    Distinct().
+                    ToDictionary(d => d.key, d => d.value);
 
-                //conversationModel.ResourcesNames = resources.Select(s => s.Content.Name).ToList();
+                conversationModel.Resources = resources;
             }
             return conversationsList;
         }

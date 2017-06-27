@@ -65,6 +65,14 @@
     <Compile Include="Migrations\201703091901345_init.Designer.cs">
       <DependentUpon>201703091901345_init.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201705310910030_AfterPluralizingOff.cs" />
+    <Compile Include="Migrations\201705310910030_AfterPluralizingOff.Designer.cs">
+      <DependentUpon>201705310910030_AfterPluralizingOff.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201705310916327_AfterPluralizingOff2.cs" />
+    <Compile Include="Migrations\201705310916327_AfterPluralizingOff2.Designer.cs">
+      <DependentUpon>201705310916327_AfterPluralizingOff2.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\CafeMigrator.cs" />
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\DbAnnotationItemAccessibleGroups.cs" />
@@ -105,6 +113,12 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201703091901345_init.resx">
       <DependentUpon>201703091901345_init.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705310910030_AfterPluralizingOff.resx">
+      <DependentUpon>201705310910030_AfterPluralizingOff.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705310916327_AfterPluralizingOff2.resx">
+      <DependentUpon>201705310916327_AfterPluralizingOff2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

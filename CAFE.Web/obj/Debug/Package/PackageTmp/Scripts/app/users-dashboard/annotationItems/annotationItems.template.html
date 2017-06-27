@@ -1,0 +1,79 @@
+﻿<div ng-show="!annotationItems.length" class="no-data-block">
+    <md-button class="md-button md-raised" md-no-ink ng-href="/AnnotationItem">Add new Annotation Item</md-button>
+    <md-button class="md-button md-raised" md-no-ink ng-click="ImportDialog()">Import from XML</md-button>
+    <div ng-show="loading">
+            <div>
+                <div class="spinner">
+                    <div class="bounce1"></div>
+                    <div class="bounce2"></div>
+                    <div class="bounce3"></div>
+                </div>
+                <h3 style="margin-top: 20px;">LOADING</h3>
+            </div>
+    </div>
+    <div ng-show="!loading">no items found ...</div>
+</div>
+<div ng-show="annotationItems.length > 0" style="position: relative;">
+    <div ng-show="additionalLoading" style="position: absolute; width: 100%; height: 100%; z-index: 10; background-color: rgba(125, 146, 171, 0.43);">
+        <div layout="row" layout-sm="column" layout-align="space-around" style="height: 100%;">
+            <md-progress-circular md-mode="indeterminate" style="margin-top: auto; margin-bottom: auto;"></md-progress-circular>
+        </div>
+    </div>
+
+    <md-toolbar class="md-table-toolbar md-default" ng-hide="selectedAnnotationItems.length || filter.show">
+        <div class="md-toolbar-tools">
+            <div flex></div>
+            <md-button class="md-primary" md-no-ink ng-href="/AnnotationItem" target="_blank">Add new Annotation Item</md-button>
+            <md-button class="md-primary" md-no-ink ng-click="ImportDialog($event)">
+                Import
+            </md-button>
+        </div>
+    </md-toolbar>
+
+    <md-toolbar class="md-table-toolbar alternate" ng-show="selectedAnnotationItems.length">
+        <div class="md-toolbar-tools" layout-align="space-between">
+            <div>{{selectedAnnotationItems.length}} {{selectedAnnotationItems.length > 1 ? 'items' : 'item'}} selected</div>
+            <div flex></div>
+            <md-button class="md-button" ng-click="CloneAnnotationItem($event,selectedAnnotationItems)">
+                Clone
+            </md-button>
+            <md-button class="md-button" ng-click="AccessLevelDialog($event,selectedAnnotationItems)">
+                Set Access mode
+            </md-button>
+            <md-button class="md-button" ng-click="DeleteAnnotationItems($event)">
+                Delete selected
+            </md-button>
+            <md-button class="md-button" ng-click="ExportAnnotationItems()">
+                Export selected
+            </md-button>
+        </div>
+    </md-toolbar>
+
+
+    <md-table-container>
+        <div class="alert alert-success alert-dismissible" role="alert" ng-show="notification">
+            <button type="button" class="close" ng-click="notification = null;"><span aria-hidden="true">&times;</span></button>
+            <span class="glyphicon glyphicon-info-sign"></span> {{notification}}
+        </div>
+        <table md-table md-progress="promise" md-row-select multiple ng-model="selectedAnnotationItems" >
+            <thead md-head md-order="query.order" md-on-reorder="getAnnotationITems">
+                <tr md-row>
+                    <th md-column md-order-by="name"><span>Name</span></th>
+                    <th md-column md-order-by="description">Description</th>
+                    <th md-column md-order-by="creationDate">Creation Date</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody md-body>
+                <tr md-row ng-repeat="annotationItem in annotationItems | orderBy: query.order | limitTo: query.limit: (query.page - 1) * query.limit" md-auto-select="false" md-select="annotationItem">
+                    <td md-cell><a href="/AnnotationItem?id={{annotationItem.id}}" target="_blank">{{annotationItem.name}}</a></td>
+                    <td md-cell><p class="max-height-ln4">{{annotationItem.description}}</td>
+                    <td md-cell>{{GetNormalizedDate(annotationItem.creationDate)}} </td>
+                </tr>
+            </tbody>
+        </table>
+
+    </md-table-container>
+
+    <md-table-pagination md-limit="query.limit" md-page="query.page" md-limit-options="[10, 20, 50]" md-page-select md-total="{{annotationItems.length}}"></md-table-pagination>
+</div>

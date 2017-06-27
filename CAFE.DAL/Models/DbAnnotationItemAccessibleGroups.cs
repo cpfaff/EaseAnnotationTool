@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CAFE.DAL.Models
 {
+    [Table("DbAnnotationItemAccessibleGroups")]
     public class DbAnnotationItemAccessibleGroups: DbBase
     {
         /// <summary>

@@ -1,0 +1,41 @@
+﻿<md-dialog add-item-dialog style="min-width: 840px;max-height: 100%;">
+    <md-dialog-content class="md-dialog-content" style="height: 100%;">
+        <h2 class="md-title">Change owner</h2>
+
+        <p ng-if="changeForm.$submitted && changeForm.$invalid" class="md-warn" layout="row" layout-align="start center">
+            <i class="material-icons">error_outline</i>
+            <span>&nbsp; All fields are required.</span>
+        </p>
+
+        <div layout="row" ng-show="model.length == 1">
+            <md-input-container flex>
+                <label>Current user</label>
+            </md-input-container>
+            <div style="display: block; width: 100%;">{{model[0].ownerName}}</div>
+        </div>
+        <div layout="row" class="input-row" >
+            <md-input-container layout-margin flex>
+                <label>New owner</label>               
+                <md-autocomplete md-no-cache="true"
+                                 md-selected-item="selectedUser"
+                                 md-search-text="searchUserKey"
+                                 md-items="item in userLiveSearch(searchUserKey)"
+                                 md-item-text="selectedUser.userName"
+                                 md-min-length="3"
+                                 md-delay="1000"
+                                 placeholder="Enter user's name">
+                    <md-item-template>
+                        <span md-highlight-text="searchUserKey" md-highlight-flags="^i">{{item.surname}} {{item.name}} ({{item.userName}} {{item.email}})</span>
+                    </md-item-template>
+                    <md-not-found>
+                        No users matching "{{searchUserKey}}" were found.
+                    </md-not-found>
+                </md-autocomplete>
+            </md-input-container>
+        </div>
+    </md-dialog-content>
+    <div class="md-actions">
+        <md-button class="md-primary" ng-click="ctrl.save()" ng-disabled="changeForm.$invalid">Save</md-button>
+        <md-button class="md-primary" ng-click="ctrl.cancel()">Cancel</md-button>
+    </div>
+</md-dialog>

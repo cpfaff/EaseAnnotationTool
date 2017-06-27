@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CAFE.DAL.Models
 {
+    [Table("DbRoles")]
     public class DbRole : DbBase
     {
         public DbRole()

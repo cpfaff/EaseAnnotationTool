@@ -199,6 +199,9 @@ namespace CAFE.Services.Messaging
                 if (resource.Kind == DbAccessibleResourceKind.File)
                 {
                     var file = _filesRepository.Find(f => f.Id == resource.ResourceId);
+                    if (!request.Requester.AccessibleFiles.Any(f => f.Id == file.Id))
+                        request.Requester.AccessibleFiles.Add(file);
+
                     request.Requester.AccessibleFiles.Add(file);
                     _userRepository.Update(request.Requester);
                     resourcesNames.Add(file.Name);
@@ -213,6 +216,20 @@ namespace CAFE.Services.Messaging
                         Id = Guid.NewGuid()
                     });
                     resourcesNames.Add(annotaionItem.Object.References.Descriptions?[0]?.Title);
+                    var resources = annotaionItem.Object.Resources?[0]?.OfflineResources.ToList();
+                    resources.ForEach(r =>
+                    {
+                        var fileId = r.FilePath.Split('/').Last();
+                        var file = _filesRepository.Find(f => f.Id.ToString() == fileId);
+                        if (!request.Requester.AccessibleFiles.Any(f => f.Id.ToString() == fileId))
+                        {
+                            file.AccessMode = DbUserFile.DbFileAccessMode.Explicit;
+                            _filesRepository.Update(file);
+
+                            request.Requester.AccessibleFiles.Add(file);
+                            _userRepository.Update(request.Requester);
+                        }
+                    });
                 }
             }
 

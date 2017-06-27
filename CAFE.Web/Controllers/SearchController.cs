@@ -53,7 +53,10 @@ namespace CAFE.Web.Controllers
                 model.Abstract = firstDescription.Abstract;
                 model.OwnerName = foundAi.OwnerName;
                 model.OwnerId = foundAi.OwnerId;
-                model.HasAccess = _searchService.CheckThatAnnotationItemsIsAccessible(id, Guid.Parse(userId));
+
+                if (null != userId)
+                    model.HasAccess = _searchService.CheckThatAnnotationItemsIsAccessible(id, Guid.Parse(userId));
+
                 model.Id = id;
                 model.ResourceType = SearchResultItemType.AnnotationItem;
                 model.Hosters = foundAi.Object.References.Hosters.Select(s => s.HosterName.Value).ToList();

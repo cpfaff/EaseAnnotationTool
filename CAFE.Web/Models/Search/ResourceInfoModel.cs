@@ -13,7 +13,7 @@ namespace CAFE.Web.Models.Search
         public string Abstract { get; set; }
         public string OwnerName { get; set; }
         public string OwnerId { get; set; }
-        public bool HasAccess { get; set; }
+        public bool? HasAccess { get; set; }
         public string Link { get; set; }
 
         public List<string> Hosters { get; set; } = new List<string>();

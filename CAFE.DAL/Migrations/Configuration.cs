@@ -29,7 +29,7 @@ namespace CAFE.DAL.Migrations
             try
             {
                 var permanentUserName = WebConfigurationManager.AppSettings["PermanentUserName"];
-                var users = new List<DbUser>
+            var users = new List<DbUser>
             {
                  new DbUser() {
                     Id = Guid.Parse("2218929f-988c-e611-9c39-f0761cf9a82c"),
@@ -280,7 +280,8 @@ namespace CAFE.DAL.Migrations
                 ////////Seed for vocabularies
 
                 var directory = AppDomain.CurrentDomain.BaseDirectory;
-                //For Denis => string schemaPath = new DirectoryInfo(AppDomain.CurrentDomain.BaseDirectory).Parent.Parent.Parent.FullName + "\\Tools\\ModelGenerator\\Compiled\\ease.xsd";
+                //For Denis => 
+                //string schemaPath = new DirectoryInfo(AppDomain.CurrentDomain.BaseDirectory).Parent.Parent.Parent.FullName + "\\Tools\\ModelGenerator\\Compiled\\ease.xsd";
                 var baseBath = new DirectoryInfo(AppDomain.CurrentDomain.BaseDirectory).FullName;
                 string schemaPath = baseBath + "\\ease.xsd";
                 XmlTextReader reader = new XmlTextReader(schemaPath);

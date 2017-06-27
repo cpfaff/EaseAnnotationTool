@@ -2,6 +2,7 @@
 using CAFE.DAL.Models;
 using CAFE.DAL.Models.Resources;
 using System;
+using System.Data.Entity.ModelConfiguration.Conventions;
 
 namespace CAFE.DAL.DbContexts
 {
@@ -97,6 +98,7 @@ namespace CAFE.DAL.DbContexts
 	    {
             modelBuilder.Properties<DateTime>().Configure(c => c.HasColumnType("datetime2"));
 
+            modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
             base.OnModelCreating(modelBuilder);
 	    }
 	}

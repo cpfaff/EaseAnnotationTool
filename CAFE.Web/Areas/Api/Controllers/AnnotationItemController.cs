@@ -851,6 +851,7 @@ namespace CAFE.Web.Areas.Api.Controllers
             return new
             {
                 Hosters = GetVocabularies_<HosterNameVocabulary>(),
+                Positions = GetVocabularies_<PositionVocabulary>(),
                 Persons = GetAnnotationItemClassProperties<Person>()
             };
         }
@@ -950,7 +951,8 @@ namespace CAFE.Web.Areas.Api.Controllers
             {
                 Coordinate = GetAnnotationItemClassProperties<UtmCoordinate>(),
                 Location = GetAnnotationItemClassProperties<Location>(),
-                SpatialResolutions = GetAnnotationItemClassProperties<SpatialResolution>()
+                SpatialResolutions = GetAnnotationItemClassProperties<SpatialResolution>(),
+                Uoms = GetVocabularies<ElevationUnitVocabulary>(),
             };
 
         }

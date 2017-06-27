@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CAFE.DAL.Models
 {
+    [Table("DbUserFiles")]
     public class DbUserFile : DbBase
     {
         public DbUserFile()

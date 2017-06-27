@@ -3,9 +3,121 @@ File name: 'A:\AFolder\Afolder3\CAFE\CAFE\Tools\ModelGenerator\Compiled\ease111.
    at CAFE.DAL.Migrations.CafeMigrator.Migrate() in A:\AFolder\Afolder3\CAFE\CAFE\CAFE.DAL\Migrations\CafeMigrator.cs:line 27
    at CAFE.Web.MvcApplication.Application_Start() in A:\AFolder\Afolder3\CAFE\CAFE\CAFE.Web\Global.asax.cs:line 52
 
-[11-Apr-17 23:10:27 ]: System.Data.SqlClient.SqlException (0x80131904): A network-related or instance-specific error occurred while establishing a connection to SQL Server. The server was not found or was not accessible. Verify that the instance name is correct and that SQL Server is configured to allow remote connections. (provider: Named Pipes Provider, error: 40 - Could not open a connection to SQL Server) ---> System.ComponentModel.Win32Exception (0x80004005): The system cannot find the file specified
-   at CAFE.DAL.Migrations.CafeMigrator.Migrate() in D:\CollabFlex\Development\Sources\CAFE\CAFE\CAFE.DAL\Migrations\CafeMigrator.cs:line 27
-   at CAFE.Web.MvcApplication.Application_Start() in D:\CollabFlex\Development\Sources\CAFE\CAFE\CAFE.Web\Global.asax.cs:line 52
-ClientConnectionId:00000000-0000-0000-0000-000000000000
-Error Number:2,State:0,Class:20
+[4/25/2017 6:36:48 PM ]: Microsoft.Practices.Unity.ResolutionFailedException: Resolution of the dependency failed, type = "CAFE.Core.Plugins.IPluginsProvider", name = "(none)".
+Exception occurred while: Calling constructor CAFE.Services.Plugins.MefPluginsProvider().
+Exception is: Exception - Plugin 'CAFE.Plugins.GeoNamesPlugin' doesn't exists. Expected location: A:\AFolder\Afolder3\CAFE\CAFE\CAFE.Web\App_Code\PluginsCAFE.Plugins.GeoNamesPlugin.dll
+-----------------------------------------------
+At the time of the exception, the container was:
+
+  Resolving CAFE.Services.Plugins.MefPluginsProvider,(none) (mapped from CAFE.Core.Plugins.IPluginsProvider, (none))
+  Calling constructor CAFE.Services.Plugins.MefPluginsProvider()
+ ---> System.Exception: Plugin 'CAFE.Plugins.GeoNamesPlugin' doesn't exists. Expected location: A:\AFolder\Afolder3\CAFE\CAFE\CAFE.Web\App_Code\PluginsCAFE.Plugins.GeoNamesPlugin.dll
+   at CAFE.Services.Plugins.MefPluginsProvider.<>c__DisplayClass1_0.<.ctor>b__0(String p) in A:\AFolder\Afolder3\CAFE\CAFE\CAFE.Services\Plugins\MefPluginsProvider.cs:line 43
+   at System.Collections.Generic.List`1.ForEach(Action`1 action)
+   at CAFE.Services.Plugins.MefPluginsProvider..ctor() in A:\AFolder\Afolder3\CAFE\CAFE\CAFE.Services\Plugins\MefPluginsProvider.cs:line 38
+   at lambda_method(Closure , IBuilderContext )
+   at Microsoft.Practices.ObjectBuilder2.DynamicBuildPlanGenerationContext.<>c__DisplayClass1.<GetBuildMethod>b__0(IBuilderContext context)
+   at Microsoft.Practices.ObjectBuilder2.DynamicMethodBuildPlan.BuildUp(IBuilderContext context)
+   at Microsoft.Practices.ObjectBuilder2.BuildPlanStrategy.PreBuildUp(IBuilderContext context)
+   at Microsoft.Practices.ObjectBuilder2.StrategyChain.ExecuteBuildUp(IBuilderContext context)
+   at Microsoft.Practices.Unity.UnityContainer.DoBuildUp(Type t, Object existing, String name, IEnumerable`1 resolverOverrides)
+   --- End of inner exception stack trace ---
+   at Microsoft.Practices.Unity.UnityContainer.DoBuildUp(Type t, Object existing, String name, IEnumerable`1 resolverOverrides)
+   at Microsoft.Practices.Unity.UnityContainer.Resolve(Type t, String name, ResolverOverride[] resolverOverrides)
+   at Microsoft.Practices.Unity.UnityContainerExtensions.Resolve[T](IUnityContainer container, ResolverOverride[] overrides)
+   at CAFE.Web.MapperConfig.<>c__DisplayClass0_0.<Config>b__0(IMapperConfigurationExpression c) in A:\AFolder\Afolder3\CAFE\CAFE\CAFE.Web\App_Start\MapperConfig.cs:line 481
+   at AutoMapper.MapperConfiguration.Build(Action`1 configure)
+   at AutoMapper.Mapper.Initialize(Action`1 config)
+   at CAFE.Web.MapperConfig.Config(IUnityContainer container) in A:\AFolder\Afolder3\CAFE\CAFE\CAFE.Web\App_Start\MapperConfig.cs:line 27
+   at CAFE.Web.MvcApplication.Application_Start() in A:\AFolder\Afolder3\CAFE\CAFE\CAFE.Web\Global.asax.cs:line 34
+
+[4/25/2017 6:39:53 PM ]: Microsoft.Practices.Unity.ResolutionFailedException: Resolution of the dependency failed, type = "CAFE.Core.Plugins.IPluginsProvider", name = "(none)".
+Exception occurred while: Calling constructor CAFE.Services.Plugins.MefPluginsProvider().
+Exception is: Exception - Plugin 'CAFE.Plugins.TestVocabularyPlugin' doesn't exists. Expected location: A:\AFolder\Afolder3\CAFE\CAFE\CAFE.Web\App_Code\Plugins\CAFE.Plugins.TestVocabularyPlugin.dll
+-----------------------------------------------
+At the time of the exception, the container was:
+
+  Resolving CAFE.Services.Plugins.MefPluginsProvider,(none) (mapped from CAFE.Core.Plugins.IPluginsProvider, (none))
+  Calling constructor CAFE.Services.Plugins.MefPluginsProvider()
+ ---> System.Exception: Plugin 'CAFE.Plugins.TestVocabularyPlugin' doesn't exists. Expected location: A:\AFolder\Afolder3\CAFE\CAFE\CAFE.Web\App_Code\Plugins\CAFE.Plugins.TestVocabularyPlugin.dll
+   at CAFE.Services.Plugins.MefPluginsProvider.<>c__DisplayClass1_0.<.ctor>b__0(String p) in A:\AFolder\Afolder3\CAFE\CAFE\CAFE.Services\Plugins\MefPluginsProvider.cs:line 43
+   at System.Collections.Generic.List`1.ForEach(Action`1 action)
+   at CAFE.Services.Plugins.MefPluginsProvider..ctor() in A:\AFolder\Afolder3\CAFE\CAFE\CAFE.Services\Plugins\MefPluginsProvider.cs:line 38
+   at lambda_method(Closure , IBuilderContext )
+   at Microsoft.Practices.ObjectBuilder2.DynamicBuildPlanGenerationContext.<>c__DisplayClass1.<GetBuildMethod>b__0(IBuilderContext context)
+   at Microsoft.Practices.ObjectBuilder2.DynamicMethodBuildPlan.BuildUp(IBuilderContext context)
+   at Microsoft.Practices.ObjectBuilder2.BuildPlanStrategy.PreBuildUp(IBuilderContext context)
+   at Microsoft.Practices.ObjectBuilder2.StrategyChain.ExecuteBuildUp(IBuilderContext context)
+   at Microsoft.Practices.Unity.UnityContainer.DoBuildUp(Type t, Object existing, String name, IEnumerable`1 resolverOverrides)
+   --- End of inner exception stack trace ---
+   at Microsoft.Practices.Unity.UnityContainer.DoBuildUp(Type t, Object existing, String name, IEnumerable`1 resolverOverrides)
+   at Microsoft.Practices.Unity.UnityContainer.Resolve(Type t, String name, ResolverOverride[] resolverOverrides)
+   at Microsoft.Practices.Unity.UnityContainerExtensions.Resolve[T](IUnityContainer container, ResolverOverride[] overrides)
+   at CAFE.Web.MapperConfig.<>c__DisplayClass0_0.<Config>b__0(IMapperConfigurationExpression c) in A:\AFolder\Afolder3\CAFE\CAFE\CAFE.Web\App_Start\MapperConfig.cs:line 481
+   at AutoMapper.MapperConfiguration.Build(Action`1 configure)
+   at AutoMapper.Mapper.Initialize(Action`1 config)
+   at CAFE.Web.MapperConfig.Config(IUnityContainer container) in A:\AFolder\Afolder3\CAFE\CAFE\CAFE.Web\App_Start\MapperConfig.cs:line 27
+   at CAFE.Web.MvcApplication.Application_Start() in A:\AFolder\Afolder3\CAFE\CAFE\CAFE.Web\Global.asax.cs:line 34
+
+[4/27/2017 3:18:12 PM ]: Microsoft.Practices.Unity.ResolutionFailedException: Resolution of the dependency failed, type = "CAFE.Core.Plugins.IPluginsProvider", name = "(none)".
+Exception occurred while: Calling constructor CAFE.Services.Plugins.MefPluginsProvider().
+Exception is: Exception - Plugin 'CAFE.Plugins.TestVocabularyPlugin' doesn't exists. Expected location: A:\AFolder\Afolder3\CAFE\CAFE\CAFE.Web\App_Code\Plugins\CAFE.Plugins.TestVocabularyPlugin.dll
+-----------------------------------------------
+At the time of the exception, the container was:
+
+  Resolving CAFE.Services.Plugins.MefPluginsProvider,(none) (mapped from CAFE.Core.Plugins.IPluginsProvider, (none))
+  Calling constructor CAFE.Services.Plugins.MefPluginsProvider()
+ ---> System.Exception: Plugin 'CAFE.Plugins.TestVocabularyPlugin' doesn't exists. Expected location: A:\AFolder\Afolder3\CAFE\CAFE\CAFE.Web\App_Code\Plugins\CAFE.Plugins.TestVocabularyPlugin.dll
+   at CAFE.Services.Plugins.MefPluginsProvider.<>c__DisplayClass1_0.<.ctor>b__0(String p) in A:\AFolder\Afolder3\CAFE\CAFE\CAFE.Services\Plugins\MefPluginsProvider.cs:line 43
+   at System.Collections.Generic.List`1.ForEach(Action`1 action)
+   at CAFE.Services.Plugins.MefPluginsProvider..ctor() in A:\AFolder\Afolder3\CAFE\CAFE\CAFE.Services\Plugins\MefPluginsProvider.cs:line 38
+   at lambda_method(Closure , IBuilderContext )
+   at Microsoft.Practices.ObjectBuilder2.DynamicBuildPlanGenerationContext.<>c__DisplayClass1.<GetBuildMethod>b__0(IBuilderContext context)
+   at Microsoft.Practices.ObjectBuilder2.DynamicMethodBuildPlan.BuildUp(IBuilderContext context)
+   at Microsoft.Practices.ObjectBuilder2.BuildPlanStrategy.PreBuildUp(IBuilderContext context)
+   at Microsoft.Practices.ObjectBuilder2.StrategyChain.ExecuteBuildUp(IBuilderContext context)
+   at Microsoft.Practices.Unity.UnityContainer.DoBuildUp(Type t, Object existing, String name, IEnumerable`1 resolverOverrides)
+   --- End of inner exception stack trace ---
+   at Microsoft.Practices.Unity.UnityContainer.DoBuildUp(Type t, Object existing, String name, IEnumerable`1 resolverOverrides)
+   at Microsoft.Practices.Unity.UnityContainer.Resolve(Type t, String name, ResolverOverride[] resolverOverrides)
+   at Microsoft.Practices.Unity.UnityContainerExtensions.Resolve[T](IUnityContainer container, ResolverOverride[] overrides)
+   at CAFE.Web.MapperConfig.<>c__DisplayClass0_0.<Config>b__0(IMapperConfigurationExpression c) in A:\AFolder\Afolder3\CAFE\CAFE\CAFE.Web\App_Start\MapperConfig.cs:line 481
+   at AutoMapper.MapperConfiguration.Build(Action`1 configure)
+   at AutoMapper.Mapper.Initialize(Action`1 config)
+   at CAFE.Web.MapperConfig.Config(IUnityContainer container) in A:\AFolder\Afolder3\CAFE\CAFE\CAFE.Web\App_Start\MapperConfig.cs:line 27
+   at CAFE.Web.MvcApplication.Application_Start() in A:\AFolder\Afolder3\CAFE\CAFE\CAFE.Web\Global.asax.cs:line 34
+
+[4/27/2017 3:19:13 PM ]: Microsoft.Practices.Unity.ResolutionFailedException: Resolution of the dependency failed, type = "CAFE.Core.Plugins.IPluginsProvider", name = "(none)".
+Exception occurred while: Calling constructor CAFE.Services.Plugins.MefPluginsProvider().
+Exception is: Exception - Plugin 'CAFE.Plugins.TestVocabularyPlugin' doesn't exists. Expected location: A:\AFolder\Afolder3\CAFE\CAFE\CAFE.Web\App_Code\Plugins\CAFE.Plugins.TestVocabularyPlugin.dll
+-----------------------------------------------
+At the time of the exception, the container was:
+
+  Resolving CAFE.Services.Plugins.MefPluginsProvider,(none) (mapped from CAFE.Core.Plugins.IPluginsProvider, (none))
+  Calling constructor CAFE.Services.Plugins.MefPluginsProvider()
+ ---> System.Exception: Plugin 'CAFE.Plugins.TestVocabularyPlugin' doesn't exists. Expected location: A:\AFolder\Afolder3\CAFE\CAFE\CAFE.Web\App_Code\Plugins\CAFE.Plugins.TestVocabularyPlugin.dll
+   at CAFE.Services.Plugins.MefPluginsProvider.<>c__DisplayClass1_0.<.ctor>b__0(String p) in A:\AFolder\Afolder3\CAFE\CAFE\CAFE.Services\Plugins\MefPluginsProvider.cs:line 43
+   at System.Collections.Generic.List`1.ForEach(Action`1 action)
+   at CAFE.Services.Plugins.MefPluginsProvider..ctor() in A:\AFolder\Afolder3\CAFE\CAFE\CAFE.Services\Plugins\MefPluginsProvider.cs:line 38
+   at lambda_method(Closure , IBuilderContext )
+   at Microsoft.Practices.ObjectBuilder2.DynamicBuildPlanGenerationContext.<>c__DisplayClass1.<GetBuildMethod>b__0(IBuilderContext context)
+   at Microsoft.Practices.ObjectBuilder2.DynamicMethodBuildPlan.BuildUp(IBuilderContext context)
+   at Microsoft.Practices.ObjectBuilder2.BuildPlanStrategy.PreBuildUp(IBuilderContext context)
+   at Microsoft.Practices.ObjectBuilder2.StrategyChain.ExecuteBuildUp(IBuilderContext context)
+   at Microsoft.Practices.Unity.UnityContainer.DoBuildUp(Type t, Object existing, String name, IEnumerable`1 resolverOverrides)
+   --- End of inner exception stack trace ---
+   at Microsoft.Practices.Unity.UnityContainer.DoBuildUp(Type t, Object existing, String name, IEnumerable`1 resolverOverrides)
+   at Microsoft.Practices.Unity.UnityContainer.Resolve(Type t, String name, ResolverOverride[] resolverOverrides)
+   at Microsoft.Practices.Unity.UnityContainerExtensions.Resolve[T](IUnityContainer container, ResolverOverride[] overrides)
+   at CAFE.Web.MapperConfig.<>c__DisplayClass0_0.<Config>b__0(IMapperConfigurationExpression c) in A:\AFolder\Afolder3\CAFE\CAFE\CAFE.Web\App_Start\MapperConfig.cs:line 481
+   at AutoMapper.MapperConfiguration.Build(Action`1 configure)
+   at AutoMapper.Mapper.Initialize(Action`1 config)
+   at CAFE.Web.MapperConfig.Config(IUnityContainer container) in A:\AFolder\Afolder3\CAFE\CAFE\CAFE.Web\App_Start\MapperConfig.cs:line 27
+   at CAFE.Web.MvcApplication.Application_Start() in A:\AFolder\Afolder3\CAFE\CAFE\CAFE.Web\Global.asax.cs:line 34
+
+[5/12/2017 10:15:50 AM ]: System.ArgumentException: The URL 'https://ajax.googleapis.com/ajax/libs/angular_material/1.0.7/angular-material.min.js' is not valid. Only application relative URLs (~/url) are allowed.
+Parameter name: virtualPath
+   at System.Web.Optimization.Bundle.Include(String[] virtualPaths)
+   at CAFE.Web.BundleConfig.RegisterBundles(BundleCollection bundles) in A:\AFolder\Afolder3\CAFE\CAFE\CAFE.Web\App_Start\BundleConfig.cs:line 43
+   at CAFE.Web.MvcApplication.Application_Start() in A:\AFolder\Afolder3\CAFE\CAFE\CAFE.Web\Global.asax.cs:line 49
 

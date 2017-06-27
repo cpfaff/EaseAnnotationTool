@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CAFE.DAL.Models
 {
+    [Table("DbUserAnnotationItems")]
     /// <summary>
     /// Data model class for relate DbUser and AnnotationItem
     /// </summary>

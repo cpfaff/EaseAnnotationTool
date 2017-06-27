@@ -100,7 +100,13 @@ namespace CAFE.Web.Areas.Api.Controllers
         {
             var searchRequestFilter = Mapper.Map(filter, new SearchRequestFilterItem());
 
-            var result = await _searchService.GetSelectValuesAsync(searchRequestFilter, System.Web.HttpContext.Current.User.Identity.GetUserId());
+            if (searchRequestFilter.Description == "InteractionPartnerOne")
+                searchRequestFilter.Description = searchRequestFilter.Description.Replace("InteractionPartnerOne", "InteractionPartner");
+            else if (searchRequestFilter.Description == "InteractionPartnerTwo")
+                searchRequestFilter.Description = searchRequestFilter.Description.Replace("InteractionPartnerTwo", "InteractionPartner");
+
+            var result = 
+                await _searchService.GetSelectValuesAsync(searchRequestFilter, System.Web.HttpContext.Current?.User?.Identity?.GetUserId());
 
             return Mapper.Map<IEnumerable<string>, IEnumerable<SearchFilterSelectionNamedModel>>(result);
         }

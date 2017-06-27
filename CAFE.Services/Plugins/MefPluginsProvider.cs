@@ -25,7 +25,25 @@ namespace CAFE.Services.Plugins
             //Prepare MEF containet
             var pth = Directory.GetParent(AppDomain.CurrentDomain.BaseDirectory);
             var fullPath = Path.Combine(pth.FullName, "App_Code\\Plugins");
+            if (!Directory.Exists(fullPath))
+                throw new Exception("Path " + fullPath + " doesn't exists.");
+
+            var requiredPlugins = new List<string> {
+                "CAFE.Plugins.GeoNamesPlugin",
+                "CAFE.Plugins.GlobalNameResolveService",
+                "CAFE.Plugins.OrganismClassNamesPlugin"
+            };
+
+            requiredPlugins.ForEach(p =>
+            {
+                var fileFullPath = fullPath +"\\"+ p + ".dll";
+
+                if (!File.Exists(fileFullPath))
+                    throw new Exception($"Plugin '{p}' doesn't exists. Expected location: " + fileFullPath);
+            });
+
             _compositionContainer = new CompositionContainer(new DirectoryCatalog(fullPath));
+
             try
             {
                 _compositionContainer.ComposeParts(this);

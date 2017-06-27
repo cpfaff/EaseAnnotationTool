@@ -203,7 +203,9 @@
                 $mdDialog.cancel();
             });
         };
-    }).
+    });
+
+    angular.module('usersDashboard.filesList').
     controller('AISearchingController', function (FilesProvider, $scope, $timeout, $mdDialog, selectedFiles) {
         'use strict';
         $scope.model = { minLength: 1 };
@@ -236,11 +238,12 @@
             form.append("<input type='hidden' name='cloningId' value='" + $scope.model.SelectedAI.id + "'>")
             form.submit();
         };
-    }).
+    });
+
+    angular.module('usersDashboard.filesList').
     controller('newFileController', function (FilesProvider, $scope, $mdDialog, updateFilesFunction, fileInfo) {
 
         'use strict';
-
         this.cancel = $mdDialog.cancel;
 
         $scope.errorMessage = null;
