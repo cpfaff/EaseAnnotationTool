@@ -10,8 +10,10 @@ namespace CAFE.Web.Areas.Api.Models.Search
             RelatedFilterModels = new List<SearchRequestFilterModel>();
         }
         public string Name { get; set; }
+        public string Tooltip { get; set; }
         public string Description { get; set; }
         public string FilterType { get; set; }
+        public string ValueType { get; set; }
         public string Value { get; set; }
 
         public List<SearchRequestFilterModel> RelatedFilterModels { get; set; }

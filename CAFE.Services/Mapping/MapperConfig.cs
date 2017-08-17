@@ -43,6 +43,7 @@ namespace CAFE.Services.Mapping
             //.ForMember(m => m.OwnedFiles, opts => opts.Ignore()).
             //.ForMember(m => m.AccessibleFiles, opts => opts.Ignore());
 
+            c.CreateMap<DbSchemaItemDescription, SchemaItemDescription>();
 
             c.CreateMap<Group, DbRole>(MemberList.Destination).MaxDepth(2).PreserveReferences();
             c.CreateMap<DbRole, Group>(MemberList.Source).MaxDepth(2).PreserveReferences()

@@ -73,10 +73,15 @@
     <Compile Include="Migrations\201705310916327_AfterPluralizingOff2.Designer.cs">
       <DependentUpon>201705310916327_AfterPluralizingOff2.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201708161533530_Added schema elements description.cs" />
+    <Compile Include="Migrations\201708161533530_Added schema elements description.Designer.cs">
+      <DependentUpon>201708161533530_Added schema elements description.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\CafeMigrator.cs" />
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\DbAnnotationItemAccessibleGroups.cs" />
     <Compile Include="Models\DbAnnotationItem.cs" />
+    <Compile Include="Models\DbSchemaItemDescription.cs" />
     <Compile Include="Models\DbSearchFilterCachedItem.cs" />
     <Compile Include="Models\DbAnnotationItemAccessibleUsers.cs" />
     <Compile Include="Models\DbUserAnnotationItem.cs" />
@@ -119,6 +124,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201705310916327_AfterPluralizingOff2.resx">
       <DependentUpon>201705310916327_AfterPluralizingOff2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201708161533530_Added schema elements description.resx">
+      <DependentUpon>201708161533530_Added schema elements description.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

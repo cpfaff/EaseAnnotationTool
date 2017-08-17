@@ -98,6 +98,7 @@
     <Compile Include="Configuration\IConfiguration.cs" />
     <Compile Include="Configuration\IConfigurationProvider.cs" />
     <Compile Include="Configuration\IEmailTemplatesRenderer.cs" />
+    <Compile Include="Configuration\ComplexSearchFiltersConfiguration.cs" />
     <Compile Include="Configuration\RelatedSearchFiltersConfiguration.cs" />
     <Compile Include="Configuration\SimpleEmailTemplatesRenderer.cs" />
     <Compile Include="Integration\AnnotationItem.cs" />
@@ -126,6 +127,7 @@
     <Compile Include="Resources\IAccessibleResourcesProvider.cs" />
     <Compile Include="Resources\IExtensibleVocabularyService.cs" />
     <Compile Include="Resources\IVocabularyService.cs" />
+    <Compile Include="Resources\SchemaItemDescription.cs" />
     <Compile Include="Resources\VocabularyUserValue.cs" />
     <Compile Include="Resources\VocabularyValue.cs" />
     <Compile Include="Searching\FilterType.cs" />

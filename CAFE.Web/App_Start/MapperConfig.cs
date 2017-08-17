@@ -34,6 +34,8 @@ namespace CAFE.Web
                 c.CreateMap<EmailConfiguration, EmailConfigurationSection>();
                 c.CreateMap<RelatedSearchFiltersConfigurationSection, RelatedSearchFiltersConfiguration>();
                 c.CreateMap<RelatedSearchFiltersConfiguration, RelatedSearchFiltersConfigurationSection>();
+                c.CreateMap<ComplexSearchFiltersConfigurationSection, ComplexSearchFiltersConfiguration>();
+                c.CreateMap<ComplexSearchFiltersConfiguration, ComplexSearchFiltersConfigurationSection>();
                 c.CreateMap<Configuration.RelatedFilterScope, Core.Configuration.RelatedFilterScope>();
                 c.CreateMap<Core.Configuration.RelatedFilterScope, Configuration.RelatedFilterScope>();
                 c.CreateMap<Configuration.FilterElement, Core.Configuration.FilterElement>();
@@ -152,6 +154,9 @@ namespace CAFE.Web
                 c.CreateMap<string, SearchFilterSelectionNamedModel>()
                     .ForMember(m => m.Name, opts => opts.MapFrom(f => f))
                     .ForMember(m => m.Value, opts => opts.MapFrom(f => f));
+
+                c.CreateMap<VocabularyValue, SearchFilterSelectionNamedModel>()
+                    .ForMember(m => m.Name, opts => opts.MapFrom(f => f.Value));
 
                 c.CreateMap<VocabularyValueModel, VocabularyValue>();
                 c.CreateMap<VocabularyValue, VocabularyValueModel>();

@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using CAFE.Core.Security;
 using System;
+using CAFE.Core.Resources;
 
 namespace CAFE.Core.Searching
 {
@@ -11,7 +12,7 @@ namespace CAFE.Core.Searching
 
         Task<IEnumerable<SearchRequestFilterItem>> GetFilterParametersAsync(SearchResultItemType itemType, bool needToClear);
 
-        Task<IEnumerable<string>> GetSelectValuesAsync(SearchRequestFilterItem filterItem, string userId);
+        Task<IEnumerable<VocabularyValue>> GetSelectValuesAsync(SearchRequestFilterItem filterItem, string userId);
         Task<IEnumerable<SearchResultItem>> SearchForAutocompleteAsync(string query, string UserId);
 
         bool CheckThatFileIsAccessible(Guid fileId, Guid userId);

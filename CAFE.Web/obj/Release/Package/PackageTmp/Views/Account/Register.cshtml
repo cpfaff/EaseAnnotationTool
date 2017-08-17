@@ -1,0 +1,69 @@
+﻿@model CAFE.Web.Models.Account.RegisterViewModel
+@{
+	ViewBag.Title = "Register";
+}
+
+<section class="container" id="loginForm">
+	<section class="login-form-style">
+
+		@using (Html.BeginForm("Register", "Account", FormMethod.Post, new { role = "login-style" }))
+		{
+			<section>
+				@Html.AntiForgeryToken()
+				<h2 style="text-align: center;">New user registration</h2>
+
+				@if (true == ViewBag.IsSuccessRegister)
+				{
+					<div class="alert alert-success" role="alert">
+						<i class="fa fa-check"></i> Account has been created successfully.
+					</div>
+                }
+
+                else
+                {
+                    <div style="margin-bottom: 15px;"><span style="color:red;">*</span> All fields are required</div>
+
+					<div class="form-group">
+						@Html.LabelFor(m => m.Name)
+						@Html.TextBoxFor(m => m.Name, new {@class = "form-control", required = "required"})
+						@Html.ValidationMessageFor(m => m.Name)
+					</div>
+
+					<div class="form-group">
+						@Html.LabelFor(m => m.Surname)
+						@Html.TextBoxFor(m => m.Surname, new {@class = "form-control", required = "required"})
+						@Html.ValidationMessageFor(m => m.Surname)
+					</div>
+
+					<div class="form-group">
+						@Html.LabelFor(m => m.Email)
+						@Html.TextBoxFor(m => m.Email, new { @class = "form-control", required = "required" })
+						@Html.ValidationMessageFor(m => m.Email)
+					</div>
+
+					<div class="form-group">
+						@Html.LabelFor(m => m.Password)
+						@Html.PasswordFor(m => m.Password, new { @class = "form-control", required = "required" })
+						@Html.ValidationMessageFor(m => m.Password)
+					</div>
+
+					<div class="form-group">
+						@Html.LabelFor(m => m.ConfirmPassword)
+						@Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
+						@Html.ValidationMessageFor(m => m.ConfirmPassword)
+					</div>
+
+					<input type="submit" class="btn btn-block btn-primary" value="Create account" />
+				}
+			</section>
+            <div>
+                @Html.ActionLink("Log In", "Login")
+                @Html.ActionLink("Restore password", "ForgotPassword", "ForgotPassword", new { style = "float: right;" })
+            </div>
+		}
+	</section>
+</section>
+
+@section Scripts {
+	@Scripts.Render("~/bundles/jqueryval")
+}

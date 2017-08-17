@@ -1,4 +1,5 @@
 
+using System.Diagnostics;
 using System.Xml.Serialization;
 using CAFE.DAL.Models.Resources;
 
@@ -14,6 +15,7 @@ namespace CAFE.DAL.Migrations
     using System.IO;
     using System.Xml;
     using System.Xml.Schema;
+    using System.Xml.Linq;
 
     internal sealed class Configuration : DbMigrationsConfiguration<CAFE.DAL.DbContexts.ApplicationDbContext>
     {
@@ -384,6 +386,12 @@ namespace CAFE.DAL.Migrations
                     }
                 }
 
+                if (!context.SchemaItemDescriptions.Any())
+                {
+                    var items = LoadXsdDescriptions(schemaPath);
+                    WriteSchemaDataToDatabase(items, context);
+                }
+
                 //Adding descriptions for labels
                 System.Xml.Linq.XDocument doc = System.Xml.Linq.XDocument.Load(schemaPath);
                 var elements2 = doc.Descendants().Where(d => d.Name.LocalName == "documentation");
@@ -415,6 +423,110 @@ namespace CAFE.DAL.Migrations
                 Console.Write("ERROR: ");
 
             Console.WriteLine(args.Message);
+        }
+
+
+        static List<SchemeDescriptionElement> LoadXsdDescriptions(string xsdPath)
+        {
+            var result = new List<SchemeDescriptionElement>();
+
+            try
+            {
+                var xDoc = XDocument.Load(xsdPath);
+                var ns = XNamespace.Get(@"http://www.w3.org/2001/XMLSchema");
+
+                var easeElement = xDoc.Element(ns + "schema").Element(ns + "element");
+                var objectElement =
+                    easeElement.Element(ns + "complexType").Element(ns + "sequence").Element(ns + "element");
+                var contextsElement =
+                    objectElement.Element(ns + "complexType").Element(ns + "sequence").Element(ns + "element");
+                var contextElement =
+                    contextsElement.Element(ns + "complexType").Element(ns + "sequence").Element(ns + "element");
+
+                var contextSequense = contextElement.Element(ns + "complexType").Element(ns + "sequence");
+
+                var parentKey = "Object";
+
+                result.AddRange(GetElementsRecursively(contextSequense, parentKey));
+
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e);
+                throw;
+            }
+
+            return result;
+        }
+
+        static IEnumerable<SchemeDescriptionElement> GetElementsRecursively(XElement element, string parentKey)
+        {
+            var ns = XNamespace.Get(@"http://www.w3.org/2001/XMLSchema");
+            List<SchemeDescriptionElement> result = new List<SchemeDescriptionElement>();
+
+            if (element.HasElements)
+            {
+                foreach (var child in element.Elements())
+                {
+                    try
+                    {
+                        if (child.Attribute("name") == null) continue;
+
+                        var key = $"{parentKey}.{child.Attribute("name").Value}";
+                        var annotationElement = child.Element(ns + "annotation");
+                        if (annotationElement == null) continue;
+
+                        var descriptionElement = annotationElement.Element(ns + "documentation");
+                        var description = "";
+                        if (descriptionElement != null)
+                            description = descriptionElement.Value.Trim().Replace("\t", "");
+
+                        var resultItem = new SchemeDescriptionElement();
+                        resultItem.Key = key;
+                        resultItem.Description = description;
+
+                        var parenComplexType = child.Element(ns + "complexType");
+                        if (parenComplexType != null)
+                        {
+                            var parentSequences = parenComplexType.Element(ns + "sequence");
+                            if (parentSequences != null)
+                                resultItem.Children.AddRange(GetElementsRecursively(parentSequences, key));
+
+                        }
+
+                        result.Add(resultItem);
+                    }
+                    catch (Exception e)
+                    {
+                        Debug.WriteLine(e);
+                    }
+                }
+            }
+
+            return result;
+        }
+
+        private void WriteSchemaDataToDatabase(IEnumerable<SchemeDescriptionElement> items, DbContexts.ApplicationDbContext context)
+        {
+            foreach (var schemeDescriptionElement in items)
+            {
+                var dbItem = new DbSchemaItemDescription();
+                dbItem.Path = schemeDescriptionElement.Key;
+                dbItem.Description = schemeDescriptionElement.Description;
+
+                context.SchemaItemDescriptions.Add(dbItem);
+
+                WriteSchemaDataToDatabase(schemeDescriptionElement.Children, context);
+            }    
+        }
+
+
+        class SchemeDescriptionElement
+        {
+            public string Key { get; set; }
+            public string Description { get; set; }
+
+            public List<SchemeDescriptionElement> Children { get; set; } = new List<SchemeDescriptionElement>();
         }
     }
 }

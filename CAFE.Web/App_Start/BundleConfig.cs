@@ -20,7 +20,8 @@ namespace CAFE.Web
 
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
                       "~/Scripts/bootstrap.js",
-                      "~/Scripts/respond.js"));
+                      "~/Scripts/respond.js"
+                      ));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
@@ -28,17 +29,19 @@ namespace CAFE.Web
                       "~/Content/site.css"));
 
 			bundles.Add(new ScriptBundle("~/bundles/global").Include(
-				"~/Scripts/app/global/formSubmit.js"
-				));
+                "~/Scripts/app/global/formSubmit.js"
+                ));
 
             //FOR ADMIN
             bundles.Add(new ScriptBundle("~/bundles/admin/jquery").Include(
                 "~/Scripts/libs/jquery/jquery.min.js",
-                "~/Scripts/libs/lodash/lodash.min.js"));
+                "~/Scripts/libs/lodash/lodash.min.js"
+                ));
 
             bundles.Add(new ScriptBundle("~/bundles/admin/bootstrap").Include(
                 "~/Scripts/libs/bootstrap/js/bootstrap.min.js",
-                "~/Scripts/respond.js"));
+                "~/Scripts/respond.js"
+                ));
 
             bundles.Add(new ScriptBundle("~/bundles/admin/angular").Include(
                 "~/Scripts/libs/angular/angular.min.js",
@@ -158,13 +161,20 @@ namespace CAFE.Web
                       "~/Scripts/libs/angular-material/angular-material.min.css",
                       "~/Scripts/libs/angular-material/modules/js/select/select.min.css",
                       "~/Scripts/libs/angular-ui-select/select.min.css",
-                      //"~/Scripts/libs/angular-material-icons/angular-material-icons.css",
+                      "~/Scripts/libs/angular-material-icons/angular-material-icons.css",
                       "~/Scripts/libs/md-data-table/md-data-table.min.css",
                       "~/Content/icons.css",
-                      "~/Content/admin.css",
+                      //"~/Content/admin.css",
                       "~/Scripts/libs/ui-grid-master/ui-grid.min.css"
                       ));
 
+
+            bundles.Add(new StyleBundle("~/Content/temp/css").Include(
+                  "~/Scripts/libs/font-awesome/css/font-awesome.min.css",
+                  "~/Scripts/libs/angular-material/angular-material.min.css",
+                  "~/Scripts/libs/md-data-table/md-data-table.min.css",
+                  "~/Content/icons.css"
+              ));
 
             bundles.Add(new ScriptBundle("~/bundles/search/angular").Include(
                 "~/Scripts/libs/angular/angular.min.js",
@@ -176,8 +186,8 @@ namespace CAFE.Web
                 "~/Scripts/libs/angular-messages/angular-messages.min.js",
                 "~/Scripts/libs/angular-material/angular-material.min.js",
                 "~/Scripts/libs/md-data-table/md-data-table.min.js",
-                "~/Scripts/libs/np-autocomplete/np-autocomplete.min.js",
-                "~/Scripts/libs/ui-bootstrap/ui-bootstrap-tpls-2.2.0.js"));
+                "~/Scripts/libs/ui-bootstrap/ui-bootstrap-tpls-2.2.0.js",
+                "~/Scripts/libs/np-autocomplete/np-autocomplete.min.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/search/app").Include(
                 "~/Scripts/app/search/app.js",

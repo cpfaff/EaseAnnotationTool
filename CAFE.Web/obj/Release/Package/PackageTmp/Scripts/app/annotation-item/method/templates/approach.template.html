@@ -1,0 +1,89 @@
+﻿<div class="row" style="margin: 10px 10px 30px 10px;">
+    <div class="col-md-6">
+        <div class="col-md-12">
+            <div class="col-md-3" style="min-width: 350px; margin-bottom: 20px;">
+                <h4>
+                    Type
+                    <md-button class="md-icon-button md-primary" aria-label="{{simpleTypesVocabularies.approachType}}" ng-show="simpleTypesVocabularies.approachType">
+                        <md-tooltip class="tt-multiline" md-direction="right">{{simpleTypesVocabularies.approachType}}</md-tooltip>
+                        <i class="material-icons">help_outline</i>
+                    </md-button>
+                </h4>
+                <div layout="row">
+                    <md-autocomplete flex
+                                     md-selected-item="approachModel.approachType"
+                                     md-search-text="autocompleteFields.approachType"
+                                     md-items="subItem in querySearch(autocompleteFields.approachType, methodDictionaries.approaches[0].approachType)"
+                                     md-item-text="subItem.value"
+                                     placeholder="Search for an Approach type"
+                                     md-require-match="true"
+                                     ng-disabled="!isAccessible"
+                                     md-min-length="0">
+                        <md-item-template>
+                            <span md-highlight-text="autocompleteFields.searchText">{{subItem.value}}</span>
+                            <md-button class="md-icon-button md-primary" aria-label="{{subItem.description}}" ng-show="subItem.description">
+                                <md-tooltip class="tt-multiline" md-direction="right">{{subItem.description}}</md-tooltip>
+                                <i class="material-icons">help_outline</i>
+                            </md-button>
+                        </md-item-template>
+                    </md-autocomplete>
+                    <md-button ng-if="isAccessible" class="md-icon-button import" aria-label="Add/Import new" ng-click="ImportDialogOpen('approachType', methodDictionaries.approaches[0].approachType, $event, approachModel)">
+                        <i class="material-icons md-24" title="Add/Import new">library_add</i>
+                    </md-button>
+                </div>
+            </div>
+            <div class="col-md-3" style="min-width: 350px; margin-bottom: 20px;">
+                <h4>
+                    Localization
+                    <md-button class="md-icon-button md-primary" aria-label="{{simpleTypesVocabularies.approachLocalization}}" ng-show="simpleTypesVocabularies.approachLocalization">
+                        <md-tooltip class="tt-multiline" md-direction="right">{{simpleTypesVocabularies.approachLocalization}}</md-tooltip>
+                        <i class="material-icons">help_outline</i>
+                    </md-button>
+                </h4>
+                <div layout="row" flex>
+                    <md-autocomplete flex
+                                     md-selected-item="approachModel.approachLocalization"
+                                     md-search-text="autocompleteFields.approachLocalization"
+                                     md-items="subItem in querySearch(autocompleteFields.approachLocalization, methodDictionaries.approaches[0].approachLocalization)"
+                                     md-item-text="subItem.value"
+                                     placeholder="Search for an Approach localization"
+                                     md-require-match="true"
+                                     ng-disabled="!isAccessible"
+                                     md-min-length="0">
+                        <md-item-template>
+                            <span md-highlight-text="autocompleteFields.approachLocalization">{{subItem.value}}</span>
+                            <md-button class="md-icon-button md-primary" aria-label="{{subItem.description}}" ng-show="subItem.description">
+                                <md-tooltip class="tt-multiline" md-direction="right">{{subItem.description}}</md-tooltip>
+                                <i class="material-icons">help_outline</i>
+                            </md-button>
+                        </md-item-template>
+                    </md-autocomplete>
+                    <md-button ng-if="isAccessible" class="md-icon-button import" aria-label="Add/Import new" ng-click="ImportDialogOpen('approachLocalization', methodDictionaries.approaches[0].approachLocalization, $event, approachModel)">
+                        <i class="material-icons md-24" title="Add/Import new">library_add</i>
+                    </md-button>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <md-divider style="margin: 10px 5px 5px 10px;"></md-divider>
+            <div layout="row" layout-align="center">
+                <md-button ng-click="AddApproach()">Add combination to list</md-button>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4" ng-show="methodContext.approaches.length > 0" style="min-width: 350px;">
+        <md-content>
+            <md-list layout-margin>
+                <md-list-item ng-repeat="approach in methodContext.approaches track by $index" style="margin-bottom: 15px;">
+                    <div class="md-list-item-text" layout="column" flex="90">
+                        <p><b>Type:</b> {{ approach.approachType.value }}</p>
+                        <p><b>Localization:</b> {{ approach.approachLocalization.value }}</p>
+                    </div>
+                    <md-button ng-if="isAccessible" class="md-icon-button secondary" ng-click="methodContext.approaches.splice($index, 1)">
+                        <i class="material-icons">delete</i>
+                    </md-button>
+                </md-list-item>
+            </md-list>
+        </md-content>
+    </div>
+</div>

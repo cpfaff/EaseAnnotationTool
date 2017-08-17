@@ -1,0 +1,72 @@
+﻿<div layout="row" layout-xs="row" layout-margin>
+    <div layout="column" flex="60" layout-margin style="margin-top:30px;" ng-if="isAccessible" >
+        <div layout="column">
+            <uib-accordion close-others="true">
+                <div uib-accordion-group style="min-width: 740px;" class="panel-default" heading="Static Header" ng-repeat="item in physiognomyComponents" is-open="isOpen" ng-click="accordionOpenStatuses[key]=!accordionOpenStatuses[key]">
+                    <uib-accordion-heading>
+                        {{::item.title}}
+                        <md-button class="md-icon-button md-primary" aria-label="{{simpleTypesVocabularies[item.type]}}" ng-show="simpleTypesVocabularies[item.type]">
+                            <md-tooltip class="tt-multiline" md-direction="right">{{simpleTypesVocabularies[item.type]}}</md-tooltip>
+                            <i class="material-icons">help_outline</i>
+                        </md-button>
+                    </uib-accordion-heading>
+                    <div class="row" ng-include="'Scripts/app/annotation-item/biome/templates/physiognomy/'+(item.name)+'.template.html'">
+                    </div>
+                </div>
+            </uib-accordion>
+        </div>
+        <md-divider style="margin: 10px 5px 5px 10px;min-width: 740px;"></md-divider>
+        <div layout="row" layout-align="center" style="min-width: 740px;">
+            <md-button ng-click="AddPhysiognomy()">Add combination to list</md-button>
+        </div>
+    </div>
+
+    <div layout="column" flex="40" layout-margin ng-show="biomeModel.physiognomies.length > 0">
+        <md-content>
+            <md-list layout-margin>
+                <md-list-item ng-repeat="physiognomy in biomeModel.physiognomies" style="margin-bottom: 15px;">
+                    <uib-accordion close-others="true" flex>
+                        <div uib-accordion-group class="panel-default" heading="Static Header" is-open="accordionOpenStatuses2.terrestrial[$index]">
+                            <uib-accordion-heading>
+                                Terrestrial
+                            </uib-accordion-heading>
+                            <div class="row" layout-padding>
+                                <span ng-repeat="item in physiognomy.physiognomyTypes[0].terrestrialPhysiognomies" ng-bind="item.terrestrialPhysiognomyType.value + ($index == (physiognomy.physiognomyTypes[0].terrestrialPhysiognomies.length - 1) ? '' : ', ')"></span>
+                            </div>
+                        </div>
+                        <div uib-accordion-group class="panel-default" heading="Static Header" is-open="accordionOpenStatuses2.semiAquatic[$index]">
+                            <uib-accordion-heading>
+                                Semi Aquatic
+                            </uib-accordion-heading>
+                            <div class="row" layout-padding>
+                                <span ng-repeat="item in physiognomy.physiognomyTypes[0].semiAquaticPhysiognomies" ng-bind="item.semiAquaticPhysiognomyType.value + ($index == (physiognomy.physiognomyTypes[0].semiAquaticPhysiognomies.length - 1) ? '' : ', ')"></span>
+                            </div>
+                        </div>
+                        <div uib-accordion-group class="panel-default" heading="Static Header" is-open="accordionOpenStatuses2.aquatic[$index]">
+                            <uib-accordion-heading>
+                                Aquatic
+                            </uib-accordion-heading>
+                            <div class="row" layout-margin>
+                                <md-content>
+                                    <md-list layout-margin>
+                                        <md-list-item ng-repeat="item in physiognomy.physiognomyTypes[0].aquaticPhysiognomies track by $index" style="margin-bottom: 15px;">
+                                            <div class="md-list-item-text" layout="column" style="width: 300px;">
+                                                <p><b>Plant Characterized:</b> {{ item.plantCharacterizedAquaticPhysiognomyType.value }}
+                                                </p>
+                                                <p><b>Habitat Characterized:</b> {{ item.habitatCharacterizedAquaticPhysiognomy.value}}
+                                                </p>
+                                            </div>
+                                        </md-list-item>
+                                    </md-list>
+                                </md-content>
+                            </div>
+                        </div>
+                    </uib-accordion>
+                    <md-button ng-if="isAccessible" class="md-icon-button secondary" ng-click="biomeModel.physiognomies.splice($index, 1)">
+                        <i class="material-icons">delete</i>
+                    </md-button>
+                </md-list-item>
+            </md-list>
+        </md-content>
+    </div>
+</div>

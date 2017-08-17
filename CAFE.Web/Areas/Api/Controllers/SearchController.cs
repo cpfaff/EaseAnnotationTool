@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Http;
 using AutoMapper;
+using CAFE.Core.Resources;
 using CAFE.Core.Searching;
 using CAFE.Core.Security;
 using CAFE.Web.Areas.Api.Models.Search;
@@ -108,7 +109,7 @@ namespace CAFE.Web.Areas.Api.Controllers
             var result = 
                 await _searchService.GetSelectValuesAsync(searchRequestFilter, System.Web.HttpContext.Current?.User?.Identity?.GetUserId());
 
-            return Mapper.Map<IEnumerable<string>, IEnumerable<SearchFilterSelectionNamedModel>>(result);
+            return Mapper.Map<IEnumerable<VocabularyValue>, IEnumerable<SearchFilterSelectionNamedModel>>(result);
         }
 
         [HttpGet]

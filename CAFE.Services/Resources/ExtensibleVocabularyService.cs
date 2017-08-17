@@ -127,7 +127,8 @@ namespace CAFE.Services.Resources
             var allValues = _vocabularyValuesRepository.FindCollection(w => w.Value == "-1");
 
             foreach (var item in allValues)
-                result.Add(item.Type, item.Description);
+                if(!result.ContainsKey(item.Type))
+                    result.Add(item.Type, item.Description);
 
             return result;
         }

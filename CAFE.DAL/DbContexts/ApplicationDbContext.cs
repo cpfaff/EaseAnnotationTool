@@ -93,6 +93,10 @@ namespace CAFE.DAL.DbContexts
         /// </summary>
         public DbSet<DbAnnotationItemAccessibleUsers> DbAnnotationItemAccessibleUsers { get; set; }
 
+        /// <summary>
+        /// Descriptions for each Annotation schema element
+        /// </summary>
+        public DbSet<DbSchemaItemDescription> SchemaItemDescriptions { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
 	    {

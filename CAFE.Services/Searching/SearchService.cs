@@ -18,6 +18,7 @@ using System.IO;
 using CAFE.Core.Configuration;
 using System.Data.Entity;
 using System.Text;
+using CAFE.Core.Integration;
 
 namespace CAFE.Services.Searching
 {
@@ -32,8 +33,10 @@ namespace CAFE.Services.Searching
         private readonly IRepository<DbAnnotationItemAccessibleUsers> _accecibleUsersRepository;
         private readonly IRepository<DbAnnotationItemAccessibleGroups> _accecibleGroupsRepository;
         private readonly IConfigurationProvider _configurationProvider;
+        private readonly IRepository<DbSchemaItemDescription> _schemaDescriptionsRepository;
 
         private RelatedSearchFiltersConfiguration _filtersRelationConfiguration;
+        private ComplexSearchFiltersConfiguration _complexfiltersConfiguration;
 
         public SearchService(IRepository<DbUserFile> filesRepository,
             IRepository<DbAnnotationItem> annotaionItemRepository,
@@ -43,6 +46,7 @@ namespace CAFE.Services.Searching
             IVocabularyService vocabularyService,
             IRepository<DbAnnotationItemAccessibleUsers> accecibleUsersRepository,
             IRepository<DbAnnotationItemAccessibleGroups> accecibleGroupsRepository,
+            IRepository<DbSchemaItemDescription> schemaDescriptionsRepository,
             Core.Configuration.IConfigurationProvider configurationProvider)
         {
             _filesRepository = filesRepository;
@@ -54,6 +58,7 @@ namespace CAFE.Services.Searching
             _accecibleUsersRepository = accecibleUsersRepository;
             _accecibleGroupsRepository = accecibleGroupsRepository;
             _configurationProvider = configurationProvider;
+            _schemaDescriptionsRepository = schemaDescriptionsRepository;
         }
 
         private Func<DbAnnotationItem, string, bool> AISearchFunc = (dbAI, search) =>
@@ -192,10 +197,10 @@ namespace CAFE.Services.Searching
             return result;
         }
 
-        public async Task<IEnumerable<string>> GetSelectValuesAsync(SearchRequestFilterItem filterItem, string userId)
+        public async Task<IEnumerable<VocabularyValue>> GetSelectValuesAsync(SearchRequestFilterItem filterItem, string userId)
         {
             if (filterItem.FilterType != FilterType.Select) throw new InvalidOperationException("Filter type must be 'Select'");
-            var result = new List<string>();
+            var result = new List<VocabularyValue>();
 
             if (filterItem.Name.Contains("LocationName"))
             {
@@ -203,13 +208,14 @@ namespace CAFE.Services.Searching
 
                 foreach(var ai in annItms)
                     if(ai.Object.Contexts?[0].SpaceContext?.Locations?.Count > 0)
-                        result.AddRange(ai.Object.Contexts[0].SpaceContext.Locations.Select(l => l.LocationName));
+                        result.AddRange(ai.Object.Contexts[0].SpaceContext.Locations.Select(l => new VocabularyValue{ Value = l.LocationName}));
 
                 return result.Distinct();
             }
 
             
-            result.AddRange(await GetSelectValuesFromAnnotationItemsAsync(filterItem.Description.Split('.').Last(), userId));
+            //result.AddRange(await GetSelectValuesFromAnnotationItemsAsync(filterItem.Description.Split('.').Last(), userId));
+            result.AddRange(await GetSelectValuesFromAnnotationItemsAsync(filterItem.ValueType, userId));
             result.AddRange(await GetSelectValuesFromFilesAsync(filterItem.Name));
 
             return result;
@@ -249,6 +255,18 @@ namespace CAFE.Services.Searching
             }
         }
 
+        internal ComplexSearchFiltersConfiguration ComplexFiltersConfiguration
+        {
+            get
+            {
+                if (_complexfiltersConfiguration == null)
+                {
+                    _complexfiltersConfiguration = _configurationProvider.Get<ComplexSearchFiltersConfiguration>();
+                }
+
+                return _complexfiltersConfiguration;
+            }
+        }
         #region internal logic
 
         private async Task<IEnumerable<SearchResultItem>> SearchAllItemsWithFilterAsync(User user, string search,
@@ -679,13 +697,17 @@ namespace CAFE.Services.Searching
         {
             await Task.Delay(0);
 
+            var filterDescriptions = _schemaDescriptionsRepository.FindCollection(f => true).ToList();
+
             IEnumerable<SearchRequestFilterItem> filters;
             // First check that db exists cache of search filters model
             // and it have actual state
-            if (!HaveActualCachedSearchFilterItems() && needToClear)
+            needToClear = true;
+            if (needToClear)
+            //if (!HaveActualCachedSearchFilterItems() && needToClear)
             {
-                var annotationObjectType = typeof(DbAnnotationContext);
-                filters = GetFiltersForType(annotationObjectType, "Object", "");
+                var annotationObjectType = typeof(Context);
+                filters = GetFiltersForType(annotationObjectType, "Object", "", filterDescriptions);
 
                 //Save performed filter items model to cache
                 try
@@ -699,7 +721,7 @@ namespace CAFE.Services.Searching
             }
             else
             {
-                filters = GetFiltersForTypeFromCache();
+                filters = GetFiltersForTypeFromCache(filterDescriptions);
             }
 
             return filters;
@@ -712,7 +734,8 @@ namespace CAFE.Services.Searching
 
         }
 
-        private IEnumerable<SearchRequestFilterItem> GetFiltersForType(Type type, string pn, string directParentName)
+        private IEnumerable<SearchRequestFilterItem> GetFiltersForType(Type type, string pn, string directParentName, 
+            IEnumerable<DbSchemaItemDescription> descriptions)
         {
             List<SearchRequestFilterItem> result = new List<SearchRequestFilterItem>();
 
@@ -728,6 +751,7 @@ namespace CAFE.Services.Searching
                 {
                     prNm += "[]";
                     pt = propertyInfo.PropertyType.GetGenericArguments()[0];
+                    prNm += "." + pt.Name;
                 }
 
                 if (pt.IsBaseValueType() && propertyInfo.Name != "LocationName")
@@ -749,11 +773,19 @@ namespace CAFE.Services.Searching
 
                     var fileTypeFor = GetFileTypeFor(pt, prNm);
 
+                    var name = string.IsNullOrEmpty(pn) ? prNm : pn + "." + prNm;
+                    var path = name.Replace("[]", "");
+                    var tooltip = "NA";
+                    var foundDescription = descriptions.Where(d => d.Path.ToLower() == path.ToLower()).FirstOrDefault();
+                    if (foundDescription != null)
+                        tooltip = foundDescription.Description;
                     result.Add(new SearchRequestFilterItem()
                     {
                         FilterType = fileTypeFor,
-                        Name = string.IsNullOrEmpty(pn) ? prNm : pn + "." + prNm,
-                        Description = desc
+                        Name = name,
+                        Description = desc,
+                        ValueType = propertyInfo.PropertyType.Name,
+                        Tooltip = tooltip
                     });
                 }
                 else if ((propertyInfo.PropertyType.GetProperties().Any(p => p.Name == "Value") &&
@@ -765,27 +797,52 @@ namespace CAFE.Services.Searching
                     {
                         desc = pnArr[pnArr.Length - 2] + "." + prevDesc;
                     }
+
+                    var name = string.IsNullOrEmpty(pn) ? prNm : pn + "." + prNm;
+                    var path = name.Replace("[]", "");
+                    var tooltip = "NA";
+                    var foundDescription = descriptions.Where(d => d.Path.ToLower() == path.ToLower()).FirstOrDefault();
+                    if (foundDescription != null)
+                        tooltip = foundDescription.Description;
+
                     result.Add(new SearchRequestFilterItem()
                     {
                         FilterType = FilterType.Select,
-                        Name = string.IsNullOrEmpty(pn) ? prNm : pn + "." + prNm,
-                        Description = desc
+                        Name = name,
+                        Description = desc,
+                        ValueType = $"{propertyInfo.PropertyType.Name}Vocabulary",
+                        Tooltip = tooltip
                     });
                 }
                 else
                 {
                     result.AddRange(GetFiltersForType(pt,
-                        string.IsNullOrEmpty(pn) ? prNm : pn + "." + prNm, propertyInfo.Name));
+                        string.IsNullOrEmpty(pn) ? prNm : pn + "." + prNm, propertyInfo.Name, descriptions));
                 }
             }
 
             return result;
         }
 
-        private IEnumerable<SearchRequestFilterItem> GetFiltersForTypeFromCache()
+        private IEnumerable<SearchRequestFilterItem> GetFiltersForTypeFromCache(IEnumerable<DbSchemaItemDescription> descriptions)
         {
             var dbItems = _cachedSearchFilterRepository.Select().ToList();
             var mappedItems = Mapper.Map<IEnumerable<SearchRequestFilterItem>>(dbItems);
+
+            foreach (var searchRequestFilterItem in mappedItems)
+            {
+                var foundDescription =
+                    descriptions.Where(d => d.Path.ToLower() == searchRequestFilterItem.Name.Replace("[]", "").ToLower())
+                        .FirstOrDefault();
+                if (foundDescription != null)
+                {
+                    searchRequestFilterItem.Tooltip = foundDescription.Description;
+                }
+                else
+                {
+                    searchRequestFilterItem.Tooltip = "NA";
+                }
+            }
             return mappedItems;
         }
 
@@ -808,7 +865,7 @@ namespace CAFE.Services.Searching
         {
             var assmName = Assembly.GetCallingAssembly().GetReferencedAssemblies().Where(a => a.Name == "CAFE.Core").FirstOrDefault();
             var assm = Assembly.Load(assmName);
-            var foundType = assm.GetTypes().Where(t => t.Name.ToLower() == name.ToLower() + "vocabulary").FirstOrDefault();
+            var foundType = assm.GetTypes().Where(t => t.Name.ToLower() == name.ToLower()).FirstOrDefault();
 
             return foundType;
         }
@@ -850,7 +907,7 @@ namespace CAFE.Services.Searching
 
         }
 
-        private async Task<IEnumerable<string>> GetSelectValuesFromAnnotationItemsAsync(string property, string userId)
+        private async Task<IEnumerable<VocabularyValue>> GetSelectValuesFromAnnotationItemsAsync(string property, string userId)
         {
             await Task.Delay(0);
             var result = new List<string>();
@@ -859,10 +916,12 @@ namespace CAFE.Services.Searching
 
             if (vocabularyType == null) throw new InvalidOperationException("Unknown vocabulary type");
 
-            IEnumerable<string> vocs;
+            IEnumerable<VocabularyValue> vocs;
             try
             {
-                vocs = _vocabularyService.GetVocabularyValues(vocabularyType, userId).Select(s => s.Value);
+                vocs =
+                    _vocabularyService.GetVocabularyValues(vocabularyType, userId).ToList();
+
             }
             catch (Exception exception)
             {
@@ -872,16 +931,16 @@ namespace CAFE.Services.Searching
 
         }
 
-        private async Task<IEnumerable<string>> GetSelectValuesFromFilesAsync(string property)
+        private async Task<IEnumerable<VocabularyValue>> GetSelectValuesFromFilesAsync(string property)
         {
             await Task.Delay(0);
 
-            var result = new List<string>();
+            var result = new List<VocabularyValue>();
 
             switch (property.ToLower())
             {
                 case "filetype":
-                    result.AddRange(_filesRepository.Select(s => s.Type.ToString()).ToList().Distinct());
+                    result.AddRange(_filesRepository.Select(s => new VocabularyValue{ Value = s.Type.ToString()}).ToList().Distinct());
                     break;
                 default:
                     //TODO: for others dynamic properties
