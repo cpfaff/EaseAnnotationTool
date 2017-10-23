@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doc>
+<assembly><name>Linq.Expression.Optimizer</name></assembly>
+<members>
+<member name="M:ExpressionOptimizer.visit(System.Linq.Expressions.Expression)">
+<summary>
+ Expression tree visit&apos;or: go through the whole expression tree.
+</summary>
+</member>
+<member name="M:ExpressionOptimizer.doReduction(System.Linq.Expressions.Expression)">
+<summary>
+ Does reductions just for a current node.
+</summary>
+</member>
+<member name="M:ExpressionOptimizer.evaluate constants(System.Linq.Expressions.Expression)">
+<summary>
+ Evaluating constants to not mess with our expressions:
+</summary>
+</member>
+<member name="M:ExpressionOptimizer.balancetree(System.Linq.Expressions.Expression)">
+<summary>
+ Balance tree that is too much weighted to other side.
+ The real advantage is not-so-nested-stack
+</summary>
+</member>
+<member name="M:ExpressionOptimizer.remove AnonymousType(System.Linq.Expressions.Expression)">
+<summary>
+ Purpose of this is to replace non-used anonymous types:
+ new AnonymousObject(Item1 = x, Item2 = &quot;&quot;).Item1    --&gt;   x
+</summary>
+</member>
+<member name="M:ExpressionOptimizer.replace constant comparison(System.Linq.Expressions.Expression)">
+<summary>
+ Purpose of this is optimize away already known constant=constant style expressions.
+   7 &gt; 8      --&gt;   False
+ &quot;G&quot; = &quot;G&quot;    --&gt;   True
+</summary>
+</member>
+<member name="T:ExpressionOptimizer">
+<summary>
+ This is just a light-weight expression optimizer.
+ It won&apos;t do any heavy stuff...
+</summary>
+</member>
+</members>
+</doc>
