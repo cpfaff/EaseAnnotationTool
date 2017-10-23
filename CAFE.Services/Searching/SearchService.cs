@@ -1,5 +1,6 @@
 ﻿
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -19,6 +20,7 @@ using CAFE.Core.Configuration;
 using System.Data.Entity;
 using System.Text;
 using CAFE.Core.Integration;
+using CAFE.DAL.Types;
 
 namespace CAFE.Services.Searching
 {
@@ -35,7 +37,7 @@ namespace CAFE.Services.Searching
         private readonly IConfigurationProvider _configurationProvider;
         private readonly IRepository<DbSchemaItemDescription> _schemaDescriptionsRepository;
 
-        private RelatedSearchFiltersConfiguration _filtersRelationConfiguration;
+        //private RelatedSearchFiltersConfiguration _filtersRelationConfiguration;
         private ComplexSearchFiltersConfiguration _complexfiltersConfiguration;
 
         public SearchService(IRepository<DbUserFile> filesRepository,
@@ -88,9 +90,9 @@ namespace CAFE.Services.Searching
             return OrderSearchResultItems(result, searchRequest.OrderBy);
         }
 
-        public async Task<IEnumerable<SearchRequestFilterItem>> GetFilterParametersAsync(SearchResultItemType itemType, bool needToClear = true)
+        public async Task<IEnumerable<SearchRequestComplexFilter>> GetFilterParametersAsync(SearchResultItemType itemType, bool needToClear = true)
         {
-            IEnumerable<SearchRequestFilterItem> result = new List<SearchRequestFilterItem>();
+            IEnumerable<SearchRequestComplexFilter> result = new List<SearchRequestComplexFilter>();
 
             if (itemType == SearchResultItemType.All)
             {
@@ -109,84 +111,89 @@ namespace CAFE.Services.Searching
             //Fill related filter items
             foreach (var resultItem in result)
             {
-                resultItem.RelatedFilters = new List<SearchRequestFilterItem>();
+                //resultItem.RelatedFilters = new List<SearchRequestFilterItem>();
 
                 try
                 {
-                    var foundFilterScope = FiltersRelationConfiguration.RelatedFiltersScopes.Where(w => {
+                    //var foundFilterScope = FiltersRelationConfiguration.RelatedFiltersScopes.Where(w => {
 
-                        foreach (var key in w.Key.Split('_'))
-                            if (resultItem.Name.Contains(key))
-                                return true;
+                    //    foreach (var key in w.Key.Split('_'))
+                    //        if (resultItem.Name.Contains(key))
+                    //            return true;
 
-                        return false;
-                    }).FirstOrDefault();
+                    //    return false;
+                    //}).FirstOrDefault();
+
+
+
                     /*
                     if(resultItem.Name.ToLower().Contains("geological"))
                     {
                         var i2 = 0;
                     }
                     */
-                    if (foundFilterScope != null)
-                    {
-                        var sections = resultItem.Name.Split('.');
-                        if (sections.Length > 1)
-                        {
-                            int foundLevel = sections.Length - 1;
-                            //find need level..
-                            for (var j = sections.Length - 1; j >= 0; j--)
-                            {
 
-                                var level = sections[j].Replace("[]", "").ToLower();
-                                if (foundFilterScope.Key.ToLower() == level)
-                                {
-                                    foundLevel = j;
-                                    break;
-                                }
-                            }
 
-                            string[] newSectionLevels = new string[foundLevel + 1];
-                            for (var i = 0; i <= foundLevel; i++)
-                            {
-                                newSectionLevels[i] = sections[i];
-                            }
+                    //if (foundFilterScope != null)
+                    //{
+                    //    var sections = resultItem.Name.Split('.');
+                    //    if (sections.Length > 1)
+                    //    {
+                    //        int foundLevel = sections.Length - 1;
+                    //        //find need level..
+                    //        for (var j = sections.Length - 1; j >= 0; j--)
+                    //        {
 
-                            var keyPattern = string.Join(".", newSectionLevels);
+                    //            var level = sections[j].Replace("[]", "").ToLower();
+                    //            if (foundFilterScope.Key.ToLower() == level)
+                    //            {
+                    //                foundLevel = j;
+                    //                break;
+                    //            }
+                    //        }
 
-                            //find related filters
+                    //        string[] newSectionLevels = new string[foundLevel + 1];
+                    //        for (var i = 0; i <= foundLevel; i++)
+                    //        {
+                    //            newSectionLevels[i] = sections[i];
+                    //        }
+
+                    //        var keyPattern = string.Join(".", newSectionLevels);
+
+                    //        //find related filters
                            
-                            var fndItems = result.Where(w =>
-                                w.Name.Contains(keyPattern) && w.Name != resultItem.Name).ToList();
+                    //        var fndItems = result.Where(w =>
+                    //            w.Name.Contains(keyPattern) && w.Name != resultItem.Name).ToList();
 
-                            Debug.WriteLine(string.Join(",", fndItems.Select(fi => fi.Name)));
+                    //        Debug.WriteLine(string.Join(",", fndItems.Select(fi => fi.Name)));
 
-                            foreach (var fndItem in fndItems)
-                            {
-                                var parts = fndItem.Name.Split('.');
-                                Debug.WriteLine(parts.Length);
-                                Debug.WriteLine(fndItem.Name);
-                                string[] newParts = new string[sections.Length - foundLevel];
-                                Debug.WriteLine(newParts.Length);
+                    //        foreach (var fndItem in fndItems)
+                    //        {
+                    //            var parts = fndItem.Name.Split('.');
+                    //            Debug.WriteLine(parts.Length);
+                    //            Debug.WriteLine(fndItem.Name);
+                    //            string[] newParts = new string[sections.Length - foundLevel];
+                    //            Debug.WriteLine(newParts.Length);
 
-                                Array.Copy(parts, foundLevel, newParts, 0, sections.Length - foundLevel);
+                    //            Array.Copy(parts, foundLevel, newParts, 0, sections.Length - foundLevel);
 
-                                var newName = string.Join(".", newParts);
+                    //            var newName = string.Join(".", newParts);
 
-                                bool foundMatch = false;
-                                foreach (var filterScopeItem in foundFilterScope.RelatedFiltersCollection)
-                                {
-                                    if (newName.ToLower().Contains(filterScopeItem.Key.ToLower()))
-                                    {
-                                        foundMatch = true;
-                                        break;
-                                    }
-                                }
+                    //            //bool foundMatch = false;
+                    //            //foreach (var filterScopeItem in foundFilterScope.RelatedFiltersCollection)
+                    //            //{
+                    //            //    if (newName.ToLower().Contains(filterScopeItem.Key.ToLower()))
+                    //            //    {
+                    //            //        foundMatch = true;
+                    //            //        break;
+                    //            //    }
+                    //            //}
 
-                                if (foundMatch)
-                                    resultItem.RelatedFilters.Add(fndItem);
-                            }
-                        }
-                    }
+                    //            //if (foundMatch)
+                    //            //    resultItem.RelatedFilters.Add(fndItem);
+                    //        }
+                    //    }
+                    //}
 
                 }
                 catch (Exception ex)
@@ -199,7 +206,9 @@ namespace CAFE.Services.Searching
 
         public async Task<IEnumerable<VocabularyValue>> GetSelectValuesAsync(SearchRequestFilterItem filterItem, string userId)
         {
-            if (filterItem.FilterType != FilterType.Select) throw new InvalidOperationException("Filter type must be 'Select'");
+            if (filterItem.FilterType != FilterType.Select && filterItem.FilterType != FilterType.ReferenceValue)
+                throw new InvalidOperationException("Filter type must be 'Select'");
+
             var result = new List<VocabularyValue>();
 
             if (filterItem.Name.Contains("LocationName"))
@@ -242,18 +251,18 @@ namespace CAFE.Services.Searching
             return result;
         }
 
-        internal RelatedSearchFiltersConfiguration FiltersRelationConfiguration
-        {
-            get
-            {
-                if (_filtersRelationConfiguration == null)
-                {
-                    _filtersRelationConfiguration = _configurationProvider.Get<RelatedSearchFiltersConfiguration>();
-                }
+        //internal RelatedSearchFiltersConfiguration FiltersRelationConfiguration
+        //{
+        //    get
+        //    {
+        //        if (_filtersRelationConfiguration == null)
+        //        {
+        //            _filtersRelationConfiguration = _configurationProvider.Get<RelatedSearchFiltersConfiguration>();
+        //        }
 
-                return _filtersRelationConfiguration;
-            }
-        }
+        //        return _filtersRelationConfiguration;
+        //    }
+        //}
 
         internal ComplexSearchFiltersConfiguration ComplexFiltersConfiguration
         {
@@ -270,7 +279,7 @@ namespace CAFE.Services.Searching
         #region internal logic
 
         private async Task<IEnumerable<SearchResultItem>> SearchAllItemsWithFilterAsync(User user, string search,
-            IEnumerable<SearchRequestFilterItem> filters)
+            IEnumerable<SearchRequestComplexFilter> filters)
         {
             await Task.Delay(0);
             var resut = new List<SearchResultItem>();
@@ -283,7 +292,7 @@ namespace CAFE.Services.Searching
         }
 
         private async Task<IEnumerable<SearchResultItem>> SearchAnnotationsOnlyWithFilterAsync(User user, string search,
-            IEnumerable<SearchRequestFilterItem> filters)
+            IEnumerable<SearchRequestComplexFilter> filters)
         {
             await Task.Delay(0);
             var resut = new List<SearchResultItem>();
@@ -318,160 +327,12 @@ namespace CAFE.Services.Searching
 
             }
 
-            ////var queryRoot = "AnnotationItems.Where(a => a.AnnotationObject.Contexts.Any(ar=>";
-            ////var queryRoot = "AnnotationObject.Contexts.Count(";
-            //var queryRoot = "Object.Contexts.Any(";
-
-            //var queryString = "";
-
-            //_annotationItemRepository.TurnOffProxy();
-            //var query = _annotationItemRepository.Select().Include("Object.Contexts");
-
-            //foreach (var searchRequestFilterItem in filters)
-            //{
-            //    int valToClose = 0;
-            //    var parsedFilter = searchRequestFilterItem.Name.Split('.');
-            //    if (!string.IsNullOrEmpty(queryString))
-            //    {
-            //        queryString += " AND ";
-            //    }
-            //    for (int i = 1; i < parsedFilter.Length; i++)
-            //    {
-            //        var filterPath = parsedFilter[i];
-            //        //if (i == 1)
-            //        //{
-            //        //    queryString += "ar";
-            //        //}
-            //        if (filterPath.EndsWith("[]"))
-            //        {
-            //            valToClose++;
-            //            //queryString += "." + filterPath.Replace("[]", ".Any(a" + valToClose + "=>");
-            //            //queryString += "." + filterPath.Replace("[]", ".Count(");
-            //            queryString += "." + filterPath.Replace("[]", ".Any(");
-            //        }
-            //        else
-            //        {
-            //            //if (valToClose > 0)
-            //            //{
-            //            //    queryString += "a" + valToClose + "." + filterPath;
-            //            //}
-            //            //else
-            //            //{
-            //                if (string.IsNullOrEmpty(queryString) || queryString.EndsWith("(") || queryString.TrimEnd().EndsWith("AND"))
-            //                {
-            //                    queryString += filterPath;
-            //                }
-            //                else
-            //                {
-            //                    queryString += "." + filterPath;
-            //                }
-            //            //}
-            //        }
-            //        if (i == parsedFilter.Length - 1)
-            //        {
-            //            if (searchRequestFilterItem.FilterType == FilterType.Select)
-            //            {
-            //                queryString += ".Value";
-            //            }
-
-            //            if (searchRequestFilterItem.FilterType == FilterType.DigitalRange)
-            //            {
-            //                SearchRequestFilterRange<int> range;
-            //                searchRequestFilterItem.Value.TryGetRange(out range);
-
-            //                queryString = "(" + queryString + ">=" + range.Min.ToString() + " AND " + queryString + "<=" + range.Max.ToString() + ")";
-            //            }
-            //            else if (searchRequestFilterItem.FilterType == FilterType.DateRange)
-            //            {
-            //                SearchRequestFilterRange<int> range;
-            //                searchRequestFilterItem.Value.TryGetRange(out range);
-
-            //                queryString = "(" + queryString + ">=\"" + range.Min.ToString() + "\" AND " + queryString + "<=\"" + range.Max.ToString() + "\")";
-            //            }
-            //            else if (searchRequestFilterItem.FilterType == FilterType.Flag)
-            //            {
-            //                bool valb;
-            //                searchRequestFilterItem.Value.TryGetValue(out valb);
-
-            //                queryString += "=\"" + valb.ToString() + "\"";
-
-            //            }
-            //            else
-            //            {
-            //                queryString += "=\"" + searchRequestFilterItem.Value.Value.ToString() + "\"";
-            //            }
-            //        }
-            //    }
-
-            //    for (int j = 0; j < valToClose; j++)
-            //    {
-            //        queryString += ")";
-            //    }
-            //}
-            //if (!string.IsNullOrEmpty(queryString))
-            //{
-            //    queryRoot += queryString + ")";
-            //    Debug.WriteLine("queryString: " + queryString);
-            //    Debug.WriteLine("queryRoot: " + queryRoot);
-            //    try
-            //    {
-            //        //var externals = new Dictionary<string, object>();
-            //        //externals.Add("AnnotationItems", query);
-            //        //var expression = DynamicExpression.Parse(typeof(IQueryable<DbAnnotationItem>), queryRoot, new object[]{externals});
-
-            //        //query = query.Provider.CreateQuery<DbAnnotationItem>(expression);
-
-
-            //        ///query = query.DynamicWhere(queryRoot);
-            //    }
-            //    catch (Exception exception)
-            //    {
-            //        if(exception.InnerException != null)
-            //            Debug.WriteLine(exception.InnerException);
-            //        else
-            //            Debug.WriteLine(exception);
-            //        throw;
-            //    }
-            //}
-
-            //if (!string.IsNullOrEmpty(search))
-            //{
-            //    query =
-            //        query.AsEnumerable()
-            //            .Where(f => AISearchFunc(f, search.ToLower()))
-            //            .AsQueryable();
-            //}
-
-            //List<DbAnnotationItem> found = new List<DbAnnotationItem>();
-            //try
-            //{
-            //    found = query.ToList();
-            //}
-            //catch (Exception exception)
-            //{                
-            //    throw;
-            //}
-            //foreach (var annotationItem in found)
-            //{
-            //    resut.Add(new SearchResultItem()
-            //    {
-            //        IsAccessible = CheckThatAnnotationItemsIsAccessibleFor(annotationItem, user == null ? null : Mapper.Map(user, new DbUser())),
-            //        ItemType = SearchResultItemType.AnnotationItem,
-            //        Link = "/AnnotationItem?id=" + annotationItem.Id,//TODO: url here
-            //        Name = annotationItem.Object.References.Descriptions?[0]?.Title,
-            //        Owner = string.IsNullOrEmpty(annotationItem.OwnerId) ? null : new User() {Id = annotationItem.OwnerId, Name = annotationItem.OwnerName},
-            //        ItemId = annotationItem.Id,
-            //        AccessMode = annotationItem.AccessMode,
-            //        //CreationDate = annotationItem.CreationDate?.Date
-            //        CreationDate = annotationItem.CreationDate
-            //    });
-            //}
 
             return resut;
         }
 
         private async Task<IEnumerable<SearchResultItem>> SearchFilesOnlyWithFilterAsync(User user, string search,
-            IEnumerable<SearchRequestFilterItem> filters)
+            IEnumerable<SearchRequestComplexFilter> filters)
         {
             await Task.Delay(0);
 
@@ -483,27 +344,27 @@ namespace CAFE.Services.Searching
 
             var filesQuerable = _filesRepository.FindCollection(f => true);
 
-            foreach (var filter in filters)
-            {
-                switch (filter.Name.ToLower())
-                {
-                    case "filetype":
-                        filesQuerable = filesQuerable.Where(f => f.Type.ToString() == filter.Value.Value.ToString());
-                        break;
-                    case "creationdate":
-                        SearchRequestFilterRange<System.DateTime> range = null;
-                        if (filter.Value.TryGetRange(out range))
-                        {
-                            filesQuerable =
-                                filesQuerable.Where(f => f.CreationDate > range.Min && f.CreationDate <= range.Max);
-                        }
-                        break;
-                    default:
-                        //TODO: for others dynamic properties
+            //foreach (var filter in filters)
+            //{
+            //    switch (filter.Name.ToLower())
+            //    {
+            //        case "filetype":
+            //            filesQuerable = filesQuerable.Where(f => f.Type.ToString() == filter.Value.Value.ToString());
+            //            break;
+            //        case "creationdate":
+            //            SearchRequestFilterRange<System.DateTime> range = null;
+            //            if (filter.Value.TryGetRange(out range))
+            //            {
+            //                filesQuerable =
+            //                    filesQuerable.Where(f => f.CreationDate > range.Min && f.CreationDate <= range.Max);
+            //            }
+            //            break;
+            //        default:
+            //            //TODO: for others dynamic properties
 
-                        break;
-                }
-            }
+            //            break;
+            //    }
+            //}
 
             if (!string.IsNullOrEmpty(search))
             {
@@ -665,54 +526,59 @@ namespace CAFE.Services.Searching
             //}
         }
 
-        private async Task<IEnumerable<SearchRequestFilterItem>> GetFilterParametersForAllAsync(bool needToClear)
+        private async Task<IEnumerable<SearchRequestComplexFilter>> GetFilterParametersForAllAsync(bool needToClear)
         {
-            var list = new List<SearchRequestFilterItem>();
+            var list = new List<SearchRequestComplexFilter>();
             list.AddRange(await GetFilterParametersForFilesAsync());
             list.AddRange(await GetFilterParametersForAnnotationItemsAsync(needToClear));
 
             return list;
         }
 
-        private async Task<IEnumerable<SearchRequestFilterItem>> GetFilterParametersForFilesAsync()
+        private async Task<IEnumerable<SearchRequestComplexFilter>> GetFilterParametersForFilesAsync()
         {
             await Task.Delay(0);
-            var list = new List<SearchRequestFilterItem>();
+            var list = new List<SearchRequestComplexFilter>();
 
-            list.Add(new SearchRequestFilterItem()
-            {
-                FilterType = FilterType.Select,
-                Name = "FileType"
-            });
-            list.Add(new SearchRequestFilterItem()
-            {
-                FilterType = FilterType.DateRange,
-                Name = "CreationDate"
-            });
+            //list.Add(new SearchRequestFilterItem()
+            //{
+            //    FilterType = FilterType.Select,
+            //    Name = "FileType"
+            //});
+            //list.Add(new SearchRequestFilterItem()
+            //{
+            //    FilterType = FilterType.DateRange,
+            //    Name = "CreationDate"
+            //});
 
             return list;
         }
 
-        private async Task<IEnumerable<SearchRequestFilterItem>> GetFilterParametersForAnnotationItemsAsync(bool needToClear)
+        private async Task<IEnumerable<SearchRequestComplexFilter>> GetFilterParametersForAnnotationItemsAsync(bool needToClear)
         {
             await Task.Delay(0);
 
+            IEnumerable<SearchRequestComplexFilter> filters = new List<SearchRequestComplexFilter>();
+            var listFilters = (List<SearchRequestComplexFilter>) filters;
+
+
             var filterDescriptions = _schemaDescriptionsRepository.FindCollection(f => true).ToList();
 
-            IEnumerable<SearchRequestFilterItem> filters;
+            IEnumerable<SearchRequestFilterItem> oldfilters = new List<SearchRequestFilterItem>();
+
             // First check that db exists cache of search filters model
             // and it have actual state
             needToClear = true;
             if (needToClear)
             //if (!HaveActualCachedSearchFilterItems() && needToClear)
             {
-                var annotationObjectType = typeof(Context);
-                filters = GetFiltersForType(annotationObjectType, "Object", "", filterDescriptions);
+                var annotationObjectType = typeof(AnnotationObject);
+                oldfilters = GetFiltersForType(annotationObjectType, "Object", "", filterDescriptions);
 
                 //Save performed filter items model to cache
                 try
                 {
-                    SaveToCacheFilterItems(filters);
+                    SaveToCacheFilterItems(oldfilters);
                 }
                 catch (Exception e)
                 {
@@ -721,10 +587,43 @@ namespace CAFE.Services.Searching
             }
             else
             {
-                filters = GetFiltersForTypeFromCache(filterDescriptions);
+                oldfilters = GetFiltersForTypeFromCache(filterDescriptions);
             }
 
+
+            filters = ComplexFiltersConfiguration.ComplexFiltersScopes.ToDomainList();
+            foreach (var searchRequestComplexFilter in filters)
+            {
+                foreach (var searchRequestFilterItem in searchRequestComplexFilter.Items)
+                {
+                    var foundOldFilter =
+                        oldfilters.Where(
+                                f => f.Name.ToLower().StartsWith(searchRequestFilterItem.Name.Replace("[N]", "[]").Replace("[1]", "[]").ToLower()))
+                            .FirstOrDefault();
+                    if (foundOldFilter != null)
+                        searchRequestFilterItem.ValueType = foundOldFilter.ValueType;
+                    else
+                    {
+                        if (searchRequestFilterItem.Name.EndsWith("Persons[N].Position[1]"))
+                            searchRequestFilterItem.ValueType = "PositionVocabulary";
+                        else if(searchRequestFilterItem.Name.EndsWith("Hosters[N].HosterName"))
+                            searchRequestFilterItem.ValueType = "HosterNameVocabulary";
+                        else if (searchRequestFilterItem.Name.EndsWith("AccessMode"))
+                            searchRequestFilterItem.ValueType = "AccessModes";
+                        else if(searchRequestFilterItem.Name.EndsWith("Interactions[N].InteractionPartnerOne"))
+                            searchRequestFilterItem.ValueType = "InteractionPartnerVocabulary";
+                        else if (searchRequestFilterItem.Name.EndsWith("Interactions[N].InteractionPartnerTwo"))
+                            searchRequestFilterItem.ValueType = "InteractionPartnerVocabulary";
+                        //else if (searchRequestFilterItem.Name.EndsWith("Processes[N].ProcessSubject[1]"))
+                        //    searchRequestFilterItem.ValueType = "ProcessSubjectVocabulary"; 
+                        else
+                            searchRequestFilterItem.ValueType = "String";
+                    }
+                }
+            }
             return filters;
+
+            //return filters;
         }
 
         private bool HaveActualCachedSearchFilterItems()
@@ -751,7 +650,7 @@ namespace CAFE.Services.Searching
                 {
                     prNm += "[]";
                     pt = propertyInfo.PropertyType.GetGenericArguments()[0];
-                    prNm += "." + pt.Name;
+                    //prNm += "." + pt.Name;
                 }
 
                 if (pt.IsBaseValueType() && propertyInfo.Name != "LocationName")
@@ -788,8 +687,27 @@ namespace CAFE.Services.Searching
                         Tooltip = tooltip
                     });
                 }
-                else if ((propertyInfo.PropertyType.GetProperties().Any(p => p.Name == "Value") &&
-                         propertyInfo.PropertyType.GetProperties().Any(p => p.Name == "Uri")) || propertyInfo.Name == "LocationName")
+                else if (propertyInfo.PropertyType.Name == "DateAndTime")
+                {
+                    var fileTypeFor = FilterType.DateAndTime;
+
+                    var name = string.IsNullOrEmpty(pn) ? prNm : pn + "." + prNm;
+                    var path = name.Replace("[]", "");
+                    var tooltip = "NA";
+                    var foundDescription = descriptions.Where(d => d.Path.ToLower() == path.ToLower()).FirstOrDefault();
+                    if (foundDescription != null)
+                        tooltip = foundDescription.Description;
+                    result.Add(new SearchRequestFilterItem()
+                    {
+                        FilterType = fileTypeFor,
+                        Name = name,
+                        Description = desc,
+                        ValueType = propertyInfo.PropertyType.Name,
+                        Tooltip = tooltip
+                    });
+                }
+                else if ((pt.GetProperties().Any(p => p.Name == "Value") &&
+                         pt.GetProperties().Any(p => p.Name == "Uri")) || propertyInfo.Name == "LocationName")
                 {
                     var pnArr = pn.Split('.');
                     var prevDesc = desc;
@@ -810,7 +728,7 @@ namespace CAFE.Services.Searching
                         FilterType = FilterType.Select,
                         Name = name,
                         Description = desc,
-                        ValueType = $"{propertyInfo.PropertyType.Name}Vocabulary",
+                        ValueType = $"{pt.Name}Vocabulary",
                         Tooltip = tooltip
                     });
                 }
@@ -874,7 +792,7 @@ namespace CAFE.Services.Searching
         {
             if (t.Name == "DateTime")
             {
-                return FilterType.DateRange;
+                return FilterType.DateAndTime;
             }
             else if (t.Name == "Boolean")
             {
@@ -882,14 +800,14 @@ namespace CAFE.Services.Searching
             }
             else if (propertyName.ToLower() == "time")
             {
-                return FilterType.Timer;
+                return FilterType.DateAndTime;
             }
             else if (t.Name == "String")
             {
                 var vocType = TryFindVocabularyType(propertyName);
                 if (vocType == null)
                 {
-                    return FilterType.Input;
+                    return FilterType.Simple;
                 }
                 else
                 {
@@ -899,6 +817,10 @@ namespace CAFE.Services.Searching
             else if (t.Name.StartsWith("Int") || t.Name == "Decimal" || t.Name == "Double")
             {
                 return FilterType.DigitalRange;
+            }
+            else if (t.Name == "Byte[]")
+            {
+                return FilterType.Other;
             }
             else
             {
@@ -966,267 +888,421 @@ namespace CAFE.Services.Searching
               || type.Equals(typeof(string));
         }
 
-        private string BuildSqlQueryFor(IEnumerable<SearchRequestFilterItem> filters, string search)
+        private string BuildSqlQueryFor(IEnumerable<SearchRequestComplexFilter> filters, string search)
         {
             var usedKeys = new List<string>()
             {
                 "AI",
                 "AO",
-                "CT"
+                //"CT"
             };
-            StringBuilder builder = new StringBuilder("SELECT AI.* FROM [dbo].[DbAnnotationItem] AS AI INNER JOIN [dbo].[DbAnnotationObject] AS AO ON AI.Object_Id = AO.Id JOIN [dbo].[DbAnnotationContext] AS CT ON AI.Object_Id = CT.DbAnnotationObject_Id INNER JOIN [dbo].[DbReferences] AS RF ON AO.References_Id = RF.Id JOIN [dbo].[DbDescription] AS DS ON DS.DbReferences_Id = RF.Id ");
+            StringBuilder builder = new StringBuilder("SELECT AI.* FROM [dbo].[DbAnnotationItem] AS AI INNER JOIN [dbo].[DbAnnotationObject] AS AO ON AI.Object_Id = AO.Id JOIN [dbo].[DbReferences] AS RF ON AO.References_Id = RF.Id JOIN [dbo].[DbDescription] AS DS ON DS.DbReferences_Id = RF.Id ");
 
-            var contextType = typeof(DbAnnotationContext);
+            //StringBuilder builder = new StringBuilder("SELECT AI.* FROM [dbo].[DbAnnotationItem] AS AI INNER JOIN [dbo].[DbAnnotationObject] AS AO ON AI.Object_Id = AO.Id JOIN [dbo].[DbAnnotationContext] AS CT ON AI.Object_Id = CT.DbAnnotationObject_Id INNER JOIN [dbo].[DbReferences] AS RF ON AO.References_Id = RF.Id JOIN [dbo].[DbDescription] AS DS ON DS.DbReferences_Id = RF.Id ");
+
+            //var contextType = typeof(DbAnnotationContext);
+            var annotationObjectType = typeof(DbAnnotationObject);
             var filterStatements = new List<string>();
             var mappedJoinKeys = new Dictionary<string, string>();
             var addedPaths = new List<string>();
 
-            foreach (var filterItem in filters)
+            var searchRequestComplexFilters = filters as SearchRequestComplexFilter[] ?? filters.ToArray();
+            foreach (var searchRequestComplexFilter in searchRequestComplexFilters)
             {
-                var parsedFilterKey = ParseFiltersKey(filterItem);
 
-                var mappedPropertyTypes = new Dictionary<string, Type>();
+                var complexFilterName = searchRequestComplexFilter.Name;
 
-                for (int i = 1; i < parsedFilterKey.Length; i++)
+                switch (complexFilterName)
                 {
-                    var currentKey = parsedFilterKey[i];
-                    var currentPathArray = new string[i];
-                    Array.Copy(parsedFilterKey, 1, currentPathArray, 0, i);
-                    var currentPath = string.Join(".", currentPathArray);
+                    default:
+                        break;
+                }
 
-                    if (i == 1)
+                foreach (var searchRequestFilterItem in searchRequestComplexFilter.Items)
+                {
+                    if((searchRequestFilterItem.Value == null || (searchRequestFilterItem.Value.Value == null || string.IsNullOrEmpty(searchRequestFilterItem.Value.Value.ToString()))) 
+                        && (!searchRequestFilterItem.Values.Any())) continue;
+
+
+
+                    //Access mode
+                    if (searchRequestFilterItem.Name.EndsWith(".AccessMode"))
                     {
-                        currentPath = currentKey;
-                        var foundProperty = contextType.GetProperties(BindingFlags.Instance | BindingFlags.Public)
-                            .Where(p => p.Name == currentKey).FirstOrDefault();
-
-                        if (foundProperty == null)
-                            throw new ApplicationException("Requested property not found");
-
-                        var propertyType = foundProperty.PropertyType;
-                        var isCollection = false;
-
-                        if (typeof(IEnumerable<>).IsAssignableFrom(propertyType))
+                        var intEnumStrings = new List<string>();
+                        foreach (var searchRequestFilterValue in searchRequestFilterItem.Values)
                         {
-                            propertyType = propertyType.GetGenericArguments()[0];
-                            isCollection = true;
+                            intEnumStrings.Add(((int) Enum.Parse(typeof(AccessModes),
+                                searchRequestFilterValue.Value.ToString())).ToString());
+
                         }
 
-                        mappedPropertyTypes.Add(currentPath, propertyType);
-
-                        var propertyTypeName = propertyType.Name;
-                        var endPropertyTypeName = propertyTypeName;// + "s";
-                        //if (propertyTypeName.EndsWith("s"))
-                        //{
-                        //    var singledPropertyName = propertyTypeName.PadRight(propertyTypeName.Length - 1);
-                        //    if (AlreadyExistType(singledPropertyName))
-                        //        endPropertyTypeName += "1";
-                        //}
-
-                        //if (AlreadyExistType(endPropertyTypeName))
-                        //    endPropertyTypeName += "1";
-
-                        var propertyKey = "";
+                        filterStatements.Add("AI.AccessMode IN (" + string.Join(",", intEnumStrings) + ") ");
+                        continue;
+                    }
 
 
-                        if (!mappedJoinKeys.ContainsKey(currentKey))
+
+                    var parsedFilterKey = ParseFiltersKey(searchRequestFilterItem);
+
+                    var mappedPropertyTypes = new Dictionary<string, Type>();
+
+                    for (int i = 1; i < parsedFilterKey.Length; i++)
+                    {
+                        var currentKey = parsedFilterKey[i];
+                        var currentPathArray = new string[i];
+                        Array.Copy(parsedFilterKey, 1, currentPathArray, 0, i);
+                        var currentPath = string.Join(".", currentPathArray);
+
+                        if (i == 1)
                         {
-                            propertyKey = "KEY" + RandomNumber(1, 1000).ToString();
-                            if (usedKeys.Contains(propertyKey))
-                                propertyKey = "KEY" + RandomNumber(1, 1000).ToString();
-                            usedKeys.Add(propertyKey);
+                            currentPath = currentKey;
+                            var foundProperty = annotationObjectType.GetProperties(BindingFlags.Instance | BindingFlags.Public)
+                                .Where(p => p.Name == currentKey.Replace("[]", "")).FirstOrDefault();
 
-                            mappedJoinKeys.Add(currentKey, propertyKey);
-                        }
-                        else
-                        {
-                            propertyKey = mappedJoinKeys[currentKey];
-                        }
+                            if (foundProperty == null)
+                                throw new ApplicationException("Requested property not found");
 
-                        if (!addedPaths.Contains(currentPath))
-                        {
-                            if (isCollection)
+                            var propertyType = foundProperty.PropertyType;
+                            var isCollection = false;
+
+                            if(propertyType.GetInterfaces().Contains(typeof(IEnumerable)) && propertyType.IsGenericType)
+                            //if (typeof(IEnumerable<>).IsAssignableFrom(propertyType))
                             {
-                                builder.Append("JOIN ");
+                                propertyType = propertyType.GetGenericArguments()[0];
+                                isCollection = true;
+                            }
+
+                            mappedPropertyTypes.Add(currentPath, propertyType);
+
+                            var propertyTypeName = propertyType.Name;
+                            var endPropertyTypeName = propertyTypeName;// + "s";
+                                                                       //if (propertyTypeName.EndsWith("s"))
+                                                                       //{
+                                                                       //    var singledPropertyName = propertyTypeName.PadRight(propertyTypeName.Length - 1);
+                                                                       //    if (AlreadyExistType(singledPropertyName))
+                                                                       //        endPropertyTypeName += "1";
+                                                                       //}
+
+                            //if (AlreadyExistType(endPropertyTypeName))
+                            //    endPropertyTypeName += "1";
+
+                            var propertyKey = "";
+
+
+                            if (!mappedJoinKeys.ContainsKey(currentKey))
+                            {
+                                propertyKey = "KEY" + RandomNumber(RandomNumber(1, 100), RandomNumber(1000, 10000)).ToString();
+                                if (usedKeys.Contains(propertyKey))
+                                    propertyKey = "KEY" + RandomNumber(RandomNumber(1, 100), RandomNumber(1000, 10000)).ToString();
+                                usedKeys.Add(propertyKey);
+
+                                mappedJoinKeys.Add(currentKey, propertyKey);
                             }
                             else
                             {
-                                builder.Append("INNER JOIN ");
+                                propertyKey = mappedJoinKeys[currentKey];
                             }
-                            builder.Append("[dbo].[");
-                            builder.Append(endPropertyTypeName);
-                            builder.Append("] AS ");
-                            builder.Append(propertyKey);
-                            builder.Append(" ON CT.");
-                            builder.Append(foundProperty.Name);
-                            builder.Append("_Id = ");
-                            builder.Append(propertyKey);
-                            builder.Append(".Id ");
 
-                            addedPaths.Add(currentPath);
-                        }
-                    }
-                    else if ((i + 1) == parsedFilterKey.Length)
-                    {
-                        var previousPathArray = new string[i - 1];
-                        Array.Copy(parsedFilterKey, 1, previousPathArray, 0, i - 1);
-                        var previousPath = string.Join(".", previousPathArray);
-
-                        var previousKey = mappedJoinKeys[previousPath];
-
-                        var previousType = mappedPropertyTypes[previousPath];
-                        var previousTypeProperties = previousType.GetProperties(BindingFlags.Instance | BindingFlags.Public);
-                        var currentProperty = previousTypeProperties
-                            .Where(p => p.Name == currentKey).FirstOrDefault();
-
-                        if(null == currentProperty)
-                        {
-                            var notSimpleProperties = previousTypeProperties.Where(p => !IsSimple(p.PropertyType));
-                            foreach(var prop in notSimpleProperties)
+                            if (!addedPaths.Contains(currentPath))
                             {
-                                var props = prop.PropertyType.GetProperties();
-                                currentProperty = props.Where(p => p.Name == currentKey).FirstOrDefault();
-                                if (null != currentProperty)
-                                    break;
-                            }
-                        }
-
-                        var currentPropertyType = currentProperty.PropertyType;
-                        var operation = "=";
-
-                        switch (filterItem.FilterType)
-                        {
-                            case FilterType.Input:
-                                if (currentPropertyType.Name == "Int16" || currentPropertyType.Name == "Int32"
-                                    || currentPropertyType.Name == "Int64" || currentPropertyType.Name == "UInt16"
-                                    || currentPropertyType.Name == "UInt32" || currentPropertyType.Name == "UInt64"
-                                    || currentPropertyType.Name == "Double" || currentPropertyType.Name == "Decimal")
+                                if (isCollection)
                                 {
-                                    filterStatements.Add(previousKey + "." + currentKey + " " + operation + " " + filterItem.Value.Value + " ");
+                                    builder.Append("JOIN ");
+                                    builder.Append("[dbo].[");
+                                    builder.Append(endPropertyTypeName);
+                                    builder.Append("] AS ");
+                                    builder.Append(propertyKey);
+                                    builder.Append(" ON ");
+                                    builder.Append(propertyKey);
+                                    builder.Append(".");
+                                    builder.Append(annotationObjectType.Name);
+                                    builder.Append("_Id = ");
+                                    builder.Append("AO");
+                                    builder.Append(".Id ");
+
                                 }
                                 else
                                 {
-                                    filterStatements.Add(previousKey + "." + currentKey + " " + operation + " N'" + filterItem.Value.Value + "' ");
+                                    builder.Append("INNER JOIN ");
+                                    builder.Append("[dbo].[");
+                                    builder.Append(endPropertyTypeName);
+                                    builder.Append("] AS ");
+                                    builder.Append(propertyKey);
+                                    builder.Append(" ON AO.");
+                                    builder.Append(foundProperty.Name);
+                                    builder.Append("_Id = ");
+                                    builder.Append(propertyKey);
+                                    builder.Append(".Id ");
+
                                 }
-                                break;
-                            case FilterType.Select:
-                                if("undefined" != (string)filterItem.Value.Value)
-                                    filterStatements.Add(previousKey + "." + currentKey + " " + operation + " N'" + filterItem.Value.Value + "' ");
-                                break;
-                            case FilterType.Flag:
-                                filterStatements.Add(previousKey + "." + currentKey + " " + operation + " " + filterItem.Value.Value + " ");
-                                break;
-                            case FilterType.DateRange:
-                                SearchRequestFilterRange<DateTime> dateRange;
-                                if (filterItem.Value.TryGetRange(out dateRange))
-                                {
-                                    filterStatements.Add("(" + previousKey + "." + currentKey + " BETWEEN '" + dateRange.Min + "' AND '" + dateRange.Max + "') ");
-                                }
-                                break;
-                            case FilterType.DigitalRange:
-                                SearchRequestFilterRange<double> intRange;
-                                if (filterItem.Value.TryGetRange(out intRange))
-                                {
-                                    filterStatements.Add("(" + previousKey + "." + currentKey + " BETWEEN " + intRange.Min + " AND " + intRange.Max + ") ");
-                                }
-                                break;
+
+                                addedPaths.Add(currentPath);
+                            }
                         }
-                    }
-                    else
-                    {
-                        string[] s1 = new string[3] {"John", "Paul", "Mary"};
-                        var s1Array = new string[i - 1];
-                        Array.Copy(parsedFilterKey, 1, s1Array, 0, i - 1);
-                        var s2 = string.Join(".", s1Array);
-
-                        var s3 = mappedPropertyTypes[s2];
-
-                        var s4 = s3.GetProperties(BindingFlags.Instance | BindingFlags.Public);
-                        var foundProperty1 = s4
-                            .Where(p => p.Name == currentKey.Replace("[]", "")).FirstOrDefault();
-
-                        if (foundProperty1 == null)
-                            throw new ApplicationException("Requested property not found");
-
-                        var propertyType1 = foundProperty1.PropertyType;
-                        var isCollection1 = false;
-
-                        if (propertyType1.GetInterface("IEnumerable") != null)
+                        else if ((i + 1) == parsedFilterKey.Length)
                         {
-                            propertyType1 = propertyType1.GetGenericArguments()[0];
-                            isCollection1 = true;
-                        }
+                            var previousPathArray = new string[i - 1];
+                            Array.Copy(parsedFilterKey, 1, previousPathArray, 0, i - 1);
+                            var previousPath = string.Join(".", previousPathArray);
 
-                        mappedPropertyTypes.Add(currentPath, propertyType1);
+                            var previousKey = mappedJoinKeys[previousPath];
 
-                        var propertyTypeName1 = propertyType1.Name;
-                        var endPropertyTypeName1 = propertyTypeName1;
-                        //if (!endPropertyTypeName1.EndsWith("s"))
-                        //{
-                        //    endPropertyTypeName1 += "s";
-                        //}
-                        //var propertyNameForCheck = propertyTypeName1 + "s";
-                        //if (AlreadyExistType(propertyNameForCheck))
-                        //    endPropertyTypeName1 += "1";
+                            var previousType = mappedPropertyTypes[previousPath];
+                            var previousTypeProperties = previousType.GetProperties(BindingFlags.Instance | BindingFlags.Public);
+                            var currentProperty = previousTypeProperties
+                                .Where(p => p.Name == currentKey.Replace("[]", "")).FirstOrDefault();
 
-                        var propertyKey1 = "";
-                        if (!mappedJoinKeys.ContainsKey(currentPath))
-                        {
-                            propertyKey1 = "KEY" + RandomNumber(1, 1000).ToString();
-                            if (usedKeys.Contains(propertyKey1))
-                                propertyKey1 = "KEY" + RandomNumber(1, 1000).ToString();
-                            usedKeys.Add(propertyKey1);
+                            if (null == currentProperty)
+                            {
+                                var notSimpleProperties = previousTypeProperties.Where(p => !IsSimple(p.PropertyType));
+                                foreach (var prop in notSimpleProperties)
+                                {
+                                    var props = prop.PropertyType.GetProperties();
+                                    currentProperty = props.Where(p => p.Name == currentKey.Replace("[]", "")).FirstOrDefault();
+                                    if (null != currentProperty)
+                                        break;
+                                }
+                            }
+                            var propertyType1 = currentProperty.PropertyType;
+                            var isCollection1 = false;
 
-                            mappedJoinKeys.Add(currentPath, propertyKey1);
+                            var isPersistanceSerialized = false;
+                            if (propertyType1.GetInterface("IEnumerable") != null)
+                            {
+                                if (propertyType1 == typeof(PersistableStringCollection))
+                                {
+                                    propertyType1 = typeof(string);
+                                    isPersistanceSerialized = true;
+                                }
+                                if (propertyType1.IsGenericType)
+                                    propertyType1 = propertyType1.GetGenericArguments()[0];
+                                isCollection1 = true;
+                            }
+
+                            var currentPropertyType = propertyType1;
+                            var operation = "=";
+
+                            switch (searchRequestFilterItem.FilterType)
+                            {
+                                case FilterType.Simple:
+                                case FilterType.Numeric:
+                                    if (currentPropertyType.Name == "Int16" || currentPropertyType.Name == "Int32"
+                                        || currentPropertyType.Name == "Int64" || currentPropertyType.Name == "UInt16"
+                                        || currentPropertyType.Name == "UInt32" || currentPropertyType.Name == "UInt64"
+                                        || currentPropertyType.Name == "Double" || currentPropertyType.Name == "Decimal")
+                                    {
+                                        if (searchRequestComplexFilter.Name == "Space.Bounding Box")
+                                        {
+                                            switch (searchRequestFilterItem.Name)
+                                            {
+                                                case "Object.Contexts[1].SpaceContext.BoundingBoxes[N].NorthBoundingCoordinate":
+                                                case "Object.Contexts[1].SpaceContext.BoundingBoxes[N].EastBoundingCoordinate":
+                                                    filterStatements.Add(previousKey + "." + currentKey.Replace("[]", "") + " <= " + searchRequestFilterItem.Value.Value + " ");
+
+                                                    break;
+                                                case "Object.Contexts[1].SpaceContext.BoundingBoxes[N].SouthBoundingCoordinate":
+                                                case "Object.Contexts[1].SpaceContext.BoundingBoxes[N].WestBoundingCoordinate":
+                                                    filterStatements.Add(previousKey + "." + currentKey.Replace("[]", "") + " >= " + searchRequestFilterItem.Value.Value + " ");
+
+                                                    break;
+
+                                            }
+                                        }
+                                        else
+                                            filterStatements.Add(previousKey + "." + currentKey.Replace("[]", "") + " " + operation + " " + searchRequestFilterItem.Value.Value + " ");
+                                    }
+                                    else
+                                    {
+                                        filterStatements.Add(previousKey + "." + currentKey.Replace("[]", "") + (isPersistanceSerialized ? "_SerializedValue" : "") + " " + operation + " N'" + searchRequestFilterItem.Value.Value + "' ");
+                                    }
+                                    break;
+                                case FilterType.Select:
+                                case FilterType.ReferenceValue:
+                                    mappedPropertyTypes.Add(currentPath, propertyType1);
+
+                                    var propertyTypeName1 = propertyType1.Name;
+                                    var endPropertyTypeName1 = propertyTypeName1;
+                                    //if (!endPropertyTypeName1.EndsWith("s"))
+                                    //{
+                                    //    endPropertyTypeName1 += "s";
+                                    //}
+                                    //var propertyNameForCheck = propertyTypeName1 + "s";
+                                    //if (AlreadyExistType(propertyNameForCheck))
+                                    //    endPropertyTypeName1 += "1";
+
+                                    var propertyKey2 = "";
+                                    if (!mappedJoinKeys.ContainsKey(currentPath))
+                                    {
+                                        propertyKey2 = "KEY" + RandomNumber(RandomNumber(1,100), RandomNumber(1000, 10000)).ToString();
+                                        if (usedKeys.Contains(propertyKey2))
+                                            propertyKey2 = "KEY" + RandomNumber(RandomNumber(1, 100), RandomNumber(1000, 10000)).ToString();
+                                        usedKeys.Add(propertyKey2);
+
+                                        mappedJoinKeys.Add(currentPath, propertyKey2);
+                                    }
+                                    else
+                                    {
+                                        propertyKey2 = mappedJoinKeys[currentPath];
+                                    }
+
+                                    var previousKey1 = mappedJoinKeys[previousPath];
+
+                                    if (!addedPaths.Contains(currentPath))
+                                    {
+
+
+                                        if (isCollection1)
+                                        {
+                                            builder.Append("JOIN ");
+                                            builder.Append("[dbo].[");
+                                            builder.Append(endPropertyTypeName1);
+                                            builder.Append("] AS ");
+                                            builder.Append(propertyKey2);
+                                            builder.Append(" ON ");
+                                            builder.Append(propertyKey2);
+                                            builder.Append(".");
+                                            builder.Append(previousType.Name);
+                                            builder.Append("_Id = ");
+                                            builder.Append(previousKey1);
+                                            builder.Append(".Id ");
+
+                                        }
+                                        else
+                                        {
+                                            builder.Append("INNER JOIN ");
+                                            builder.Append("[dbo].[");
+                                            builder.Append(endPropertyTypeName1);
+                                            builder.Append("] AS ");
+                                            builder.Append(propertyKey2);
+                                            builder.Append(" ON ");
+                                            builder.Append(previousKey);
+                                            builder.Append(".");
+                                            builder.Append(currentProperty.Name);
+                                            builder.Append("_Id = ");
+                                            builder.Append(previousKey1);
+                                            builder.Append(".Id ");
+                                        }
+
+                                        addedPaths.Add(currentPath);
+                                    }
+
+                                    if (searchRequestFilterItem.Values != null && searchRequestFilterItem.Values.Any())
+                                        filterStatements.Add(propertyKey2 + ".Value IN (" + string.Join(",", searchRequestFilterItem.Values.ToSqlParameterStrings()) + ") ");
+                                    break;
+                                //case FilterType.Flag:
+                                //    filterStatements.Add(previousKey + "." + currentKey + " " + operation + " " + filterItem.Value.Value + " ");
+                                //    break;
+                                case FilterType.DateAndTime:
+                                    var date = DateTime.Parse(searchRequestFilterItem.Value.Value.ToString());
+
+                                    if (searchRequestComplexFilter.Name == "Time.Time Ranges")
+                                    {
+                                        if(searchRequestFilterItem.Name == "Object.Contexts[1].TimeContext.TimeRanges.TimeRange.RangeStart.DateTime")
+                                            filterStatements.Add(previousKey + "." + currentKey.Replace("[]", "") + " >= '" + date.Date + "' ");
+                                        else
+                                            filterStatements.Add(previousKey + "." + currentKey.Replace("[]", "") + " <= '" + date.Date + "' ");
+                                    }
+                                    else
+                                        filterStatements.Add(previousKey + "." + currentKey.Replace("[]", "") + " = '" + date.Date + "' ");
+                                    break;
+                                    //case FilterType.DigitalRange:
+                                    //    SearchRequestFilterRange<double> intRange;
+                                    //    if (filterItem.Value.TryGetRange(out intRange))
+                                    //    {
+                                    //        filterStatements.Add("(" + previousKey + "." + currentKey + " BETWEEN " + intRange.Min + " AND " + intRange.Max + ") ");
+                                    //    }
+                                    //    break;
+                            }
                         }
                         else
                         {
-                            propertyKey1 = mappedJoinKeys[currentPath];
-                        }
+                            var s1Array = new string[i - 1];
+                            Array.Copy(parsedFilterKey, 1, s1Array, 0, i - 1);
+                            var s2 = string.Join(".", s1Array);
 
-                        var previousKey = mappedJoinKeys[s2];
+                            var s3 = mappedPropertyTypes[s2];
 
-                        if (!addedPaths.Contains(currentPath))
-                        {
+                            var s4 = s3.GetProperties(BindingFlags.Instance | BindingFlags.Public);
+                            var foundProperty1 = s4
+                                .Where(p => p.Name == currentKey.Replace("[]", "")).FirstOrDefault();
 
+                            if (foundProperty1 == null)
+                                throw new ApplicationException("Requested property not found");
 
-                            if (isCollection1)
+                            var propertyType1 = foundProperty1.PropertyType;
+                            var isCollection1 = false;
+
+                            if (propertyType1.GetInterface("IEnumerable") != null)
                             {
-                                builder.Append("JOIN ");
-                                builder.Append("[dbo].[");
-                                builder.Append(endPropertyTypeName1);
-                                builder.Append("] AS ");
-                                builder.Append(propertyKey1);
-                                builder.Append(" ON ");
-                                builder.Append(propertyKey1);
-                                builder.Append(".");
-                                builder.Append(s3.Name);
-                                builder.Append("_Id = ");
-                                builder.Append(previousKey);
-                                builder.Append(".Id ");
+                                propertyType1 = propertyType1.GetGenericArguments()[0];
+                                isCollection1 = true;
+                            }
 
+                            mappedPropertyTypes.Add(currentPath, propertyType1);
+
+                            var propertyTypeName1 = propertyType1.Name;
+                            var endPropertyTypeName1 = propertyTypeName1;
+
+                            var propertyKey1 = "";
+                            if (!mappedJoinKeys.ContainsKey(currentPath))
+                            {
+                                propertyKey1 = "KEY" + RandomNumber(RandomNumber(1, 100), RandomNumber(1000, 10000)).ToString();
+                                if (usedKeys.Contains(propertyKey1))
+                                    propertyKey1 = "KEY" + RandomNumber(RandomNumber(1, 100), RandomNumber(1000, 10000)).ToString();
+                                usedKeys.Add(propertyKey1);
+
+                                mappedJoinKeys.Add(currentPath, propertyKey1);
                             }
                             else
                             {
-                                builder.Append("INNER JOIN ");
-                                builder.Append("[dbo].[");
-                                builder.Append(endPropertyTypeName1);
-                                builder.Append("] AS ");
-                                builder.Append(propertyKey1);
-                                builder.Append(" ON ");
-                                builder.Append(previousKey);
-                                builder.Append(".");
-                                builder.Append(foundProperty1.Name);
-                                builder.Append("_Id = ");
-                                builder.Append(propertyKey1);
-                                builder.Append(".Id ");
+                                propertyKey1 = mappedJoinKeys[currentPath];
                             }
 
-                            addedPaths.Add(currentPath);
+                            var previousKey = mappedJoinKeys[s2];
+
+                            if (!addedPaths.Contains(currentPath))
+                            {
+
+
+                                if (isCollection1)
+                                {
+                                    builder.Append("JOIN ");
+                                    builder.Append("[dbo].[");
+                                    builder.Append(endPropertyTypeName1);
+                                    builder.Append("] AS ");
+                                    builder.Append(propertyKey1);
+                                    builder.Append(" ON ");
+                                    builder.Append(propertyKey1);
+                                    builder.Append(".");
+                                    builder.Append(s3.Name);
+                                    builder.Append("_Id = ");
+                                    builder.Append(previousKey);
+                                    builder.Append(".Id ");
+
+                                }
+                                else
+                                {
+                                    builder.Append("INNER JOIN ");
+                                    builder.Append("[dbo].[");
+                                    builder.Append(endPropertyTypeName1);
+                                    builder.Append("] AS ");
+                                    builder.Append(propertyKey1);
+                                    builder.Append(" ON ");
+                                    builder.Append(previousKey);
+                                    builder.Append(".");
+                                    builder.Append(foundProperty1.Name);
+                                    builder.Append("_Id = ");
+                                    builder.Append(propertyKey1);
+                                    builder.Append(".Id ");
+                                }
+
+                                addedPaths.Add(currentPath);
+                            }
                         }
                     }
                 }
             }
+
 
             if (!string.IsNullOrEmpty(search) || filterStatements.Any())
                 builder.Append("WHERE ");
@@ -1237,7 +1313,7 @@ namespace CAFE.Services.Searching
                 builder.Append(filterStatement);
                 builder.Append(" AND ");
             }
-            if (string.IsNullOrEmpty(search) && filters.Any())
+            if (string.IsNullOrEmpty(search) && searchRequestComplexFilters.Any())
             {
                 builder.Remove(builder.Length - 6, 5);
             }
@@ -1256,20 +1332,33 @@ namespace CAFE.Services.Searching
 
         private string[] ParseFiltersKey(SearchRequestFilterItem filterItem)
         {
-            var parsedFilterKey = filterItem.Name.Split('.');
+            var parsedFilterKey = filterItem.Name.Replace("[1]", "[]").Replace("[N]", "[]")
+                //.Replace("[]", "")
+                .Split('.');
 
-            // getting last item to check
-            // if it 'Select' type and need additional join performs
-            // also it must contains 'Value' propty
-            var lastItemIsSelect = CheckIsItemIsSelectType(parsedFilterKey[parsedFilterKey.Length - 1]);
-            if (lastItemIsSelect)
+
+            //// getting last item to check
+            //// if it 'Select' type and need additional join performs
+            //// also it must contains 'Value' propty
+            //var lastItemIsSelect = CheckIsItemIsSelectType(parsedFilterKey[parsedFilterKey.Length - 1]);
+            //if (lastItemIsSelect)
+            //{
+            //    var tempArr = new string[parsedFilterKey.Length];
+            //    Array.Copy(parsedFilterKey, 0, tempArr, 0, parsedFilterKey.Length);
+
+            //    parsedFilterKey = new string[tempArr.Length + 1];
+            //    Array.Copy(tempArr, 0, parsedFilterKey, 0, tempArr.Length);
+            //    parsedFilterKey[parsedFilterKey.Length - 1] = "Value";
+            //    tempArr = null;
+            //}
+            if (filterItem.ValueType == typeof(DateAndTime).Name)
             {
                 var tempArr = new string[parsedFilterKey.Length];
                 Array.Copy(parsedFilterKey, 0, tempArr, 0, parsedFilterKey.Length);
 
                 parsedFilterKey = new string[tempArr.Length + 1];
                 Array.Copy(tempArr, 0, parsedFilterKey, 0, tempArr.Length);
-                parsedFilterKey[parsedFilterKey.Length - 1] = "Value";
+                parsedFilterKey[parsedFilterKey.Length - 1] = "Date";
                 tempArr = null;
             }
 

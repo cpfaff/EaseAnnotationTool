@@ -17,6 +17,7 @@ using CAFE.DAL.Models;
 using System.Collections.Generic;
 using Microsoft.Practices.Unity;
 using CAFE.Core.Plugins;
+using CAFE.Core.Configuration.Complex;
 
 namespace CAFE.Web
 {
@@ -38,8 +39,21 @@ namespace CAFE.Web
                 c.CreateMap<ComplexSearchFiltersConfiguration, ComplexSearchFiltersConfigurationSection>();
                 c.CreateMap<Configuration.RelatedFilterScope, Core.Configuration.RelatedFilterScope>();
                 c.CreateMap<Core.Configuration.RelatedFilterScope, Configuration.RelatedFilterScope>();
+                c.CreateMap<ComplexFilterScope, ComplexSearchFiltersConfigurationSection.ComplexFilterScope>();
+                c.CreateMap<ComplexSearchFiltersConfigurationSection.ComplexFilterScope, ComplexFilterScope>();
                 c.CreateMap<Configuration.FilterElement, Core.Configuration.FilterElement>();
                 c.CreateMap<Core.Configuration.FilterElement, Configuration.FilterElement>();
+                c.CreateMap<ComplexSearchFiltersConfigurationSection.FilterElement, Core.Configuration.Complex.FilterElement>()
+                    .ForMember(m => m.Type,
+                        opt =>
+                            opt.MapFrom(f => (FilterElementValueType) Enum.Parse(typeof(FilterElementValueType), f.Type)));
+
+                c.CreateMap<Core.Configuration.Complex.FilterElement, ComplexSearchFiltersConfigurationSection.FilterElement>();
+
+                c.CreateMap<SearchRequestComplexFilter, SearchRequestComplexFilterModel>();
+                c.CreateMap<SearchRequestComplexFilterModel, SearchRequestComplexFilter>();
+
+                c.CreateMap<SearchFilterSelectionNamedModel, SearchRequestFilterValue>();
 
                 c.CreateMap<User, UserViewModel>(MemberList.Source).MaxDepth(2).PreserveReferences();
                 c.CreateMap<UserViewModel, User>(MemberList.Destination).MaxDepth(2).PreserveReferences();

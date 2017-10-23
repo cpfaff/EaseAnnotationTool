@@ -14,6 +14,7 @@
 
     app.controller('SearchController', [
         '$scope', '$http', '$filter', '$mdDialog', function ($scope, $http, $filter, $mdDialog) {
+
             $scope.definedProperties = [];
             $scope.properties = [];
 
@@ -47,6 +48,47 @@
                     });
                 });
             };
+
+            $scope.searchPost = function () {
+                $scope.items = [];
+                $scope.isLoading = true;
+                $scope.isLoadingFirst = true;
+                var data = {
+                    searchItemsType: $scope.searchBy,
+                    orderBy: $scope.orderBy,
+                    searchText: $scope.npSearchString,
+                    filters: $scope.filters.map(function (item) {
+                        var prop = item.property;
+
+                        prop.items = item.property.items.map(function (f) {
+                            var f1 = f;
+
+                            f1.values = f.values.map(function(v) {
+                                var v1 = v;
+                                delete v1['$id'];
+
+                                return v1;
+                            });
+
+                            return f1;
+
+                        });
+                        return prop;
+                    })
+                }
+
+
+                $http.post('/api/Search/SearchItems', data).then(function (response) {
+                    $scope.isLoading = false;
+                    $scope.isLoadingFirst = false;
+                    $scope.items = response.data;
+                    angular.forEach($scope.items, function (value, key) {
+                        value.selected = false;
+                    });
+                });
+            };
+
+
             $scope.anySelected = function() {
                 return $filter('filter')($scope.items, { selected: true }).length > 0;
             };
@@ -123,71 +165,79 @@
             };
 
             $scope.onFilterParameterSelect = function (item) {
-                
-                if (item.property.filterType == "Select") {
-                    if (item.property.value == undefined) {
-                        item.property.value = '';
-                    }
 
-                    $http.post('/api/Search/GetSelectValuesForFilter', item.property).then(function(response) {
-                        item.filterSelectionItems = response.data;
-                    });
+                for (var i = 0; i < item.property.items.length; i++) {
+                    let property = item.property.items[i];
+
+                    if (property.filterType == "Select" || property.filterType == "ReferenceValue") {
+                        if (property.value == undefined) {
+                            property.value = '';
+                        }
+
+                        $http.post('/api/Search/GetSelectValuesForFilter', property).then(function (response) {
+                            property.filterSelectionItems = response.data;
+                        });
+                    }
+                    else if (property.filterType == "DateAndTime") {
+                        property.popup1 = { opened: false };
+                        //item.property.popup2 = { opened: false };
+                    }
                 }
-                else if (item.property.filterType == "DateRange") {
-                    item.property.popup1 = { opened: false };
-                    item.property.popup2 = { opened: false };
-                }
+
+
                 $scope.properties.splice($scope.properties.indexOf(item.property), 1);
 
-                //fill related properties
-                for (var i = 0; i < item.property.relatedFilterModels.length; i++) {
-                    var relatedItem = item.property.relatedFilterModels[i];
+                ////fill related properties
+                //for (var i = 0; i < item.property.relatedFilterModels.length; i++) {
+                //    var relatedItem = item.property.relatedFilterModels[i];
 
-                    var filter = { property: relatedItem };
-                    $scope.filters.push(filter);
+                //    var filter = { property: relatedItem };
+                //    $scope.filters.push(filter);
 
-                    $scope.onFilterParameterSelect(filter);
-                }
+                //    $scope.onFilterParameterSelect(filter);
+                //}
             };
 
             $scope.applyFilters = function () {
                 var filters = $scope.filters;
-                $scope.preparedFilters = '';
-                for (var i in filters) {
-                    var value = filters[i];
-                    //if (value.property.value == undefined) return;
-                    $scope.preparedFilters += value.property.name + '=';
-                    if (value.property.filterType == 'DateRange') {
-                        if (value.property.min instanceof Date && value.property.max instanceof Date) {
+                //$scope.preparedFilters = '';
+                //for (var i in filters) {
+                //    var value = filters[i];
+                //    //if (value.property.value == undefined) return;
+                //    $scope.preparedFilters += value.property.name + '=';
+                //    if (value.property.filterType == 'DateRange') {
+                //        if (value.property.min instanceof Date && value.property.max instanceof Date) {
 
-                            var min = value.property.min.getDate() + "." + (value.property.min.getMonth() + 1) + "." + value.property.min.getFullYear() + " " +
-                                value.property.min.getHours() + ":" + value.property.min.getMinutes() + ":" + value.property.min.getSeconds();
-                            var max = value.property.max.getDate() + "." + (value.property.max.getMonth() + 1) + "." + value.property.max.getFullYear() + " " +
-                                value.property.max.getHours() + ":" + value.property.max.getMinutes() + ":" + value.property.max.getSeconds();
-                            $scope.preparedFilters += min + '-' + max;
+                //            var min = value.property.min.getDate() + "." + (value.property.min.getMonth() + 1) + "." + value.property.min.getFullYear() + " " +
+                //                value.property.min.getHours() + ":" + value.property.min.getMinutes() + ":" + value.property.min.getSeconds();
+                //            var max = value.property.max.getDate() + "." + (value.property.max.getMonth() + 1) + "." + value.property.max.getFullYear() + " " +
+                //                value.property.max.getHours() + ":" + value.property.max.getMinutes() + ":" + value.property.max.getSeconds();
+                //            $scope.preparedFilters += min + '-' + max;
 
-                        }
-                    }
-                    else if (value.property.filterType == 'DigitalRange') {
-                        $scope.preparedFilters += value.property.min + '-' + value.property.max;
-                    }
-                    else if (value.property.filterType == 'Select') {
-                        if (value.property.value == undefined) {
-                            $scope.errorMessage = "You must fill all filter's fields or remove some filters.";
-                            $("#errorModal").modal("show");
-                            return;
-                        }
-                        $scope.preparedFilters += value.property.value.value;
-                    } else {
-                        if (value.property.value == undefined) {
-                            $scope.errorMessage = "You must fill all filter's fields or remove some filters.";
-                            $("#errorModal").modal("show");
-                            return;
-                        }
-                        $scope.preparedFilters += value.property.value;
-                    }
-                    $scope.preparedFilters += ',';
-                }
+                //        }
+                //    }
+                //    else if (value.property.filterType == 'DigitalRange') {
+                //        $scope.preparedFilters += value.property.min + '-' + value.property.max;
+                //    }
+                //    else if (value.property.filterType == 'Select') {
+                //        if (value.property.value == undefined) {
+                //            $scope.errorMessage = "You must fill all filter's fields or remove some filters.";
+                //            $("#errorModal").modal("show");
+                //            return;
+                //        }
+                //        $scope.preparedFilters += value.property.value.value;
+                //    } else {
+                //        if (value.property.value == undefined) {
+                //            $scope.errorMessage = "You must fill all filter's fields or remove some filters.";
+                //            $("#errorModal").modal("show");
+                //            return;
+                //        }
+                //        $scope.preparedFilters += value.property.value;
+                //    }
+                //    $scope.preparedFilters += ',';
+                //}
+
+
                 //angular.forEach(filters, function (value, key) {
                 //    if (value.property.value == undefined) return;
                 //    $scope.preparedFilters += value.property.name + '=';
@@ -211,14 +261,15 @@
                 //    }
                 //});
 
-                $scope.search();
+                //$scope.search();
+                $scope.searchPost();
             };
 
             $scope.openDate = function (item, whatExactly) {
                 if (whatExactly == 1) {
-                    item.property.popup1.opened = true;
+                    item.popup1.opened = true;
                 } else {
-                    item.property.popup2.opened = true;
+                    item.popup2.opened = true;
                 }
             };
 

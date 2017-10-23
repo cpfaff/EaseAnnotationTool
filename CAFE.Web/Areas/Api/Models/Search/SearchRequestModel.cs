@@ -8,7 +8,7 @@ namespace CAFE.Web.Areas.Api.Models.Search
         public string SearchItemsType { get; set; } = "";
         public string OrderBy { get; set; } = "";
         public string SearchText { get; set; } = "";
-        public IEnumerable<SearchRequestFilterModel> Filters { get; set; } = new List<SearchRequestFilterModel>();
+        public IEnumerable<SearchRequestComplexFilterModel> Filters { get; set; } = new List<SearchRequestComplexFilterModel>();
 
     }
 }

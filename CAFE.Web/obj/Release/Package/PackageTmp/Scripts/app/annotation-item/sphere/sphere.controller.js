@@ -31,7 +31,21 @@
                     else
                         $scope.ReloadSliders();
                 }
-
+                $scope.atmosphereHeight = {
+                    min: -1000,
+                    max: 1000,
+                    uom: 'Kilometre',
+                    options: {
+                        floor: -1000,
+                        ceil: 1000,
+                        step: 0.00001,
+                        precision: 5,
+                        vertical: true,
+                        disabled: !$scope.isAccessible,
+                        hidePointerLabels: true,
+                        hideLimitLabels: true
+                    }
+                };
                 $scope.exctSpecify = {
                     minValue: 0,
                     maxValue: 10,
@@ -88,6 +102,7 @@
                 };
                 $scope.vegetationUoms = ['Millimetre', 'Centimetre', 'Metre'];
                 $scope.soilHorizonUoms = ['Millimetre', 'Centimetre', 'Metre'];
+                $scope.atmosphereElevationUoms = ['Kilometre'];
 
                 $scope.soilMorphologyValues = [
                     'Histosols',
@@ -130,7 +145,10 @@
                         floor: 0,
                         ceil: 100,
                         step: 1,
-                        disabled: !$scope.isAccessible
+                        disabled: !$scope.isAccessible,
+                        translate: function (value) {
+                            return value + "%";
+                        }
                     }
                 };
                 $scope.siltySlider = {
@@ -139,7 +157,10 @@
                         floor: 0,
                         ceil: 100,
                         step: 1,
-                        disabled: !$scope.isAccessible
+                        disabled: !$scope.isAccessible,
+                        translate: function (value) {
+                            return value + "%";
+                        }
                     }
                 };
                 $scope.loamySlider = {
@@ -148,7 +169,10 @@
                         floor: 0,
                         ceil: 100,
                         step: 1,
-                        disabled: !$scope.isAccessible
+                        disabled: !$scope.isAccessible,
+                        translate: function (value) {
+                            return value + "%";
+                        }
                     }
                 };
                 var refreshSlider = function () {
@@ -520,6 +544,15 @@
                     }
                     if (!atmosphere.namedAtmosphereLayers)
                         atmosphere.namedAtmosphereLayers = [];
+                    if (atmosphere.numericAtmosphereLayersSpecified || atmosphere.numericAtmosphereLayers) {
+                        for (var i = 0; i < atmosphere.numericAtmosphereLayers.length; i++) {
+
+                            var num = atmosphere.numericAtmosphereLayers[i];
+                            $scope.atmosphereHeight.min = num.minimumAtmosphereHeight;
+                            $scope.atmosphereHeight.max = num.maximumAtmosphereHeight;
+                            $scope.atmosphereHeight.uom = num.minimumAtmosphereHeightUnit.value;
+                        }    
+                    }
 
                     //Fill biosphere
                     var ecosphere = $scope.sphereContext.spheres[0].ecosphere;
@@ -884,19 +917,24 @@
                     if (!namedObj)
                         $scope.sphereContext.spheres[0].atmosphere.namedAtmosphereLayers.push(addedAtmL);
 
-                    var addedAtmN = {
-                        minimumAtmosphereHeight: selectedmodel.min,
-                        minimumAtmosphereHeightUnit: { value: selectedmodel.uom, uri: '', id: 0 },
-                        maximumAtmosphereHeight: selectedmodel.max,
-                        maximumAtmosphereHeightUnit: { value: selectedmodel.uom, uri: '', id: 0 }
-                    };
 
-                    var numericObj = $filter('sphereAtmosphereNumericLayersFilter')
-                        ($scope.sphereContext.spheres[0]
-                        .atmosphere.numericAtmosphereLayers, selectedmodel.min,
-                        selectedmodel.max, selectedmodel.uom);
-                    if (!numericObj)
+                    if ($scope.sphereContext.spheres[0].atmosphere.numericAtmosphereLayers.length == 0) {
+                        var addedAtmN = {
+                            minimumAtmosphereHeight: $scope.atmosphereHeight.min,
+                            minimumAtmosphereHeightUnit: { value: $scope.atmosphereHeight.uom, uri: '', id: 0 },
+                            maximumAtmosphereHeight: $scope.atmosphereHeight.max,
+                            maximumAtmosphereHeightUnit: { value: $scope.atmosphereHeight.uom, uri: '', id: 0 }
+                        };
                         $scope.sphereContext.spheres[0].atmosphere.numericAtmosphereLayers.push(addedAtmN);
+                    } else {
+                        var num = $scope.sphereContext.spheres[0].atmosphere.numericAtmosphereLayers[0];
+                        if (num) {
+                            num.minimumAtmosphereHeight = $scope.atmosphereHeight.min;
+                            num.minimumAtmosphereHeightUnit = { value: $scope.atmosphereHeight.uom, uri: '', id: 0 };
+                            num.maximumAtmosphereHeight = $scope.atmosphereHeight.max;
+                            num.maximumAtmosphereHeightUnit = { value: $scope.atmosphereHeight.uom, uri: '', id: 0 };
+                        }
+                    }
                 };
 
                 //Remove record from atmosphere model
@@ -951,8 +989,73 @@
                         removeFromAtmosphere('Stratosphere', $scope.atmosphereModel.troposphere);
                     }
                 });
+                $scope.$watch('atmosphereHeight.min', function () {
+                    var foundRecord = {};
+                    if ($scope.sphereContext.spheres[0]
+                        .pedosphere.pedosphereCompartments[0].soil.numericSoilLayers.length == 0 && $scope.settings.depthEnabled) {
+                        foundRecord = {
+                            minimumAtmosphereHeight: $scope.atmosphereHeight.min,
+                            minimumAtmosphereHeightUnit: { value: $scope.atmosphereHeight.uom, uri: '', id: 0 },
+                            maximumAtmosphereHeight: $scope.atmosphereHeight.max,
+                            maximumAtmosphereHeightUnit: { value: $scope.atmosphereHeight.uom, uri: '', id: 0 }
+                        };
+                        $scope.sphereContext.spheres[0].pedosphere.pedosphereCompartments[0].soil.numericSoilLayers.push(foundRecord);
+                    } else {
+                        foundRecord = $scope.sphereContext.spheres[0].pedosphere.pedosphereCompartments[0].soil
+                            .numericSoilLayers[0];
+                        if (foundRecord) {
+                            foundRecord.minimumAtmosphereHeight = $scope.atmosphereHeight.min;
+                            foundRecord.minimumAtmosphereHeightUnit = { value: $scope.atmosphereHeight.uom, uri: '', id: 0 };
+                            //$scope.settings.depthEnabled = true;
+                            $scope.ReloadSliders();
+                        }
+                    }
+                });
+                $scope.$watch('atmosphereHeight.max', function () {
+                    var foundRecord = {};
+                    if ($scope.sphereContext.spheres[0]
+                        .pedosphere.pedosphereCompartments[0].soil.numericSoilLayers.length == 0 && $scope.settings.depthEnabled) {
+                        foundRecord = {
+                            minimumAtmosphereHeight: $scope.atmosphereHeight.min,
+                            minimumAtmosphereHeightUnit: { value: $scope.atmosphereHeight.uom, uri: '', id: 0 },
+                            maximumAtmosphereHeight: $scope.atmosphereHeight.max,
+                            maximumAtmosphereHeightUnit: { value: $scope.atmosphereHeight.uom, uri: '', id: 0 }
+                        };
+                        $scope.sphereContext.spheres[0].pedosphere.pedosphereCompartments[0].soil.numericSoilLayers.push(foundRecord);
+                    } else {
+                        foundRecord = $scope.sphereContext.spheres[0].pedosphere.pedosphereCompartments[0].soil
+                            .numericSoilLayers[0];
+                        if (foundRecord) {
+                            foundRecord.maximumAtmosphereHeight = $scope.atmosphereHeight.max;
+                            foundRecord.maximumAtmosphereHeightUnit = { value: $scope.atmosphereHeight.uom, uri: '', id: 0 };
+                            $scope.ReloadSliders();
+                        }
+                    }
+                });
+                $scope.$watch('atmosphereHeight.uom', function () {
+                    var foundRecord = {};
+                    if ($scope.sphereContext.spheres[0]
+                        .pedosphere.pedosphereCompartments[0].soil.numericSoilLayers.length == 0 && $scope.settings.depthEnabled) {
+                        foundRecord = {
+                            minimumAtmosphereHeight: $scope.atmosphereHeight.min,
+                            minimumAtmosphereHeightUnit: { value: $scope.atmosphereHeight.uom, uri: '', id: 0 },
+                            maximumAtmosphereHeight: $scope.atmosphereHeight.max,
+                            maximumAtmosphereHeightUnit: { value: $scope.atmosphereHeight.uom, uri: '', id: 0 }
+                        };
+                        $scope.sphereContext.spheres[0].pedosphere.pedosphereCompartments[0].soil.numericSoilLayers.push(foundRecord);
+                    } else {
+                        foundRecord = $scope.sphereContext.spheres[0].pedosphere.pedosphereCompartments[0].soil
+                            .numericSoilLayers[0];
+                        if (foundRecord) {
+                            foundRecord.minimumAtmosphereHeightUnit = { value: $scope.atmosphereHeight.uom, uri: '', id: 0 };
+                            foundRecord.maximumAtmosphereHeightUnit = { value: $scope.atmosphereHeight.uom, uri: '', id: 0 };
+                        }
+                    }
 
-                
+                });
+
+
+
                 /////////////////////////////////////////////////
                 /////////////////// Biosphere ///////////////////
                 /////////////////////////////////////////////////

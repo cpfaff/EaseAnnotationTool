@@ -29,7 +29,15 @@ namespace CAFE.Web.Areas.Api.Controllers
         [HttpPost]
         public async Task<IEnumerable<SearchResultItemViewModel>> SearchItems([FromBody]SearchRequestModel model)
         {
-            var mappedRequest = Mapper.Map(model, new SearchRequest());
+            SearchRequest mappedRequest = null;
+            try
+            {
+                mappedRequest = Mapper.Map(model, new SearchRequest());
+            }
+            catch (Exception e)
+            {
+                throw;
+            }
             var searchResult =
                 await
                     _searchService.SearchWithFiltersAsync(
@@ -73,26 +81,38 @@ namespace CAFE.Web.Areas.Api.Controllers
         }
 
         [HttpGet]
-        public async Task<IEnumerable<SearchRequestFilterModel>> GetFilters(string itemsType = "All")
+        public async Task<IEnumerable<SearchRequestComplexFilterModel>> GetFilters(string itemsType = "All")
         {
             var serchResultItemType = (SearchResultItemType) Enum.Parse(typeof (SearchResultItemType), itemsType);
-            var parameters = await _searchService.GetFilterParametersAsync(serchResultItemType, true);
 
-            var mappedParameters =
-                Mapper.Map<IEnumerable<SearchRequestFilterItem>, IEnumerable<SearchRequestFilterModel>>(parameters);
+            IEnumerable<SearchRequestComplexFilterModel> mappedParameters = null;
 
-            //Fill additional related filter models
-            foreach(var filter in parameters)
+            try
             {
-                if(filter.RelatedFilters.Count > 0)
-                {
-                    var matchedMappedFilter = mappedParameters.FirstOrDefault(f => f.Name == filter.Name);
-                    foreach(var relatedFilter in filter.RelatedFilters)
-                    {
-                        matchedMappedFilter.RelatedFilterModels.Add(Mapper.Map<SearchRequestFilterModel>(relatedFilter));
-                    }
-                }
+                var parameters = await _searchService.GetFilterParametersAsync(serchResultItemType, true);
+
+                mappedParameters =
+                    Mapper.Map<IEnumerable<SearchRequestComplexFilter>, IEnumerable<SearchRequestComplexFilterModel>>(
+                        parameters);
             }
+            catch (Exception ex)
+            {
+                throw;
+            }
+
+
+            ////Fill additional related filter models
+            //foreach(var filter in parameters)
+            //{
+            //    if(filter.RelatedFilters.Count > 0)
+            //    {
+            //        var matchedMappedFilter = mappedParameters.FirstOrDefault(f => f.Name == filter.Name);
+            //        foreach(var relatedFilter in filter.RelatedFilters)
+            //        {
+            //            matchedMappedFilter.RelatedFilterModels.Add(Mapper.Map<SearchRequestFilterModel>(relatedFilter));
+            //        }
+            //    }
+            //}
             return mappedParameters;
         }
 
@@ -106,9 +126,38 @@ namespace CAFE.Web.Areas.Api.Controllers
             else if (searchRequestFilter.Description == "InteractionPartnerTwo")
                 searchRequestFilter.Description = searchRequestFilter.Description.Replace("InteractionPartnerTwo", "InteractionPartner");
 
-            var result = 
-                await _searchService.GetSelectValuesAsync(searchRequestFilter, System.Web.HttpContext.Current?.User?.Identity?.GetUserId());
-
+            IEnumerable<VocabularyValue> result = null;
+            if (searchRequestFilter.ValueType == "AccessModes")
+            {
+                var resultList = new List<VocabularyValue>();
+                resultList.Add(new VocabularyValue()
+                {
+                    Value = AccessModes.Explicit.ToString(),
+                    Description = AccessModes.Explicit.ToString()
+                });
+                resultList.Add(new VocabularyValue()
+                {
+                    Value = AccessModes.Internal.ToString(),
+                    Description = AccessModes.Internal.ToString()
+                });
+                resultList.Add(new VocabularyValue()
+                {
+                    Value = AccessModes.Private.ToString(),
+                    Description = AccessModes.Private.ToString()
+                });
+                resultList.Add(new VocabularyValue()
+                {
+                    Value = AccessModes.Public.ToString(),
+                    Description = AccessModes.Public.ToString()
+                });
+                result = resultList;
+            }
+            else
+            {
+                result =
+                    await _searchService.GetSelectValuesAsync(searchRequestFilter,
+                        System.Web.HttpContext.Current?.User?.Identity?.GetUserId());
+            }
             return Mapper.Map<IEnumerable<VocabularyValue>, IEnumerable<SearchFilterSelectionNamedModel>>(result);
         }
 
@@ -135,7 +184,7 @@ namespace CAFE.Web.Areas.Api.Controllers
             {
                 foreach (var filter in filters)
                 {
-                    var foundFilter = parameters.Where(f => f.Name == filter.Key).FirstOrDefault();
+                    var foundFilter = parameters.SelectMany(s => s.Items).Where(f => f.Name == filter.Key).FirstOrDefault();
 
                     ((List<SearchRequestFilterModel>)searchRequestModel.Filters).Add(new SearchRequestFilterModel()
                     {

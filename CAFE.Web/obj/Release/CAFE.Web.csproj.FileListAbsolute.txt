@@ -26,10 +26,7 @@ D:\CollabFlex\Development\Sources\CAFE\CAFE\CAFE.Web\bin\roslyn\vbc.exe.config
 D:\CollabFlex\Development\Sources\CAFE\CAFE\CAFE.Web\bin\roslyn\vbc.rsp
 D:\CollabFlex\Development\Sources\CAFE\CAFE\CAFE.Web\bin\roslyn\VBCSCompiler.exe
 D:\CollabFlex\Development\Sources\CAFE\CAFE\CAFE.Web\bin\roslyn\VBCSCompiler.exe.config
-D:\CollabFlex\Development\Sources\CAFE\CAFE\CAFE.Web\bin\CAFE.Web.dll.config
 D:\CollabFlex\Development\Sources\CAFE\CAFE\CAFE.Web\bin\CAFE.Web.XML
-D:\CollabFlex\Development\Sources\CAFE\CAFE\CAFE.Web\bin\CAFE.Web.dll
-D:\CollabFlex\Development\Sources\CAFE\CAFE\CAFE.Web\bin\CAFE.Web.pdb
 D:\CollabFlex\Development\Sources\CAFE\CAFE\CAFE.Web\bin\Antlr3.Runtime.dll
 D:\CollabFlex\Development\Sources\CAFE\CAFE\CAFE.Web\bin\AutoMapper.dll
 D:\CollabFlex\Development\Sources\CAFE\CAFE\CAFE.Web\bin\BouncyCastle.Crypto.dll
@@ -138,3 +135,6 @@ D:\CollabFlex\Development\Sources\CAFE\CAFE\CAFE.Web\bin\CsvHelper.xml
 D:\CollabFlex\Development\Sources\CAFE\CAFE\CAFE.Web\obj\Release\CAFE.Web.csprojResolveAssemblyReference.cache
 D:\CollabFlex\Development\Sources\CAFE\CAFE\CAFE.Web\obj\Release\CAFE.Web.dll
 D:\CollabFlex\Development\Sources\CAFE\CAFE\CAFE.Web\obj\Release\CAFE.Web.pdb
+D:\CollabFlex\Development\Sources\CAFE\CAFE\CAFE.Web\bin\CAFE.Web.dll.config
+D:\CollabFlex\Development\Sources\CAFE\CAFE\CAFE.Web\bin\CAFE.Web.dll
+D:\CollabFlex\Development\Sources\CAFE\CAFE\CAFE.Web\bin\CAFE.Web.pdb

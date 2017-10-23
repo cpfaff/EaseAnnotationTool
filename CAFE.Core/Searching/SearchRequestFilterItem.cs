@@ -11,7 +11,8 @@ namespace CAFE.Core.Searching
         public FilterType FilterType { get; set; }
         public string ValueType { get; set; }
         public SearchRequestFilterValue Value { get; set; }
-
-        public List<SearchRequestFilterItem> RelatedFilters { get; set; } = new List<SearchRequestFilterItem>();
+        public List<SearchRequestFilterValue> Values { get; set; } = new List<SearchRequestFilterValue>();
+        //public List<SearchRequestFilterItem> RelatedFilters { get; set; } = new List<SearchRequestFilterItem>();
     }
+
 }

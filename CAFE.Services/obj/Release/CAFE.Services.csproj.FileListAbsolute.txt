@@ -1,4 +1,3 @@
-D:\CollabFlex\Development\Sources\CAFE\CAFE\CAFE.Services\obj\Release\CAFE.Services.csprojResolveAssemblyReference.cache
 D:\CollabFlex\Development\Sources\CAFE\CAFE\CAFE.Services\bin\Release\CAFE.Services.dll.config
 D:\CollabFlex\Development\Sources\CAFE\CAFE\CAFE.Services\bin\Release\CAFE.Services.dll
 D:\CollabFlex\Development\Sources\CAFE\CAFE\CAFE.Services\bin\Release\CAFE.Services.pdb
@@ -30,5 +29,6 @@ D:\CollabFlex\Development\Sources\CAFE\CAFE\CAFE.Services\bin\Release\Microsoft.
 D:\CollabFlex\Development\Sources\CAFE\CAFE\CAFE.Services\bin\Release\Microsoft.Owin.xml
 D:\CollabFlex\Development\Sources\CAFE\CAFE\CAFE.Services\bin\Release\Microsoft.Owin.Host.SystemWeb.xml
 D:\CollabFlex\Development\Sources\CAFE\CAFE\CAFE.Services\bin\Release\Microsoft.Practices.Unity.xml
+D:\CollabFlex\Development\Sources\CAFE\CAFE\CAFE.Services\obj\Release\CAFE.Services.csprojResolveAssemblyReference.cache
 D:\CollabFlex\Development\Sources\CAFE\CAFE\CAFE.Services\obj\Release\CAFE.Services.dll
 D:\CollabFlex\Development\Sources\CAFE\CAFE\CAFE.Services\obj\Release\CAFE.Services.pdb

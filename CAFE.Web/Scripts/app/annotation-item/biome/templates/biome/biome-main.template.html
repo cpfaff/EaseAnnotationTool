@@ -1,13 +1,18 @@
 ﻿<md-tabs md-dynamic-height md-border-bottom class="md-tab-right" md-selected="mdTabs.selectedSubIndex">
-    <md-tab id="pedoTab">
-        <md-tab-label>Pedo Biomes
-            <md-button class="md-icon-button md-primary" aria-label="{{simpleTypesVocabularies.pedoBiomes}}">
-                <md-tooltip class="tt-multiline" md-direction="right">{{simpleTypesVocabularies.pedoBiomes}}</md-tooltip>
+    <md-tab id="zonoTab" md-active="true">
+        <md-tab-label>
+            Zono Biomes
+            <md-button class="md-icon-button md-primary" aria-label="{{simpleTypesVocabularies.zonoBiomes}}">
+                <md-tooltip class="tt-multiline" md-direction="right">{{simpleTypesVocabularies.zonoBiomes}}</md-tooltip>
                 <i class="material-icons">help_outline</i>
             </md-button>
         </md-tab-label>
         <md-tab-body>
-            <md-card class="auto-overflow" ng-include="'Scripts/app/annotation-item/biome/templates/biome/pedo.template.html'">
+            <div class="alert alert-warning alert-dismissible ai-help" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <span class="glyphicon glyphicon-info-sign"></span>Set the desired combination and click "Add combination to list"-button at the bottom to add it to the list. You can also extend the existing vocabulary by clicking the "plus"-button.
+            </div>
+            <md-card class="auto-overflow" ng-include="'Scripts/app/annotation-item/biome/templates/biome/zono.template.html'">
             </md-card>
         </md-tab-body>
     </md-tab>
@@ -23,20 +28,18 @@
             </md-card>
         </md-tab-body>
     </md-tab>
-    <md-tab id="zonoTab" md-active="true">
-        <md-tab-label>Zono Biomes
-            <md-button class="md-icon-button md-primary" aria-label="{{simpleTypesVocabularies.zonoBiomes}}">
-                <md-tooltip class="tt-multiline" md-direction="right">{{simpleTypesVocabularies.zonoBiomes}}</md-tooltip>
+    <md-tab id="pedoTab">
+        <md-tab-label>
+            Pedo Biomes
+            <md-button class="md-icon-button md-primary" aria-label="{{simpleTypesVocabularies.pedoBiomes}}">
+                <md-tooltip class="tt-multiline" md-direction="right">{{simpleTypesVocabularies.pedoBiomes}}</md-tooltip>
                 <i class="material-icons">help_outline</i>
             </md-button>
         </md-tab-label>
         <md-tab-body>
-            <div class="alert alert-warning alert-dismissible ai-help" role="alert">
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <span class="glyphicon glyphicon-info-sign"></span>Set the desired combination and click "Add combination to list"-button at the bottom to add it to the list. You can also extend the existing vocabulary by clicking the "plus"-button.
-            </div>
-            <md-card class="auto-overflow" ng-include="'Scripts/app/annotation-item/biome/templates/biome/zono.template.html'">
+            <md-card class="auto-overflow" ng-include="'Scripts/app/annotation-item/biome/templates/biome/pedo.template.html'">
             </md-card>
         </md-tab-body>
     </md-tab>
+
 </md-tabs>

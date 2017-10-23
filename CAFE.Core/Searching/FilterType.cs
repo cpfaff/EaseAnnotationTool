@@ -3,12 +3,21 @@ namespace CAFE.Core.Searching
 {
     public enum FilterType
     {
-        Input,
         Select,
+        Simple,
+        DateAndTime,
+        ReferenceValue,
+        Numeric,
+
+        Input,
+        //Select,
         InList,
         Flag,
         DigitalRange,
         DateRange,
-        Timer
+        Timer,
+
+
+        Other
     }
 }

@@ -4,7 +4,7 @@ namespace CAFE.Core.Configuration
 {
     public class ComplexSearchFiltersConfiguration : IConfiguration
     {
-        public IEnumerable<ComplexFilterScope> ComplexFiltersScopes { get; set; } = new List<ComplexFilterScope>();
+        public IEnumerable<ComplexFilterScope> ComplexFiltersScopes { get; set; }
 
 
         public ComplexFilterScope GetComplexFieldsByFilterItem(string filterItemName)
@@ -14,9 +14,9 @@ namespace CAFE.Core.Configuration
             {
                 if (foudScope != null)
                     break;
-                foreach(var complexFilter in complexScope.ComplexFiltersCollection)
+                foreach (var complexFilter in complexScope.ComplexFiltersCollection)
                 {
-                    if(complexFilter.Property.ToLower() == filterItemName.ToLower())
+                    if (complexFilter.Property.ToLower() == filterItemName.ToLower())
                     {
                         foudScope = complexScope;
                         break;
@@ -33,6 +33,8 @@ namespace CAFE.Core.Configuration
 
         public string Type { get; set; }
 
+        public string BasePath { get; set; }
+
         public IEnumerable<Complex.FilterElement> ComplexFiltersCollection { get; set; } = new List<Complex.FilterElement>();
 
     }
@@ -43,7 +45,17 @@ namespace CAFE.Core.Configuration
         {
 
             public string Property { get; set; }
+            public string Description { get; set; }
+            public FilterElementValueType Type { get; set; }
+        }
 
+        public enum FilterElementValueType
+        {
+            Select,
+            Simple,
+            DateAndTime,
+            ReferenceValue,
+            Numeric
         }
     }
 

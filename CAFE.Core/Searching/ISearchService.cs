@@ -10,7 +10,7 @@ namespace CAFE.Core.Searching
     {
         Task<IEnumerable<SearchResultItem>> SearchWithFiltersAsync(User user, SearchRequest searchRequest);
 
-        Task<IEnumerable<SearchRequestFilterItem>> GetFilterParametersAsync(SearchResultItemType itemType, bool needToClear);
+        Task<IEnumerable<SearchRequestComplexFilter>> GetFilterParametersAsync(SearchResultItemType itemType, bool needToClear);
 
         Task<IEnumerable<VocabularyValue>> GetSelectValuesAsync(SearchRequestFilterItem filterItem, string userId);
         Task<IEnumerable<SearchResultItem>> SearchForAutocompleteAsync(string query, string UserId);

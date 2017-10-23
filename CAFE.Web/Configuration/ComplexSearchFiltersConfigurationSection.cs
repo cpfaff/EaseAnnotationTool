@@ -8,7 +8,7 @@ namespace CAFE.Web.Configuration
     public class ComplexSearchFiltersConfigurationSection : ConfigurationSection
     {
         [ConfigurationProperty("ComplexFiltersScopes", IsRequired = true)]
-        public ConfigElementsCollection RelatedFiltersScopes
+        public ConfigElementsCollection ComplexFiltersScopes
         {
             get
             {
@@ -31,8 +31,21 @@ namespace CAFE.Web.Configuration
                 }
             }
 
+            [ConfigurationProperty("basePath", IsKey = true, IsRequired = true)]
+            public string BasePath
+            {
+                get
+                {
+                    return base["basePath"] as string;
+                }
+                set
+                {
+                    base["basePath"] = value;
+                }
+            }
+
             [ConfigurationProperty("ComplexFiltersCollection")]
-            public ConfigSubElementsCollection RelatedFiltersCollection
+            public ConfigSubElementsCollection ComplexFiltersCollection
             {
                 get
                 {
@@ -134,6 +147,31 @@ namespace CAFE.Web.Configuration
                 }
             }
 
+            [ConfigurationProperty("type", IsKey = true, IsRequired = true, DefaultValue = "Simple")]
+            public string Type
+            {
+                get
+                {
+                    return base["type"] as string;
+                }
+                set
+                {
+                    base["type"] = value;
+                }
+            }
+
+            [ConfigurationProperty("description", IsKey = true, IsRequired = false, DefaultValue = "")]
+            public string Description
+            {
+                get
+                {
+                    return base["description"] as string;
+                }
+                set
+                {
+                    base["description"] = value;
+                }
+            }
         }
     }
 }

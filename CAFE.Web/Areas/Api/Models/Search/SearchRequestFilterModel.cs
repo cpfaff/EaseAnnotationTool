@@ -7,7 +7,7 @@ namespace CAFE.Web.Areas.Api.Models.Search
     {
         public SearchRequestFilterModel()
         {
-            RelatedFilterModels = new List<SearchRequestFilterModel>();
+            //RelatedFilterModels = new List<SearchRequestFilterModel>();
         }
         public string Name { get; set; }
         public string Tooltip { get; set; }
@@ -15,8 +15,9 @@ namespace CAFE.Web.Areas.Api.Models.Search
         public string FilterType { get; set; }
         public string ValueType { get; set; }
         public string Value { get; set; }
+        public List<SearchFilterSelectionNamedModel> Values { get; set; }
 
-        public List<SearchRequestFilterModel> RelatedFilterModels { get; set; }
+        //public List<SearchRequestFilterModel> RelatedFilterModels { get; set; }
 
     }
 }

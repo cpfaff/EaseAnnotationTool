@@ -148,6 +148,7 @@
     <Compile Include="Resources\ExcelVocabularySource.cs" />
     <Compile Include="Resources\ExtensibleVocabularyService.cs" />
     <Compile Include="Resources\VocabularyService.cs" />
+    <Compile Include="Searching\SearchExtensions.cs" />
     <Compile Include="Searching\SearchService.cs" />
     <Compile Include="Security\AccessRequestService.cs" />
     <Compile Include="Security\SecurityService.cs" />

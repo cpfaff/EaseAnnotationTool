@@ -133,6 +133,7 @@
     <Compile Include="Searching\FilterType.cs" />
     <Compile Include="Searching\ISearchService.cs" />
     <Compile Include="Searching\SearchRequest.cs" />
+    <Compile Include="Searching\SearchRequestComplexFilter.cs" />
     <Compile Include="Searching\SearchRequestFilterItem.cs" />
     <Compile Include="Searching\SearchRequestFilterRange.cs" />
     <Compile Include="Searching\SearchRequestFilterValue.cs" />
