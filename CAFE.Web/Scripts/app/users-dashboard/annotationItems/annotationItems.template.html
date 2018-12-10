@@ -1,6 +1,7 @@
 ﻿<div class="no-data-block" style="width: 100%; text-align: right;">
     <a class="btn btn-primary" ng-href="/AnnotationItem" target="_blank">Add new Annotation Item</a>
-    <button class="btn btn-primary"ng-click="ImportDialog()">Import from XML</button>
+    <button class="btn btn-primary" ng-click="ImportDialog()">Import from XML</button>
+    <button class="btn btn-primary" ng-click="ImportWizardDialog()">Import with Wizard</button>
 </div>
 <div class="alert alert-success alert-dismissible" role="alert" ng-show="notification">
     <button type="button" class="close" ng-click="notification = null;"><span aria-hidden="true">&times;</span></button>
@@ -17,6 +18,7 @@
     <table ng-table="tableParams" class="table" show-filter="false">
         <thead>
             <tr>
+                <th></th>
                 <th><span>Name</span></th>
                 <th>Description</th>
                 <th>Creation Date</th>

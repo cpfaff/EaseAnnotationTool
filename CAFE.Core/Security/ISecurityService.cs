@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace CAFE.Core.Security
 {
@@ -20,6 +21,8 @@ namespace CAFE.Core.Security
         bool RemoveUser(User user, bool removeOwnData);
         IEnumerable<User> SearchUsers(string keyWord);
         User AcceptUser(string userId);
+        void RemoveUserAcceptances(IEnumerable<Guid> userIds);
+        void AddOreRemoveUserHiddenHelper(Guid userId, string helperName);
 
         #endregion
 

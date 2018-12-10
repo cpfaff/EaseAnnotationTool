@@ -331,15 +331,45 @@ namespace CAFE.DAL.Migrations
                     //Store finded vocabulary values into db with enum type
                     foreach (var enumDic in enumDics)
                     {
+                        //Trace.WriteLine(enumDic.Key);
+
                         var simpleTypeItems = new XmlSchemaObjectCollection();
                         foreach (object item in myschema.Items)
                         {
                             if (item is XmlSchemaSimpleType)
                             {
                                 var simpleType = item as XmlSchemaSimpleType;
+
+                                //Trace.WriteLine(simpleType.Name);
+
                                 if (simpleType.Name == enumDic.Key)
                                 {
-                                    simpleTypeItems = (simpleType.Content as XmlSchemaSimpleTypeRestriction).Facets;
+                                    var restrictionType = simpleType.Content as XmlSchemaSimpleTypeRestriction;
+                                    if(restrictionType != null)
+                                    {
+                                        simpleTypeItems = restrictionType.Facets;
+                                    }
+                                    var compositeType = simpleType.Content as XmlSchemaSimpleTypeUnion;
+                                    if(compositeType != null)
+                                    {
+                                        if (compositeType.MemberTypes.Any())
+                                        {
+                                            var firstFacetsType = compositeType.MemberTypes.First();
+                                            if(firstFacetsType != null)
+                                            {
+                                                var foundType = FindTypeByName(firstFacetsType.Name, myschema.Items);
+                                                if(foundType != null)
+                                                {
+                                                    var firstRestrictionType = foundType.Content as XmlSchemaSimpleTypeRestriction;
+                                                    if(firstRestrictionType != null)
+                                                    {
+                                                        simpleTypeItems = firstRestrictionType.Facets;
+                                                    }
+                                                }
+                                                
+                                            }
+                                        }
+                                    }
                                     break;
                                 }
                             }
@@ -347,6 +377,8 @@ namespace CAFE.DAL.Migrations
 
                         foreach (var enVal in enumDic.Value)
                         {
+                            //Trace.WriteLine(enVal);
+
                             var documentation = new XmlSchemaDocumentation();
                             foreach (var item in simpleTypeItems)
                             {
@@ -415,6 +447,27 @@ namespace CAFE.DAL.Migrations
                 throw ex;
             }
         }
+
+        public XmlSchemaSimpleType FindTypeByName(string name, XmlSchemaObjectCollection items)
+        {
+            foreach (object item in items)
+            {
+                if (item is XmlSchemaSimpleType)
+                {
+                    var simpleType = item as XmlSchemaSimpleType;
+
+                    //Trace.WriteLine(simpleType.Name);
+
+                    if (simpleType.Name == name)
+                    {
+                        return simpleType;
+                    }
+                }
+            }
+
+            return null;
+        }
+
         static void ValidationCallback(object sender, ValidationEventArgs args)
         {
             if (args.Severity == XmlSeverityType.Warning)

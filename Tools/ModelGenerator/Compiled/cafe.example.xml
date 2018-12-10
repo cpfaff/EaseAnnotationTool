@@ -200,7 +200,7 @@
           <ZonoBiomes>
             <ZonoBiome>
               <biomeType>Terrestrial</biomeType>
-              <biomeZone>Polar</biomeZone>
+              <biomeLatitudinalZone>Polar</biomeLatitudinalZone>
               <biomeHumidityType>Humid</biomeHumidityType>
               <biomeContinentalityType>Continental</biomeContinentalityType>
               <biomeHemisphere>North</biomeHemisphere>
@@ -256,55 +256,6 @@
                 <division>str1234</division>
                 <order>str1234</order>
                 <family>str1234</family>
-                <OrganismName>
-                  <BacterialName>
-                    <fullBacterialName>str1234</fullBacterialName>
-                    <genusOrMonomial>str1234</genusOrMonomial>
-                    <subgenus>str1234</subgenus>
-                    <subgenusAuthorAndYear>str1234</subgenusAuthorAndYear>
-                    <speciesEpithet>str1234</speciesEpithet>
-                    <subspeciesEpithet>str1234</subspeciesEpithet>
-                    <parentheticalAuthorTeamAndYear>str1234</parentheticalAuthorTeamAndYear>
-                    <authorTeamAndYear>str1234</authorTeamAndYear>
-                    <nameApprobation>str1234</nameApprobation>
-                  </BacterialName>
-                  <FungalName>
-                    <fullFungalName>str1234</fullFungalName>
-                  </FungalName>
-                  <BotanicalName>
-                    <fullBotanicalName>str1234</fullBotanicalName>
-                    <genusOrMonomial>str1234</genusOrMonomial>
-                    <firstEpithet>str1234</firstEpithet>
-                    <infraspecificEpithet>str1234</infraspecificEpithet>
-                    <rank>subgen.</rank>
-                    <hybridFlag insertionpoint="1">1</hybridFlag>
-                    <authorTeamParenthesis>str1234</authorTeamParenthesis>
-                    <authorTeam>str1234</authorTeam>
-                    <cultivarGroupName>str1234</cultivarGroupName>
-                    <cultivarName>str1234</cultivarName>
-                    <tradeDesignationNames>
-                      <tradeDesignationName>str1234</tradeDesignationName>
-                    </tradeDesignationNames>
-                  </BotanicalName>
-                  <ZoologicalName>
-                    <fullZoologicalName>str1234</fullZoologicalName>
-                    <genusOrMonomial>str1234</genusOrMonomial>
-                    <subgenus>str1234</subgenus>
-                    <speciesEpithet>str1234</speciesEpithet>
-                    <subspeciesEpithet>str1234</subspeciesEpithet>
-                    <authorTeamOriginalAndYear>str1234</authorTeamOriginalAndYear>
-                    <authorTeamParenthesisAndYear>str1234</authorTeamParenthesisAndYear>
-                    <combinationAuthorTeamAndYear>str1234</combinationAuthorTeamAndYear>
-                    <breed>str1234</breed>
-                    <namedIndividual>str1234</namedIndividual>
-                  </ZoologicalName>
-                  <ViralName>
-                    <fullViralName>str1234</fullViralName>
-                    <genusOrMonomial>str1234</genusOrMonomial>
-                    <viralSpeciesDesignation>str1234</viralSpeciesDesignation>
-                    <acronym>str1234</acronym>
-                  </ViralName>
-                </OrganismName>
               </Taxonomy>
             </Organism>
           </Organisms>

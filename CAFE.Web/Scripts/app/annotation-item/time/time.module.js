@@ -10,7 +10,7 @@
               .primaryPalette('blue')
               .accentPalette('pink');
         }]).
-        controller('annotationTimeController', function (TimeProvider, $scope, $mdDialog, actualAnnotationModel, AnnotationItemProvider)
+        controller('annotationTimeController', function (TimeProvider, $scope, $mdDialog, actualAnnotationModel, AnnotationItemProvider, VocabulariesProvider)
         {
             $scope.errorMessage = null;
             $scope.timeModule = {
@@ -53,22 +53,22 @@
                 if ($.isEmptyObject(actualAnnotationModel.annotationItem.object.contexts[0].timeContext)) {
                     actualAnnotationModel.annotationItem.object.contexts[0].timeContext = $scope.timeModule;
 
-                    var localTimeZone = GetCurrentTimeZone();
-                    var selectedTimeZoneName;
+                    //var localTimeZone = GetCurrentTimeZone();
+                    //var selectedTimeZoneName;
 
-                    $scope.vocabularies.timeZonesVocabulary.every(function (item)
-                    {
-                        if ($scope.GetNormalizedTimeZoneNames(item.value).indexOf(localTimeZone) > -1) {
-                            selectedTimeZoneName = item;
-                            return false;
-                        }
-                        return true;
-                    });
+                    //$scope.vocabularies.timeZonesVocabulary.every(function (item)
+                    //{
+                    //    if ($scope.GetNormalizedTimeZoneNames(item.value).indexOf(localTimeZone) > -1) {
+                    //        selectedTimeZoneName = item;
+                    //        return false;
+                    //    }
+                    //    return true;
+                    //});
 
-                    if (selectedTimeZoneName) {
-                        $scope.timeRange.rangeEnd.timezone = selectedTimeZoneName;
-                        $scope.timeRange.rangeStart.timezone = selectedTimeZoneName;
-                    }
+                    //if (selectedTimeZoneName) {
+                    //    $scope.timeRange.rangeEnd.timezone = selectedTimeZoneName;
+                    //    $scope.timeRange.rangeStart.timezone = selectedTimeZoneName;
+                    //}
                 }
                 else {
                     // Restore saved values
@@ -113,9 +113,10 @@
                 return gmt; 
             }
 
-            $scope.querySearch = function (query, vocabulary) {
-                var results = query ? vocabulary.filter(createFilterFor(query)) : vocabulary;
-                return results;
+            $scope.querySearch = function (query, key) {
+                return VocabulariesProvider.search(query, key).then(function (response) {
+                    return response.data;
+                });
             }
 
             $scope.ClearModel = function (mainModel) {
@@ -215,6 +216,9 @@
             $scope.addResolution = function()
             {
                 var copiedObject = jQuery.extend(true, {}, $scope.resolutionsModel);
+
+                copiedObject.temporalExtentType.modifyer = $scope.resolutionsModel.temporalExtentTypeModifyer;
+                copiedObject.temporalResolutionType.modifyer = $scope.resolutionsModel.temporalResolutionTypeModifyer;
 
                 if (!$scope.timeModule.temporalResolutions)
                     $scope.timeModule.temporalResolutions = [];

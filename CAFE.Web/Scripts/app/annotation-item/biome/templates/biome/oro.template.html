@@ -2,7 +2,7 @@
     <div layout="row">
         <md-chips flex="90" ng-model="biomeModel.oroBiomes" md-autocomplete-snap md-require-match="true" md-transform-chip="{oroBiomeType: $chip}"  md-removable="isAccessible">
             <md-autocomplete md-search-text="functionAutocomplete.oro"
-                             md-items="item in querySearch(functionAutocomplete.oro, oroDictionary)"
+                             md-items="item in querySearch(functionAutocomplete.oro, 'oroBiomeType')"
                              md-min-length="0"
                              md-item-text="item.value"
                              ng-if="isAccessible"

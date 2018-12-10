@@ -5,13 +5,13 @@
         .module('usersDashboard.acceptRequests')
         .component('accessRequestsList', {
             templateUrl: 'Scripts/app/users-dashboard/acceptRequests/accept-requests.template.html',
-            controller: ['AcceptRequestsProvider', '$scope', '$mdDialog', 'NgTableParams',
-              function (AcceptRequestsProvider, $scope, $mdDialog, NgTableParams) {
+            controller: ['AcceptRequestsProvider', '$scope','$filter', '$mdDialog', 'NgTableParams',
+                function (AcceptRequestsProvider, $scope, $filter, $mdDialog, NgTableParams) {
                   
                   var bookmark;
                   $scope.selected = [];
                   $scope.selectedGroupName = null;
-
+                    
                   $scope.filter = {};
 
                   $scope.query = {
@@ -38,6 +38,10 @@
                         $scope.tableParams.settings({
                             dataset: $scope.requests
                         });
+                        
+                        var openedItems = $filter('filter')($scope.requests, { status: 'Open' });
+                        if (openedItems.length > 0) 
+                            $scope.$parent.openedCommunications = true;
                     });
                 };
                 $scope.checkRequest = function (request) {

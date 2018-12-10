@@ -25,12 +25,27 @@
             </md-button>
         </md-tab-label>
         <md-tab-body>
-            <div class="alert alert-warning alert-dismissible ai-help" role="alert">
+            <div class="alert alert-warning alert-dismissible ai-help" role="alert" ng-if="-1 == hiddenHelpers.indexOf('method-factors')">>
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <span class="glyphicon glyphicon-info-sign"></span>Set the desired combination and click "Add combination to list"-button at the bottom to add it to the list. You can also extend the existing vocabulary by clicking the "plus"-button.
+                <md-checkbox class="pull-right" ng-model="factorsHelperVisibility" ng-change="HideHelper('method-factors')" aria-label="Never show again">Never show again</md-checkbox>
             </div>
             <md-card ng-include="'Scripts/app/annotation-item/method/templates/factor.template.html'">
             </md-card>
         </md-tab-body>
     </md-tab>
+    <md-tab id="organizationalTab">
+        <md-tab-label>
+            Organizational Hierarchies
+            <md-button class="md-icon-button md-primary" aria-label="{{simpleTypesVocabularies.organizationalHierarchies}}">
+                <md-tooltip class="tt-multiline" md-direction="right">{{simpleTypesVocabularies.organizationalHierarchies}}</md-tooltip>
+                <i class="material-icons">help_outline</i>
+            </md-button>
+        </md-tab-label>
+        <md-tab-body>
+            <md-card ng-include="'Scripts/app/annotation-item/method/templates/organizational.template.html'">
+            </md-card>
+        </md-tab-body>
+    </md-tab>
+
 </md-tabs>

@@ -211,6 +211,32 @@ namespace CAFE.Services.Searching
 
             var result = new List<VocabularyValue>();
 
+            var dbEntities = new Dictionary<string, List<string>> {
+                { "DbLocation", new List<string>{ "LocationName" } },
+                { "DbInteraction", new List<string>{ "InteractionName" } },
+                { "DbCompound", new List<string>{ "CompoundName" } },
+                { "DbPosition", new List<string>{ "Position[1]" } },
+                { "DbPerson", new List<string>{ "PhoneNumber[1]", "EmailAddress[1]", "SurName[1]", "GivenName[1]", "Salutation[1]" } },
+                { "DbUtmCoordinate", new List<string>{"UtmCoordinateZone", "UtmCoordinateSubZone" } }
+            };
+
+            var searchInDbEntity = dbEntities.SingleOrDefault(i => i.Value.Any(v => filterItem.Name.Contains(v)));
+            if (null != searchInDbEntity.Key)
+            {
+                var repository = new DAL.DbContexts.ApplicationDbContext();
+                var fieldName = filterItem.Name.Split('.').Last();
+
+                if ("DbPerson" == searchInDbEntity.Key)
+                    fieldName = fieldName.Replace("[1]", string.Empty) + "Values";
+                else if ("DbPosition" == searchInDbEntity.Key)
+                    fieldName = "Value";
+
+                List<string> results = new List<string>();
+                    results = await repository.Database.SqlQuery<string>($"SELECT DISTINCT {fieldName} FROM {searchInDbEntity.Key} WHERE DATALENGTH({fieldName}) > 0 ").ToListAsync();
+
+                return results.Select(v => new VocabularyValue { Value = v });
+            }
+
             if (filterItem.Name.Contains("LocationName"))
             {
                 var annItms = _annotationItemRepository.Select().ToList();
@@ -1113,7 +1139,7 @@ namespace CAFE.Services.Searching
                                     }
                                     else
                                     {
-                                        filterStatements.Add(previousKey + "." + currentKey.Replace("[]", "") + (isPersistanceSerialized ? "_SerializedValue" : "") + " " + operation + " N'" + searchRequestFilterItem.Value.Value + "' ");
+                                        filterStatements.Add(previousKey + "." + currentKey.Replace("[]", "") + /*(isPersistanceSerialized ? "_SerializedValue" : "") +*/ " " + operation + " N'" + searchRequestFilterItem.Value.Value + "' ");
                                     }
                                     break;
                                 case FilterType.Select:

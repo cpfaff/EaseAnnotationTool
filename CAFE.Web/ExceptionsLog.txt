@@ -121,3 +121,19 @@ Parameter name: virtualPath
    at CAFE.Web.BundleConfig.RegisterBundles(BundleCollection bundles) in A:\AFolder\Afolder3\CAFE\CAFE\CAFE.Web\App_Start\BundleConfig.cs:line 43
    at CAFE.Web.MvcApplication.Application_Start() in A:\AFolder\Afolder3\CAFE\CAFE\CAFE.Web\Global.asax.cs:line 49
 
+[3/28/2018 10:58:45 AM ]: System.Xml.XmlException: Root element is missing.
+   at System.Xml.XmlTextReaderImpl.Throw(Exception e)
+   at System.Xml.XmlTextReaderImpl.ParseDocumentContent()
+   at System.Xml.XmlTextReaderImpl.Read()
+   at System.Xml.XPath.XPathDocument.LoadFromReader(XmlReader reader, XmlSpace space)
+   at System.Xml.XPath.XPathDocument..ctor(String uri, XmlSpace space)
+   at System.Xml.XPath.XPathDocument..ctor(String uri)
+   at CAFE.Web.Areas.HelpPage.XmlDocumentationProvider..ctor(String documentPath) in A:\AFolder\Afolder3\CAFE\CAFE\CAFE.Web\Areas\HelpPage\XmlDocumentationProvider.cs:line 34
+   at CAFE.Web.Areas.HelpPage.HelpPageConfig.Register(HttpConfiguration config) in A:\AFolder\Afolder3\CAFE\CAFE\CAFE.Web\Areas\HelpPage\App_Start\HelpPageConfig.cs:line 37
+   at CAFE.Web.Areas.HelpPage.HelpPageAreaRegistration.RegisterArea(AreaRegistrationContext context) in A:\AFolder\Afolder3\CAFE\CAFE\CAFE.Web\Areas\HelpPage\HelpPageAreaRegistration.cs:line 23
+   at System.Web.Mvc.AreaRegistration.CreateContextAndRegister(RouteCollection routes, Object state)
+   at System.Web.Mvc.AreaRegistration.RegisterAllAreas(RouteCollection routes, IBuildManager buildManager, Object state)
+   at System.Web.Mvc.AreaRegistration.RegisterAllAreas(Object state)
+   at System.Web.Mvc.AreaRegistration.RegisterAllAreas()
+   at CAFE.Web.MvcApplication.Application_Start() in A:\AFolder\Afolder3\CAFE\CAFE\CAFE.Web\Global.asax.cs:line 43
+

@@ -29,9 +29,10 @@
             </md-button>
         </md-tab-label>
         <md-tab-body>
-            <div class="alert alert-warning alert-dismissible ai-help" role="alert">
+            <div class="alert alert-warning alert-dismissible ai-help" role="alert" ng-if="-1 == hiddenHelpers.indexOf('space-boundingBox')">
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <span class="glyphicon glyphicon-info-sign"></span> <span>Click on the map to add a point to COORDINATE-list&nbsp;&nbsp;</span><span class="glyphicon glyphicon-info-sign"></span><span>Pull/resize the box to select the desired area and click "ADD ELEVATION TO LIST"</span>
+                <md-checkbox class="pull-right" ng-model="boundingBoxHelperVisibility" ng-change="HideHelper('space-boundingBox')" aria-label="Never show again">Never show again</md-checkbox>
             </div>
             <md-card ng-include="'Scripts/app/annotation-item/space/templates/box.template.html'">
             </md-card>
@@ -45,9 +46,10 @@
             </md-button>
         </md-tab-label>
         <md-tab-body>
-            <div class="alert alert-warning alert-dismissible ai-help" role="alert">
+            <div class="alert alert-warning alert-dismissible ai-help" role="alert" ng-if="-1 == hiddenHelpers.indexOf('space-coordinates')">
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <span class="glyphicon glyphicon-info-sign"></span>Set the desired combination and click "Add combination to list"-button at the bottom to add it to the list. You can also extend the existing vocabulary by clicking the "plus"-button.
+                <md-checkbox class="pull-right" ng-model="coordinatesHelperVisibility" ng-change="HideHelper('space-coordinates')" aria-label="Never show again">Never show again</md-checkbox>
             </div>
             <md-card ng-include="'Scripts/app/annotation-item/space/templates/coordinate.template.html'">
             </md-card>
@@ -61,9 +63,10 @@
             </md-button>
         </md-tab-label>
         <md-tab-body>
-            <div class="alert alert-warning alert-dismissible ai-help" role="alert">
+            <div class="alert alert-warning alert-dismissible ai-help" role="alert" ng-if="-1 == hiddenHelpers.indexOf('space-locations')">
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <span class="glyphicon glyphicon-info-sign"></span>Set the desired combination and click "Add combination to list"-button at the bottom to add it to the list. You can also extend the existing vocabulary by clicking the "plus"-button.
+                <md-checkbox class="pull-right" ng-model="locationsHelperVisibility" ng-change="HideHelper('space-locations')" aria-label="Never show again">Never show again</md-checkbox>
             </div>
             <md-card ng-include="'Scripts/app/annotation-item/space/templates/location.template.html'">
             </md-card>

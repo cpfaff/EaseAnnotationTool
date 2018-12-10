@@ -1,4 +1,4 @@
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="qualified" version="1.0.1">
+﻿<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="qualified" version="1.0.1">
   <xs:element name="Ease">
     <xs:annotation>
       <xs:documentation xml:lang="en">
@@ -11,7 +11,7 @@
 	  <xs:annotation>
 	    <xs:documentation xml:lang="en">
 	      The Object wraps all information stored in an annotation.
-	      It contains context information for the data but also the
+	      It links context information for the data but also the
 	      references and the resources which allow to acccess the
 	      data described.
 	    </xs:documentation>
@@ -31,9 +31,8 @@
 		    <xs:element name="Context" minOccurs="1" maxOccurs="unbounded">
 		      <xs:annotation>
 			<xs:documentation xml:lang="en">
-			  The Context captures biologcial context information
-			  in different categories like time, space, sphere,
-			  orgnism, biome, chemical, method and process.
+			  The Contexts capture biologcial links information in different
+			  categories. These categories are time, space, sphere, orgnism, biome,
 			</xs:documentation>
 		      </xs:annotation>
 		      <xs:complexType>
@@ -43,7 +42,7 @@
 			      <xs:documentation xml:lang="en">
 				The time context allows to capture the
 				quantitative and qualitative temporal aspects
-				that describe the the object.
+				that describe a search object.
 			      </xs:documentation>
 			    </xs:annotation>
 			    <xs:complexType>
@@ -300,6 +299,7 @@
 					      </xs:annotation>
 					    </xs:element>
 					  </xs:sequence>
+					<xs:attribute name="factor.id" type="xs:integer"/>
 					</xs:complexType>
 				      </xs:element>
 				    </xs:sequence>
@@ -472,7 +472,7 @@
 						    </xs:annotation>
 						  </xs:element>
 						  <!-- todo: subzone should be optional  -->
-						  <xs:element name="utmCoordinateSubZone" type="xs:integer" minOccurs="1" maxOccurs="1">
+						  <xs:element name="utmCoordinateSubZone" type="xs:string" minOccurs="1" maxOccurs="1">
 						    <xs:annotation>
 						      <xs:documentation xml:lang="en">
 							The subzone letter corresponding to one of the 20 north-south divisions of the
@@ -1293,36 +1293,6 @@
 						      </xs:sequence>
 						    </xs:complexType>
 						  </xs:element>
-						  <xs:element name="OrganizationalHierarchies" minOccurs="0" maxOccurs="1">
-						    <xs:annotation>
-						      <xs:documentation xml:lang="en">
-							A wrapper around organizational hierarchies
-						      </xs:documentation>
-						    </xs:annotation>
-						    <xs:complexType>
-						      <xs:sequence>
-							<xs:element name="OrganizationalHierarchy" minOccurs="1" maxOccurs="unbounded">
-							  <xs:annotation>
-							    <xs:documentation xml:lang="en">
-							      A organizational hierarchy
-							    </xs:documentation>
-							  </xs:annotation>
-							  <xs:complexType>
-							    <xs:sequence>
-							      <xs:element name="organizationHierarchyName" type="OrganizationHierarchyName" minOccurs="1" maxOccurs="1">
-								<xs:annotation>
-								  <xs:documentation xml:lang="en">
-								    A named organizational hierarchy of life (Atom
-								    Level, Molecule Level, Cell Level, ...)
-								  </xs:documentation>
-								</xs:annotation>
-							      </xs:element>
-							    </xs:sequence>
-							  </xs:complexType>
-							</xs:element>
-						      </xs:sequence>
-						    </xs:complexType>
-						  </xs:element>
 						</xs:sequence>
 					      </xs:complexType>
 					    </xs:element>
@@ -1367,7 +1337,7 @@
 						</xs:documentation>
 					      </xs:annotation>
 					    </xs:element>
-					    <xs:element name="biomeZone" type="BiomeZone" minOccurs="1" maxOccurs="1">
+					    <xs:element name="biomeLatitudinalZone" type="BiomeLatitudinalZone" minOccurs="1" maxOccurs="1">
 					      <xs:annotation>
 						<xs:documentation xml:lang="en">
 						  The name of a biome zone (Polar, Boreal, Temperate, Subtropic, Tropic)
@@ -1717,356 +1687,19 @@
 						      </xs:documentation>
 						    </xs:annotation>
 						  </xs:element>
-						  <xs:element name="species" type="xs:string" minOccurs="0" maxOccurs="1">
+						  <xs:element name="genus" type="Genus" minOccurs="0" maxOccurs="1">
 						    <xs:annotation>
 						      <xs:documentation xml:lang="en">
-							The generic full name of the organism including author and year
-							if required.
+							The genus of the organism
 						      </xs:documentation>
 						    </xs:annotation>
 						  </xs:element>
-						  <!-- note: I am not sure anymore if this is really required. Maybe the linnean  -->
-						  <!-- topology provided above will suffice for the description and discovery  -->
-						  <!-- purposes -->
-						  <xs:element name="OrganismName" minOccurs="0" maxOccurs="1">
+						  <xs:element name="species" type="xs:string" minOccurs="0" maxOccurs="1">
 						    <xs:annotation>
 						      <xs:documentation xml:lang="en">
-							The name of an organism
+							The full name of the organism (also including author and year)
 						      </xs:documentation>
 						    </xs:annotation>
-						    <xs:complexType>
-						      <xs:sequence>
-							<xs:element name="BacterialName" minOccurs="0" maxOccurs="1">
-							  <xs:annotation>
-							    <xs:documentation xml:lang="en">
-							      Atomised name with elements according to the International Code of Nomenclature
-							      of Prokaryotes (ABCD)
-							    </xs:documentation>
-							  </xs:annotation>
-							  <xs:complexType>
-							    <xs:sequence>
-							      <xs:element name="fullBacterialName" type="xs:string" minOccurs="0" maxOccurs="1">
-								<xs:annotation>
-								  <xs:documentation xml:lang="en">
-								    An element that captures the full scientific name of the bacteria in one string.
-								  </xs:documentation>
-								</xs:annotation>
-							      </xs:element>
-							      <xs:element name="genusOrMonomial" type="xs:string" minOccurs="0">
-								<xs:annotation>
-								  <xs:documentation xml:lang="en">
-								    Genus name
-								  </xs:documentation>
-								</xs:annotation>
-							      </xs:element>
-							      <xs:element name="subgenus" type="xs:string" minOccurs="0">
-								<xs:annotation>
-								  <xs:documentation xml:lang="en">
-								    Subgenus name
-								  </xs:documentation>
-								</xs:annotation>
-							      </xs:element>
-							      <xs:element name="subgenusAuthorAndYear" type="xs:string" minOccurs="0">
-								<xs:annotation>
-								  <xs:documentation xml:lang="en">
-								    Author team and year of the subgenus name
-								  </xs:documentation>
-								</xs:annotation>
-							      </xs:element>
-							      <xs:element name="speciesEpithet" type="xs:string" minOccurs="0">
-								<xs:annotation>
-								  <xs:documentation xml:lang="en">
-								    A name element dependent on a genus or a species name under the
-								    bacteriological, botanical, and zoological code.
-								  </xs:documentation>
-								</xs:annotation>
-							      </xs:element>
-							      <xs:element name="subspeciesEpithet" type="xs:string" minOccurs="0">
-								<xs:annotation>
-								  <xs:documentation xml:lang="en">
-								    The subsphecies epithet (Maps to Darwin Core 2: Subspecies)
-								  </xs:documentation>
-								</xs:annotation>
-							      </xs:element>
-							      <xs:element name="parentheticalAuthorTeamAndYear" type="xs:string" minOccurs="0">
-								<xs:annotation>
-								  <xs:documentation xml:lang="en">
-								    Author team and year of the basionym of a species or subspecies combination
-								  </xs:documentation>
-								</xs:annotation>
-							      </xs:element>
-							      <xs:element name="authorTeamAndYear" type="xs:string" minOccurs="0">
-								<xs:annotation>
-								  <xs:documentation xml:lang="en">
-								    The author(s) who published the full name as it stands and its year
-								  </xs:documentation>
-								</xs:annotation>
-							      </xs:element>
-							      <xs:element name="nameApprobation" type="xs:string" minOccurs="0">
-								<xs:annotation>
-								  <xs:documentation xml:lang="en">
-								    Approbation of name according to approved list, validation list,or validly
-								    published, paper in IJSB after 1980
-								  </xs:documentation>
-								</xs:annotation>
-							      </xs:element>
-							    </xs:sequence>
-							  </xs:complexType>
-							</xs:element>
-							<xs:element name="FungalName" minOccurs="0" maxOccurs="1">
-							  <xs:annotation>
-							    <xs:documentation xml:lang="en">
-							      The ame of a fungi
-							    </xs:documentation>
-							  </xs:annotation>
-							  <xs:complexType>
-							    <xs:sequence>
-							      <xs:element name="fullFungalName" type="xs:string" minOccurs="0" maxOccurs="1">
-								<xs:annotation>
-								  <xs:documentation xml:lang="en">
-								    An element that captures the full scientific name of the bacteria in one string.
-								  </xs:documentation>
-								</xs:annotation>
-							      </xs:element>
-							    </xs:sequence>
-							  </xs:complexType>
-							</xs:element>
-							<xs:element name="BotanicalName" minOccurs="0" maxOccurs="1">
-							  <xs:annotation>
-							    <xs:documentation xml:lang="en">
-							      Atomised name with elements according to the International Code of Botanical
-							      Nomenclature or the International Code of Nomenclature for Cultivated Plants
-							      (ABCD)
-							    </xs:documentation>
-							  </xs:annotation>
-							  <xs:complexType>
-							    <xs:sequence>
-							      <xs:element name="fullBotanicalName" type="xs:string" minOccurs="0" maxOccurs="1">
-								<xs:annotation>
-								  <xs:documentation xml:lang="en">
-								    An element that captures the full botanical name in one string.
-								  </xs:documentation>
-								</xs:annotation>
-							      </xs:element>
-							      <xs:element name="genusOrMonomial" type="xs:string" minOccurs="0">
-								<xs:annotation>
-								  <xs:documentation xml:lang="en">
-								    Genus or higher taxon name
-								  </xs:documentation>
-								</xs:annotation>
-							      </xs:element>
-							      <xs:element name="firstEpithet" type="xs:string" minOccurs="0">
-								<xs:annotation>
-								  <xs:documentation xml:lang="en">
-								    The first epithet in a botanical name combination (species epithet or the
-								    epithet of the subdivision of a genus
-								  </xs:documentation>
-								</xs:annotation>
-							      </xs:element>
-							      <xs:element name="infraspecificEpithet" type="xs:string" minOccurs="0">
-								<xs:annotation>
-								  <xs:documentation xml:lang="en">
-								    The final epithet of a botanical name of infraspecific rank
-								  </xs:documentation>
-								</xs:annotation>
-							      </xs:element>
-							      <xs:element name="rank" type="RankAbbreviation" minOccurs="0">
-								<xs:annotation>
-								  <xs:documentation xml:lang="en">
-								    The rank of the name where needed to form it.
-								  </xs:documentation>
-								</xs:annotation>
-							      </xs:element>
-							      <xs:element name="hybridFlag" minOccurs="0">
-								<xs:annotation>
-								  <xs:documentation xml:lang="en">
-								    Flag indicating that this is a named hybrid ("x") or a graft chimaera ("+").
-								    The attribute insertionpoint defines the name element in front of which the
-								    qualifier should be inserted (1 = before entire name, 2= before first epithet,
-								    3 = before rank designation for second epithet.)
-								  </xs:documentation>
-								</xs:annotation>
-								<xs:complexType>
-								  <xs:simpleContent>
-								    <xs:extension base="xs:string">
-								      <xs:attribute name="insertionpoint" type="Insertpoint"/>
-								    </xs:extension>
-								  </xs:simpleContent>
-								</xs:complexType>
-							      </xs:element>
-							      <xs:element name="authorTeamParenthesis" type="xs:string" minOccurs="0">
-								<xs:annotation>
-								  <xs:documentation xml:lang="en">
-								    Author team of the basionym of a combination
-								  </xs:documentation>
-								</xs:annotation>
-							      </xs:element>
-							      <xs:element name="authorTeam" type="xs:string" minOccurs="0">
-								<xs:annotation>
-								  <xs:documentation xml:lang="en">
-								    The author(s) who published the full name as it stands
-								  </xs:documentation>
-								</xs:annotation>
-							      </xs:element>
-							      <xs:element name="cultivarGroupName" type="xs:string" minOccurs="0">
-								<xs:annotation>
-								  <xs:documentation xml:lang="en">
-								    Cultivar group name
-								  </xs:documentation>
-								</xs:annotation>
-							      </xs:element>
-							      <xs:element name="cultivarName" type="xs:string" minOccurs="0">
-								<xs:annotation>
-								  <xs:documentation xml:lang="en">
-								    Cultivar name according to the ICNCP
-								  </xs:documentation>
-								</xs:annotation>
-							      </xs:element>
-							      <xs:element name="tradeDesignationNames" minOccurs="0">
-								<xs:annotation>
-								  <xs:documentation xml:lang="en">
-								    Container for trade names
-								  </xs:documentation>
-								</xs:annotation>
-								<xs:complexType>
-								  <xs:sequence>
-								    <xs:element name="tradeDesignationName" type="xs:string" minOccurs="0" maxOccurs="unbounded">
-								      <xs:annotation>
-									<xs:documentation xml:lang="en">
-									  Trade name used for a specific cultivar
-									</xs:documentation>
-								      </xs:annotation>
-								    </xs:element>
-								  </xs:sequence>
-								</xs:complexType>
-							      </xs:element>
-							    </xs:sequence>
-							  </xs:complexType>
-							</xs:element>
-							<xs:element name="ZoologicalName" minOccurs="0" maxOccurs="1">
-							  <xs:annotation>
-							    <xs:documentation xml:lang="en">
-							      Atomised name with elements according to the International Code of Zoological
-							      Nomenclature (ABCD)
-							    </xs:documentation>
-							  </xs:annotation>
-							  <xs:complexType>
-							    <xs:sequence>
-							      <xs:element name="fullZoologicalName" type="xs:string" minOccurs="0" maxOccurs="1">
-								<xs:annotation>
-								  <xs:documentation xml:lang="en">
-								    An element that captures the full zoological name in one string.
-								  </xs:documentation>
-								</xs:annotation>
-							      </xs:element>
-							      <xs:element name="genusOrMonomial" type="xs:string" minOccurs="0">
-								<xs:annotation>
-								  <xs:documentation xml:lang="en">
-								    Genus or higher taxon name
-								  </xs:documentation>
-								</xs:annotation>
-							      </xs:element>
-							      <xs:element name="subgenus" type="xs:string" minOccurs="0">
-								<xs:annotation>
-								  <xs:documentation xml:lang="en">
-								    Subgenus name
-								  </xs:documentation>
-								</xs:annotation>
-							      </xs:element>
-							      <xs:element name="speciesEpithet" type="xs:string" minOccurs="0">
-								<xs:annotation>
-								  <xs:documentation xml:lang="en">
-								    Species epithet
-								  </xs:documentation>
-								</xs:annotation>
-							      </xs:element>
-							      <xs:element name="subspeciesEpithet" type="xs:string" minOccurs="0">
-								<xs:annotation>
-								  <xs:documentation xml:lang="en">
-								    Maps to Darwin Core 2: Subspecies
-								  </xs:documentation>
-								</xs:annotation>
-							      </xs:element>
-							      <xs:element name="authorTeamOriginalAndYear" type="xs:string" minOccurs="0">
-								<xs:annotation>
-								  <xs:documentation xml:lang="en">
-								    The first person(s) who validly published a species-group name and the year of
-								    publication
-								  </xs:documentation>
-								</xs:annotation>
-							      </xs:element>
-							      <xs:element name="authorTeamParenthesisAndYear" type="xs:string" minOccurs="0">
-								<xs:annotation>
-								  <xs:documentation xml:lang="en">
-								    The parenthetical citation of the original author when a species-group was
-								    transferred to another genus and the year of the original publication
-								  </xs:documentation>
-								</xs:annotation>
-							      </xs:element>
-							      <xs:element name="combinationAuthorTeamAndYear" type="xs:string" minOccurs="0">
-								<xs:annotation>
-								  <xs:documentation xml:lang="en">
-								    The citation of the authors responsible for the new combination and the year of
-								    its publication
-								  </xs:documentation>
-								</xs:annotation>
-							      </xs:element>
-							      <xs:element name="breed" type="xs:string" minOccurs="0">
-								<xs:annotation>
-								  <xs:documentation xml:lang="en">
-								    Name of the breed of an animal
-								  </xs:documentation>
-								</xs:annotation>
-							      </xs:element>
-							      <xs:element name="namedIndividual" type="xs:string" minOccurs="0"/>
-							    </xs:sequence>
-							  </xs:complexType>
-							</xs:element>
-							<xs:element name="ViralName" minOccurs="0" maxOccurs="1">
-							  <xs:annotation>
-							    <xs:documentation xml:lang="en">
-							      Atomised name with elements according to the International Committee on
-							      Taxonomy of Viruses
-							    </xs:documentation>
-							  </xs:annotation>
-							  <xs:complexType>
-							    <xs:sequence>
-							      <xs:element name="fullViralName" type="xs:string" minOccurs="0" maxOccurs="1">
-								<xs:annotation>
-								  <xs:documentation xml:lang="en">
-								    An element that captures the full viral name in one string.
-								  </xs:documentation>
-								</xs:annotation>
-							      </xs:element>
-							      <xs:element name="genusOrMonomial" type="xs:string" minOccurs="0">
-								<xs:annotation>
-								  <xs:documentation xml:lang="en">
-								    Genus or higher taxon name formed according to the code and representing the
-								    result of the identification. E.g. Comovirus
-								  </xs:documentation>
-								</xs:annotation>
-							      </xs:element>
-							      <xs:element name="viralSpeciesDesignation" type="xs:string" minOccurs="0">
-								<xs:annotation>
-								  <xs:documentation xml:lang="en">
-								    The formal name of a viral species. Examples: vaccinia virus; human herpes
-								    virus 2 (herpes simplex virus 2); poliovirus 1; Saccharomyces cerevisiae virus
-								    L-A; enterobacteria phage PRD1 [Source: ICTV]
-								  </xs:documentation>
-								</xs:annotation>
-							      </xs:element>
-							      <xs:element name="acronym" type="xs:string" minOccurs="0">
-								<xs:annotation>
-								  <xs:documentation xml:lang="en">
-								    The accepted acronym for the Virus, e.g. PCV for Peanut Clump Virus
-								  </xs:documentation>
-								</xs:annotation>
-							      </xs:element>
-							    </xs:sequence>
-							  </xs:complexType>
-							</xs:element>
-						      </xs:sequence>
-						    </xs:complexType>
 						  </xs:element>
 						</xs:sequence>
 					      </xs:complexType>
@@ -2408,6 +2041,64 @@
 					      <xs:annotation>
 						<xs:documentation xml:lang="en">
 						  The type of given factor (Biotic, Abiotic, Disturbance, ...)
+						</xs:documentation>
+					      </xs:annotation>
+					    </xs:element>
+					  </xs:sequence>
+					<xs:attribute name="id" type="xs:integer"/>
+					<xs:attribute name="was" default="manipulated">
+					  <xs:simpleType>
+					    <xs:restriction base="xs:string">
+					      <xs:enumeration value="manipulated">
+						<xs:annotation>
+						  <xs:documentation xml:lang="en">
+						    A variable that has been manipulated as part of the study setup
+						  </xs:documentation>
+						</xs:annotation>
+					      </xs:enumeration>
+					      <xs:enumeration value="measured">
+						<xs:annotation>
+						  <xs:documentation xml:lang="en">
+						    A variable that has been measured
+						  </xs:documentation>
+						</xs:annotation>
+					      </xs:enumeration>
+					      <xs:enumeration value="estimated">
+						<xs:annotation>
+						  <xs:documentation xml:lang="en">
+						    A variable that has been estimated
+						  </xs:documentation>
+						</xs:annotation>
+					      </xs:enumeration>
+					    </xs:restriction>
+					  </xs:simpleType>
+					</xs:attribute>
+					</xs:complexType>
+				      </xs:element>
+				    </xs:sequence>
+				  </xs:complexType>
+				</xs:element>
+				<xs:element name="OrganizationalHierarchies" minOccurs="0" maxOccurs="1">
+				  <xs:annotation>
+				    <xs:documentation xml:lang="en">
+				      A wrapper around organizational hierarchies
+				    </xs:documentation>
+				  </xs:annotation>
+				  <xs:complexType>
+				    <xs:sequence>
+				      <xs:element name="OrganizationalHierarchy" minOccurs="1" maxOccurs="unbounded">
+					<xs:annotation>
+					  <xs:documentation xml:lang="en">
+					    A organizational hierarchy
+					  </xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+					  <xs:sequence>
+					    <xs:element name="organizationHierarchyName" type="OrganizationHierarchyName" minOccurs="1" maxOccurs="1">
+					      <xs:annotation>
+						<xs:documentation xml:lang="en">
+						  A named organizational hierarchy of life (Atom
+						  Level, Molecule Level, Cell Level, ...)
 						</xs:documentation>
 					      </xs:annotation>
 					    </xs:element>
@@ -9261,15 +8952,38 @@
   </xs:complexType>
 
   <xs:simpleType name="ElevationDatumVocabulary">
+      <xs:union memberTypes="ElevationDatumVocabularyBase ElevationDatumVocabularyExtension"/>
+  </xs:simpleType>
+
+  <xs:simpleType name="ElevationDatumVocabularyBase">
     <xs:restriction base="xs:string">
       <xs:enumeration value="Above Mean Sea Level">
 	<xs:annotation>
 	  <xs:documentation xml:lang="en">
-	    NA
+	    A "mean sea level" is imaginary. It is not possible to know the
+	    average sea level for the entire planet. The sea level also changes
+	    over time when measured in the same place. The sea moves, high and
+	    low pressure zones affect the height, tides change the sea level,
+	    and local difference in gravity all affect the sea level. People
+	    can only pick a spot and calculate the mean sea level at that point
+	    and use it as a datum. For example, the British Ordnance Survey
+	    uses a datum based on the measurements of mean sea level at a gauge
+	    at Newlyn, Cornwall from 1915 to 1921[1] for their maps of Great
+	    Britain. This datum is actually about 80 cm different from the mean
+	    sea level reading on the other side of the country. An alternative
+	    is to base height measurements on an ellipsoid of the entire earth.
+	    GPS and other satellite systems do this. In aviation, the ellipsoid
+	    known as World Geodetic System 84 is increasingly used to define
+	    mean sea level. (Wikipedia,
+	    https://simple.wikipedia.org/wiki/Above_mean_sea_level)
 	  </xs:documentation>
 	</xs:annotation>
       </xs:enumeration>
-      <!-- extension -->
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="ElevationDatumVocabularyExtension">
+    <xs:restriction base="xs:string">
       <xs:pattern value="[A-zäöüÄÖÜß0-9 ]*"/>
     </xs:restriction>
   </xs:simpleType>
@@ -9372,9 +9086,13 @@
   </xs:complexType>
 
   <xs:simpleType name="UtmCoordinateGeodeticDatumVocabulary">
+      <xs:union memberTypes="UtmCoordinateGeodeticDatumVocabularyBase UtmCoordinateGeodeticDatumVocabularyExtension"/>
+  </xs:simpleType>
+
+  <xs:simpleType name="UtmCoordinateGeodeticDatumVocabularyBase">
     <xs:annotation>
       <xs:documentation xml:lang="en">
-	Utm coordinate geodetic datum
+	The geodetic datum of the UTM coordinate
       </xs:documentation>
     </xs:annotation>
     <xs:restriction base="xs:string">
@@ -9385,6 +9103,11 @@
 	  </xs:documentation>
 	</xs:annotation>
       </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="UtmCoordinateGeodeticDatumVocabularyExtension">
+    <xs:restriction base="xs:string">
       <xs:pattern value="[A-zäöüÄÖÜß0-9 ]*"/>
     </xs:restriction>
   </xs:simpleType>
@@ -9403,6 +9126,10 @@
   </xs:complexType>
 
   <xs:simpleType name="LocationTypeVocabulary">
+      <xs:union memberTypes="LocationTypeVocabularyBase LocationTypeVocabularyExtension"/>
+  </xs:simpleType>
+
+  <xs:simpleType name="LocationTypeVocabularyBase">
     <xs:restriction base="xs:string">
       <xs:enumeration value="Country">
 	<xs:annotation>
@@ -9571,7 +9298,11 @@
 	  </xs:documentation>
 	</xs:annotation>
       </xs:enumeration>
-      <!-- extension -->
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="LocationTypeVocabularyExtension">
+    <xs:restriction base="xs:string">
       <xs:pattern value="[A-zäöüÄÖÜß0-9 ]*"/>
     </xs:restriction>
   </xs:simpleType>
@@ -9590,6 +9321,10 @@
   </xs:complexType>
 
   <xs:simpleType name="CountryNameVocabulary">
+      <xs:union memberTypes="CountryNameVocabularyBase CountryNameVocabularyExtension"/>
+  </xs:simpleType>
+
+  <xs:simpleType name="CountryNameVocabularyBase">
     <xs:annotation>
       <xs:documentation xml:lang="en">
 	A country name
@@ -11332,7 +11067,11 @@
 	  </xs:documentation>
 	</xs:annotation>
       </xs:enumeration>
-      <!-- extension -->
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="CountryNameVocabularyExtension">
+    <xs:restriction base="xs:string">
       <xs:pattern value="[A-zäöüÄÖÜß0-9 ]*"/>
     </xs:restriction>
   </xs:simpleType>
@@ -11351,6 +11090,10 @@
   </xs:complexType>
 
   <xs:simpleType name="ContinentNameVocabulary">
+      <xs:union memberTypes="ContinentNameVocabularyBase ContinentNameVocabularyExtension"/>
+  </xs:simpleType>
+
+  <xs:simpleType name="ContinentNameVocabularyBase">
     <xs:annotation>
       <xs:documentation xml:lang="en">
 	A continent name
@@ -11489,7 +11232,11 @@
 	  </xs:documentation>
 	</xs:annotation>
       </xs:enumeration>
-      <!-- extension -->
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="ContinentNameVocabularyExtension">
+    <xs:restriction base="xs:string">
       <xs:pattern value="[A-zäöüÄÖÜß0-9 ]*"/>
     </xs:restriction>
   </xs:simpleType>
@@ -12039,6 +11786,8 @@
     </xs:simpleContent>
   </xs:complexType>
 
+
+
   <xs:simpleType name="PelagicSeaZoneVocabulary">
     <xs:annotation>
       <xs:documentation xml:lang="en">
@@ -12136,6 +11885,10 @@
   </xs:complexType>
 
   <xs:simpleType name="SoilHorizonVocabulary">
+      <xs:union memberTypes="SoilHorizonVocabularyBase SoilHorizonVocabularyExtension"/>
+  </xs:simpleType>
+
+  <xs:simpleType name="SoilHorizonVocabularyBase">
     <xs:annotation>
       <xs:documentation xml:lang="en">
 	A soil horizon
@@ -12270,7 +12023,11 @@
 	  </xs:documentation>
 	</xs:annotation>
       </xs:enumeration>
-      <!-- extension -->
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="SoilHorizonVocabularyExtension">
+    <xs:restriction base="xs:string">
       <xs:pattern value="[A-zäöüÄÖÜß0-9 ]*"/>
     </xs:restriction>
   </xs:simpleType>
@@ -13023,7 +12780,7 @@
     </xs:simpleContent>
   </xs:complexType>
 
-  <xs:simpleType name="BiomeZoneVocabulary">
+  <xs:simpleType name="BiomeLatitudinalZoneVocabulary">
     <xs:annotation>
       <xs:documentation xml:lang="en">
 	A biome zone name
@@ -13095,9 +12852,9 @@
     </xs:restriction>
   </xs:simpleType>
 
-  <xs:complexType name="BiomeZone">
+  <xs:complexType name="BiomeLatitudinalZone">
     <xs:simpleContent>
-      <xs:extension base="BiomeZoneVocabulary">
+      <xs:extension base="BiomeLatitudinalZoneVocabulary">
 	<xs:attribute name="uri">
 	  <xs:simpleType>
 	    <xs:restriction base="xs:anyURI">
@@ -13539,6 +13296,11 @@
   </xs:complexType>
 
   <xs:simpleType name="SemiAquaticPhysiognomyTypeVocabulary">
+      <xs:union memberTypes="SemiAquaticPhysiognomyTypeVocabularyBase SemiAquaticPhysiognomyTypeVocabularyExtension"/>
+  </xs:simpleType>
+
+
+  <xs:simpleType name="SemiAquaticPhysiognomyTypeVocabularyBase">
     <xs:annotation>
       <xs:documentation xml:lang="en">
 	A type of semi aquatic physiognomy
@@ -13606,7 +13368,11 @@
 	  </xs:documentation>
 	</xs:annotation>
       </xs:enumeration>
-      <!-- extension -->
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="SemiAquaticPhysiognomyTypeVocabularyExtension">
+    <xs:restriction base="xs:string">
       <xs:pattern value="[A-zäöüÄÖÜß0-9 ]*"/>
     </xs:restriction>
   </xs:simpleType>
@@ -13625,6 +13391,10 @@
   </xs:complexType>
 
   <xs:simpleType name="PlantCharacterizedAquaticPhysiognomyTypeVocabulary">
+      <xs:union memberTypes="PlantCharacterizedAquaticPhysiognomyTypeVocabularyBase PlantCharacterizedAquaticPhysiognomyTypeVocabularyExtension"/>
+  </xs:simpleType>
+
+  <xs:simpleType name="PlantCharacterizedAquaticPhysiognomyTypeVocabularyBase">
     <xs:annotation>
       <xs:documentation xml:lang="en">
 	A type of plant characterized aquatic physiognomy
@@ -13668,7 +13438,11 @@
 	  </xs:documentation>
 	</xs:annotation>
       </xs:enumeration>
-      <!-- extension -->
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="PlantCharacterizedAquaticPhysiognomyTypeVocabularyExtension">
+    <xs:restriction base="xs:string">
       <xs:pattern value="[A-zäöüÄÖÜß0-9 ]*"/>
     </xs:restriction>
   </xs:simpleType>
@@ -13687,6 +13461,10 @@
   </xs:complexType>
 
   <xs:simpleType name="HabitatCharacterizedAquaticPhysiognomyVocabulary">
+      <xs:union memberTypes="HabitatCharacterizedAquaticPhysiognomyVocabularyBase HabitatCharacterizedAquaticPhysiognomyVocabularyExtension"/>
+  </xs:simpleType>
+
+  <xs:simpleType name="HabitatCharacterizedAquaticPhysiognomyVocabularyBase">
     <xs:annotation>
       <xs:documentation xml:lang="en">
 	A type of habitat characterized aquatic physiognomy
@@ -13812,7 +13590,11 @@
 	  </xs:documentation>
 	</xs:annotation>
       </xs:enumeration>
-      <!-- extension -->
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="HabitatCharacterizedAquaticPhysiognomyVocabularyExtension">
+    <xs:restriction base="xs:string">
       <xs:pattern value="[A-zäöüÄÖÜß0-9 ]*"/>
     </xs:restriction>
   </xs:simpleType>
@@ -13876,6 +13658,10 @@
   </xs:complexType>
 
   <xs:simpleType name="LandUseFormVocabulary">
+      <xs:union memberTypes="LandUseFormVocabularyBase LandUseFormVocabularyExtension"/>
+  </xs:simpleType>
+
+  <xs:simpleType name="LandUseFormVocabularyBase">
     <xs:annotation>
       <xs:documentation xml:lang="en">
 	A type of land use form
@@ -13952,8 +13738,11 @@
 	  </xs:documentation>
 	</xs:annotation>
       </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
 
-      <!-- extension -->
+  <xs:simpleType name="LandUseFormVocabularyExtension">
+    <xs:restriction base="xs:string">
       <xs:pattern value="[A-zäöüÄÖÜß0-9 ]*"/>
     </xs:restriction>
   </xs:simpleType>
@@ -13972,13 +13761,16 @@
   </xs:complexType>
 
   <xs:simpleType name="ProcessNameVocabulary">
+      <xs:union memberTypes="ProcessNameVocabularyBase ProcessNameVocabularyExtension"/>
+  </xs:simpleType>
+
+  <xs:simpleType name="ProcessNameVocabularyBase">
     <xs:annotation>
       <xs:documentation xml:lang="en">
 	The name of a process.
       </xs:documentation>
     </xs:annotation>
     <xs:restriction base="xs:string">
-
       <xs:enumeration value="Adaptation">
 	<xs:annotation>
 	  <xs:documentation xml:lang="en">
@@ -14331,7 +14123,11 @@
 	  </xs:documentation>
 	</xs:annotation>
       </xs:enumeration>
-      <!-- extension -->
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="ProcessNameVocabularyExtension">
+    <xs:restriction base="xs:string">
       <xs:pattern value="[A-zäöüÄÖÜß0-9 ]*"/>
     </xs:restriction>
   </xs:simpleType>
@@ -14350,6 +14146,10 @@
   </xs:complexType>
 
   <xs:simpleType name="ProcessSubjectVocabulary">
+      <xs:union memberTypes="ProcessSubjectVocabularyBase ProcessSubjectVocabularyExtension"/>
+  </xs:simpleType>
+
+  <xs:simpleType name="ProcessSubjectVocabularyBase">
     <xs:annotation>
       <xs:documentation xml:lang="en">
 	The focus of a process.
@@ -14411,7 +14211,11 @@
 	  </xs:documentation>
 	</xs:annotation>
       </xs:enumeration>
-      <!-- extension -->
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="ProcessSubjectVocabularyExtension">
+    <xs:restriction base="xs:string">
       <xs:pattern value="[A-zäöüÄÖÜß0-9 ]*"/>
     </xs:restriction>
   </xs:simpleType>
@@ -14430,6 +14234,10 @@
   </xs:complexType>
 
   <xs:simpleType name="InteractionPartnerVocabulary">
+      <xs:union memberTypes="InteractionPartnerVocabularyBase InteractionPartnerVocabularyExtension"/>
+  </xs:simpleType>
+
+  <xs:simpleType name="InteractionPartnerVocabularyBase">
     <xs:annotation>
       <xs:documentation xml:lang="en">
 	A type of interaction partner
@@ -14541,7 +14349,11 @@
 	  </xs:documentation>
 	</xs:annotation>
       </xs:enumeration>
-      <!-- extension -->
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="InteractionPartnerVocabularyExtension">
+    <xs:restriction base="xs:string">
       <xs:pattern value="[A-zäöüÄÖÜß0-9 ]*"/>
     </xs:restriction>
   </xs:simpleType>
@@ -14560,6 +14372,10 @@
   </xs:complexType>
 
   <xs:simpleType name="InteractionDirectionVocabulary">
+      <xs:union memberTypes="InteractionDirectionVocabularyBase InteractionDirectionVocabularyExtension"/>
+  </xs:simpleType>
+
+  <xs:simpleType name="InteractionDirectionVocabularyBase">
     <xs:annotation>
       <xs:documentation xml:lang="en">
 	A direction type for an interaction. It is obvious that real world
@@ -14600,7 +14416,11 @@
 	  </xs:documentation>
 	</xs:annotation>
       </xs:enumeration>
-      <!-- extension -->
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="InteractionDirectionVocabularyExtension">
+    <xs:restriction base="xs:string">
       <xs:pattern value="[A-zäöüÄÖÜß0-9 ]*"/>
     </xs:restriction>
   </xs:simpleType>
@@ -14619,6 +14439,10 @@
   </xs:complexType>
 
   <xs:simpleType name="InteractionQualityVocabulary">
+      <xs:union memberTypes="InteractionQualityVocabularyBase InteractionQualityVocabularyExtension"/>
+  </xs:simpleType>
+
+  <xs:simpleType name="InteractionQualityVocabularyBase">
     <xs:annotation>
       <xs:documentation xml:lang="en">
 	The quality of interaction that was in the focus of a study
@@ -14727,7 +14551,11 @@
 	  </xs:documentation>
 	</xs:annotation>
       </xs:enumeration>
-      <!-- extension -->
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="InteractionQualityVocabularyExtension">
+    <xs:restriction base="xs:string">
       <xs:pattern value="[A-zäöüÄÖÜß0-9 ]*"/>
     </xs:restriction>
   </xs:simpleType>
@@ -15713,6 +15541,10 @@
   </xs:complexType>
 
   <xs:simpleType name="IsotopeNameVocabulary">
+      <xs:union memberTypes="IsotopeNameVocabularyBase IsotopeNameVocabularyExtension"/>
+  </xs:simpleType>
+
+  <xs:simpleType name="IsotopeNameVocabularyBase">
     <xs:annotation>
       <xs:documentation xml:lang="en">
 	An isotope name
@@ -16216,7 +16048,11 @@
 	  </xs:documentation>
 	</xs:annotation>
       </xs:enumeration>
-      <!-- extension -->
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="IsotopeNameVocabularyExtension">
+    <xs:restriction base="xs:string">
       <xs:pattern value="[A-zäöüÄÖÜß0-9 ]*"/>
     </xs:restriction>
   </xs:simpleType>
@@ -16235,6 +16071,10 @@
   </xs:complexType>
 
   <xs:simpleType name="CompoundClassVocabulary">
+      <xs:union memberTypes="CompoundClassVocabularyBase CompoundClassVocabularyExtension"/>
+  </xs:simpleType>
+
+  <xs:simpleType name="CompoundClassVocabularyBase">
     <xs:annotation>
       <xs:documentation xml:lang="en">
 	A compound class
@@ -16306,7 +16146,11 @@
 	  </xs:documentation>
 	</xs:annotation>
       </xs:enumeration>
-      <!-- extension -->
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="CompoundClassVocabularyExtension">
+    <xs:restriction base="xs:string">
       <xs:pattern value="[A-zäöüÄÖÜß0-9 ]*"/>
     </xs:restriction>
   </xs:simpleType>
@@ -17331,6 +17175,10 @@
   </xs:complexType>
 
   <xs:simpleType name="ChemicalFunctionTypeVocabulary">
+      <xs:union memberTypes="ChemicalFunctionTypeVocabularyBase ChemicalFunctionTypeVocabularyExtension"/>
+  </xs:simpleType>
+
+  <xs:simpleType name="ChemicalFunctionTypeVocabularyBase">
     <xs:annotation>
       <xs:documentation xml:lang="en">
 	A chemical function type
@@ -17575,7 +17423,11 @@
 	  </xs:documentation>
 	</xs:annotation>
       </xs:enumeration>
-      <!-- extension -->
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="ChemicalFunctionTypeVocabularyExtension">
+    <xs:restriction base="xs:string">
       <xs:pattern value="[A-zäöüÄÖÜß0-9 ]*"/>
     </xs:restriction>
   </xs:simpleType>
@@ -17682,12 +17534,16 @@
   </xs:complexType>
 
   <xs:simpleType name="FactorNameVocabulary">
+      <xs:union memberTypes="FactorNameVocabularyBase FactorNameVocabularyExtension"/>
+  </xs:simpleType>
+
+  <xs:simpleType name="FactorNameVocabularyBase">
     <xs:restriction base="xs:string">
       <!-- biotic -->
       <xs:enumeration value="Producer Diversity">
 	<xs:annotation>
 	  <xs:documentation xml:lang="en">
-	    This includes richness, functional diversity, shannon diversity, rarefaction
+	    This includes e.g. richness, functional diversity, shannon diversity, rarefaction
 	  </xs:documentation>
 	</xs:annotation>
       </xs:enumeration>
@@ -17744,6 +17600,7 @@
 	  </xs:documentation>
 	</xs:annotation>
       </xs:enumeration>
+
       <!-- abiotic -->
       <xs:enumeration value="Radiation Intensity">
 	<xs:annotation>
@@ -17802,6 +17659,7 @@
 	  </xs:documentation>
 	</xs:annotation>
       </xs:enumeration>
+
       <xs:enumeration value="Precipitation">
 	<xs:annotation>
 	  <xs:documentation xml:lang="en">
@@ -17812,6 +17670,7 @@
 	  </xs:documentation>
 	</xs:annotation>
       </xs:enumeration>
+
       <xs:enumeration value="Nutrient Availability">
 	<xs:annotation>
 	  <xs:documentation xml:lang="en">
@@ -17820,6 +17679,21 @@
 	  </xs:documentation>
 	</xs:annotation>
       </xs:enumeration>
+
+      <xs:enumeration value="Geographical Feature">
+	<xs:annotation>
+	  <xs:documentation xml:lang="en">
+	    Geographical features are man-made or naturally-created features of
+	    the Earth. Natural geographical features consist of landforms and
+	    ecosystems. For example, terrain types, physical factors of the
+	    environment) are natural geographical features. Conversely, human
+	    settlements or other engineered forms are considered types of
+	    artificial geographical features. ( Wikipedia,
+	    https://goo.gl/7N6SJk )
+	  </xs:documentation>
+	</xs:annotation>
+      </xs:enumeration>
+
       <xs:enumeration value="Soil Texture">
 	<xs:annotation>
 	  <xs:documentation xml:lang="en">
@@ -17896,6 +17770,20 @@
 	</xs:annotation>
       </xs:enumeration>
       <!-- topo -->
+      <xs:enumeration value="Land Form Characteristic">
+	<xs:annotation>
+	  <xs:documentation xml:lang="en">
+	    A landform is a natural feature of the solid surface of the Earth
+	    or other planetary body. Landforms together make up a given
+	    terrain, and their arrangement in the landscape is known as
+	    topography. Typical landforms include hills, mountains, plateaus,
+	    canyons, valleys, as well as shoreline features such as bays,
+	    peninsulas, and seas, including submerged features such as
+	    mid-ocean ridges, volcanoes, and the great ocean basins.
+	  </xs:documentation>
+	</xs:annotation>
+      </xs:enumeration>
+
       <xs:enumeration value="Elevation">
 	<xs:annotation>
 	  <xs:documentation xml:lang="en">
@@ -17922,6 +17810,7 @@
 	  </xs:documentation>
 	</xs:annotation>
       </xs:enumeration>
+
       <xs:enumeration value="Space">
 	<xs:annotation>
 	  <xs:documentation xml:lang="en">
@@ -17931,7 +17820,317 @@
 	  </xs:documentation>
 	</xs:annotation>
       </xs:enumeration>
+
       <!-- extension -->
+      <xs:enumeration value="Air Pressure">
+	<xs:annotation>
+	  <xs:documentation xml:lang="en">
+	    NA
+	  </xs:documentation>
+	</xs:annotation>
+      </xs:enumeration>
+
+      <xs:enumeration value="Wind Speed">
+	<xs:annotation>
+	  <xs:documentation xml:lang="en">
+	    NA
+	  </xs:documentation>
+	</xs:annotation>
+      </xs:enumeration>
+
+      <xs:enumeration value="Chemical Composition">
+	<xs:annotation>
+	  <xs:documentation xml:lang="en">
+	    NA
+	  </xs:documentation>
+	</xs:annotation>
+      </xs:enumeration>
+
+      <xs:enumeration value="Chemical Element">
+	<xs:annotation>
+	  <xs:documentation xml:lang="en">
+	    NA
+	  </xs:documentation>
+	</xs:annotation>
+      </xs:enumeration>
+
+      <xs:enumeration value="Plant Trait">
+	<xs:annotation>
+	  <xs:documentation xml:lang="en">
+	    NA
+	  </xs:documentation>
+	</xs:annotation>
+      </xs:enumeration>
+
+      <xs:enumeration value="Wood Trait">
+	<xs:annotation>
+	  <xs:documentation xml:lang="en">
+	    NA
+	  </xs:documentation>
+	</xs:annotation>
+      </xs:enumeration>
+
+      <xs:enumeration value="Root Trait">
+	<xs:annotation>
+	  <xs:documentation xml:lang="en">
+	    NA
+	  </xs:documentation>
+	</xs:annotation>
+      </xs:enumeration>
+
+      <xs:enumeration value="Leaf Trait">
+	<xs:annotation>
+	  <xs:documentation xml:lang="en">
+	    NA
+	  </xs:documentation>
+	</xs:annotation>
+      </xs:enumeration>
+
+      <xs:enumeration value="Carbon Nitrogen Ratio">
+	<xs:annotation>
+	  <xs:documentation xml:lang="en">
+	    NA
+	  </xs:documentation>
+	</xs:annotation>
+      </xs:enumeration>
+
+      <xs:enumeration value="Identity">
+	<xs:annotation>
+	  <xs:documentation xml:lang="en">
+	    An identity assigned to an object of measurement for later
+	    identification. For example tags on trees or coarse woody
+	    debirs elements which lay on a forest floor or plots.
+	  </xs:documentation>
+	</xs:annotation>
+      </xs:enumeration>
+
+      <xs:enumeration value="Wood Density">
+	<xs:annotation>
+	  <xs:documentation xml:lang="en">
+	    NA
+	  </xs:documentation>
+	</xs:annotation>
+      </xs:enumeration>
+
+      <xs:enumeration value="Bulk Density">
+	<xs:annotation>
+	  <xs:documentation xml:lang="en">
+	    Bulk density is a property of powders, granules, and other
+	    "divided" solids, especially used in reference to mineral
+	    components (soil, gravel), chemical substances, (pharmaceutical)
+	    ingredients, foodstuff, or any other masses of corpuscular or
+	    particulate matter. It is defined as the weight of many particles
+	    of the material divided by the total volume they occupy. The total
+	    volume includes particle volume, inter-particle void volume, and
+	    internal pore volume (WP, https://goo.gl/RvdJ9J)
+	  </xs:documentation>
+	</xs:annotation>
+      </xs:enumeration>
+
+      <xs:enumeration value="Producer Status">
+	<xs:annotation>
+	  <xs:documentation xml:lang="en">
+	    Living, Dead, Broken, Mature, Juvenile...
+	  </xs:documentation>
+	</xs:annotation>
+      </xs:enumeration>
+
+      <xs:enumeration value="Producer Age">
+	<xs:annotation>
+	  <xs:documentation xml:lang="en">
+	    Age of producers
+	  </xs:documentation>
+	</xs:annotation>
+      </xs:enumeration>
+
+      <xs:enumeration value="Canopy Structure">
+	<xs:annotation>
+	  <xs:documentation xml:lang="en">
+	    NA
+	  </xs:documentation>
+	</xs:annotation>
+      </xs:enumeration>
+
+      <xs:enumeration value="Producer Abundance">
+	<xs:annotation>
+	  <xs:documentation xml:lang="en">
+	    NA
+	  </xs:documentation>
+	</xs:annotation>
+      </xs:enumeration>
+
+      <xs:enumeration value="Consumer Abundance">
+	<xs:annotation>
+	  <xs:documentation xml:lang="en">
+	    NA
+	  </xs:documentation>
+	</xs:annotation>
+      </xs:enumeration>
+
+      <xs:enumeration value="Gravimetric Water Content">
+	<xs:annotation>
+	  <xs:documentation xml:lang="en">
+	    The gravimetric water content e.g of soil
+	  </xs:documentation>
+	</xs:annotation>
+      </xs:enumeration>
+
+      <xs:enumeration value="Plant Height">
+	<xs:annotation>
+	  <xs:documentation xml:lang="en">
+	    NA
+	  </xs:documentation>
+	</xs:annotation>
+      </xs:enumeration>
+
+      <xs:enumeration value="Bifurcation Point Height">
+	<xs:annotation>
+	  <xs:documentation xml:lang="en">
+	    NA
+	  </xs:documentation>
+	</xs:annotation>
+      </xs:enumeration>
+
+      <xs:enumeration value="Canopy Height">
+	<xs:annotation>
+	  <xs:documentation xml:lang="en">
+	    NA
+	  </xs:documentation>
+	</xs:annotation>
+      </xs:enumeration>
+
+      <xs:enumeration value="Stem Morphology">
+	<xs:annotation>
+	  <xs:documentation xml:lang="en">
+	    NA
+	  </xs:documentation>
+	</xs:annotation>
+      </xs:enumeration>
+
+      <xs:enumeration value="Crown Architecture">
+	<xs:annotation>
+	  <xs:documentation xml:lang="en">
+	    NA
+	  </xs:documentation>
+	</xs:annotation>
+      </xs:enumeration>
+
+      <xs:enumeration value="Dry Weight">
+	<xs:annotation>
+	  <xs:documentation xml:lang="en">
+	    NA
+	  </xs:documentation>
+	</xs:annotation>
+      </xs:enumeration>
+
+      <xs:enumeration value="Wet Weight">
+	<xs:annotation>
+	  <xs:documentation xml:lang="en">
+	    Synonymous with Fresh Weight
+	  </xs:documentation>
+	</xs:annotation>
+      </xs:enumeration>
+
+      <xs:enumeration value="Leaf Habit">
+	<xs:annotation>
+	  <xs:documentation xml:lang="en">
+	    Decidious, Evergreen
+	  </xs:documentation>
+	</xs:annotation>
+      </xs:enumeration>
+
+      <xs:enumeration value="Leaf Toughness">
+	<xs:annotation>
+	  <xs:documentation xml:lang="en">
+	    NA
+	  </xs:documentation>
+	</xs:annotation>
+      </xs:enumeration>
+
+      <xs:enumeration value="Specific Leaf Area">
+	<xs:annotation>
+	  <xs:documentation xml:lang="en">
+	    NA
+	  </xs:documentation>
+	</xs:annotation>
+      </xs:enumeration>
+
+      <xs:enumeration value="Leaf Dry Matter Content">
+	<xs:annotation>
+	  <xs:documentation xml:lang="en">
+	    NA
+	  </xs:documentation>
+	</xs:annotation>
+      </xs:enumeration>
+
+      <xs:enumeration value="Leaf Structure">
+	<xs:annotation>
+	  <xs:documentation xml:lang="en">
+	    All sorts of structural aspects of leafes.
+	  </xs:documentation>
+	</xs:annotation>
+      </xs:enumeration>
+
+      <xs:enumeration value="Stomatal Size">
+	<xs:annotation>
+	  <xs:documentation xml:lang="en">
+	    Size of stomata e.g. length, width
+	  </xs:documentation>
+	</xs:annotation>
+      </xs:enumeration>
+
+      <xs:enumeration value="Stomatal Density">
+	<xs:annotation>
+	  <xs:documentation xml:lang="en">
+	    The density of stomata
+	  </xs:documentation>
+	</xs:annotation>
+      </xs:enumeration>
+
+      <xs:enumeration value="Shannon Diversity">
+	<xs:annotation>
+	  <xs:documentation xml:lang="en">
+	    NA
+	  </xs:documentation>
+	</xs:annotation>
+      </xs:enumeration>
+
+      <xs:enumeration value="Species Richness">
+	<xs:annotation>
+	  <xs:documentation xml:lang="en">
+	    NA
+	  </xs:documentation>
+	</xs:annotation>
+      </xs:enumeration>
+
+      <xs:enumeration value="Functional Diversity">
+	<xs:annotation>
+	  <xs:documentation xml:lang="en">
+	    NA
+	  </xs:documentation>
+	</xs:annotation>
+      </xs:enumeration>
+
+      <xs:enumeration value="Functional Dissimilarity">
+	<xs:annotation>
+	  <xs:documentation xml:lang="en">
+	    NA
+	  </xs:documentation>
+	</xs:annotation>
+      </xs:enumeration>
+
+      <xs:enumeration value="Functional Evenness">
+	<xs:annotation>
+	  <xs:documentation xml:lang="en">
+	    NA
+	  </xs:documentation>
+	</xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="FactorNameVocabularyExtension">
+    <xs:restriction base="xs:string">
       <xs:pattern value="[A-zäöüÄÖÜß0-9 ]*"/>
     </xs:restriction>
   </xs:simpleType>
@@ -17945,38 +18144,15 @@
 	    </xs:restriction>
 	  </xs:simpleType>
 	</xs:attribute>
-	<xs:attribute name="was" default="measured">
-	  <xs:simpleType>
-	    <xs:restriction base="xs:string">
-	      <xs:enumeration value="manipulated">
-		<xs:annotation>
-		  <xs:documentation xml:lang="en">
-		    A variable that has been manipulated as part of the study setup
-		  </xs:documentation>
-		</xs:annotation>
-	      </xs:enumeration>
-	      <xs:enumeration value="measured">
-		<xs:annotation>
-		  <xs:documentation xml:lang="en">
-		    A variable that has been measured
-		  </xs:documentation>
-		</xs:annotation>
-	      </xs:enumeration>
-	      <xs:enumeration value="estimated">
-		<xs:annotation>
-		  <xs:documentation xml:lang="en">
-		    A variable that has been estimated
-		  </xs:documentation>
-		</xs:annotation>
-	      </xs:enumeration>
-	    </xs:restriction>
-	  </xs:simpleType>
-	</xs:attribute>
       </xs:extension>
     </xs:simpleContent>
   </xs:complexType>
 
   <xs:simpleType name="FactorTypeVocabulary">
+      <xs:union memberTypes="FactorTypeVocabularyBase FactorTypeVocabularyExtension"/>
+  </xs:simpleType>
+
+  <xs:simpleType name="FactorTypeVocabularyBase">
     <xs:restriction base="xs:string">
       <!-- biotic -->
       <!-- the ones are rather a factor attributes   -->
@@ -18017,6 +18193,7 @@
 	  </xs:documentation>
 	</xs:annotation>
       </xs:enumeration>
+
       <xs:enumeration value="Topography">
 	<xs:annotation>
 	  <xs:documentation xml:lang="en">
@@ -18044,9 +18221,23 @@
 	</xs:annotation>
       </xs:enumeration>
       <!-- extension -->
+
+      <xs:enumeration value="Chemical">
+	<xs:annotation>
+	  <xs:documentation xml:lang="en">
+	    NA
+	  </xs:documentation>
+	</xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="FactorTypeVocabularyExtension">
+    <xs:restriction base="xs:string">
       <xs:pattern value="[A-zäöüÄÖÜß0-9 ]*"/>
     </xs:restriction>
   </xs:simpleType>
+
 
   <xs:complexType name="FactorType">
     <xs:simpleContent>
@@ -18164,6 +18355,10 @@
   </xs:complexType>
 
   <xs:simpleType name="KingdomVocabulary">
+      <xs:union memberTypes="KingdomVocabularyBase KingdomVocabularyExtension"/>
+  </xs:simpleType>
+
+  <xs:simpleType name="KingdomVocabularyBase">
     <xs:annotation>
       <xs:documentation xml:lang="en">
 	The kingdoms of life
@@ -18260,7 +18455,11 @@
 	  </xs:documentation>
 	</xs:annotation>
       </xs:enumeration>
-      <!-- extension -->
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="KingdomVocabularyExtension">
+    <xs:restriction base="xs:string">
       <xs:pattern value="[A-zäöüÄÖÜß0-9 ]*"/>
     </xs:restriction>
   </xs:simpleType>
@@ -18330,8 +18529,26 @@
     </xs:simpleContent>
   </xs:complexType>
 
+  <xs:complexType name="Genus">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+	<xs:attribute name="uri">
+	  <xs:simpleType>
+	    <xs:restriction base="xs:anyURI">
+	    </xs:restriction>
+	  </xs:simpleType>
+	</xs:attribute>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
   <!-- for the references -->
+
   <xs:simpleType name="DataSourceTypeVocabulary">
+      <xs:union memberTypes="DataSourceTypeVocabularyBase DataSourceTypeVocabularyExtension"/>
+  </xs:simpleType>
+
+  <xs:simpleType name="DataSourceTypeVocabularyBase">
     <xs:annotation>
       <xs:documentation xml:lang="en">
 	The source the scientific data is derived from (e.g. Specimen,
@@ -18365,7 +18582,11 @@
 	  </xs:documentation>
 	</xs:annotation>
       </xs:enumeration>
-      <!-- extension -->
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="DataSourceTypeVocabularyExtension">
+    <xs:restriction base="xs:string">
       <xs:pattern value="[A-zäöüÄÖÜß0-9 ]*"/>
     </xs:restriction>
   </xs:simpleType>
@@ -18384,6 +18605,10 @@
   </xs:complexType>
 
   <xs:simpleType name="DataFormatVocabulary">
+      <xs:union memberTypes="DataFormatVocabularyBase DataFormatVocabularyExtension"/>
+  </xs:simpleType>
+
+  <xs:simpleType name="DataFormatVocabularyBase">
     <xs:annotation>
       <xs:documentation xml:lang="en">
 	The data type provides information about the type of object. It is an
@@ -18419,7 +18644,11 @@
 	  </xs:documentation>
 	</xs:annotation>
       </xs:enumeration>
-      <!-- extension -->
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="DataFormatVocabularyExtension">
+    <xs:restriction base="xs:string">
       <xs:pattern value="[A-zäöüÄÖÜß0-9 ]*"/>
     </xs:restriction>
   </xs:simpleType>
@@ -18438,6 +18667,10 @@
   </xs:complexType>
 
   <xs:simpleType name="HosterNameVocabulary">
+      <xs:union memberTypes="HosterNameVocabularyBase HosterNameVocabularyExtension"/>
+  </xs:simpleType>
+
+  <xs:simpleType name="HosterNameVocabularyBase">
     <xs:annotation>
       <xs:documentation xml:lang="en">
 	The data center where the downloadable data and the metadat is hosted at. For
@@ -18446,7 +18679,7 @@
       </xs:documentation>
     </xs:annotation>
     <xs:restriction base="xs:string">
-      <xs:enumeration value="PANGEAE">
+      <xs:enumeration value="PANGAEA">
 	<xs:annotation>
 	  <xs:documentation xml:lang="en">
 	    PANGAEA: Data Publisher for Earth and Environmental Science, Bremen/Bremerhaven
@@ -18526,7 +18759,11 @@
 	  </xs:documentation>
 	</xs:annotation>
       </xs:enumeration>
-      <!-- extension -->
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="HosterNameVocabularyExtension">
+    <xs:restriction base="xs:string">
       <xs:pattern value="[A-zäöüÄÖÜß0-9 ]*"/>
     </xs:restriction>
   </xs:simpleType>
@@ -18545,6 +18782,10 @@
   </xs:complexType>
 
   <xs:simpleType name="PositionVocabulary">
+      <xs:union memberTypes="PositionVocabularyBase PositionVocabularyExtension"/>
+  </xs:simpleType>
+
+  <xs:simpleType name="PositionVocabularyBase">
     <xs:annotation>
       <xs:documentation xml:lang="en">
 	The function of a person
@@ -18572,7 +18813,11 @@
 	  </xs:documentation>
 	</xs:annotation>
       </xs:enumeration>
-      <!-- extension -->
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="PositionVocabularyExtension">
+    <xs:restriction base="xs:string">
       <xs:pattern value="[A-zäöüÄÖÜß0-9 ]*"/>
     </xs:restriction>
   </xs:simpleType>
@@ -18613,6 +18858,10 @@
   </xs:simpleType>
 
   <xs:simpleType name="AudioMimeTypeVocabulary">
+      <xs:union memberTypes="AudioMimeTypeVocabularyBase AudioMimeTypeVocabularyExtension"/>
+  </xs:simpleType>
+
+  <xs:simpleType name="AudioMimeTypeVocabularyBase">
     <xs:annotation>
       <xs:documentation xml:lang="en">
 	A mime type for audio files
@@ -18808,7 +19057,11 @@
 	  </xs:documentation>
 	</xs:annotation>
       </xs:enumeration>
-      <!-- extension -->
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="AudioMimeTypeVocabularyExtension">
+    <xs:restriction base="xs:string">
       <xs:pattern value="[A-zäöüÄÖÜß0-9 ]*"/>
     </xs:restriction>
   </xs:simpleType>
@@ -18827,6 +19080,10 @@
   </xs:complexType>
 
   <xs:simpleType name="ImageMimeTypeVocabulary">
+      <xs:union memberTypes="ImageMimeTypeVocabularyBase ImageMimeTypeVocabularyExtension"/>
+  </xs:simpleType>
+
+  <xs:simpleType name="ImageMimeTypeVocabularyBase">
     <xs:annotation>
       <xs:documentation xml:lang="en">
 	A mime type for image files
@@ -19130,7 +19387,11 @@
 	  </xs:documentation>
 	</xs:annotation>
       </xs:enumeration>
-      <!-- extension -->
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="ImageMimeTypeVocabularyExtension">
+    <xs:restriction base="xs:string">
       <xs:pattern value="[A-zäöüÄÖÜß0-9 ]*"/>
     </xs:restriction>
   </xs:simpleType>
@@ -19149,6 +19410,10 @@
   </xs:complexType>
 
   <xs:simpleType name="VideoMimeTypeVocabulary">
+      <xs:union memberTypes="VideoMimeTypeVocabularyBase VideoMimeTypeVocabularyExtension"/>
+  </xs:simpleType>
+
+  <xs:simpleType name="VideoMimeTypeVocabularyBase">
     <xs:annotation>
       <xs:documentation xml:lang="en">
 	A mime type for video files
@@ -19393,7 +19658,11 @@
 	  </xs:documentation>
 	</xs:annotation>
       </xs:enumeration>
-      <!-- extension -->
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="VideoMimeTypeVocabularyExtension">
+    <xs:restriction base="xs:string">
       <xs:pattern value="[A-zäöüÄÖÜß0-9 ]*"/>
     </xs:restriction>
   </xs:simpleType>
@@ -19412,6 +19681,10 @@
   </xs:complexType>
 
   <xs:simpleType name="TableMimeTypeVocabulary">
+      <xs:union memberTypes="TableMimeTypeVocabularyBase TableMimeTypeVocabularyExtension"/>
+  </xs:simpleType>
+
+  <xs:simpleType name="TableMimeTypeVocabularyBase">
     <xs:annotation>
       <xs:documentation xml:lang="en">
 	A mime type for tabular files
@@ -19463,7 +19736,11 @@
 	  </xs:documentation>
 	</xs:annotation>
       </xs:enumeration>
-      <!-- extension -->
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="TableMimeTypeVocabularyExtension">
+    <xs:restriction base="xs:string">
       <xs:pattern value="[A-zäöüÄÖÜß0-9 ]*"/>
     </xs:restriction>
   </xs:simpleType>
@@ -19482,6 +19759,10 @@
   </xs:complexType>
 
   <xs:simpleType name="MetadataMimeTypeVocabulary">
+      <xs:union memberTypes="MetadataMimeTypeVocabularyBase MetadataMimeTypeVocabularyExtension"/>
+  </xs:simpleType>
+
+  <xs:simpleType name="MetadataMimeTypeVocabularyBase">
     <xs:annotation>
       <xs:documentation xml:lang="en">
 	A mime type for metadata files
@@ -19509,7 +19790,11 @@
 	  </xs:documentation>
 	</xs:annotation>
       </xs:enumeration>
-      <!-- extension -->
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="MetadataMimeTypeVocabularyExtension">
+    <xs:restriction base="xs:string">
       <xs:pattern value="[A-zäöüÄÖÜß0-9 ]*"/>
     </xs:restriction>
   </xs:simpleType>

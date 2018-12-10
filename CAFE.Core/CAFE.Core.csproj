@@ -18,7 +18,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>TRACE;DEBUG;CONTRACTS_FULL</DefineConstants>
+    <DefineConstants>TRACE;DEBUG;CONTRACTS_NONE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <CodeContractsEnableRuntimeChecking>True</CodeContractsEnableRuntimeChecking>
@@ -116,11 +116,14 @@
     <Compile Include="Misc\Messages.cs" />
     <Compile Include="Notification\IEmailService.cs" />
     <Compile Include="Notification\ISmsService.cs" />
+    <Compile Include="Plugins\IExternalSourcePlugin.cs" />
     <Compile Include="Plugins\IPluginsProvider.cs" />
     <Compile Include="Plugins\IVocabularyExtenalSourcePlugin.cs" />
+    <Compile Include="Plugins\IVocabularyExternalSourcePluginT.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources\AccessibleResourceDescriptorBase.cs" />
     <Compile Include="Resources\CoordinatesCSVModel.cs" />
+    <Compile Include="Resources\GlobalNamesRankValue.cs" />
     <Compile Include="Resources\IAccessibleResourceDescriptor.cs" />
     <Compile Include="Resources\AccessibleResource.cs" />
     <Compile Include="Resources\AccessibleResourceKind.cs" />
@@ -128,6 +131,7 @@
     <Compile Include="Resources\IExtensibleVocabularyService.cs" />
     <Compile Include="Resources\IVocabularyService.cs" />
     <Compile Include="Resources\SchemaItemDescription.cs" />
+    <Compile Include="Resources\SpeciesResolveValue.cs" />
     <Compile Include="Resources\VocabularyUserValue.cs" />
     <Compile Include="Resources\VocabularyValue.cs" />
     <Compile Include="Searching\FilterType.cs" />
@@ -144,6 +148,7 @@
     <Compile Include="Security\Group.cs" />
     <Compile Include="Security\IAccessRequestService.cs" />
     <Compile Include="Security\User.cs" />
+    <Compile Include="Security\UserHiddenHelper.cs" />
     <Compile Include="Security\UserFile.cs" />
     <Compile Include="Security\ISecurityService.cs" />
     <Compile Include="Security\ISecurityServiceAsync.cs" />

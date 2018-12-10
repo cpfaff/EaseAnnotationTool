@@ -1,5 +1,7 @@
 ﻿
 using CAFE.Core.Configuration;
+using System.Collections;
+using System.Collections.Generic;
 
 namespace CAFE.Plugins.GlobalNameResolveService
 {
@@ -57,6 +59,16 @@ namespace CAFE.Plugins.GlobalNameResolveService
         /// Returns 'canonical_form' with infraspecific ranks, if they are present.
         /// </summary>
         public bool WithCanonicalRanks { get; set; }
+
+
+
+        public IEnumerable<UIElement> AvailableUIElements { get; set; }
+
+        public class UIElement
+        {
+            public string Id { get; set; }
+            public string Title { get; set; }
+        }
 
     }
 }

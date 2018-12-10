@@ -32,6 +32,12 @@ namespace CAFE.Core.Security
         /// </summary>
         public Guid Id { get; set; }
 
+
+        /// <summary>
+        /// Identity number
+        /// </summary>
+        public int FileId { get; set; }
+
         /// <summary>
         /// Files name
         /// </summary>

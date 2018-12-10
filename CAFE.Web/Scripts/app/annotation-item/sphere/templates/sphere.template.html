@@ -54,8 +54,8 @@
                 </div>
             </div>
             <div class="col-xs-6">
-                <div><label style="font-weight: normal;">Elevation</label></div>
-                <div>
+                <div><label style="font-weight: normal;">Height/Slice (in/of atmosphere) <input type="checkbox" style="vertical-align: baseline;" ng-model="settings.heightEnabled" ng-change="heightChanged()"></label></div>
+                <div ng-show="settings.heightEnabled">
                     <rzslider style="height: 280px; margin-top: 10px;"
                               rz-slider-model="atmosphereHeight.min"
                               rz-slider-high="atmosphereHeight.max"
@@ -89,228 +89,106 @@
                 <i class="material-icons">help_outline</i>
             </md-button>
         </uib-accordion-heading>
-        <md-tabs md-dynamic-height md-border-bottom class="my-container">
-            <md-tab id="layerTab">
-                <md-tab-label>Layer/Height</md-tab-label>
-                <md-tab-body>
-                    <div class="row" style="padding: 1em;">
-                        <div class="col-xs-6">
-                            <div>Vegetation level</div>
-                            <div style="margin-top: 2.5em;">
-                                <md-checkbox ng-disabled="!isAccessible" ng-model="biosphereModel.treeLayer.checked" aria-label="Tree layer">
-                                    Tree layer
-                                    <md-button class="md-icon-button md-primary" aria-label="{{simpleTypesVocabularies['tree Layer']}}" ng-show="simpleTypesVocabularies['tree Layer']">
-                                        <md-tooltip class="tt-multiline" md-direction="right">{{simpleTypesVocabularies['tree Layer']}}</md-tooltip>
-                                        <i class="material-icons">help_outline</i>
-                                    </md-button>
-                                </md-checkbox>
-                            </div>
-                            <div style="margin-top: 1.5em;">
-                                <md-checkbox ng-disabled="!isAccessible" ng-model="biosphereModel.shrubLayer.checked" aria-label="Shrub layer">
-                                    Shrub layer
-                                    <md-button class="md-icon-button md-primary" aria-label="{{simpleTypesVocabularies['shrub Layer']}}" ng-show="simpleTypesVocabularies['shrub Layer']">
-                                        <md-tooltip class="tt-multiline" md-direction="right">{{simpleTypesVocabularies['shrub Layer']}}</md-tooltip>
-                                        <i class="material-icons">help_outline</i>
-                                    </md-button>
-                                </md-checkbox>
-                            </div>
-                            <div style="margin-top: 1.5em;">
-                                <md-checkbox ng-disabled="!isAccessible" ng-model="biosphereModel.herbLayer.checked" aria-label="Herb layer">
-                                    Herb layer
-                                    <md-button class="md-icon-button md-primary" aria-label="{{simpleTypesVocabularies['herb Layer']}}" ng-show="simpleTypesVocabularies['herb Layer']">
-                                        <md-tooltip class="tt-multiline" md-direction="right">{{simpleTypesVocabularies['herb Layer']}}</md-tooltip>
-                                        <i class="material-icons">help_outline</i>
-                                    </md-button>
-                                </md-checkbox>
-                            </div>
-                            <div style="margin-top: 1.5em;">
-                                <md-checkbox ng-disabled="!isAccessible" ng-model="biosphereModel.mossLayer.checked" aria-label="Moss layer">
-                                    Moss layer
-                                    <md-button class="md-icon-button md-primary" aria-label="{{simpleTypesVocabularies['moss Layer']}}" ng-show="simpleTypesVocabularies['moss Layer']">
-                                        <md-tooltip class="tt-multiline" md-direction="right">{{simpleTypesVocabularies['moss Layer']}}</md-tooltip>
-                                        <i class="material-icons">help_outline</i>
-                                    </md-button>
-                                </md-checkbox>
-                            </div>
-                            <!--<div style="margin-top: 1.5em;"><md-checkbox ng-model="biosphereModel.groundLayer.checked" aria-label="Ground layer">Ground layer</md-checkbox></div>-->
-                        </div>
+        <div class="row" style="padding: 1em;">
+            <div class="col-xs-6">
+                <div>Vegetation level</div>
+                <div style="margin-top: 2.5em;">
+                    <md-checkbox ng-disabled="!isAccessible" ng-model="biosphereModel.treeLayer.checked" aria-label="Tree layer">
+                        Tree layer
+                        <md-button class="md-icon-button md-primary" aria-label="{{simpleTypesVocabularies['tree Layer']}}" ng-show="simpleTypesVocabularies['tree Layer']">
+                            <md-tooltip class="tt-multiline" md-direction="right">{{simpleTypesVocabularies['tree Layer']}}</md-tooltip>
+                            <i class="material-icons">help_outline</i>
+                        </md-button>
+                    </md-checkbox>
+                </div>
+                <div style="margin-top: 1.5em;">
+                    <md-checkbox ng-disabled="!isAccessible" ng-model="biosphereModel.shrubLayer.checked" aria-label="Shrub layer">
+                        Shrub layer
+                        <md-button class="md-icon-button md-primary" aria-label="{{simpleTypesVocabularies['shrub Layer']}}" ng-show="simpleTypesVocabularies['shrub Layer']">
+                            <md-tooltip class="tt-multiline" md-direction="right">{{simpleTypesVocabularies['shrub Layer']}}</md-tooltip>
+                            <i class="material-icons">help_outline</i>
+                        </md-button>
+                    </md-checkbox>
+                </div>
+                <div style="margin-top: 1.5em;">
+                    <md-checkbox ng-disabled="!isAccessible" ng-model="biosphereModel.herbLayer.checked" aria-label="Herb layer">
+                        Herb layer
+                        <md-button class="md-icon-button md-primary" aria-label="{{simpleTypesVocabularies['herb Layer']}}" ng-show="simpleTypesVocabularies['herb Layer']">
+                            <md-tooltip class="tt-multiline" md-direction="right">{{simpleTypesVocabularies['herb Layer']}}</md-tooltip>
+                            <i class="material-icons">help_outline</i>
+                        </md-button>
+                    </md-checkbox>
+                </div>
+                <div style="margin-top: 1.5em;">
+                    <md-checkbox ng-disabled="!isAccessible" ng-model="biosphereModel.mossLayer.checked" aria-label="Moss layer">
+                        Moss layer
+                        <md-button class="md-icon-button md-primary" aria-label="{{simpleTypesVocabularies['moss Layer']}}" ng-show="simpleTypesVocabularies['moss Layer']">
+                            <md-tooltip class="tt-multiline" md-direction="right">{{simpleTypesVocabularies['moss Layer']}}</md-tooltip>
+                            <i class="material-icons">help_outline</i>
+                        </md-button>
+                    </md-checkbox>
+                </div>
+                <!--<div style="margin-top: 1.5em;"><md-checkbox ng-model="biosphereModel.groundLayer.checked" aria-label="Ground layer">Ground layer</md-checkbox></div>-->
+            </div>
 
 
-                        <div class="col-xs-6">
-                            <div><label style="font-weight: normal;">Height/Slice (in/of vegetation) <input type="checkbox" style="vertical-align: baseline;" ng-model="settings.heightEnabled" ng-change="heightChanged()"></label></div>
-                            <div ng-show="settings.heightEnabled">
-                                <rzslider style="height: 280px; margin-top: 10px;"
-                                          rz-slider-model="biosphereVegetation.min"
-                                          rz-slider-high="biosphereVegetation.max"
-                                          rz-slider-options="biosphereVegetation.options"></rzslider>
-                                <md-input-container flex style="position: absolute;top: 30px;max-width: 100px;">
-                                    <label>Max</label>
-                                    <input type="number" ng-model="biosphereVegetation.max" ng-disabled="!isAccessible">
-                                </md-input-container>
-                                <md-input-container flex style="position: absolute; bottom: 80px; max-width: 100px;">
-                                    <label>Min</label>
-                                    <input type="number" ng-disabled="!isAccessible" ng-model="biosphereVegetation.min">
-                                </md-input-container>
-                                <div>
-                                    <md-input-container flex style="margin-top: 3em; width: 80%">
-                                        <label>Vegetation UOM</label>
-                                        <md-select ng-disabled="!isAccessible" ng-model="biosphereVegetation.uom" name="VegetationUom" required>
-                                            <md-option ng-value="opt" ng-repeat="opt in vegetationUoms">{{ opt }}</md-option>
-                                        </md-select>
-                                    </md-input-container>
-                                </div>
-                            </div>
-
-                            <!--<div>Height/Slice (in/of vegetation)</div>
-                            <rzslider style="height: 240px; margin-top: 10px;"
-                                      rz-slider-model="biosphereVegetation.min"
-                                      rz-slider-high="biosphereVegetation.max"
-                                      rz-slider-options="biosphereVegetation.options"></rzslider>
-                            <div>
-                                <md-input-container flex style="margin-top: 3em; width: 80%">
-                                    <label>Vegetation UOM</label>
-                                    <md-select ng-disabled="!isAccessible" ng-model="biosphereVegetation.uom" name="ElevationMin" required>
-                                        <md-option ng-value="$index" ng-repeat="opt in vegetationUoms">{{ opt }}</md-option>
-                                    </md-select>
-                                </md-input-container>
-                            </div>-->
-                        </div>
-
-
-                        <!--<div class="col-xs-3">
-                            <div style="margin-top: 50%;">
-                                <div>
-                                    <md-checkbox aria-label="Height">Height</md-checkbox>
-                                </div>
-                                <div style="margin-top: 2.5em;">
-                                    <md-checkbox aria-label="Slice">Slice</md-checkbox>
-                                </div>
-                            </div>
-                        </div>-->
+            <div class="col-xs-6">
+                <div><label style="font-weight: normal;">Height/Slice (in/of vegetation) <input type="checkbox" style="vertical-align: baseline;" ng-model="settings.heightEnabled" ng-change="heightChanged()"></label></div>
+                <div ng-show="settings.heightEnabled">
+                    <rzslider style="height: 280px; margin-top: 10px;"
+                                rz-slider-model="biosphereVegetation.min"
+                                rz-slider-high="biosphereVegetation.max"
+                                rz-slider-options="biosphereVegetation.options"></rzslider>
+                    <md-input-container flex style="position: absolute;top: 30px;max-width: 100px;">
+                        <label>Max</label>
+                        <input type="number" ng-model="biosphereVegetation.max" ng-disabled="!isAccessible">
+                    </md-input-container>
+                    <md-input-container flex style="position: absolute; bottom: 80px; max-width: 100px;">
+                        <label>Min</label>
+                        <input type="number" ng-disabled="!isAccessible" ng-model="biosphereVegetation.min">
+                    </md-input-container>
+                    <div>
+                        <md-input-container flex style="margin-top: 3em; width: 80%">
+                            <label>Vegetation UOM</label>
+                            <md-select ng-disabled="!isAccessible" ng-model="biosphereVegetation.uom" name="VegetationUom" required>
+                                <md-option ng-value="opt" ng-repeat="opt in vegetationUoms">{{ opt }}</md-option>
+                            </md-select>
+                        </md-input-container>
                     </div>
-                    <div class="row" style="padding: 1em;">
-                        <div class="col-md-12">
-                            <br />*Multiple choices are allowed if suitable.
-                        </div>
-                    </div>
-                </md-tab-body>
-            </md-tab>
-            <md-tab id="organizationalTab">
-                <md-tab-label>Organizational level</md-tab-label>
-                <md-tab-body>
-                    <div class="row" style="padding: 1em;">
-                        <div class="col-xs-12">
-                            <div>
-                                <md-checkbox ng-disabled="!isAccessible" ng-model="organizationalModel.bioma.checked" aria-label="Bioma">
-                                    Biome
-                                    <md-button class="md-icon-button md-primary" aria-label="{{simpleTypesVocabularies['biome Level']}}" ng-show="simpleTypesVocabularies['biome Level']">
-                                        <md-tooltip class="tt-multiline" md-direction="right">{{simpleTypesVocabularies['biome Level']}}</md-tooltip>
-                                        <i class="material-icons">help_outline</i>
-                                    </md-button>
-                                </md-checkbox>
-                            </div>
-                            <div>
-                                <md-checkbox ng-disabled="!isAccessible" ng-model="organizationalModel.ecosystem.checked" aria-label="Ecosystem">
-                                    Ecosystem
-                                    <md-button class="md-icon-button md-primary" aria-label="{{simpleTypesVocabularies['ecosystem Level']}}" ng-show="simpleTypesVocabularies['ecosystem Level']">
-                                        <md-tooltip class="tt-multiline" md-direction="right">{{simpleTypesVocabularies['ecosystem Level']}}</md-tooltip>
-                                        <i class="material-icons">help_outline</i>
-                                    </md-button>
-                                </md-checkbox>
-                            </div>
-                            <div>
-                                <md-checkbox ng-disabled="!isAccessible" ng-model="organizationalModel.population.checked" aria-label="Population">
-                                    Population
-                                    <md-button class="md-icon-button md-primary" aria-label="{{simpleTypesVocabularies['population Level']}}" ng-show="simpleTypesVocabularies['population Level']">
-                                        <md-tooltip class="tt-multiline" md-direction="right">{{simpleTypesVocabularies['population Level']}}</md-tooltip>
-                                        <i class="material-icons">help_outline</i>
-                                    </md-button>
-                                </md-checkbox>
-                            </div>
-                            <div>
-                                <md-checkbox ng-disabled="!isAccessible" ng-model="organizationalModel.organizm.checked" aria-label="Organizm">
-                                    Organism
-                                    <md-button class="md-icon-button md-primary" aria-label="{{simpleTypesVocabularies['organism Level']}}" n ng-show="simpleTypesVocabularies['organism Level']">
-                                        <md-tooltip class="tt-multiline" md-direction="right">{{simpleTypesVocabularies['organism Level']}}</md-tooltip>
-                                        <i class="material-icons">help_outline</i>
-                                    </md-button>
-                                </md-checkbox>
-                            </div>
-                            <div>
-                                <md-checkbox ng-disabled="!isAccessible" ng-model="organizationalModel.systemOfOrgans.checked" aria-label="System of Organs">
-                                    System of Organs
-                                    <md-button class="md-icon-button md-primary" aria-label="{{simpleTypesVocabularies['system of Organs Level']}}" ng-show="simpleTypesVocabularies['system of Organs Level']">
-                                        <md-tooltip class="tt-multiline" md-direction="right">{{simpleTypesVocabularies['system of Organs Level']}}</md-tooltip>
-                                        <i class="material-icons">help_outline</i>
-                                    </md-button>
-                                </md-checkbox>
-                            </div>
-                            <div>
-                                <md-checkbox ng-disabled="!isAccessible" ng-model="organizationalModel.organ.checked" aria-label="Organ">
-                                    Organ
-                                    <md-button class="md-icon-button md-primary" aria-label="{{simpleTypesVocabularies['organ Level']}}" ng-show="simpleTypesVocabularies['organ Level']">
-                                        <md-tooltip class="tt-multiline" md-direction="right">{{simpleTypesVocabularies['organ Level']}}</md-tooltip>
-                                        <i class="material-icons">help_outline</i>
-                                    </md-button>
-                                </md-checkbox>
-                            </div>
-                            <div>
-                                <md-checkbox ng-disabled="!isAccessible" ng-model="organizationalModel.tissue.checked" aria-label="Tissue">
-                                    Tissue
-                                    <md-button class="md-icon-button md-primary" aria-label="{{simpleTypesVocabularies['tissue Level']}}" ng-show="simpleTypesVocabularies['tissue Level']">
-                                        <md-tooltip class="tt-multiline" md-direction="right">{{simpleTypesVocabularies['tissue Level']}}</md-tooltip>
-                                        <i class="material-icons">help_outline</i>
-                                    </md-button>
-                                </md-checkbox>
-                            </div>
-                            <div>
-                                <md-checkbox ng-disabled="!isAccessible" ng-model="organizationalModel.cell.checked" aria-label="Cell">
-                                    Cell
-                                    <md-button class="md-icon-button md-primary" aria-label="{{simpleTypesVocabularies['cell Level']}}" ng-show="simpleTypesVocabularies['cell Level']">
-                                        <md-tooltip class="tt-multiline" md-direction="right">{{simpleTypesVocabularies['cell Level']}}</md-tooltip>
-                                        <i class="material-icons">help_outline</i>
-                                    </md-button>
-                                </md-checkbox>
-                            </div>
-                            <div>
-                                <md-checkbox ng-disabled="!isAccessible" ng-model="organizationalModel.cellOrganelle.checked" aria-label="Cell Organelle">
-                                    Cell Organelle
-                                    <md-button class="md-icon-button md-primary" aria-label="{{simpleTypesVocabularies['cell Organelle Level']}}" ng-show="simpleTypesVocabularies['cell Organelle Level']">
-                                        <md-tooltip class="tt-multiline" md-direction="right">{{simpleTypesVocabularies['cell Organelle Level']}}</md-tooltip>
-                                        <i class="material-icons">help_outline</i>
-                                    </md-button>
-                                </md-checkbox>
-                            </div>
-                            <div>
-                                <md-checkbox ng-disabled="!isAccessible" ng-model="organizationalModel.molecule.checked" aria-label="Molecule">
-                                    Molecule
-                                    <md-button class="md-icon-button md-primary" aria-label="{{simpleTypesVocabularies['molecule Level']}}" ng-show="simpleTypesVocabularies['molecule Level']">
-                                        <md-tooltip class="tt-multiline" md-direction="right">{{simpleTypesVocabularies['molecule Level']}}</md-tooltip>
-                                        <i class="material-icons">help_outline</i>
-                                    </md-button>
-                                </md-checkbox>
-                            </div>
-                            <div>
-                                <md-checkbox ng-disabled="!isAccessible" ng-model="organizationalModel.atom.checked" aria-label="Atom">
-                                    Atom
-                                    <md-button class="md-icon-button md-primary" aria-label="{{simpleTypesVocabularies['atom Level']}}" ng-show="simpleTypesVocabularies['atom Level']">
-                                        <md-tooltip class="tt-multiline" md-direction="right">{{simpleTypesVocabularies['atom Level']}}</md-tooltip>
-                                        <i class="material-icons">help_outline</i>
-                                    </md-button>
-                                </md-checkbox>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row" style="padding: 1em;">
-                        <div class="col-md-12">
-                            <br />*Multiple choices are allowed if suitable.
-                        </div>
-                    </div>
+                </div>
 
-                </md-tab-body>
-            </md-tab>
+                <!--<div>Height/Slice (in/of vegetation)</div>
+        <rzslider style="height: 240px; margin-top: 10px;"
+                    rz-slider-model="biosphereVegetation.min"
+                    rz-slider-high="biosphereVegetation.max"
+                    rz-slider-options="biosphereVegetation.options"></rzslider>
+        <div>
+            <md-input-container flex style="margin-top: 3em; width: 80%">
+                <label>Vegetation UOM</label>
+                <md-select ng-disabled="!isAccessible" ng-model="biosphereVegetation.uom" name="ElevationMin" required>
+                    <md-option ng-value="$index" ng-repeat="opt in vegetationUoms">{{ opt }}</md-option>
+                </md-select>
+            </md-input-container>
+        </div>-->
+            </div>
 
-        </md-tabs>
+
+            <!--<div class="col-xs-3">
+        <div style="margin-top: 50%;">
+            <div>
+                <md-checkbox aria-label="Height">Height</md-checkbox>
+            </div>
+            <div style="margin-top: 2.5em;">
+                <md-checkbox aria-label="Slice">Slice</md-checkbox>
+            </div>
+        </div>
+    </div>-->
+        </div>
+        <div class="row" style="padding: 1em;">
+            <div class="col-md-12">
+                <br />*Multiple choices are allowed if suitable.
+            </div>
+        </div>
     </div>
     <div uib-accordion-group class="panel-default" heading="Static Header, initially expanded" is-open="accordionOpenStatuses[2]">
         <uib-accordion-heading>

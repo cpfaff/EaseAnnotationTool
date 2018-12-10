@@ -56,7 +56,7 @@
             <md-content flex layout-fill style="min-height: 100% !important;">
                 <md-list ng-cloak>
                     <md-list-item ng-repeat="item in mainMenuItems" ng-init="fullName = ('annotation.' + item.toLowerCase())" ng-click="navigateTo(fullName, $event, 0)" ng-class="{'selected-menu-item': activeMenuItem.current.name == fullName }">
-                        <p>{{::item}}
+                        <p><img src="/Content/images/icons/{{'annotation.' + item.toLowerCase()}}.svg" style="padding: 15px;">{{::item}}
                             <md-button class="md-icon-button md-primary" ng-if="'Common' != item" aria-label="{{simpleTypesVocabularies[item.toLowerCase() + 'Context']}}">
                                 <md-tooltip class="tt-multiline" md-direction="right">{{simpleTypesVocabularies[item.toLowerCase() + 'Context']}}</md-tooltip>
                                 <i class="material-icons">help_outline</i>

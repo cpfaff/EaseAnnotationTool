@@ -19,11 +19,11 @@ namespace CAFE.Plugins.GlobalNameResolveService
         [JsonProperty(PropertyName = "url")]
         public string Url { get; set; }
 
-        /// <summary>
-        /// A list of data source ids you used for name resolution. If no data sources were given the list is empty.
-        /// </summary>
-        [JsonProperty(PropertyName = "data_sources")]
-        public List<string> DataSources { get; set; } = new List<string>();
+        ///// <summary>
+        ///// A list of data source ids you used for name resolution. If no data sources were given the list is empty.
+        ///// </summary>
+        //[JsonProperty(PropertyName = "data_sources")]
+        //public int[] DataSources { get; set; }
 
         /// <summary>
         /// Appears if 'with_context' parameter is set to true.
@@ -167,8 +167,8 @@ namespace CAFE.Plugins.GlobalNameResolveService
             [JsonProperty(PropertyName = "imported_at")]
             public string ImportedAt { get; set; }
 
-            [JsonProperty(PropertyName = "vernaculars")]
-            public List<string> Vernaculars { get; set; } = new List<string>();
+            //[JsonProperty(PropertyName = "vernaculars")]
+            //public List<string> Vernaculars { get; set; } = new List<string>();
 
             /// <summary>
             /// Explains how resolver found the name. If the resolver cannot find names corresponding to the entire 
@@ -221,7 +221,7 @@ namespace CAFE.Plugins.GlobalNameResolveService
             public bool BestMatchOnly { get; set; }
 
             [JsonProperty(PropertyName = "data_sources")]
-            public List<string> DataSources { get; set; } = new List<string>();
+            public int[] DataSources { get; set; }
 
             [JsonProperty(PropertyName = "preferred_data_sources")]
             public List<string> PreferredDataSources { get; set; } = new List<string>();

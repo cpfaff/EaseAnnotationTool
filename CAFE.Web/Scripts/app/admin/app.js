@@ -11,7 +11,8 @@
       'admin.annotationList',
       'admin.userAcceptanceList',
       'admin.groupList',
-      'admin.masterdata'
+      'admin.masterdata',
+      'admin.gfbio'
     ]);
 
     app.config(function ($stateProvider, $urlRouterProvider) {
@@ -40,6 +41,9 @@
             }).state('admin.annotation', {
                 url: "/annotation",
                 templateUrl: "Scripts/app/admin/views/annotation.html"
+            }).state('admin.gfbio', {
+                url: "/gfbio",
+                templateUrl: "Scripts/app/admin/views/gfbio.html"
             });
     });
 

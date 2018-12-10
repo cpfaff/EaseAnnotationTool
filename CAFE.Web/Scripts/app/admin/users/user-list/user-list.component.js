@@ -51,7 +51,6 @@
                       }).then(function (response) {
                           $scope.selected = [];
                           $scope.getUsers();
-                          $scope.CloseDeleteUsersDialog();
                       });
                   }
 

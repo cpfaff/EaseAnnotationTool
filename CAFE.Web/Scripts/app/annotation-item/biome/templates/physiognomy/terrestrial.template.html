@@ -4,7 +4,7 @@
             <md-chips flex="90"  ng-model="physiognomyModel.physiognomyTypes[0].terrestrialPhysiognomies" md-transform-chip="{terrestrialPhysiognomyType: $chip}" md-autocomplete-snap md-require-match="true">
                 <md-autocomplete flex
                                  md-search-text="functionAutocomplete.terrestrial"
-                                 md-items="item in querySearch(functionAutocomplete.terrestrial, terrestrialDictionaries)"
+                                 md-items="item in querySearch(functionAutocomplete.terrestrial, 'terrestrialPhysiognomyType')"
                                  md-item-text="item.value"
                                  placeholder="Search for a Terrestrial"
                                  md-min-length="0">

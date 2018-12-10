@@ -10,7 +10,7 @@
             <div layout="row">
                 <md-autocomplete flex="80" md-selected-item="spaceContext.spatialResolutions[0].spatialExtentType"
                                  md-search-text="autocompleteFields.spatialExtentType"
-                                 md-items="subItem in querySearch(autocompleteFields.spatialExtentType, vocabularies.spatialResolutions.spatialResolutionType)"
+                                 md-items="subItem in queryRequestSearch(autocompleteFields.spatialExtentType, 'spatialExtentType')"
                                  md-item-text="subItem.value"
                                  placeholder="Search for a Spatial Coverage"
                                  md-require-match="true"
@@ -39,7 +39,7 @@
             <div layout="row">
                 <md-autocomplete flex="80" md-selected-item="spaceContext.spatialResolutions[0].spatialResolutionType"
                                  md-search-text="autocompleteFields.spatialResolutionType"
-                                 md-items="subItem in querySearch(autocompleteFields.spatialResolutionType, vocabularies.spatialResolutions.spatialResolutionType)"
+                                 md-items="subItem in queryRequestSearch(autocompleteFields.spatialResolutionType, 'spatialResolutionType')"
                                  md-item-text="subItem.value"
                                  placeholder="Search for a Spatial Resolution"
                                  md-require-match="true"

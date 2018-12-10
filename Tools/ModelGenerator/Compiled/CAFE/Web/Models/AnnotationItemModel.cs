@@ -33,12 +33,11 @@ namespace CAFE.Web.Models
         /// <summary>
         /// <para xml:lang="en">
         ///	      The Object wraps all information stored in an annotation.
-        ///	      It contains context information for the data but also the
+        ///	      It links context information for the data but also the
         ///	      references and the resources which allow to acccess the
         ///	      data described.
         ///	    </para>
         /// </summary>
-        [System.ComponentModel.DataAnnotations.RequiredAttribute()]
         [System.ComponentModel.DataAnnotations.RequiredAttribute()]
         public AnnotationObjectModel Object { get; set; }
     }
@@ -81,7 +80,6 @@ namespace CAFE.Web.Models
         ///		  </para>
         /// </summary>
         [System.ComponentModel.DataAnnotations.RequiredAttribute()]
-        [System.ComponentModel.DataAnnotations.RequiredAttribute()]
         public ReferencesModel References { get; set; }
         
         /// <summary>
@@ -110,7 +108,7 @@ namespace CAFE.Web.Models
         /// <para xml:lang="en">
         ///				The time context allows to capture the
         ///				quantitative and qualitative temporal aspects
-        ///				that describe the the object.
+        ///				that describe a search object.
         ///			      </para>
         /// </summary>
         public TimeContextModel TimeContext { get; set; }
@@ -253,7 +251,6 @@ namespace CAFE.Web.Models
         ///					  </para>
         /// </summary>
         [System.ComponentModel.DataAnnotations.RequiredAttribute()]
-        [System.ComponentModel.DataAnnotations.RequiredAttribute()]
         public TimeRangeModel TimeRange { get; set; }
     }
     
@@ -281,7 +278,6 @@ namespace CAFE.Web.Models
         ///						</para>
         /// </summary>
         [System.ComponentModel.DataAnnotations.RequiredAttribute()]
-        [System.ComponentModel.DataAnnotations.RequiredAttribute()]
         public RangeStartModel RangeStart { get; set; }
         
         /// <summary>
@@ -296,7 +292,6 @@ namespace CAFE.Web.Models
         ///						  campaign.
         ///						</para>
         /// </summary>
-        [System.ComponentModel.DataAnnotations.RequiredAttribute()]
         [System.ComponentModel.DataAnnotations.RequiredAttribute()]
         public RangeEndModel RangeEnd { get; set; }
     }
@@ -317,7 +312,6 @@ namespace CAFE.Web.Models
         ///							This element captures a local time with date and olson timezone
         ///						      </para>
         /// </summary>
-        [System.ComponentModel.DataAnnotations.RequiredAttribute()]
         [System.ComponentModel.DataAnnotations.RequiredAttribute()]
         public DateAndTimeModel DateTime { get; set; }
     }
@@ -395,7 +389,6 @@ namespace CAFE.Web.Models
         ///							This element captures a local time with date and olson timezone
         ///						      </para>
         /// </summary>
-        [System.ComponentModel.DataAnnotations.RequiredAttribute()]
         [System.ComponentModel.DataAnnotations.RequiredAttribute()]
         public DateAndTime DateTime { get; set; }
     }
@@ -624,6 +617,16 @@ namespace CAFE.Web.Models
         ///						</para>
         /// </summary>
         public TemporalResolutionTypeModel TemporalResolutionType { get; set; }
+        
+        /// <summary>
+        /// </summary>
+        public int FactorPeriodId { get; set; }
+        
+        /// <summary>
+        /// <para xml:lang="de">Ruft einen Wert ab, der angibt, ob die FactorPeriodId-Eigenschaft spezifiziert ist, oder legt diesen fest.</para>
+        /// <para xml:lang="en">Gets or sets a value indicating whether the FactorPeriodId property is specified.</para>
+        /// </summary>
+        public bool FactorPeriodIdSpecified { get; set; }
     }
     
     /// <summary>
@@ -649,7 +652,7 @@ namespace CAFE.Web.Models
         
         /// <summary>
         /// </summary>
-        public string Modifyer
+        public int Modifyer
         {
             get
             {
@@ -685,7 +688,7 @@ namespace CAFE.Web.Models
         
         /// <summary>
         /// </summary>
-        public string Modifyer
+        public int Modifyer
         {
             get
             {
@@ -997,7 +1000,6 @@ namespace CAFE.Web.Models
         ///						</para>
         /// </summary>
         [System.ComponentModel.DataAnnotations.RequiredAttribute()]
-        [System.ComponentModel.DataAnnotations.RequiredAttribute()]
         public UtmCoordinateModel UtmCoordinate { get; set; }
     }
     
@@ -1018,7 +1020,7 @@ namespace CAFE.Web.Models
         ///						      </para>
         /// </summary>
         [System.ComponentModel.DataAnnotations.RequiredAttribute()]
-        public string UtmCoordinateZone { get; set; }
+        public int UtmCoordinateZone { get; set; }
         
         /// <summary>
         /// <para xml:lang="en">
@@ -1987,7 +1989,6 @@ namespace CAFE.Web.Models
         ///								  </para>
         /// </summary>
         [System.ComponentModel.DataAnnotations.RequiredAttribute()]
-        [System.ComponentModel.DataAnnotations.RequiredAttribute()]
         public SoilModel Soil { get; set; }
     }
     
@@ -2256,7 +2257,7 @@ namespace CAFE.Web.Models
         /// </summary>
         [System.ComponentModel.DataAnnotations.RangeAttribute(typeof(decimal), "0", "100")]
         [System.ComponentModel.DataAnnotations.RequiredAttribute()]
-        public string SandPercent { get; set; }
+        public int SandPercent { get; set; }
         
         /// <summary>
         /// <para xml:lang="en">
@@ -2270,7 +2271,7 @@ namespace CAFE.Web.Models
         /// </summary>
         [System.ComponentModel.DataAnnotations.RangeAttribute(typeof(decimal), "0", "100")]
         [System.ComponentModel.DataAnnotations.RequiredAttribute()]
-        public string SiltPercent { get; set; }
+        public int SiltPercent { get; set; }
         
         /// <summary>
         /// <para xml:lang="en">
@@ -2284,7 +2285,7 @@ namespace CAFE.Web.Models
         /// </summary>
         [System.ComponentModel.DataAnnotations.RangeAttribute(typeof(decimal), "0", "100")]
         [System.ComponentModel.DataAnnotations.RequiredAttribute()]
-        public string LoamPercent { get; set; }
+        public int LoamPercent { get; set; }
     }
     
     /// <summary>
@@ -2411,7 +2412,6 @@ namespace CAFE.Web.Models
         {
             this.NamedEcosphereLayers = new System.Collections.Generic.List<NamedEcosphereLayerModel>();
             this.NumericEcosphereLayers = new System.Collections.Generic.List<NumericEcosphereLayerModel>();
-            this.OrganizationalHierarchies = new System.Collections.Generic.List<OrganizationalHierarchyModel>();
         }
         
         /// <summary>
@@ -2430,25 +2430,6 @@ namespace CAFE.Web.Models
             get
             {
                 return (this.NumericEcosphereLayers.Count != 0);
-            }
-        }
-        
-        /// <summary>
-        /// <para xml:lang="en">
-        ///							A wrapper around organizational hierarchies
-        ///						      </para>
-        /// </summary>
-        public System.Collections.Generic.List<OrganizationalHierarchyModel> OrganizationalHierarchies { get; set; }
-        
-        /// <summary>
-        /// <para xml:lang="de">Ruft einen Wert ab, der angibt, ob die OrganizationalHierarchies-Collection leer ist.</para>
-        /// <para xml:lang="en">Gets a value indicating whether the OrganizationalHierarchies collection is empty.</para>
-        /// </summary>
-        public bool OrganizationalHierarchiesSpecified
-        {
-            get
-            {
-                return (this.OrganizationalHierarchies.Count != 0);
             }
         }
     }
@@ -2546,49 +2527,6 @@ namespace CAFE.Web.Models
     /// <summary>
     /// </summary>
     public partial class VegetationHeightUnitModel
-    {
-        
-        /// <summary>
-        /// <para xml:lang="de">Ruft den Text ab oder legt diesen fest.</para>
-        /// <para xml:lang="en">Gets or sets the text value.</para>
-        /// </summary>
-        public string Value { get; set; }
-        
-        /// <summary>
-        /// <para xml:lang="de">Ruft einen Wert ab, der diese Entität eindeutig identifiziert, oder legt diesen fest.</para>
-        /// <para xml:lang="en">Gets or sets a value uniquely identifying this entity.</para>
-        /// </summary>
-        public long Id { get; set; }
-        
-        /// <summary>
-        /// </summary>
-        public string Uri { get; set; }
-    }
-    
-    /// <summary>
-    /// </summary>
-    public partial class OrganizationalHierarchyModel
-    {
-        
-        /// <summary>
-        /// <para xml:lang="de">Ruft einen Wert ab, der diese Entität eindeutig identifiziert, oder legt diesen fest.</para>
-        /// <para xml:lang="en">Gets or sets a value uniquely identifying this entity.</para>
-        /// </summary>
-        public long Id { get; set; }
-        
-        /// <summary>
-        /// <para xml:lang="en">
-        ///								    A named organizational hierarchy of life (Atom
-        ///								    Level, Molecule Level, Cell Level, ...)
-        ///								  </para>
-        /// </summary>
-        [System.ComponentModel.DataAnnotations.RequiredAttribute()]
-        public OrganizationHierarchyNameModel OrganizationHierarchyName { get; set; }
-    }
-    
-    /// <summary>
-    /// </summary>
-    public partial class OrganizationHierarchyNameModel
     {
         
         /// <summary>
@@ -2753,7 +2691,7 @@ namespace CAFE.Web.Models
         ///						</para>
         /// </summary>
         [System.ComponentModel.DataAnnotations.RequiredAttribute()]
-        public BiomeZoneModel BiomeZone { get; set; }
+        public BiomeLatitudinalZoneModel BiomeLatitudinalZone { get; set; }
         
         /// <summary>
         /// <para xml:lang="en">
@@ -2802,7 +2740,7 @@ namespace CAFE.Web.Models
     
     /// <summary>
     /// </summary>
-    public partial class BiomeZoneModel
+    public partial class BiomeLatitudinalZoneModel
     {
         
         /// <summary>
@@ -3355,7 +3293,6 @@ namespace CAFE.Web.Models
         ///						</para>
         /// </summary>
         [System.ComponentModel.DataAnnotations.RequiredAttribute()]
-        [System.ComponentModel.DataAnnotations.RequiredAttribute()]
         public TaxonomyModel Taxonomy { get; set; }
     }
     
@@ -3415,18 +3352,17 @@ namespace CAFE.Web.Models
         
         /// <summary>
         /// <para xml:lang="en">
-        ///							The generic full name of the organism including author and year
-        ///							if required.
+        ///							The genus of the organism
         ///						      </para>
         /// </summary>
-        public string Species { get; set; }
+        public GenusModel Genus { get; set; }
         
         /// <summary>
         /// <para xml:lang="en">
-        ///							The name of an organism
+        ///							The full name of the organism (also including author and year)
         ///						      </para>
         /// </summary>
-        public OrganismNameModel OrganismName { get; set; }
+        public string Species { get; set; }
     }
     
     /// <summary>
@@ -3563,272 +3499,7 @@ namespace CAFE.Web.Models
     
     /// <summary>
     /// </summary>
-    public partial class OrganismNameModel
-    {
-        
-        /// <summary>
-        /// <para xml:lang="de">Ruft einen Wert ab, der diese Entität eindeutig identifiziert, oder legt diesen fest.</para>
-        /// <para xml:lang="en">Gets or sets a value uniquely identifying this entity.</para>
-        /// </summary>
-        public long Id { get; set; }
-        
-        /// <summary>
-        /// <para xml:lang="en">
-        ///							      Atomised name with elements according to the International Code of Nomenclature
-        ///							      of Prokaryotes (ABCD)
-        ///							    </para>
-        /// </summary>
-        public BacterialNameModel BacterialName { get; set; }
-        
-        /// <summary>
-        /// <para xml:lang="en">
-        ///							      The ame of a fungi
-        ///							    </para>
-        /// </summary>
-        public FungalNameModel FungalName { get; set; }
-        
-        /// <summary>
-        /// <para xml:lang="en">
-        ///							      Atomised name with elements according to the International Code of Botanical
-        ///							      Nomenclature or the International Code of Nomenclature for Cultivated Plants
-        ///							      (ABCD)
-        ///							    </para>
-        /// </summary>
-        public BotanicalNameModel BotanicalName { get; set; }
-        
-        /// <summary>
-        /// <para xml:lang="en">
-        ///							      Atomised name with elements according to the International Code of Zoological
-        ///							      Nomenclature (ABCD)
-        ///							    </para>
-        /// </summary>
-        public ZoologicalNameModel ZoologicalName { get; set; }
-        
-        /// <summary>
-        /// <para xml:lang="en">
-        ///							      Atomised name with elements according to the International Committee on
-        ///							      Taxonomy of Viruses
-        ///							    </para>
-        /// </summary>
-        public ViralNameModel ViralName { get; set; }
-    }
-    
-    /// <summary>
-    /// </summary>
-    public partial class BacterialNameModel
-    {
-        
-        /// <summary>
-        /// <para xml:lang="de">Ruft einen Wert ab, der diese Entität eindeutig identifiziert, oder legt diesen fest.</para>
-        /// <para xml:lang="en">Gets or sets a value uniquely identifying this entity.</para>
-        /// </summary>
-        public long Id { get; set; }
-        
-        /// <summary>
-        /// <para xml:lang="en">
-        ///								    An element that captures the full scientific name of the bacteria in one string.
-        ///								  </para>
-        /// </summary>
-        public string FullBacterialName { get; set; }
-        
-        /// <summary>
-        /// <para xml:lang="en">
-        ///								    Genus name
-        ///								  </para>
-        /// </summary>
-        public string GenusOrMonomial { get; set; }
-        
-        /// <summary>
-        /// <para xml:lang="en">
-        ///								    Subgenus name
-        ///								  </para>
-        /// </summary>
-        public string Subgenus { get; set; }
-        
-        /// <summary>
-        /// <para xml:lang="en">
-        ///								    Author team and year of the subgenus name
-        ///								  </para>
-        /// </summary>
-        public string SubgenusAuthorAndYear { get; set; }
-        
-        /// <summary>
-        /// <para xml:lang="en">
-        ///								    A name element dependent on a genus or a species name under the
-        ///								    bacteriological, botanical, and zoological code.
-        ///								  </para>
-        /// </summary>
-        public string SpeciesEpithet { get; set; }
-        
-        /// <summary>
-        /// <para xml:lang="en">
-        ///								    The subsphecies epithet (Maps to Darwin Core 2: Subspecies)
-        ///								  </para>
-        /// </summary>
-        public string SubspeciesEpithet { get; set; }
-        
-        /// <summary>
-        /// <para xml:lang="en">
-        ///								    Author team and year of the basionym of a species or subspecies combination
-        ///								  </para>
-        /// </summary>
-        public string ParentheticalAuthorTeamAndYear { get; set; }
-        
-        /// <summary>
-        /// <para xml:lang="en">
-        ///								    The author(s) who published the full name as it stands and its year
-        ///								  </para>
-        /// </summary>
-        public string AuthorTeamAndYear { get; set; }
-        
-        /// <summary>
-        /// <para xml:lang="en">
-        ///								    Approbation of name according to approved list, validation list,or validly
-        ///								    published, paper in IJSB after 1980
-        ///								  </para>
-        /// </summary>
-        public string NameApprobation { get; set; }
-    }
-    
-    /// <summary>
-    /// </summary>
-    public partial class FungalNameModel
-    {
-        
-        /// <summary>
-        /// <para xml:lang="de">Ruft einen Wert ab, der diese Entität eindeutig identifiziert, oder legt diesen fest.</para>
-        /// <para xml:lang="en">Gets or sets a value uniquely identifying this entity.</para>
-        /// </summary>
-        public long Id { get; set; }
-        
-        /// <summary>
-        /// <para xml:lang="en">
-        ///								    An element that captures the full scientific name of the bacteria in one string.
-        ///								  </para>
-        /// </summary>
-        public string FullFungalName { get; set; }
-    }
-    
-    /// <summary>
-    /// </summary>
-    public partial class BotanicalNameModel
-    {
-        
-        /// <summary>
-        /// <para xml:lang="de">Ruft einen Wert ab, der diese Entität eindeutig identifiziert, oder legt diesen fest.</para>
-        /// <para xml:lang="en">Gets or sets a value uniquely identifying this entity.</para>
-        /// </summary>
-        public long Id { get; set; }
-        
-        /// <summary>
-        /// <para xml:lang="en">
-        ///								    An element that captures the full botanical name in one string.
-        ///								  </para>
-        /// </summary>
-        public string FullBotanicalName { get; set; }
-        
-        /// <summary>
-        /// <para xml:lang="en">
-        ///								    Genus or higher taxon name
-        ///								  </para>
-        /// </summary>
-        public string GenusOrMonomial { get; set; }
-        
-        /// <summary>
-        /// <para xml:lang="en">
-        ///								    The first epithet in a botanical name combination (species epithet or the
-        ///								    epithet of the subdivision of a genus
-        ///								  </para>
-        /// </summary>
-        public string FirstEpithet { get; set; }
-        
-        /// <summary>
-        /// <para xml:lang="en">
-        ///								    The final epithet of a botanical name of infraspecific rank
-        ///								  </para>
-        /// </summary>
-        public string InfraspecificEpithet { get; set; }
-        
-        /// <summary>
-        /// <para xml:lang="en">
-        ///								    The rank of the name where needed to form it.
-        ///								  </para>
-        /// <para xml:lang="en">
-        ///	The abbreviation of a taxonomic rank as used in (botanical) organism name strings
-        ///      </para>
-        /// </summary>
-        public string Rank { get; set; }
-        
-        /// <summary>
-        /// <para xml:lang="en">
-        ///								    Flag indicating that this is a named hybrid ("x") or a graft chimaera ("+").
-        ///								    The attribute insertionpoint defines the name element in front of which the
-        ///								    qualifier should be inserted (1 = before entire name, 2= before first epithet,
-        ///								    3 = before rank designation for second epithet.)
-        ///								  </para>
-        /// </summary>
-        public HybridFlagModel HybridFlag { get; set; }
-        
-        /// <summary>
-        /// <para xml:lang="en">
-        ///								    Author team of the basionym of a combination
-        ///								  </para>
-        /// </summary>
-        public string AuthorTeamParenthesis { get; set; }
-        
-        /// <summary>
-        /// <para xml:lang="en">
-        ///								    The author(s) who published the full name as it stands
-        ///								  </para>
-        /// </summary>
-        public string AuthorTeam { get; set; }
-        
-        /// <summary>
-        /// <para xml:lang="en">
-        ///								    Cultivar group name
-        ///								  </para>
-        /// </summary>
-        public string CultivarGroupName { get; set; }
-        
-        /// <summary>
-        /// <para xml:lang="en">
-        ///								    Cultivar name according to the ICNCP
-        ///								  </para>
-        /// </summary>
-        public string CultivarName { get; set; }
-        
-        /// <summary>
-        /// <para xml:lang="en">
-        ///								    Container for trade names
-        ///								  </para>
-        /// </summary>
-        public System.Collections.Generic.List<string> TradeDesignationNames { get; set; }
-        
-        /// <summary>
-        /// <para xml:lang="de">Ruft einen Wert ab, der angibt, ob die TradeDesignationNames-Collection leer ist.</para>
-        /// <para xml:lang="en">Gets a value indicating whether the TradeDesignationNames collection is empty.</para>
-        /// </summary>
-        public bool TradeDesignationNamesSpecified
-        {
-            get
-            {
-                return (this.TradeDesignationNames.Count != 0);
-            }
-        }
-        
-        /// <summary>
-        /// <para xml:lang="de">Initialisiert eine neue Instanz der <see cref="BotanicalName" /> Klasse.</para>
-        /// <para xml:lang="en">Initializes a new instance of the <see cref="BotanicalName" /> class.</para>
-        /// </summary>
-        public BotanicalNameModel()
-        {
-            this.TradeDesignationNames = new System.Collections.Generic.List<string>();
-        }
-    }
-    
-    /// <summary>
-    /// </summary>
-    public partial class HybridFlagModel
+    public partial class GenusModel
     {
         
         /// <summary>
@@ -3844,136 +3515,8 @@ namespace CAFE.Web.Models
         public long Id { get; set; }
         
         /// <summary>
-        /// <para xml:lang="en">Minimum inclusive value: 1.</para>
-        /// <para xml:lang="en">Maximum inclusive value: 3.</para>
         /// </summary>
-        [System.ComponentModel.DataAnnotations.RangeAttribute(typeof(decimal), "1", "3")]
-        public string Insertionpoint { get; set; }
-    }
-    
-    /// <summary>
-    /// </summary>
-    public partial class ZoologicalNameModel
-    {
-        
-        /// <summary>
-        /// <para xml:lang="de">Ruft einen Wert ab, der diese Entität eindeutig identifiziert, oder legt diesen fest.</para>
-        /// <para xml:lang="en">Gets or sets a value uniquely identifying this entity.</para>
-        /// </summary>
-        public long Id { get; set; }
-        
-        /// <summary>
-        /// <para xml:lang="en">
-        ///								    An element that captures the full zoological name in one string.
-        ///								  </para>
-        /// </summary>
-        public string FullZoologicalName { get; set; }
-        
-        /// <summary>
-        /// <para xml:lang="en">
-        ///								    Genus or higher taxon name
-        ///								  </para>
-        /// </summary>
-        public string GenusOrMonomial { get; set; }
-        
-        /// <summary>
-        /// <para xml:lang="en">
-        ///								    Subgenus name
-        ///								  </para>
-        /// </summary>
-        public string Subgenus { get; set; }
-        
-        /// <summary>
-        /// <para xml:lang="en">
-        ///								    Species epithet
-        ///								  </para>
-        /// </summary>
-        public string SpeciesEpithet { get; set; }
-        
-        /// <summary>
-        /// <para xml:lang="en">
-        ///								    Maps to Darwin Core 2: Subspecies
-        ///								  </para>
-        /// </summary>
-        public string SubspeciesEpithet { get; set; }
-        
-        /// <summary>
-        /// <para xml:lang="en">
-        ///								    The first person(s) who validly published a species-group name and the year of
-        ///								    publication
-        ///								  </para>
-        /// </summary>
-        public string AuthorTeamOriginalAndYear { get; set; }
-        
-        /// <summary>
-        /// <para xml:lang="en">
-        ///								    The parenthetical citation of the original author when a species-group was
-        ///								    transferred to another genus and the year of the original publication
-        ///								  </para>
-        /// </summary>
-        public string AuthorTeamParenthesisAndYear { get; set; }
-        
-        /// <summary>
-        /// <para xml:lang="en">
-        ///								    The citation of the authors responsible for the new combination and the year of
-        ///								    its publication
-        ///								  </para>
-        /// </summary>
-        public string CombinationAuthorTeamAndYear { get; set; }
-        
-        /// <summary>
-        /// <para xml:lang="en">
-        ///								    Name of the breed of an animal
-        ///								  </para>
-        /// </summary>
-        public string Breed { get; set; }
-        
-        /// <summary>
-        /// </summary>
-        public string NamedIndividual { get; set; }
-    }
-    
-    /// <summary>
-    /// </summary>
-    public partial class ViralNameModel
-    {
-        
-        /// <summary>
-        /// <para xml:lang="de">Ruft einen Wert ab, der diese Entität eindeutig identifiziert, oder legt diesen fest.</para>
-        /// <para xml:lang="en">Gets or sets a value uniquely identifying this entity.</para>
-        /// </summary>
-        public long Id { get; set; }
-        
-        /// <summary>
-        /// <para xml:lang="en">
-        ///								    An element that captures the full viral name in one string.
-        ///								  </para>
-        /// </summary>
-        public string FullViralName { get; set; }
-        
-        /// <summary>
-        /// <para xml:lang="en">
-        ///								    Genus or higher taxon name formed according to the code and representing the
-        ///								    result of the identification. E.g. Comovirus
-        ///								  </para>
-        /// </summary>
-        public string GenusOrMonomial { get; set; }
-        
-        /// <summary>
-        /// <para xml:lang="en">
-        ///								    The formal name of a viral species. Examples: vaccinia virus; human herpes
-        ///								    virus 2 (herpes simplex virus 2); poliovirus 1; Saccharomyces cerevisiae virus
-        ///								    L-A; enterobacteria phage PRD1 [Source: ICTV]
-        ///								  </para>
-        /// </summary>
-        public string ViralSpeciesDesignation { get; set; }
-        
-        /// <summary>
-        /// <para xml:lang="en">
-        ///								    The accepted acronym for the Virus, e.g. PCV for Peanut Clump Virus
-        ///								  </para>
-        /// </summary>
-        public string Acronym { get; set; }
+        public string Uri { get; set; }
     }
     
     /// <summary>
@@ -4627,6 +4170,7 @@ namespace CAFE.Web.Models
         {
             this.Approaches = new System.Collections.Generic.List<ApproachModel>();
             this.Factors = new System.Collections.Generic.List<FactorModel>();
+            this.OrganizationalHierarchies = new System.Collections.Generic.List<OrganizationalHierarchyModel>();
         }
         
         /// <summary>
@@ -4645,6 +4189,25 @@ namespace CAFE.Web.Models
             get
             {
                 return (this.Factors.Count != 0);
+            }
+        }
+        
+        /// <summary>
+        /// <para xml:lang="en">
+        ///				      A wrapper around organizational hierarchies
+        ///				    </para>
+        /// </summary>
+        public System.Collections.Generic.List<OrganizationalHierarchyModel> OrganizationalHierarchies { get; set; }
+        
+        /// <summary>
+        /// <para xml:lang="de">Ruft einen Wert ab, der angibt, ob die OrganizationalHierarchies-Collection leer ist.</para>
+        /// <para xml:lang="en">Gets a value indicating whether the OrganizationalHierarchies collection is empty.</para>
+        /// </summary>
+        public bool OrganizationalHierarchiesSpecified
+        {
+            get
+            {
+                return (this.OrganizationalHierarchies.Count != 0);
             }
         }
     }
@@ -4727,12 +4290,6 @@ namespace CAFE.Web.Models
     {
         
         /// <summary>
-        /// <para xml:lang="de">Ruft einen Wert ab, der diese Entität eindeutig identifiziert, oder legt diesen fest.</para>
-        /// <para xml:lang="en">Gets or sets a value uniquely identifying this entity.</para>
-        /// </summary>
-        public long Id { get; set; }
-        
-        /// <summary>
         /// <para xml:lang="en">
         ///						  A name of a factor that has been measured
         ///						  or calculated in the study (Producer Diversity,
@@ -4748,6 +4305,30 @@ namespace CAFE.Web.Models
         ///						</para>
         /// </summary>
         public FactorTypeModel FactorType { get; set; }
+        
+        /// <summary>
+        /// </summary>
+        public int Id { get; set; }
+        
+        /// <summary>
+        /// <para xml:lang="de">Ruft einen Wert ab, der angibt, ob die Id-Eigenschaft spezifiziert ist, oder legt diesen fest.</para>
+        /// <para xml:lang="en">Gets or sets a value indicating whether the Id property is specified.</para>
+        /// </summary>
+        public bool IdSpecified { get; set; }
+        
+        /// <summary>
+        /// </summary>
+        public string Was
+        {
+            get
+            {
+                return this._was;
+            }
+            set
+            {
+                this._was = value;
+            }
+        }
     }
     
     /// <summary>
@@ -4770,25 +4351,54 @@ namespace CAFE.Web.Models
         /// <summary>
         /// </summary>
         public string Uri { get; set; }
-        
-        /// <summary>
-        /// </summary>
-        public string Was
-        {
-            get
-            {
-                return this._was;
-            }
-            set
-            {
-                this._was = value;
-            }
-        }
     }
     
     /// <summary>
     /// </summary>
     public partial class FactorTypeModel
+    {
+        
+        /// <summary>
+        /// <para xml:lang="de">Ruft den Text ab oder legt diesen fest.</para>
+        /// <para xml:lang="en">Gets or sets the text value.</para>
+        /// </summary>
+        public string Value { get; set; }
+        
+        /// <summary>
+        /// <para xml:lang="de">Ruft einen Wert ab, der diese Entität eindeutig identifiziert, oder legt diesen fest.</para>
+        /// <para xml:lang="en">Gets or sets a value uniquely identifying this entity.</para>
+        /// </summary>
+        public long Id { get; set; }
+        
+        /// <summary>
+        /// </summary>
+        public string Uri { get; set; }
+    }
+    
+    /// <summary>
+    /// </summary>
+    public partial class OrganizationalHierarchyModel
+    {
+        
+        /// <summary>
+        /// <para xml:lang="de">Ruft einen Wert ab, der diese Entität eindeutig identifiziert, oder legt diesen fest.</para>
+        /// <para xml:lang="en">Gets or sets a value uniquely identifying this entity.</para>
+        /// </summary>
+        public long Id { get; set; }
+        
+        /// <summary>
+        /// <para xml:lang="en">
+        ///						  A named organizational hierarchy of life (Atom
+        ///						  Level, Molecule Level, Cell Level, ...)
+        ///						</para>
+        /// </summary>
+        [System.ComponentModel.DataAnnotations.RequiredAttribute()]
+        public OrganizationHierarchyNameModel OrganizationHierarchyName { get; set; }
+    }
+    
+    /// <summary>
+    /// </summary>
+    public partial class OrganizationHierarchyNameModel
     {
         
         /// <summary>
@@ -5227,7 +4837,13 @@ namespace CAFE.Web.Models
         ///					    A database id as reference to a dataset which is described.
         ///					  </para>
         /// </summary>
-        public string FileID { get; set; }
+        public int FileID { get; set; }
+        
+        /// <summary>
+        /// <para xml:lang="de">Ruft einen Wert ab, der angibt, ob die FileID-Eigenschaft spezifiziert ist, oder legt diesen fest.</para>
+        /// <para xml:lang="en">Gets or sets a value indicating whether the FileID property is specified.</para>
+        /// </summary>
+        public bool FileIDSpecified { get; set; }
         
         /// <summary>
         /// <para xml:lang="en">

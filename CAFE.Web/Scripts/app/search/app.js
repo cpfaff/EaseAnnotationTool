@@ -9,11 +9,13 @@
       'ngAnimate',
       'ngMaterial',
       'ng-pros.directive.autocomplete',
-      'search.accessRequestDialog'
+      'search.accessRequestDialog',
+      'rzModule',
+      'leaflet-directive'
     ]);
 
     app.controller('SearchController', [
-        '$scope', '$http', '$filter', '$mdDialog', function ($scope, $http, $filter, $mdDialog) {
+        '$scope', '$http', '$filter', '$mdDialog', 'leafletData', '$timeout', function ($scope, $http, $filter, $mdDialog, leafletData, $timeout) {
 
             $scope.definedProperties = [];
             $scope.properties = [];
@@ -145,14 +147,17 @@
                 });
             };
 
+
             $scope.addFilter = function() {
                 var filter = {};
                 $scope.filters.push(filter);
+                $('html, body').animate({ scrollTop: $("#filterBtn").offset().top }, 100); 
             };
 
             $scope.removeFilter = function(filter) {
                 $scope.filters.splice($scope.filters.indexOf(filter), 1);
                 $scope.properties.push(filter.property);
+                $('html, body').animate({ scrollTop: $("#filterBtn").offset().top }, 100); 
             };
 
             $scope.clearFilters = function() {
@@ -164,8 +169,111 @@
                 $scope.search();
             };
 
-            $scope.onFilterParameterSelect = function (item) {
+            $scope.boundingBox =
+            {
+                northBoundingCoordinate: 25,
+                southBoundingCoordinate: -25,
+                eastBoundingCoordinate: 25,
+                westBoundingCoordinate: -25
+            };
 
+            function InitLeaflet() {
+                
+                leafletData.getMap("mainMap").then(function (map) {
+                    var boundingBoxCoordinates = [[-25, -25], [25, 25]];
+                    angular.extend(map, { editable: true });
+                    var rec = L.rectangle(boundingBoxCoordinates).addTo(map);
+                    rec.enableEdit();
+                    rec.
+                        on('mouseup', SaveCoordinates).
+                        on('drag', SaveCoordinates).
+                        on('editable:editing', SaveCoordinates);
+
+                    map._onResize(); 
+                    function SaveFilter() {
+                        $scope.filters.forEach(function (item) {
+                            if (item.property.name == 'Space.Bounding Box') {
+                                item.property.items.forEach(function (filterElement) {
+                                    if (filterElement.description == 'North')
+                                        filterElement.value = $scope.boundingBox.northBoundingCoordinate;
+
+                                    if (filterElement.description == 'South')
+                                        filterElement.value = $scope.boundingBox.southBoundingCoordinate;
+
+                                    if (filterElement.description == 'East')
+                                        filterElement.value = $scope.boundingBox.eastBoundingCoordinate;
+
+                                    if (filterElement.description == 'West')
+                                        filterElement.value = $scope.boundingBox.westBoundingCoordinate;
+                                });
+                            }
+                        });
+                    }
+
+                    function SaveCoordinates() {
+                        var latLngs = rec.getLatLngs();
+
+                        var north = latLngs[0][1].lat > latLngs[0][3].lat ? latLngs[0][1].lat : latLngs[0][3].lat;
+                        var south = latLngs[0][1].lat < latLngs[0][3].lat ? latLngs[0][1].lat : latLngs[0][3].lat;
+                        var west = latLngs[0][0].lng < latLngs[0][2].lng ? latLngs[0][0].lng : latLngs[0][2].lng;
+                        var east = latLngs[0][0].lng > latLngs[0][2].lng ? latLngs[0][0].lng : latLngs[0][2].lng;
+
+                        if (
+                            west < -180 ||
+                            east > 180
+                        ) {
+                            var westOld = $scope.boundingBox.westBoundingCoordinate;
+                            var eastOld = $scope.boundingBox.eastBoundingCoordinate;
+
+                            rec.setBounds(
+                                L.latLngBounds(
+                                    L.latLng(
+                                        south,
+                                        west < -180 ? -180 : westOld
+                                    ),
+                                    L.latLng(
+                                        north,
+                                        east > 180 ? 180 : eastOld
+                                    )
+                                )
+                            );
+                        }
+                        else
+                            $scope.boundingBox =
+                                {
+                                    northBoundingCoordinate: north,
+                                    southBoundingCoordinate: south,
+                                    eastBoundingCoordinate: east,
+                                    westBoundingCoordinate: west
+                                };
+
+                        SaveFilter();
+                    }
+
+                    $scope.SetBoundingBoxPostion = function () {
+                        if (null != $scope.boundingBox.southBoundingCoordinate && null != $scope.boundingBox.westBoundingCoordinate &&
+                            null != $scope.boundingBox.northBoundingCoordinate && null != $scope.boundingBox.eastBoundingCoordinate)
+                            rec.setBounds(
+                                L.latLngBounds(
+                                    L.latLng(
+                                        $scope.boundingBox.southBoundingCoordinate,
+                                        $scope.boundingBox.westBoundingCoordinate
+                                    ),
+                                    L.latLng(
+                                        $scope.boundingBox.northBoundingCoordinate,
+                                        $scope.boundingBox.eastBoundingCoordinate
+                                    )
+                                )
+                            );
+
+                        SaveFilter();
+                    }
+
+                });
+            }
+
+
+            $scope.onFilterParameterSelect = function (item) {
                 for (var i = 0; i < item.property.items.length; i++) {
                     let property = item.property.items[i];
 
@@ -184,18 +292,11 @@
                     }
                 }
 
-
                 $scope.properties.splice($scope.properties.indexOf(item.property), 1);
 
-                ////fill related properties
-                //for (var i = 0; i < item.property.relatedFilterModels.length; i++) {
-                //    var relatedItem = item.property.relatedFilterModels[i];
-
-                //    var filter = { property: relatedItem };
-                //    $scope.filters.push(filter);
-
-                //    $scope.onFilterParameterSelect(filter);
-                //}
+                if (item.property.name == "Space.Bounding Box") {
+                    InitLeaflet(); //$timeout(InitLeaflet, 2000); 
+                }
             };
 
             $scope.applyFilters = function () {

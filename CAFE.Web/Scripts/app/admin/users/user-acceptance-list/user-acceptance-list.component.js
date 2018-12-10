@@ -9,7 +9,7 @@
               function (UserProvider, $scope, $mdDialog, $mdToast) {
 
                   var bookmark;
-
+                  $scope.selected = [];
                   $scope.filter = {
                       options: {
                           debounce: 500
@@ -93,6 +93,21 @@
                           $scope.filter.form.$setPristine();
                       }
                   };
+
+                  $scope.DeleteAcceptences = function () {
+                      var usersIds = [];
+                      
+                      $scope.selected.forEach(function (user) {
+                          usersIds.push(user.userId);
+                      });
+
+                      UserProvider.deleteUserAcceptances(usersIds).
+                      then(function (response) {
+                          $scope.selected = [];
+                          $scope.getUsers();
+                          $scope.CloseDeleteUsersDialog();
+                      });
+                  }
 
                   $scope.$watch('query.filter', function (newValue, oldValue) {
                       if (!oldValue) {

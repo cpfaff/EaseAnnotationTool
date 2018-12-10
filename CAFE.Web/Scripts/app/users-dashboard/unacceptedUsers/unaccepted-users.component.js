@@ -130,46 +130,67 @@
         });
     
     angular.
-       module('usersDashboard.acceptRequests').
-       controller('messagesController', ['AcceptRequestsProvider', '$scope', '$mdDialog', 'messages', 'subject', 'conversationId', 'requestId', 'userName', 'resources', 'reloadFunction',
-       function (AcceptRequestsProvider, $scope, $mdDialog, messages, subject, conversationId, requestId, userName, resources, reloadFunction) {
-           'use strict';
-           $scope.subject = subject;
-           $scope.messages = messages;
-           $scope.resources = resources;
-           
-           this.Cancel = $mdDialog.cancel;
+        module('usersDashboard.acceptRequests').
+        controller('messagesController', ['AcceptRequestsProvider', '$scope', '$mdDialog', '$anchorScroll', '$location', '$timeout', 'messages', 'subject', 'conversationId', 'requestId', 'userName', 'resources', 'reloadFunction',
+            function (AcceptRequestsProvider, $scope, $mdDialog, $anchorScroll, $location, $timeout, messages, subject, conversationId, requestId, userName, resources, reloadFunction) {
+                'use strict';
+                $scope.subject = subject;
+                $scope.messages = messages;
+                $scope.resources = resources;
+                this.Cancel = $mdDialog.cancel;
 
-           this.Accept = function () {
-               var prom = AcceptRequestsProvider.acceptRequest(conversationId);
+                this.Accept = function () {
+                    var prom = AcceptRequestsProvider.acceptRequest(conversationId);
 
-               prom.then(function (result) {
-                   $mdDialog.cancel();
-                   reloadFunction();
-               });
-           }
+                    prom.then(function (result) {
+                        $mdDialog.cancel();
+                        reloadFunction();
+                    });
+                }
 
-           this.Decline = function () {
-               var prom = AcceptRequestsProvider.declineRequest({ ConversationId: conversationId, Reason: $scope.message });
+                this.Decline = function () {
+                    var prom = AcceptRequestsProvider.declineRequest({ ConversationId: conversationId, Reason: $scope.message });
 
-               prom.then(function (result) {
-                   $mdDialog.cancel();
-                   reloadFunction();
-               });
-           }
+                    prom.then(function (result) {
+                        $mdDialog.cancel();
+                        reloadFunction();
+                    });
+                }
 
-           this.SendMessage = function () {
-               var prom = AcceptRequestsProvider.sendMessage({ text: $scope.message, conversationId: conversationId });
+                this.SendMessage = function () {
+                    var prom = AcceptRequestsProvider.sendMessage({ text: $scope.message, conversationId: conversationId });
+                    prom.then(function (result) {
+                        $scope.message = null;
+                        $scope.messageForm.$setUntouched();
+                        $scope.messages.push({
+                            sender: result.data.sender,
+                            text: result.data.text,
+                            creationDate: result.data.creationDate
+                        });
 
-               prom.then(function (result) {
-                   $scope.message = null;
-                   $scope.messageForm.$setUntouched();
-                   $scope.messages.push({
-                       sender: result.data.sender,
-                       text: result.data.text,
-                       creationDate: result.data.creationDate
-                   });
-               });
-           }
-       }]);
+ 
+                        $location.hash('bbb');
+                        $location.hash('sendMessageButton');
+                        $anchorScroll();
+                    });
+                }
+            }])
+            .directive('scrollToBottom', function ($timeout, $window) {
+                return {
+                    scope: {
+                        scrollToBottom: "="
+                    },
+                    restrict: 'A',
+                    link: function (scope, element, attr) {
+                        scope.$watchCollection('scrollToBottom', function (newVal) {
+                            if (newVal) {
+                                $timeout(function () {
+                                    element[0].scrollTop = element[0].scrollHeight;
+                                }, 0);
+                            }
+
+                        });
+                    }
+                };
+            });
 })();

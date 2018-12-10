@@ -22,14 +22,16 @@ namespace CAFE.Services.Security
         private readonly IRepository<DbUserFile> _userFileRepository;
         private readonly IRepository<DbAnnotationItem> _annotationItemRepository;
         private readonly IRepository<DbRole> _rolesRepository;
-
+        private readonly IRepository<DbUserHiddenHelper> _hiddenUserHelperRepository;
+        
         public SecurityService
         (
             IRepository<DbUser> userRepository, 
             IRepository<DbRole> groupRepository, 
             IRepository<DbUserFile> fileRepository,
             IRepository<DbAnnotationItem> annotationItemRepository,
-            IRepository<DbRole> rolesRepository 
+            IRepository<DbRole> rolesRepository ,
+            IRepository<DbUserHiddenHelper> hiddenUserHelperRepository
         )
         {
             _userRepository = userRepository;
@@ -37,6 +39,7 @@ namespace CAFE.Services.Security
             _userFileRepository = fileRepository;
             _annotationItemRepository = annotationItemRepository;
             _rolesRepository = rolesRepository;
+            _hiddenUserHelperRepository = hiddenUserHelperRepository;
         }
         #region IUserService implementation
 
@@ -281,6 +284,37 @@ namespace CAFE.Services.Security
             }
         }
 
+        public void RemoveUserAcceptances(IEnumerable<Guid> userIds)
+        {
+            try
+            {
+                var dbUsers = _userRepository.FindCollection(c => userIds.Contains(c.Id)).ToList();
+         
+                foreach(var dbUser in dbUsers)
+                    _userRepository.Delete(dbUser);
+            }
+            catch (Exception exception)
+            {
+                //TODO: log here
+                throw;
+            }
+        }
+
+        public void AddOreRemoveUserHiddenHelper(Guid userId, string helperName)
+        {
+            var existingHelper = _hiddenUserHelperRepository.Find(h => h.Name == helperName);
+            if (null == _hiddenUserHelperRepository.Find(h => h.Name == helperName))
+                _hiddenUserHelperRepository.Insert(new DbUserHiddenHelper
+                {
+                    Id = Guid.NewGuid(),
+                    Name = helperName,
+                    UserId = userId
+                });
+            else
+                _hiddenUserHelperRepository.Delete(existingHelper);
+        }
+
+
         #endregion
 
         #region IUserServiceAsync implementation
@@ -341,6 +375,20 @@ namespace CAFE.Services.Security
         {
             return await Task.Run(() => AcceptUser(userId));
         }
+
+        public async Task RemoveUserAcceptancesAsync(IEnumerable<Guid> userIds)
+        {
+            try
+            {
+                await Task.Run(() => RemoveUserAcceptances(userIds));
+            }
+            catch (Exception exception)
+            {
+                //TODO: log here
+                throw;
+            }
+        }
+
         public async Task<IEnumerable<User>> SearchUsersAsync(string keyWord)
         {
             return await Task.Run(() => SearchUsers(keyWord));
@@ -763,6 +811,11 @@ namespace CAFE.Services.Security
         public async Task<IEnumerable<UserFile>> SearchUserFileAsync(string keyWord)
         {
             return await Task.Run(() => SearchUserFiles(keyWord));
+        }
+
+        public async Task AddUserHiddenHelperAsync(Guid userId, string helperName)
+        {
+            await Task.Run(() => AddOreRemoveUserHiddenHelper(userId, helperName));
         }
 
         #endregion

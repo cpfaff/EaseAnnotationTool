@@ -28,11 +28,29 @@ namespace CAFE.Plugins.GlobalNameResolveService
             return Mapper.Map<GlobalNameServiceConfiguration>(section);
         }
 
+        public static int[] MapFromString(string compressedArray)
+        {
+            if(string.IsNullOrEmpty(compressedArray)) return new int[0];
+
+            var parsed = compressedArray.Split(new[] {"|"}, StringSplitOptions.RemoveEmptyEntries);
+            int[] resulr = new int[parsed.Length];
+            for (int i = 0; i < parsed.Length; i++)
+            {
+                resulr[i] = int.Parse(parsed[i]);
+            }
+
+            return resulr;
+        }
+
         public static void RegisterMapping(IMapperConfigurationExpression c)
         {
             c.CreateMap<GlobalNameServiceConfigurationSection, GlobalNameServiceConfiguration>();
             c.CreateMap<GlobalNameServiceConfiguration, GlobalNameServiceConfigurationSection>();
-            c.CreateMap<GlobalNameServiceConfiguration, RequestData>();
+            c.CreateMap<GlobalNameServiceConfigurationSection.UIElement, GlobalNameServiceConfiguration.UIElement>();
+            c.CreateMap<GlobalNameServiceConfiguration.UIElement, GlobalNameServiceConfigurationSection.UIElement>();
+            c.CreateMap<GlobalNameServiceConfiguration, RequestData>()
+                //.ForMember(m => m.DataSourceIds, expression => expression.MapFrom(m => MapFromString(m.DataSourceIds)))
+                ;
         }
     }
 }

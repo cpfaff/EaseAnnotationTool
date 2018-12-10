@@ -1,5 +1,5 @@
 ﻿<div layout="row" flex>
-    <div layout="column" layout-margin flex="30">
+    <div layout="column" layout-margin flex="40">
         <div layout="column" layout-margin>
             <div layout="column" layout-padding flex="60">
                 <h4>
@@ -10,10 +10,10 @@
                     </md-button>
                 </h4>
                 <div layout="row">
-                    <md-autocomplete flex="80"
+                    <md-autocomplete flex="50"
                                      md-selected-item="resolutionsModel.temporalExtentType"
                                      md-search-text="autocompleteFields.temporalExtentType"
-                                     md-items="subItem in querySearch(autocompleteFields.temporalExtentType, vocabularies.temporalExtentTypeVocabulary)"
+                                     md-items="subItem in querySearch(autocompleteFields.temporalExtentType, 'temporalExtentType')"
                                      md-item-text="subItem.value"
                                      placeholder="Search for a Temporal Duration"
                                      md-require-match="true"
@@ -30,6 +30,10 @@
                     <md-button ng-if="isAccessible" flex="20" class="md-icon-button import" aria-label="Add/Import new" ng-click="ImportDialogOpen('temporalExtentType', vocabularies.temporalExtentTypeVocabulary, $event)">
                         <i class="material-icons md-24" title="Add/Import new">library_add</i>
                     </md-button>
+                    <md-input-container class="md-block duration-modifyer" flex="30" style="min-width: 140px;">
+                        <label>Duration Modifyer</label>
+                        <input type="number" ng-model="resolutionsModel.temporalExtentTypeModifyer" />
+                    </md-input-container>
                 </div>
             </div>
         </div>
@@ -43,10 +47,10 @@
                     </md-button>
                 </h4>
                 <div layout="row">
-                    <md-autocomplete flex="80"
+                    <md-autocomplete flex="50"
                                      md-selected-item="resolutionsModel.temporalResolutionType"
                                      md-search-text="autocompleteFields.temporalResolutionType"
-                                     md-items="subItem in querySearch(autocompleteFields.temporalResolutionType, vocabularies.temporalResolutionTypeVocabulary)"
+                                     md-items="subItem in querySearch(autocompleteFields.temporalResolutionType, 'temporalResolutionType')"
                                      md-item-text="subItem.value"
                                      placeholder="Search for a Temporal Resolution"
                                      md-require-match="true"
@@ -63,6 +67,10 @@
                     <md-button ng-if="isAccessible" flex="20" class="md-icon-button import" aria-label="Add/Import new" ng-click="ImportDialogOpen('temporalResolutionType', vocabularies.temporalResolutionTypeVocabulary, $event)">
                         <i class="material-icons md-24" title="Add/Import new">library_add</i>
                     </md-button>
+                    <md-input-container class="md-block duration-modifyer" flex="30">
+                        <label>Duration Modifyer</label>
+                        <input type="number" ng-model="resolutionsModel.temporalResolutionTypeModifyer"/>
+                    </md-input-container>
                 </div>
             </div>
         </div>
@@ -77,8 +85,8 @@
             <md-list layout-margin>
                 <md-list-item ng-repeat="temporalResolution in timeModule.temporalResolutions track by $index" style="margin-bottom: 15px;">
                     <div class="md-list-item-text" layout="column" style="width: 300px;">
-                        <p><b>Temporal Duration:</b> {{ temporalResolution.temporalExtentType.value }}</p>
-                        <p><b>Temporal Resolution:</b> {{ temporalResolution.temporalResolutionType.value }}</p>
+                        <p><b>Temporal Duration:</b> {{ temporalResolution.temporalExtentType.value }} | {{ temporalResolution.temporalExtentType.modifyer }}</p>
+                        <p><b>Temporal Resolution:</b> {{ temporalResolution.temporalResolutionType.value }} | {{ temporalResolution.temporalResolutionType.modifyer }}</p>
                     </div>
                     <md-button ng-if="isAccessible" class="md-icon-button secondary" ng-click="timeModule.temporalResolutions.splice($index, 1)">
                         <i class="material-icons">delete</i>

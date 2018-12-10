@@ -15,9 +15,10 @@
         </md-tab-label>
         <md-tab-body>
             <md-card>
-                <div class="alert alert-warning alert-dismissible ai-help" role="alert">
+                <div class="alert alert-warning alert-dismissible ai-help" role="alert" ng-if="-1 == hiddenHelpers.indexOf('process-processes')">
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     <span class="glyphicon glyphicon-info-sign"></span>Set the desired combination and click "Add combination to list"-button at the bottom to add it to the list. You can also extend the existing vocabulary by clicking the "plus"-button.
+                    <md-checkbox class="pull-right" ng-model="processHelperVisibility" ng-change="HideHelper('process-processes')" aria-label="Never show again">Never show again</md-checkbox>
                 </div>
                 <div layout="row" layout-margin>
                     <div layout="column" layout-margin ng-if="isAccessible">
@@ -32,7 +33,7 @@
                             <div layout="column">
                                 <md-autocomplete md-selected-item="processModel.processName"
                                                  md-search-text="autocompleteFields[name]"
-                                                 md-items="subItem in querySearch(autocompleteFields[name], processNames)"
+                                                 md-items="subItem in querySearch(autocompleteFields[name], 'processName')"
                                                  md-item-text="subItem.value"
                                                  placeholder="Search for a Name"
                                                  md-require-match="true"
@@ -60,7 +61,7 @@
                                 <label></label>
                                 <md-chips class="md-chips-extended" flex="90" md-removable="isAccessible" ng-model="processModel.processObject" md-autocomplete-snap md-require-match="true">
                                     <md-autocomplete md-search-text="functionAutocomplete.searchText"
-                                                     md-items="item in querySearch(functionAutocomplete.searchText, processObjects)"
+                                                     md-items="item in querySearch(functionAutocomplete.searchText, 'processSubject')"
                                                      md-min-length="0"
                                                      md-item-text="item.value"
                                                      placeholder="Search for a subject name"
@@ -119,9 +120,10 @@
             </md-button>
         </md-tab-label>
         <md-tab-body>
-            <div class="alert alert-warning alert-dismissible ai-help" role="alert">
+            <div class="alert alert-warning alert-dismissible ai-help" role="alert" ng-if="-1 == hiddenHelpers.indexOf('process-interactions')">
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <span class="glyphicon glyphicon-info-sign"></span>Set the desired combination and click "Add combination to list"-button at the bottom to add it to the list. You can also extend the existing vocabulary by clicking the "plus"-button.
+                <md-checkbox class="pull-right" ng-model="interactionsHelperVisibility" ng-change="HideHelper('process-interactions')" aria-label="Never show again">Never show again</md-checkbox>
             </div>
             <div layout="row" layout-margin>
                 <div layout="column" layout-margin ng-if="isAccessible">
@@ -149,7 +151,7 @@
                         <div layout="column">
                             <md-autocomplete md-selected-item="interactionModel.interactionPartnerOne"
                                              md-search-text="autocompleteFields.interactionPartnerOne"
-                                             md-items="subItem in querySearch(autocompleteFields.interactionPartnerOne, interactionPartners)"
+                                             md-items="subItem in querySearch(autocompleteFields.interactionPartnerOne, 'interactionPartner')"
                                              md-item-text="subItem.value"
                                              placeholder="Search for a Partner One"
                                              md-require-match="true"
@@ -177,7 +179,7 @@
                         <div layout="row">
                             <md-autocomplete md-selected-item="interactionModel.interactionDirection"
                                              md-search-text="autocompleteFields.interactionDirection"
-                                             md-items="subItem in querySearch(autocompleteFields[direction], interactionDirections)"
+                                             md-items="subItem in querySearch(autocompleteFields[direction], 'interactionDirection')"
                                              md-item-text="subItem.value"
                                              placeholder="Search for a Direction"
                                              md-require-match="true"
@@ -205,7 +207,7 @@
                         <div layout="row">
                             <md-autocomplete md-selected-item="interactionModel.interactionPartnerTwo"
                                              md-search-text="autocompleteFields.interactionPartnerTwo"
-                                             md-items="subItem in querySearch(autocompleteFields.interactionPartnerTwo, interactionPartners)"
+                                             md-items="subItem in querySearch(autocompleteFields.interactionPartnerTwo, 'interactionPartner')"
                                              md-item-text="subItem.value"
                                              placeholder="Search for a Partner Two"
                                              md-require-match="true"
@@ -233,7 +235,7 @@
                         <div layout="row">
                             <md-autocomplete md-selected-item="interactionModel.interactionQuality"
                                              md-search-text="autocompleteFields.interactionQuality"
-                                             md-items="subItem in querySearch(autocompleteFields.interactionQuality, interactionQualities)"
+                                             md-items="subItem in querySearch(autocompleteFields.interactionQuality, 'interactionQuality')"
                                              md-item-text="subItem.value"
                                              placeholder="Search for a Quality"
                                              md-require-match="true"

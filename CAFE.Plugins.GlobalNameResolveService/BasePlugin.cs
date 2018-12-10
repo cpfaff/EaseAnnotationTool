@@ -29,7 +29,7 @@ namespace CAFE.Plugins.GlobalNameResolveService
             try
             {
                 var request = Mapper.Map<RequestData>(Configuration);
-                request.Names = search;
+                request.Data = search;
                 var response = GlobalNameRequester.GetNames(request);
 
                 values.AddRange(response.Data.SelectMany(sm => sm.Results.Select(s => new VocabularyValue() { Uri = "http://resolver.globalnames.org/name_resolvers.json", Value = s.NameString })));

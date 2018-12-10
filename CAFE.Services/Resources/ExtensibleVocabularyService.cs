@@ -68,7 +68,7 @@ namespace CAFE.Services.Resources
         {
             var dbData = _vocabularyUserValuesRepository.Select().ToList();
             var mappedData = Mapper.Map<IEnumerable<DbVocabularyUserValue>, List<VocabularyUserValue>>(dbData);
-            return mappedData;
+            return mappedData.OrderBy(o => o.Value);
         }
 
         /// <summary>
@@ -103,8 +103,37 @@ namespace CAFE.Services.Resources
 
             result.AddRange(_vocabularyValuesRepository.FindCollection(w => w.Type == vocabularyType.Name).Select(s => new VocabularyValue { Value = s.Value, Description = s.Description, Type = s.Type, Id = s.Id }));
 
-            return result;
+            return result.OrderBy(o => o.Value);
         }
+
+
+        /// <summary>
+        /// Returns all(globaly) filtered extended values for vocabulary type T (that inherited from enum)
+        /// </summary>
+        /// <param name="vocabularyType">Type of vocabulary</param>
+        /// <param name="searchToken">Filtered by this value</param>
+        /// <returns>Collection of extended values</returns>
+        public IEnumerable<VocabularyValue> GetAllExtenededValues(Type vocabularyType, string searchToken,
+            string userId)
+        {
+            Contract.Requires(vocabularyType != null);
+
+            var result = new List<VocabularyValue>();
+
+            if (!string.IsNullOrEmpty(userId))
+            {
+                var userIdGuid = Guid.Parse(userId);
+
+                result.AddRange(_vocabularyUserValuesRepository.
+                    FindCollection(w => w.Type == vocabularyType.Name && w.User.Id == userIdGuid && w.Value.StartsWith(searchToken)).
+                    Select(s => new VocabularyValue { Value = s.Value, Description = s.Description, Type = s.Type, Id = s.Id }));
+            }
+
+            result.AddRange(_vocabularyValuesRepository.FindCollection(w => w.Type == vocabularyType.Name && w.Value.StartsWith(searchToken)).Select(s => new VocabularyValue { Value = s.Value, Description = s.Description, Type = s.Type, Id = s.Id }));
+
+            return result.OrderBy(o => o.Value);
+        }
+
 
         /// <summary>
         /// Returns all(globaly) extended values
@@ -113,7 +142,7 @@ namespace CAFE.Services.Resources
         public IEnumerable<VocabularyValue> GetAllExtenededValues()
         {
             return _vocabularyValuesRepository.
-                Select(s => new VocabularyValue { Value = s.Value, Description = s.Description, Type = s.Type, Id = s.Id}).Where(s => s.Value != "-1");
+                Select(s => new VocabularyValue { Value = s.Value, Description = s.Description, Type = s.Type, Id = s.Id}).Where(s => s.Value != "-1").OrderBy(o => o.Value);
         }
 
         /// <summary>
@@ -158,7 +187,26 @@ namespace CAFE.Services.Resources
             if (string.IsNullOrEmpty(@by)) return new List<VocabularyValue>();
 
             return _vocabularyUserValuesRepository
-                .FindCollection(w => w.Type == vocabularyType.Name && w.User.Id.ToString() == by).Select(s => new VocabularyValue { Value = s.Value, Description = s.Description });
+                .FindCollection(w => w.Type == vocabularyType.Name && w.User.Id.ToString() == by).Select(s => new VocabularyValue { Value = s.Value, Description = s.Description }).OrderBy(o => o.Value);
+        }
+
+
+        /// <summary>
+        /// Returns user's defined extended filtered values for vocabulary type T (that inherited from enum)
+        /// </summary>
+        /// <param name="by">User's id that added extended values</param>
+        /// <param name="vocabularyType">Type of vocabulary</param>
+        /// <param name="searchToken">Filtered by this value</param>
+        /// <returns>Collection of extended values</returns>
+        public IEnumerable<VocabularyValue> GetExtenededValuesBy(string by, Type vocabularyType, string searchToken)
+
+        {
+            Contract.Requires(vocabularyType != null);
+
+            if (string.IsNullOrEmpty(@by)) return new List<VocabularyValue>();
+
+            return _vocabularyUserValuesRepository
+                .FindCollection(w => w.Type == vocabularyType.Name && w.User.Id.ToString() == by && w.Value.StartsWith(searchToken)).Select(s => new VocabularyValue { Value = s.Value, Description = s.Description }).OrderBy(o => o.Value);
         }
 
         /// <summary>
@@ -256,7 +304,7 @@ namespace CAFE.Services.Resources
             Contract.Requires(vocabularyType != null);
 
             return Mapper.Map<IEnumerable<VocabularyValue>>(_vocabularyValuesRepository
-                .FindCollection(w => w.Type == vocabularyType.Name));
+                .FindCollection(w => w.Type == vocabularyType.Name)).OrderBy(o => o.Value);
         }
 
         public IEnumerable<VocabularyUserValue> GetExtenededValuesBy_(string @by, Type vocabularyType)
@@ -267,7 +315,7 @@ namespace CAFE.Services.Resources
             if (string.IsNullOrEmpty(@by)) return new List<VocabularyUserValue>();
 
             return Mapper.Map<IEnumerable<VocabularyUserValue>>(_vocabularyUserValuesRepository
-                .FindCollection(w => w.Type == vocabularyType.Name && w.User.Id.ToString() == by));
+                .FindCollection(w => w.Type == vocabularyType.Name && w.User.Id.ToString() == by)).OrderBy(o => o.Value);
         }
 
         public IEnumerable<VocabularyValue> GetAllExtenededValues_<T>() where T : struct, IConvertible

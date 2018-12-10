@@ -14,8 +14,16 @@ namespace CAFE.Web.Areas.Api.Models
             FromUserFiles
         };
 
+        public enum AIImportBehavior
+        {
+            CreateClean,
+            CopyFromExisting,
+            UpdateExisting
+        }
+
         public string ExtendableData { get; set; }
         public AIImportTypes DataType { get; set; }
+        public AIImportBehavior? BehaviorType { get; set; }
         public string ExtendableDataName { get; set; }
 
         public string TransformationData { get; set; }
@@ -27,5 +35,6 @@ namespace CAFE.Web.Areas.Api.Models
 
         public string Name { get; set; }
         public string Description { get; set; }
+        public Guid? CopyFromId { get; set; }
     }
 }

@@ -18,7 +18,7 @@
                 <div layout="row">
                     <md-autocomplete flex="80" md-selected-item="geologicalTimePeriodsModel[key]"
                                      md-search-text="autocompleteFields[key]"
-                                     md-items="subItem in querySearch(autocompleteFields[key], item)"
+                                     md-items="subItem in querySearch(autocompleteFields[key], key)"
                                      md-item-text="subItem.value"
                                      placeholder="Search for a {{GetNormalizedName(key)}}"
                                      md-require-match="true"

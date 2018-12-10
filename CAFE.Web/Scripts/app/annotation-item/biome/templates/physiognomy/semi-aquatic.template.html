@@ -3,7 +3,7 @@
         <div layout="row">
             <md-chips flex="90" ng-model="physiognomyModel.physiognomyTypes[0].semiAquaticPhysiognomies" md-transform-chip="{semiAquaticPhysiognomyType: $chip}" md-autocomplete-snap md-require-match="true">
                 <md-autocomplete md-search-text="functionAutocomplete.semiAquatic"
-                                 md-items="item in querySearch(functionAutocomplete.semiAquatic, semiAquaticDictionary)"
+                                 md-items="item in querySearch(functionAutocomplete.semiAquatic, 'semiAquaticPhysiognomyType')"
                                  md-item-text="item.value"
                                  placeholder="Search for a Semi Aquatic"
                                  md-min-length="0">

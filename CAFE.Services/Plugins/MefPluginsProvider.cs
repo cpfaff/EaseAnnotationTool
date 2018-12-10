@@ -20,7 +20,7 @@ namespace CAFE.Services.Plugins
         public MefPluginsProvider()
         {
             //Thats need for MEF. Collection must be initialized or available for write (have setter)
-            Sources = new List<IVocabularyExtenalSourcePlugin>();
+            Sources = new List<IExternalSourcePlugin>();
 
             //Prepare MEF containet
             var pth = Directory.GetParent(AppDomain.CurrentDomain.BaseDirectory);
@@ -31,7 +31,7 @@ namespace CAFE.Services.Plugins
             var requiredPlugins = new List<string> {
                 "CAFE.Plugins.GeoNamesPlugin",
                 "CAFE.Plugins.GlobalNameResolveService",
-                "CAFE.Plugins.OrganismClassNamesPlugin"
+                "CAFE.Plugins.OrganismSpecifiesPlugin"
             };
 
             requiredPlugins.ForEach(p =>
@@ -58,8 +58,8 @@ namespace CAFE.Services.Plugins
         /// <summary>
         /// Returns of collection loaded plugins with external sources of vocabulary values
         /// </summary>
-        [ImportMany(typeof(IVocabularyExtenalSourcePlugin))]
-        public ICollection<IVocabularyExtenalSourcePlugin> Sources { get; }
+        [ImportMany(typeof(IExternalSourcePlugin))]
+        public ICollection<IExternalSourcePlugin> Sources { get; }
 
 
         /// <summary>
@@ -67,7 +67,7 @@ namespace CAFE.Services.Plugins
         /// </summary>
         /// <typeparam name="T">Type of vocabulary</typeparam>
         /// <returns>Collection of plugins</returns>
-        public IEnumerable<IVocabularyExtenalSourcePlugin> GetPluginsFor<T>() where T : struct, ICloneable
+        public IEnumerable<IExternalSourcePlugin> GetPluginsFor<T>() where T : struct, ICloneable
         {
             return GetPluginsFor(typeof (T));
         }
@@ -77,7 +77,7 @@ namespace CAFE.Services.Plugins
         /// </summary>
         /// <param name="type">Type of vocabulary</param>
         /// <returns>Collection of plugins</returns>
-        public IEnumerable<IVocabularyExtenalSourcePlugin> GetPluginsFor(Type type)
+        public IEnumerable<IExternalSourcePlugin> GetPluginsFor(Type type)
         {
             return Sources.Where(s => s.ForType.FullName == type.FullName);
         }

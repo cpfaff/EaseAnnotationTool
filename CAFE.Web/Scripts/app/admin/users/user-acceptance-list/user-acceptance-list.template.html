@@ -8,21 +8,18 @@
     </div>
 </md-toolbar>
 
-<md-toolbar class="md-table-toolbar md-default" ng-show="filter.show">
-    <div class="md-toolbar-tools">
-        <md-icon>search</md-icon>
-        <form flex name="filter.form">
-            <input type="text" ng-model="query.filter" ng-model-options="filter.options" placeholder="search">
-        </form>
-        <md-button class="md-icon-button" ng-click="removeFilter()">
-            <md-icon>close</md-icon>
+<md-toolbar class="md-table-toolbar alternate" ng-show="selected.length">
+    <div class="md-toolbar-tools" layout-align="space-between">
+        <div>{{selected.length}} {{selected.length > 1 ? 'items' : 'item'}} selected</div>
+        <div flex></div>
+        <md-button class="md-button" ng-click="DeleteAcceptences($event)">
+            Delete selected
         </md-button>
     </div>
 </md-toolbar>
 
-
 <md-table-container>
-    <table md-table md-progress="promise">
+    <table md-table md-row-select multiple ng-model="selected" md-progress="promise">
         <thead md-head md-order="query.order" md-on-reorder="getUsers">
             <tr md-row>
                 <th md-column md-order-by="name"><span>Name</span></th>
@@ -33,7 +30,7 @@
             </tr>
         </thead>
         <tbody md-body>
-            <tr md-row md-select="user" md-select-id="userId" ng-repeat="user in users | orderBy: query.order | limitTo: query.limit: (query.page - 1) * query.limit">
+            <tr md-row md-select="user" md-select-id="id" ng-repeat="user in users | orderBy: query.order | limitTo: query.limit: (query.page - 1) * query.limit">
                 <td md-cell>{{user.name}}</td>
                 <td md-cell>{{user.email}}</td>
                 <td md-cell>{{user.acceptanceDate}}</td>

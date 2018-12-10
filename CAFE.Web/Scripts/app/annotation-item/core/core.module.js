@@ -6,6 +6,7 @@
         'annotationItem.core.biome', 
         'annotationItem.core.organism', 
         'annotationItem.core.chemical', 
-        'annotationItem.core.method'
+        'annotationItem.core.method',
+        'annotationItem.core.vocabularies'
     ]);
 })();

@@ -4,14 +4,64 @@
         <i class="material-icons">help_outline</i>
     </md-button>
 </h2>
-<div layout="row" layout-xs="row" layout-margin style="min-width:550px">
+<div layout="row" layout-xs="row" layout-margin style="min-width: 550px; padding-top: 10px; padding-left: 10px;">
+    <button class="btn btn-primary" ng-click="ImportTaxonomyDialog()">Import Taxonomy from CSV</button>
+    <label ng-if="appendFile" id="selectedfilenamelabel">{{appendFile.name}}</label>
+</div>
+<div layout="row" layout-xs="row" layout-margin style="min-width: 550px; padding-top: 10px; padding-left: 10px;">
+    <md-autocomplete
+                        md-selected-item="organismModel.taxonomy.search"
+                        md-search-text="searchText"
+                        md-items="subItem in searchOrganisms(searchText)"
+                        md-item-text="subItem.species"
+                        placeholder="Search for a organism"
+                        md-selected-item-change="selectedSearchChange(subItem)"
+                        md-require-match="true"
+                        ng-disabled="!isAccessible"
+                        md-min-length="3">
+        <md-item-template>
+            <span md-highlight-text="autocompleteFields['search']">{{subItem.species}} score: {{subItem.score}}% cover: {{subItem.cover}}: </span>
+            <span>{{subItem.kingdom}} (kingdom) >> {{subItem.phylum}} (phylum) >> {{subItem.class}} (class)</span>
+            <span>{{subItem.order}} (order) >> {{subItem.family}} (family) >> {{subItem.genus}} (genus) >> {{subItem.search}}</span>
+        </md-item-template>
+    </md-autocomplete>
+    <md-input-container md-no-float class="md-block">
+        <label>Min score %</label>
+        <input ng-model="minScore" type="number">
+    </md-input-container>
+    <md-input-container md-no-float class="md-block">
+        <label>Coverage %</label>
+        <input ng-model="coverage" type="number">
+    </md-input-container>
+</div>
+<div layout="row" layout-xs="row" layout-margin style="min-width: 550px;">
     <div layout="column" flex="30" layout-margin style="margin-top:30px;">
         <div layout="column">
             <uib-accordion close-others="true" style="min-width: 225px;">
                 <div uib-accordion-group
+                     class="panel-default">
+                    <uib-accordion-heading>
+                        {{::GetNormalizedName('species')}}
+                        <md-button class="md-icon-button md-primary" aria-label="{{simpleTypesVocabularies['species']}}" ng-show="simpleTypesVocabularies['species']">
+                            <md-tooltip class="tt-multiline" md-direction="right">{{simpleTypesVocabularies['species']}}</md-tooltip>
+                            <i class="material-icons">help_outline</i>
+                        </md-button>
+                    </uib-accordion-heading>
+                    <div class="row" layout-margin>
+                        <div layout="column">
+                            <div layout="row">
+                                <md-input-container class="md-block" ng-if="-1 == autocompleteFieldsNames.indexOf('species')">
+                                    <label>Specify {{GetNormalizedName2('species')}}</label>
+                                    <input ng-disabled="!isAccessible" md-no-asterisk ng-model="organismModel.taxonomy['species']">
+                                </md-input-container>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div uib-accordion-group
                      class="panel-default"
                      ng-repeat="(key, item) in organismModel.taxonomy"
-                     ng-if="'id' != key">
+                     ng-if="'id' != key && key != 'species'">
                     <uib-accordion-heading>
                         {{::GetNormalizedName(key)}}
                         <md-button class="md-icon-button md-primary" aria-label="{{simpleTypesVocabularies[key]}}" ng-show="simpleTypesVocabularies[key]">
@@ -22,7 +72,6 @@
                     <div class="row" ng-if="key != 'organismName'" layout-margin>
                         <md-input-container class="md-block" ng-if="-1 == autocompleteFieldsNames.indexOf(key)">
                             <label>Specify {{GetNormalizedName2(key)}}</label>
-                            <input ng-disabled="!isAccessible" ng-if="-1 == autocompleteFieldsNames.indexOf(key) && key == 'species'" md-no-asterisk ng-model="organismModel.taxonomy[key]">
                             <input ng-disabled="!isAccessible" ng-if="-1 == autocompleteFieldsNames.indexOf(key) && key != 'species'" md-no-asterisk ng-model="organismModel.taxonomy[key].value">
                         </md-input-container>
                         <div layout="column" ng-if="-1 != autocompleteFieldsNames.indexOf(key)">
@@ -50,27 +99,6 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row" ng-if="key == 'organismName'">
-                        <uib-accordion close-others="true">
-                            <div uib-accordion-group class="panel-default" heading="{{GetNormalizedName(key)}}" ng-if="'id' != key" ng-repeat="(key, item) in organismModel.taxonomy.organismName" style="margin: 0px 20px 5px;">
-                                <uib-accordion-heading>
-                                    {{::GetNormalizedName(key)}}
-                                    <md-button class="md-icon-button md-primary" aria-label="{{simpleTypesVocabularies[key]}}" ng-show="simpleTypesVocabularies[key]">
-                                        <md-tooltip class="tt-multiline" md-direction="right">{{simpleTypesVocabularies[key]}}</md-tooltip>
-                                        <i class="material-icons">help_outline</i>
-                                    </md-button>
-                                </uib-accordion-heading>
-                                <div class="row" layout-margin>
-                                    <md-input-container style="margin: 40px 8px" class="md-block" ng-repeat="(subKey, item) in organismModel.taxonomy.organismName[key]" ng-if="'id' != subKey">
-                                        <label>Specify {{GetNormalizedName2(subKey)}}</label>
-                                        <input ng-disabled="!isAccessible" ng-if="'hybridFlag' == subKey" md-no-asterisk ng-model="organismModel.taxonomy.organismName[key][subKey].value">
-                                        <md-chips md-removable="isAccessible" ng-if="'tradeDesignationNames' == subKey" ng-model="organismModel.taxonomy.organismName[key][subKey]"></md-chips>
-                                        <input ng-disabled="!isAccessible" ng-if="'hybridFlag' != subKey && 'tradeDesignationNames' != subKey" md-no-asterisk ng-model="organismModel.taxonomy.organismName[key][subKey]">
-                                    </md-input-container>
-                                </div>
-                            </div>
-                        </uib-accordion>
-                    </div>
                 </div>
             </uib-accordion>
         </div>
@@ -92,20 +120,6 @@
                             <div class="row" ng-if="key != 'organismName'" layout-margin>
                                 <span ng-if="key == 'species'" ng-bind="value"></span>
                                 <span ng-if="key != 'species'" md-no-asterisk ng-bind="value.value"></span>
-                            </div>
-                            <div class="row" ng-if="key == 'organismName'">
-                                <uib-accordion close-others="true">
-                                    <div uib-accordion-group class="panel-default" heading="{{GetNormalizedName(subKey)}}" ng-if="'id' != key" ng-repeat="(subKey, subValue) in organism.taxonomy.organismName" style="margin: 0px 20px 5px;">
-                                        <div class="row" layout-margin>
-                                            <md-input-container style="margin: 40px 8px" class="md-block" ng-repeat="(subSubKey, subSubValue) in organism.taxonomy.organismName[subKey]" ng-if="'id' != subSubKey">
-                                                <b>{{CapitalizeFirstLetter(GetNormalizedName2(subSubKey))}}</b>:
-                                                <span ng-if="'hybridFlag' == subSubKey" ng-bind="subSubValue.value"></span>
-                                                <span ng-if="'tradeDesignationNames' == subSubKey" ng-bind="subSubValue.join()"></span>
-                                                <span ng-if="'hybridFlag' != subSubKey && 'tradeDesignationNames' != subSubKey" ng-bind="subSubValue"></span>
-                                            </md-input-container>
-                                        </div>
-                                    </div>
-                                </uib-accordion>
                             </div>
                         </div>
                     </uib-accordion>

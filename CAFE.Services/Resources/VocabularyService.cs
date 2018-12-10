@@ -128,12 +128,50 @@ namespace CAFE.Services.Resources
 
             resultCollection.AddRange(_extensibleVocabularyService.GetExtenededValuesBy(userId, vocabularyType));
 
-            resultCollection.AddRange(_pluginsProvider.GetPluginsFor(vocabularyType).SelectMany(s => s.GetValues()));
+            var plugins = _pluginsProvider.GetPluginsFor(vocabularyType).ToList();
+            foreach (var plugin in plugins)
+            {
+                var vocabularyPlugin = plugin as IVocabularyExtenalSourcePlugin;
+                if (vocabularyPlugin != null)
+                {
+                    resultCollection.AddRange(vocabularyPlugin.GetValues());
+                }
+            }
 
-            //_pluginsProvider.GetPluginsFor(vocabularyType).SelectMany(s => s.GetValuesExtended()).Select(f => f.Value);
+             // GetValuesExtended(string search, string elementName)
+            return resultCollection.OrderBy(o => o.Value);
+
+        }
+
+
+        /// <summary>
+        /// Returns list of vocabulary values
+        /// </summary>
+        /// <param name="vocabularyType">Type of vocabulary</param>
+        /// <param name="searchToken">Search by this value</param>
+        /// <returns>List of vocabulary values</returns>
+        public IEnumerable<VocabularyValue> GetVocabularyValues(Type vocabularyType, string userId, string searchToken)
+        {
+            var resultCollection = new List<VocabularyValue>();
+            if (!string.IsNullOrEmpty(searchToken))
+            {
+                resultCollection.AddRange(_extensibleVocabularyService
+                    .GetAllExtenededValues(vocabularyType, searchToken, userId).ToList());
+                resultCollection.AddRange(
+                    _extensibleVocabularyService.GetExtenededValuesBy(userId, vocabularyType, searchToken));
+
+            }
+            else
+            {
+                resultCollection.AddRange(_extensibleVocabularyService.GetAllExtenededValues(vocabularyType, userId)
+                    .ToList());
+                resultCollection.AddRange(_extensibleVocabularyService.GetExtenededValuesBy(userId, vocabularyType));
+            }
+
 
             // GetValuesExtended(string search, string elementName)
-            return resultCollection;
+            return resultCollection.OrderBy(o => o.Value);
+
         }
 
         /// <summary>
@@ -143,23 +181,33 @@ namespace CAFE.Services.Resources
         /// <returns>List of vocabulary values</returns>
         public IEnumerable<VocabularyValue> GetVocabularyValuesExtended(System.Type vocabularyType, string itemType, string search, string userId)
         {
-            var plugins =_pluginsProvider.GetPluginsFor(vocabularyType);
 
-            var pluginsCollection = plugins.SelectMany(s => s.GetValuesExtended(search, itemType)).
-                  Select(f => f.Value).Distinct().
-                  ToList();
+            var plugins =_pluginsProvider.GetPluginsFor(vocabularyType).ToList();
+            var stringValues = new List<VocabularyValue>();
+            foreach (var plugin in plugins)
+            {
+                var vocabularyPlugin = plugin as IVocabularyExtenalSourcePlugin;
+                if (vocabularyPlugin != null)
+                {
+                    stringValues.AddRange(vocabularyPlugin.GetValuesExtended(search, itemType));
+                }
+            }
+            var pluginsCollection = stringValues.Distinct().ToList();
 
             var systemCollection = _extensibleVocabularyService.GetAllExtenededValues(vocabularyType, userId).Where(v => v.Value.StartsWith(search)).ToList();
 
-            if ("Country" == itemType)
-                foreach (var item in pluginsCollection)
+            if ("Country".ToLower() == itemType.ToLower())
+                foreach (var item in pluginsCollection.Select(f => f.Value).Distinct().ToList())
                     if (null == systemCollection.FirstOrDefault(c => c.Value == item))
                         systemCollection.Add(new VocabularyValue { Value = item.First().ToString().ToUpper() + item.Substring(1) });
 
-            if ("LocationName" == itemType || itemType.ToLower() == "class" || itemType.ToLower() == "order" || itemType.ToLower() == "family")
-                systemCollection.AddRange(pluginsCollection.Select(p => new VocabularyValue { Value = p }));
+            if (itemType.ToLower() == "class" || itemType.ToLower() == "order" || itemType.ToLower() == "family")
+                systemCollection.AddRange(pluginsCollection.Select(f => f.Value).Distinct().Select(p => new VocabularyValue { Value = p }));
 
-            return systemCollection;
+            if("LocationName".ToLower() == itemType.ToLower())
+                systemCollection.AddRange(pluginsCollection.Distinct());
+            
+            return systemCollection.OrderBy(o => o.Value);
         }
 
         public Dictionary<string, string> GetSimpleTypesDescriptions()
@@ -173,7 +221,7 @@ namespace CAFE.Services.Resources
         /// <returns>List of vocabulary values</returns>
         public IEnumerable<VocabularyUserValue> GetAllExtenededUsersValues()
         {
-            return _extensibleVocabularyService.GetAllExtenededUsersValues();
+            return _extensibleVocabularyService.GetAllExtenededUsersValues().OrderBy(o => o.Value);
         }
 
         /// <summary>
@@ -189,14 +237,21 @@ namespace CAFE.Services.Resources
 
             resultCollection.AddRange(Mapper.Map<IEnumerable<VocabularyValue>>(_extensibleVocabularyService.GetExtenededValuesBy_(userId.ToString(), vocabularyType)));
 
-            resultCollection.AddRange(_pluginsProvider.GetPluginsFor(vocabularyType).SelectMany(s => s.GetValues()));
-
-            return resultCollection;
+            var plugins = _pluginsProvider.GetPluginsFor(vocabularyType).ToList();
+            foreach (var plugin in plugins)
+            {
+                var vocabularyPlugin = plugin as IVocabularyExtenalSourcePlugin;
+                if (vocabularyPlugin != null)
+                {
+                    resultCollection.AddRange(vocabularyPlugin.GetValues());
+                }
+            }
+            return resultCollection.OrderBy(o => o.Value);
         }
 
         public IEnumerable<VocabularyValue> GetAllGlobalValues()
         {
-            return _extensibleVocabularyService.GetAllExtenededValues();
+            return _extensibleVocabularyService.GetAllExtenededValues().OrderBy(o => o.Value);
         }
 
         public VocabularyValue Save(VocabularyValue value)

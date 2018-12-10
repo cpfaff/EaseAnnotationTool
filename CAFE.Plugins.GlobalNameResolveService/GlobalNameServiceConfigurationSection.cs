@@ -1,4 +1,6 @@
-﻿using System.Configuration;
+﻿using System.Collections.Generic;
+using System.Configuration;
+using System.Linq;
 
 namespace CAFE.Plugins.GlobalNameResolveService
 {
@@ -137,6 +139,10 @@ namespace CAFE.Plugins.GlobalNameResolveService
             }
         }
 
+
+        //
+
+
         /// <summary>
         /// Indicate that can changes
         /// </summary>
@@ -145,6 +151,89 @@ namespace CAFE.Plugins.GlobalNameResolveService
         {
             return false;
         }
+
+
+
+        [ConfigurationProperty("AvailableUIElements", IsRequired = false)]
+        public AvailableUIElementCollection AvailableUIElements
+        {
+            get
+            {
+                return base["AvailableUIElements"] as AvailableUIElementCollection;
+            }
+        }
+
+
+        public class UIElement : ConfigurationElement
+        {
+
+            [ConfigurationProperty("id", IsKey = true, IsRequired = true)]
+            public string Id
+            {
+                get
+                {
+                    return base["id"] as string;
+                }
+                set
+                {
+                    base["id"] = value;
+                }
+            }
+
+            [ConfigurationProperty("title", IsKey = false, IsRequired = true)]
+            public string Title
+            {
+                get
+                {
+                    return base["title"] as string;
+                }
+                set
+                {
+                    base["title"] = value;
+                }
+            }
+
+        }
+
+        [ConfigurationCollection(typeof(UIElement), AddItemName = "UIElement")]
+        public class AvailableUIElementCollection : ConfigurationElementCollection, IEnumerable<UIElement>
+        {
+
+            protected override ConfigurationElement CreateNewElement()
+            {
+                return new UIElement();
+            }
+
+            protected override object GetElementKey(ConfigurationElement element)
+            {
+                var l_configElement = element as UIElement;
+                if (l_configElement != null)
+                    return l_configElement.Id;
+                else
+                    return null;
+            }
+
+            public UIElement this[int index]
+            {
+                get
+                {
+                    return BaseGet(index) as UIElement;
+                }
+            }
+
+            #region IEnumerable<ComplexFilterScope> Members
+
+            IEnumerator<UIElement> IEnumerable<UIElement>.GetEnumerator()
+            {
+                return (from i in Enumerable.Range(0, this.Count)
+                        select this[i])
+                        .GetEnumerator();
+            }
+
+            #endregion
+
+        }
+
     }
 
 }

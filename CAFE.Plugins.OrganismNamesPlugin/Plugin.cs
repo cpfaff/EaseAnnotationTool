@@ -9,7 +9,7 @@ using AutoMapper;
 
 namespace CAFE.Plugins.OrganismClassNamesPlugin
 {
-    [Export(typeof(IVocabularyExtenalSourcePlugin))]
+    [Export(typeof(IExternalSourcePlugin))]
     public class Plugin : BasePlugin, IVocabularyExtenalSourcePlugin
     {
 
@@ -29,6 +29,15 @@ namespace CAFE.Plugins.OrganismClassNamesPlugin
         public void RegisterMapConfigs(IMapperConfigurationExpression c)
         {
             ConfigurationResolver.RegisterMapping(c);
+        }
+
+        /// <summary>
+        /// Init plugin
+        /// </summary>
+        /// <returns>Indicator that says plugin init successfull or not</returns>
+        public bool Init()
+        {
+            return true;
         }
     }
 }

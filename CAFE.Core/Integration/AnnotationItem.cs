@@ -34,7 +34,7 @@ namespace CAFE.Core.Integration
         /// <summary>
         /// <para xml:lang="en">
         ///	      The Object wraps all information stored in an annotation.
-        ///	      It contains context information for the data but also the
+        ///	      It links context information for the data but also the
         ///	      references and the resources which allow to acccess the
         ///	      data described.
         ///	    </para>
@@ -109,7 +109,7 @@ namespace CAFE.Core.Integration
         /// <para xml:lang="en">
         ///				The time context allows to capture the
         ///				quantitative and qualitative temporal aspects
-        ///				that describe the the object.
+        ///				that describe a search object.
         ///			      </para>
         /// </summary>
         [System.Xml.Serialization.XmlElementAttribute("TimeContext", Namespace="")]
@@ -381,7 +381,7 @@ namespace CAFE.Core.Integration
         
         /// <summary>
         /// </summary>
-        [System.Xml.Serialization.XmlAttributeAttribute("uri", Form=System.Xml.Schema.XmlSchemaForm.Unqualified, DataType="anyURI")]
+        [System.Xml.Serialization.XmlAttributeAttribute("uri", Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
         public string Uri { get; set; }
     }
     
@@ -5173,7 +5173,7 @@ namespace CAFE.Core.Integration
         
         /// <summary>
         /// </summary>
-        [System.Xml.Serialization.XmlAttributeAttribute("uri", Form=System.Xml.Schema.XmlSchemaForm.Unqualified, DataType="anyURI")]
+        [System.Xml.Serialization.XmlAttributeAttribute("uri", Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
         public string Uri { get; set; }
     }
     
@@ -5273,7 +5273,7 @@ namespace CAFE.Core.Integration
         
         /// <summary>
         /// </summary>
-        [System.Xml.Serialization.XmlAttributeAttribute("uri", Form=System.Xml.Schema.XmlSchemaForm.Unqualified, DataType="anyURI")]
+        [System.Xml.Serialization.XmlAttributeAttribute("uri", Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
         public string Uri { get; set; }
     }
     
@@ -5438,7 +5438,7 @@ namespace CAFE.Core.Integration
         
         /// <summary>
         /// </summary>
-        [System.Xml.Serialization.XmlAttributeAttribute("uri", Form=System.Xml.Schema.XmlSchemaForm.Unqualified, DataType="anyURI")]
+        [System.Xml.Serialization.XmlAttributeAttribute("uri", Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
         public string Uri { get; set; }
     }
     
@@ -5765,7 +5765,7 @@ namespace CAFE.Core.Integration
         
         /// <summary>
         /// </summary>
-        [System.Xml.Serialization.XmlAttributeAttribute("uri", Form=System.Xml.Schema.XmlSchemaForm.Unqualified, DataType="anyURI")]
+        [System.Xml.Serialization.XmlAttributeAttribute("uri", Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
         public string Uri { get; set; }
     }
     
@@ -6082,7 +6082,7 @@ namespace CAFE.Core.Integration
         
         /// <summary>
         /// </summary>
-        [System.Xml.Serialization.XmlAttributeAttribute("uri", Form=System.Xml.Schema.XmlSchemaForm.Unqualified, DataType="anyURI")]
+        [System.Xml.Serialization.XmlAttributeAttribute("uri", Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
         public string Uri { get; set; }
     }
     
@@ -7256,6 +7256,11 @@ namespace CAFE.Core.Integration
         /// </summary>
         [System.Xml.Serialization.XmlElementAttribute("temporalResolutionType", Namespace="")]
         public TemporalResolutionType TemporalResolutionType { get; set; }
+        
+        /// <summary>
+        /// </summary>
+        [System.Xml.Serialization.XmlAttributeAttribute("factor.id", Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public int FactorPeriodId { get; set; }
     }
     
     /// <summary>
@@ -7277,13 +7282,14 @@ namespace CAFE.Core.Integration
         
         /// <summary>
         /// </summary>
-        [System.Xml.Serialization.XmlAttributeAttribute("uri", Form=System.Xml.Schema.XmlSchemaForm.Unqualified, DataType="anyURI")]
+        [System.Xml.Serialization.XmlAttributeAttribute("uri", Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
         public string Uri { get; set; }
         
         /// <summary>
         /// </summary>
-        [System.Xml.Serialization.XmlAttributeAttribute("modifyer", Form=System.Xml.Schema.XmlSchemaForm.Unqualified, DataType="string")]
-        public string Modifyer { get; set; }
+        //[System.ComponentModel.DefaultValueAttribute("1")]
+        [System.Xml.Serialization.XmlAttributeAttribute("modifyer", Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public int Modifyer { get; set; }
     }
     
     /// <summary>
@@ -7409,13 +7415,13 @@ namespace CAFE.Core.Integration
         
         /// <summary>
         /// </summary>
-        [System.Xml.Serialization.XmlAttributeAttribute("uri", Form=System.Xml.Schema.XmlSchemaForm.Unqualified, DataType="string")]
+        [System.Xml.Serialization.XmlAttributeAttribute("uri", Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
         public string Uri { get; set; }
         
         /// <summary>
         /// </summary>
-        [System.Xml.Serialization.XmlAttributeAttribute("modifyer", Form=System.Xml.Schema.XmlSchemaForm.Unqualified, DataType="string")]
-        public string Modifyer { get; set; }
+        [System.Xml.Serialization.XmlAttributeAttribute("modifyer", Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public int Modifyer { get; set; }
     }
     
     /// <summary>
@@ -7784,7 +7790,7 @@ namespace CAFE.Core.Integration
         
         /// <summary>
         /// </summary>
-        [System.Xml.Serialization.XmlAttributeAttribute("uri", Form=System.Xml.Schema.XmlSchemaForm.Unqualified, DataType="anyURI")]
+        [System.Xml.Serialization.XmlAttributeAttribute("uri", Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
         public string Uri { get; set; }
     }
     
@@ -7855,7 +7861,7 @@ namespace CAFE.Core.Integration
         
         /// <summary>
         /// </summary>
-        [System.Xml.Serialization.XmlAttributeAttribute("uri", Form=System.Xml.Schema.XmlSchemaForm.Unqualified, DataType="anyURI")]
+        [System.Xml.Serialization.XmlAttributeAttribute("uri", Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
         public string Uri { get; set; }
     }
     
@@ -7863,13 +7869,28 @@ namespace CAFE.Core.Integration
     /// </summary>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("XmlSchemaClassGenerator", "1.0.0.0")]
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute("ElevationDatumVocabulary", Namespace="")]
+    [System.Xml.Serialization.XmlTypeAttribute("ElevationDatumVocabularyBase", Namespace="")]
     public enum ElevationDatumVocabulary
     {
         
         /// <summary>
         /// <para xml:lang="en">
-        ///	    NA
+        ///	    A "mean sea level" is imaginary. It is not possible to know the
+        ///	    average sea level for the entire planet. The sea level also changes
+        ///	    over time when measured in the same place. The sea moves, high and
+        ///	    low pressure zones affect the height, tides change the sea level,
+        ///	    and local difference in gravity all affect the sea level. People
+        ///	    can only pick a spot and calculate the mean sea level at that point
+        ///	    and use it as a datum. For example, the British Ordnance Survey
+        ///	    uses a datum based on the measurements of mean sea level at a gauge
+        ///	    at Newlyn, Cornwall from 1915 to 1921[1] for their maps of Great
+        ///	    Britain. This datum is actually about 80 cm different from the mean
+        ///	    sea level reading on the other side of the country. An alternative
+        ///	    is to base height measurements on an ellipsoid of the entire earth.
+        ///	    GPS and other satellite systems do this. In aviation, the ellipsoid
+        ///	    known as World Geodetic System 84 is increasingly used to define
+        ///	    mean sea level. (Wikipedia,
+        ///	    https://simple.wikipedia.org/wiki/Above_mean_sea_level)
         ///	  </para>
         /// </summary>
         [System.Xml.Serialization.XmlEnumAttribute("Above Mean Sea Level")]
@@ -7911,8 +7932,8 @@ namespace CAFE.Core.Integration
         ///							The numerical zone corresponding to the central meridian
         ///						      </para>
         /// </summary>
-        [System.Xml.Serialization.XmlElementAttribute("utmCoordinateZone", Namespace="", DataType="string")]
-        public string UtmCoordinateZone { get; set; }
+        [System.Xml.Serialization.XmlElementAttribute("utmCoordinateZone", Namespace="")]
+        public int UtmCoordinateZone { get; set; }
         
         /// <summary>
         /// <para xml:lang="en">
@@ -7991,7 +8012,7 @@ namespace CAFE.Core.Integration
         
         /// <summary>
         /// </summary>
-        [System.Xml.Serialization.XmlAttributeAttribute("uri", Form=System.Xml.Schema.XmlSchemaForm.Unqualified, DataType="anyURI")]
+        [System.Xml.Serialization.XmlAttributeAttribute("uri", Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
         public string Uri { get; set; }
     }
     
@@ -8040,7 +8061,7 @@ namespace CAFE.Core.Integration
         
         /// <summary>
         /// </summary>
-        [System.Xml.Serialization.XmlAttributeAttribute("uri", Form=System.Xml.Schema.XmlSchemaForm.Unqualified, DataType="anyURI")]
+        [System.Xml.Serialization.XmlAttributeAttribute("uri", Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
         public string Uri { get; set; }
     }
     
@@ -8099,18 +8120,18 @@ namespace CAFE.Core.Integration
         
         /// <summary>
         /// </summary>
-        [System.Xml.Serialization.XmlAttributeAttribute("uri", Form=System.Xml.Schema.XmlSchemaForm.Unqualified, DataType="anyURI")]
+        [System.Xml.Serialization.XmlAttributeAttribute("uri", Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
         public string Uri { get; set; }
     }
     
     /// <summary>
     /// <para xml:lang="en">
-    ///	Utm coordinate geodetic datum
+    ///	The geodetic datum of the UTM coordinate
     ///      </para>
     /// </summary>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("XmlSchemaClassGenerator", "1.0.0.0")]
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute("UtmCoordinateGeodeticDatumVocabulary", Namespace="")]
+    [System.Xml.Serialization.XmlTypeAttribute("UtmCoordinateGeodeticDatumVocabularyBase", Namespace="")]
     public enum UtmCoordinateGeodeticDatumVocabulary
     {
         
@@ -8185,7 +8206,7 @@ namespace CAFE.Core.Integration
         
         /// <summary>
         /// </summary>
-        [System.Xml.Serialization.XmlAttributeAttribute("uri", Form=System.Xml.Schema.XmlSchemaForm.Unqualified, DataType="anyURI")]
+        [System.Xml.Serialization.XmlAttributeAttribute("uri", Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
         public string Uri { get; set; }
     }
     
@@ -8193,7 +8214,7 @@ namespace CAFE.Core.Integration
     /// </summary>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("XmlSchemaClassGenerator", "1.0.0.0")]
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute("LocationTypeVocabulary", Namespace="")]
+    [System.Xml.Serialization.XmlTypeAttribute("LocationTypeVocabularyBase", Namespace="")]
     public enum LocationTypeVocabulary
     {
         
@@ -8388,7 +8409,7 @@ namespace CAFE.Core.Integration
         
         /// <summary>
         /// </summary>
-        [System.Xml.Serialization.XmlAttributeAttribute("uri", Form=System.Xml.Schema.XmlSchemaForm.Unqualified, DataType="anyURI")]
+        [System.Xml.Serialization.XmlAttributeAttribute("uri", Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
         public string Uri { get; set; }
     }
     
@@ -8399,7 +8420,7 @@ namespace CAFE.Core.Integration
     /// </summary>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("XmlSchemaClassGenerator", "1.0.0.0")]
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute("CountryNameVocabulary", Namespace="")]
+    [System.Xml.Serialization.XmlTypeAttribute("CountryNameVocabularyBase", Namespace="")]
     public enum CountryNameVocabulary
     {
         
@@ -10232,7 +10253,7 @@ namespace CAFE.Core.Integration
         
         /// <summary>
         /// </summary>
-        [System.Xml.Serialization.XmlAttributeAttribute("uri", Form=System.Xml.Schema.XmlSchemaForm.Unqualified, DataType="anyURI")]
+        [System.Xml.Serialization.XmlAttributeAttribute("uri", Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
         public string Uri { get; set; }
     }
     
@@ -10243,7 +10264,7 @@ namespace CAFE.Core.Integration
     /// </summary>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("XmlSchemaClassGenerator", "1.0.0.0")]
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute("ContinentNameVocabulary", Namespace="")]
+    [System.Xml.Serialization.XmlTypeAttribute("ContinentNameVocabularyBase", Namespace="")]
     public enum ContinentNameVocabulary
     {
         
@@ -10432,7 +10453,7 @@ namespace CAFE.Core.Integration
         
         /// <summary>
         /// </summary>
-        [System.Xml.Serialization.XmlAttributeAttribute("uri", Form=System.Xml.Schema.XmlSchemaForm.Unqualified, DataType="anyURI")]
+        [System.Xml.Serialization.XmlAttributeAttribute("uri", Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
         public string Uri { get; set; }
     }
     
@@ -10665,7 +10686,7 @@ namespace CAFE.Core.Integration
         
         /// <summary>
         /// </summary>
-        [System.Xml.Serialization.XmlAttributeAttribute("uri", Form=System.Xml.Schema.XmlSchemaForm.Unqualified, DataType="anyURI")]
+        [System.Xml.Serialization.XmlAttributeAttribute("uri", Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
         public string Uri { get; set; }
     }
     
@@ -10856,7 +10877,7 @@ namespace CAFE.Core.Integration
         
         /// <summary>
         /// </summary>
-        [System.Xml.Serialization.XmlAttributeAttribute("uri", Form=System.Xml.Schema.XmlSchemaForm.Unqualified, DataType="anyURI")]
+        [System.Xml.Serialization.XmlAttributeAttribute("uri", Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
         public string Uri { get; set; }
     }
     
@@ -11047,7 +11068,7 @@ namespace CAFE.Core.Integration
         
         /// <summary>
         /// </summary>
-        [System.Xml.Serialization.XmlAttributeAttribute("uri", Form=System.Xml.Schema.XmlSchemaForm.Unqualified, DataType="anyURI")]
+        [System.Xml.Serialization.XmlAttributeAttribute("uri", Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
         public string Uri { get; set; }
     }
     
@@ -11111,7 +11132,7 @@ namespace CAFE.Core.Integration
         
         /// <summary>
         /// </summary>
-        [System.Xml.Serialization.XmlAttributeAttribute("uri", Form=System.Xml.Schema.XmlSchemaForm.Unqualified, DataType="anyURI")]
+        [System.Xml.Serialization.XmlAttributeAttribute("uri", Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
         public string Uri { get; set; }
     }
     
@@ -11249,7 +11270,7 @@ namespace CAFE.Core.Integration
         
         /// <summary>
         /// </summary>
-        [System.Xml.Serialization.XmlAttributeAttribute("uri", Form=System.Xml.Schema.XmlSchemaForm.Unqualified, DataType="anyURI")]
+        [System.Xml.Serialization.XmlAttributeAttribute("uri", Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
         public string Uri { get; set; }
     }
     
@@ -11322,7 +11343,7 @@ namespace CAFE.Core.Integration
         
         /// <summary>
         /// </summary>
-        [System.Xml.Serialization.XmlAttributeAttribute("uri", Form=System.Xml.Schema.XmlSchemaForm.Unqualified, DataType="anyURI")]
+        [System.Xml.Serialization.XmlAttributeAttribute("uri", Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
         public string Uri { get; set; }
     }
     
@@ -11444,7 +11465,7 @@ namespace CAFE.Core.Integration
         
         /// <summary>
         /// </summary>
-        [System.Xml.Serialization.XmlAttributeAttribute("uri", Form=System.Xml.Schema.XmlSchemaForm.Unqualified, DataType="anyURI")]
+        [System.Xml.Serialization.XmlAttributeAttribute("uri", Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
         public string Uri { get; set; }
     }
     
@@ -11534,7 +11555,7 @@ namespace CAFE.Core.Integration
         
         /// <summary>
         /// </summary>
-        [System.Xml.Serialization.XmlAttributeAttribute("uri", Form=System.Xml.Schema.XmlSchemaForm.Unqualified, DataType="anyURI")]
+        [System.Xml.Serialization.XmlAttributeAttribute("uri", Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
         public string Uri { get; set; }
     }
     
@@ -11855,7 +11876,7 @@ namespace CAFE.Core.Integration
         
         /// <summary>
         /// </summary>
-        [System.Xml.Serialization.XmlAttributeAttribute("uri", Form=System.Xml.Schema.XmlSchemaForm.Unqualified, DataType="anyURI")]
+        [System.Xml.Serialization.XmlAttributeAttribute("uri", Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
         public string Uri { get; set; }
     }
     
@@ -11866,7 +11887,7 @@ namespace CAFE.Core.Integration
     /// </summary>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("XmlSchemaClassGenerator", "1.0.0.0")]
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute("SoilHorizonVocabulary", Namespace="")]
+    [System.Xml.Serialization.XmlTypeAttribute("SoilHorizonVocabularyBase", Namespace="")]
     public enum SoilHorizonVocabulary
     {
         
@@ -12074,7 +12095,7 @@ namespace CAFE.Core.Integration
         
         /// <summary>
         /// </summary>
-        [System.Xml.Serialization.XmlAttributeAttribute("uri", Form=System.Xml.Schema.XmlSchemaForm.Unqualified, DataType="anyURI")]
+        [System.Xml.Serialization.XmlAttributeAttribute("uri", Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
         public string Uri { get; set; }
     }
     
@@ -12146,7 +12167,7 @@ namespace CAFE.Core.Integration
         /// <para xml:lang="en">Maximum inclusive value: 100.</para>
         /// </summary>
         [System.Xml.Serialization.XmlElementAttribute("sandPercent", Namespace="")]
-        public string SandPercent { get; set; }
+        public int SandPercent { get; set; }
         
         /// <summary>
         /// <para xml:lang="en">
@@ -12159,7 +12180,7 @@ namespace CAFE.Core.Integration
         /// <para xml:lang="en">Maximum inclusive value: 100.</para>
         /// </summary>
         [System.Xml.Serialization.XmlElementAttribute("siltPercent", Namespace="")]
-        public string SiltPercent { get; set; }
+        public int SiltPercent { get; set; }
         
         /// <summary>
         /// <para xml:lang="en">
@@ -12172,7 +12193,7 @@ namespace CAFE.Core.Integration
         /// <para xml:lang="en">Maximum inclusive value: 100.</para>
         /// </summary>
         [System.Xml.Serialization.XmlElementAttribute("loamPercent", Namespace="")]
-        public string LoamPercent { get; set; }
+        public int LoamPercent { get; set; }
     }
     
     /// <summary>
@@ -12214,7 +12235,7 @@ namespace CAFE.Core.Integration
         
         /// <summary>
         /// </summary>
-        [System.Xml.Serialization.XmlAttributeAttribute("uri", Form=System.Xml.Schema.XmlSchemaForm.Unqualified, DataType="anyURI")]
+        [System.Xml.Serialization.XmlAttributeAttribute("uri", Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
         public string Uri { get; set; }
     }
     
@@ -12522,7 +12543,7 @@ namespace CAFE.Core.Integration
         
         /// <summary>
         /// </summary>
-        [System.Xml.Serialization.XmlAttributeAttribute("uri", Form=System.Xml.Schema.XmlSchemaForm.Unqualified, DataType="anyURI")]
+        [System.Xml.Serialization.XmlAttributeAttribute("uri", Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
         public string Uri { get; set; }
     }
     
@@ -12602,7 +12623,6 @@ namespace CAFE.Core.Integration
         {
             this.NamedEcosphereLayers = new System.Collections.Generic.List<NamedEcosphereLayer>();
             this.NumericEcosphereLayers = new System.Collections.Generic.List<NumericEcosphereLayer>();
-            this.OrganizationalHierarchies = new System.Collections.Generic.List<OrganizationalHierarchy>();
         }
         
         /// <summary>
@@ -12624,28 +12644,6 @@ namespace CAFE.Core.Integration
             get
             {
                 return (this.NumericEcosphereLayers.Count != 0);
-            }
-        }
-        
-        /// <summary>
-        /// <para xml:lang="en">
-        ///							A wrapper around organizational hierarchies
-        ///						      </para>
-        /// </summary>
-        [System.Xml.Serialization.XmlArrayAttribute("OrganizationalHierarchies", Namespace="")]
-        [System.Xml.Serialization.XmlArrayItemAttribute("OrganizationalHierarchy", Namespace="")]
-        public System.Collections.Generic.List<OrganizationalHierarchy> OrganizationalHierarchies { get; set; }
-        
-        /// <summary>
-        /// <para xml:lang="de">Ruft einen Wert ab, der angibt, ob die OrganizationalHierarchies-Collection leer ist.</para>
-        /// <para xml:lang="en">Gets a value indicating whether the OrganizationalHierarchies collection is empty.</para>
-        /// </summary>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool OrganizationalHierarchiesSpecified
-        {
-            get
-            {
-                return (this.OrganizationalHierarchies.Count != 0);
             }
         }
     }
@@ -12688,7 +12686,7 @@ namespace CAFE.Core.Integration
         
         /// <summary>
         /// </summary>
-        [System.Xml.Serialization.XmlAttributeAttribute("uri", Form=System.Xml.Schema.XmlSchemaForm.Unqualified, DataType="anyURI")]
+        [System.Xml.Serialization.XmlAttributeAttribute("uri", Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
         public string Uri { get; set; }
     }
     
@@ -12841,7 +12839,7 @@ namespace CAFE.Core.Integration
         
         /// <summary>
         /// </summary>
-        [System.Xml.Serialization.XmlAttributeAttribute("uri", Form=System.Xml.Schema.XmlSchemaForm.Unqualified, DataType="anyURI")]
+        [System.Xml.Serialization.XmlAttributeAttribute("uri", Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
         public string Uri { get; set; }
     }
     
@@ -12890,199 +12888,6 @@ namespace CAFE.Core.Integration
         ///	  </para>
         /// </summary>
         Metre,
-    }
-    
-    /// <summary>
-    /// </summary>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("XmlSchemaClassGenerator", "1.0.0.0")]
-    [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute("OrganizationalHierarchy", Namespace="", AnonymousType=true)]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    public partial class OrganizationalHierarchy
-    {
-        
-        /// <summary>
-        /// <para xml:lang="en">
-        ///								    A named organizational hierarchy of life (Atom
-        ///								    Level, Molecule Level, Cell Level, ...)
-        ///								  </para>
-        /// </summary>
-        [System.Xml.Serialization.XmlElementAttribute("organizationHierarchyName", Namespace="")]
-        public OrganizationHierarchyName OrganizationHierarchyName { get; set; }
-    }
-    
-    /// <summary>
-    /// </summary>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("XmlSchemaClassGenerator", "1.0.0.0")]
-    [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute("OrganizationHierarchyName", Namespace="")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    public partial class OrganizationHierarchyName
-    {
-        
-        /// <summary>
-        /// <para xml:lang="de">Ruft den Text ab oder legt diesen fest.</para>
-        /// <para xml:lang="en">Gets or sets the text value.</para>
-        /// </summary>
-        [System.Xml.Serialization.XmlTextAttribute()]
-        public string Value { get; set; }
-        
-        /// <summary>
-        /// </summary>
-        [System.Xml.Serialization.XmlAttributeAttribute("uri", Form=System.Xml.Schema.XmlSchemaForm.Unqualified, DataType="anyURI")]
-        public string Uri { get; set; }
-    }
-    
-    /// <summary>
-    /// <para xml:lang="en">
-    ///	Name of an organizational hierarchy level
-    ///      </para>
-    /// </summary>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("XmlSchemaClassGenerator", "1.0.0.0")]
-    [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute("OrganizationHierarchyNameVocabulary", Namespace="")]
-    public enum OrganizationHierarchyNameVocabulary
-    {
-        
-        /// <summary>
-        /// <para xml:lang="en">
-        ///	    A biome is a formation of plants and animals that have common
-        ///	    characteristics due to similar climates and can be found over a
-        ///	    range of continents. Biomes are distinct from habitats, because any
-        ///	    biome can comprise a variety of habitats (WP,
-        ///	    https://goo.gl/g7Urx4).
-        ///	  </para>
-        /// </summary>
-        [System.Xml.Serialization.XmlEnumAttribute("Biome Level")]
-        Biome_Level,
-        
-        /// <summary>
-        /// <para xml:lang="en">
-        ///	    An ecosystem is a community of living organisms in conjunction with
-        ///	    the nonliving components of their environment (things like air,
-        ///	    water and mineral soil), interacting as a system. These biotic and
-        ///	    abiotic components are regarded as linked together through nutrient
-        ///	    cycles and energy flows. As ecosystems are defined by the network
-        ///	    of interactions among organisms, and between organisms and their
-        ///	    environment, they can be of any size but usually encompass
-        ///	    specific, limited spaces (although some scientists say that the
-        ///	    entire planet is an ecosystem). (WP, https://goo.gl/88BdbP)
-        ///	  </para>
-        /// </summary>
-        [System.Xml.Serialization.XmlEnumAttribute("Ecosystem Level")]
-        Ecosystem_Level,
-        
-        /// <summary>
-        /// <para xml:lang="en">
-        ///	    A population is a summation of all the organisms of the same group
-        ///	    or species, which live in a particular geographical area, and have
-        ///	    the capability of interbreeding (WP, https://goo.gl/C2jF14).
-        ///	  </para>
-        /// </summary>
-        [System.Xml.Serialization.XmlEnumAttribute("Population Level")]
-        Population_Level,
-        
-        /// <summary>
-        /// <para xml:lang="en">
-        ///	    In biology, an organism is any contiguous living system, such as an
-        ///	    animal, plant, fungus, or bacterium. All known types of organisms
-        ///	    are capable of some degree of response to stimuli, reproduction,
-        ///	    growth and development and homeostasis. An organism consists of one
-        ///	    or more cells; when it has one cell it is known as a unicellular
-        ///	    organism; and when it has more than one it is known as a
-        ///	    multicellular organism. Most unicellular organisms are of
-        ///	    microscopic size and are thus classified as microorganisms. Humans
-        ///	    are multicellular organisms composed of many trillions of cells
-        ///	    grouped into specialized tissues and organs (WP,
-        ///	    https://goo.gl/bFZhq).
-        ///	  </para>
-        /// </summary>
-        [System.Xml.Serialization.XmlEnumAttribute("Organism Level")]
-        Organism_Level,
-        
-        /// <summary>
-        /// <para xml:lang="en">
-        ///	    A system of organs
-        ///	  </para>
-        /// </summary>
-        [System.Xml.Serialization.XmlEnumAttribute("System of Organs Level")]
-        System_Of_Organs_Level,
-        
-        /// <summary>
-        /// <para xml:lang="en">
-        ///	    In biology, an organ or viscus is a collection of tissues joined in
-        ///	    a structural unit to serve a common function. In anatomy, a viscus
-        ///	    is an internal organ, and viscera is the plural form. (WP,
-        ///	    https://goo.gl/nmTtNo)
-        ///	  </para>
-        /// </summary>
-        [System.Xml.Serialization.XmlEnumAttribute("Organ Level")]
-        Organ_Level,
-        
-        /// <summary>
-        /// <para xml:lang="en">
-        ///	    In biology, tissue is a cellular organizational level intermediate
-        ///	    between cells and a complete organ. A tissue is an ensemble of
-        ///	    similar cells from the same origin that together carry out a
-        ///	    specific function. Organs are then formed by the functional
-        ///	    grouping together of multiple tissues (WP, https://goo.gl/9Ptii9).
-        ///	  </para>
-        /// </summary>
-        [System.Xml.Serialization.XmlEnumAttribute("Tissue Level")]
-        Tissue_Level,
-        
-        /// <summary>
-        /// <para xml:lang="en">
-        ///	    The cell (from Latin cella, meaning "small room") is the basic
-        ///	    structural, functional, and biological unit of all known living
-        ///	    organisms. A cell is the smallest unit of life that can replicate
-        ///	    independently, and cells are often called the "building blocks of
-        ///	    life". The study of cells is called cell biology (WP,
-        ///	    https://goo.gl/O4nWY).
-        ///	  </para>
-        /// </summary>
-        [System.Xml.Serialization.XmlEnumAttribute("Cell Level")]
-        Cell_Level,
-        
-        /// <summary>
-        /// <para xml:lang="en">
-        ///	    In cell biology, an organelle is a specialized subunit within a
-        ///	    cell that has a specific function. Individual organelles are
-        ///	    usually separately enclosed within their own lipid bilayers (WP,
-        ///	    https://goo.gl/Dn6aVN).
-        ///	  </para>
-        /// </summary>
-        [System.Xml.Serialization.XmlEnumAttribute("Cell Organelle Level")]
-        Cell_Organelle_Level,
-        
-        /// <summary>
-        /// <para xml:lang="en">
-        ///	    A molecule is an electrically neutral group of two or more atoms
-        ///	    held together by chemical bonds. Molecules are
-        ///	    distinguished from ions by their lack of electrical charge.
-        ///	    However, in quantum physics, organic chemistry, and biochemistry,
-        ///	    the term molecule is often used less strictly, also being applied
-        ///	    to polyatomic ions (WP, https://goo.gl/iLvg0x).
-        ///	  </para>
-        /// </summary>
-        [System.Xml.Serialization.XmlEnumAttribute("Molecule Level")]
-        Molecule_Level,
-        
-        /// <summary>
-        /// <para xml:lang="en">
-        ///	    An atom is the smallest constituent unit of ordinary matter that
-        ///	    has the properties of a chemical element. Every solid, liquid, gas,
-        ///	    and plasma is composed of neutral or ionized atoms. Atoms are very
-        ///	    small; typical sizes are around 100 pm (a ten-billionth of a meter,
-        ///	    in the short scale). However, atoms do not have well-defined
-        ///	    boundaries, and there are different ways to define their size that
-        ///	    give different but close values (WP, https://goo.gl/5KGsN6).
-        ///	  </para>
-        /// </summary>
-        [System.Xml.Serialization.XmlEnumAttribute("Atmom Level")]
-        Atmom_Level,
     }
     
     /// <summary>
@@ -13242,8 +13047,8 @@ namespace CAFE.Core.Integration
         ///						  The name of a biome zone (Polar, Boreal, Temperate, Subtropic, Tropic)
         ///						</para>
         /// </summary>
-        [System.Xml.Serialization.XmlElementAttribute("biomeZone", Namespace="")]
-        public BiomeZone BiomeZone { get; set; }
+        [System.Xml.Serialization.XmlElementAttribute("biomeLatitudinalZone", Namespace="")]
+        public BiomeLatitudinalZone BiomeLatitudinalZone { get; set; }
         
         /// <summary>
         /// <para xml:lang="en">
@@ -13289,7 +13094,7 @@ namespace CAFE.Core.Integration
         
         /// <summary>
         /// </summary>
-        [System.Xml.Serialization.XmlAttributeAttribute("uri", Form=System.Xml.Schema.XmlSchemaForm.Unqualified, DataType="anyURI")]
+        [System.Xml.Serialization.XmlAttributeAttribute("uri", Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
         public string Uri { get; set; }
     }
     
@@ -13330,10 +13135,10 @@ namespace CAFE.Core.Integration
     /// </summary>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("XmlSchemaClassGenerator", "1.0.0.0")]
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute("BiomeZone", Namespace="")]
+    [System.Xml.Serialization.XmlTypeAttribute("BiomeLatitudinalZone", Namespace="")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    public partial class BiomeZone
+    public partial class BiomeLatitudinalZone
     {
         
         /// <summary>
@@ -13345,7 +13150,7 @@ namespace CAFE.Core.Integration
         
         /// <summary>
         /// </summary>
-        [System.Xml.Serialization.XmlAttributeAttribute("uri", Form=System.Xml.Schema.XmlSchemaForm.Unqualified, DataType="anyURI")]
+        [System.Xml.Serialization.XmlAttributeAttribute("uri", Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
         public string Uri { get; set; }
     }
     
@@ -13356,8 +13161,8 @@ namespace CAFE.Core.Integration
     /// </summary>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("XmlSchemaClassGenerator", "1.0.0.0")]
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute("BiomeZoneVocabulary", Namespace="")]
-    public enum BiomeZoneVocabulary
+    [System.Xml.Serialization.XmlTypeAttribute("BiomeLatitudinalZoneVocabulary", Namespace="")]
+    public enum BiomeLatitudinalZoneVocabulary
     {
         
         /// <summary>
@@ -13442,7 +13247,7 @@ namespace CAFE.Core.Integration
         
         /// <summary>
         /// </summary>
-        [System.Xml.Serialization.XmlAttributeAttribute("uri", Form=System.Xml.Schema.XmlSchemaForm.Unqualified, DataType="anyURI")]
+        [System.Xml.Serialization.XmlAttributeAttribute("uri", Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
         public string Uri { get; set; }
     }
     
@@ -13511,7 +13316,7 @@ namespace CAFE.Core.Integration
         
         /// <summary>
         /// </summary>
-        [System.Xml.Serialization.XmlAttributeAttribute("uri", Form=System.Xml.Schema.XmlSchemaForm.Unqualified, DataType="anyURI")]
+        [System.Xml.Serialization.XmlAttributeAttribute("uri", Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
         public string Uri { get; set; }
     }
     
@@ -13560,7 +13365,7 @@ namespace CAFE.Core.Integration
         
         /// <summary>
         /// </summary>
-        [System.Xml.Serialization.XmlAttributeAttribute("uri", Form=System.Xml.Schema.XmlSchemaForm.Unqualified, DataType="anyURI")]
+        [System.Xml.Serialization.XmlAttributeAttribute("uri", Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
         public string Uri { get; set; }
     }
     
@@ -13628,7 +13433,7 @@ namespace CAFE.Core.Integration
         
         /// <summary>
         /// </summary>
-        [System.Xml.Serialization.XmlAttributeAttribute("uri", Form=System.Xml.Schema.XmlSchemaForm.Unqualified, DataType="anyURI")]
+        [System.Xml.Serialization.XmlAttributeAttribute("uri", Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
         public string Uri { get; set; }
     }
     
@@ -13743,7 +13548,7 @@ namespace CAFE.Core.Integration
         
         /// <summary>
         /// </summary>
-        [System.Xml.Serialization.XmlAttributeAttribute("uri", Form=System.Xml.Schema.XmlSchemaForm.Unqualified, DataType="anyURI")]
+        [System.Xml.Serialization.XmlAttributeAttribute("uri", Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
         public string Uri { get; set; }
     }
     
@@ -13968,7 +13773,7 @@ namespace CAFE.Core.Integration
         
         /// <summary>
         /// </summary>
-        [System.Xml.Serialization.XmlAttributeAttribute("uri", Form=System.Xml.Schema.XmlSchemaForm.Unqualified, DataType="anyURI")]
+        [System.Xml.Serialization.XmlAttributeAttribute("uri", Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
         public string Uri { get; set; }
     }
     
@@ -14162,7 +13967,7 @@ namespace CAFE.Core.Integration
         
         /// <summary>
         /// </summary>
-        [System.Xml.Serialization.XmlAttributeAttribute("uri", Form=System.Xml.Schema.XmlSchemaForm.Unqualified, DataType="anyURI")]
+        [System.Xml.Serialization.XmlAttributeAttribute("uri", Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
         public string Uri { get; set; }
     }
     
@@ -14173,7 +13978,7 @@ namespace CAFE.Core.Integration
     /// </summary>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("XmlSchemaClassGenerator", "1.0.0.0")]
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute("SemiAquaticPhysiognomyTypeVocabulary", Namespace="")]
+    [System.Xml.Serialization.XmlTypeAttribute("SemiAquaticPhysiognomyTypeVocabularyBase", Namespace="")]
     public enum SemiAquaticPhysiognomyTypeVocabulary
     {
         
@@ -14287,7 +14092,7 @@ namespace CAFE.Core.Integration
         
         /// <summary>
         /// </summary>
-        [System.Xml.Serialization.XmlAttributeAttribute("uri", Form=System.Xml.Schema.XmlSchemaForm.Unqualified, DataType="anyURI")]
+        [System.Xml.Serialization.XmlAttributeAttribute("uri", Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
         public string Uri { get; set; }
     }
     
@@ -14298,7 +14103,7 @@ namespace CAFE.Core.Integration
     /// </summary>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("XmlSchemaClassGenerator", "1.0.0.0")]
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute("PlantCharacterizedAquaticPhysiognomyTypeVocabulary", Namespace="")]
+    [System.Xml.Serialization.XmlTypeAttribute("PlantCharacterizedAquaticPhysiognomyTypeVocabularyBase", Namespace="")]
     public enum PlantCharacterizedAquaticPhysiognomyTypeVocabulary
     {
         
@@ -14363,7 +14168,7 @@ namespace CAFE.Core.Integration
         
         /// <summary>
         /// </summary>
-        [System.Xml.Serialization.XmlAttributeAttribute("uri", Form=System.Xml.Schema.XmlSchemaForm.Unqualified, DataType="anyURI")]
+        [System.Xml.Serialization.XmlAttributeAttribute("uri", Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
         public string Uri { get; set; }
     }
     
@@ -14374,7 +14179,7 @@ namespace CAFE.Core.Integration
     /// </summary>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("XmlSchemaClassGenerator", "1.0.0.0")]
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute("HabitatCharacterizedAquaticPhysiognomyVocabulary", Namespace="")]
+    [System.Xml.Serialization.XmlTypeAttribute("HabitatCharacterizedAquaticPhysiognomyVocabularyBase", Namespace="")]
     public enum HabitatCharacterizedAquaticPhysiognomyVocabulary
     {
         
@@ -14549,7 +14354,7 @@ namespace CAFE.Core.Integration
         
         /// <summary>
         /// </summary>
-        [System.Xml.Serialization.XmlAttributeAttribute("uri", Form=System.Xml.Schema.XmlSchemaForm.Unqualified, DataType="anyURI")]
+        [System.Xml.Serialization.XmlAttributeAttribute("uri", Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
         public string Uri { get; set; }
     }
     
@@ -14607,7 +14412,7 @@ namespace CAFE.Core.Integration
         
         /// <summary>
         /// </summary>
-        [System.Xml.Serialization.XmlAttributeAttribute("uri", Form=System.Xml.Schema.XmlSchemaForm.Unqualified, DataType="anyURI")]
+        [System.Xml.Serialization.XmlAttributeAttribute("uri", Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
         public string Uri { get; set; }
     }
     
@@ -14618,7 +14423,7 @@ namespace CAFE.Core.Integration
     /// </summary>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("XmlSchemaClassGenerator", "1.0.0.0")]
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute("LandUseFormVocabulary", Namespace="")]
+    [System.Xml.Serialization.XmlTypeAttribute("LandUseFormVocabularyBase", Namespace="")]
     public enum LandUseFormVocabulary
     {
         
@@ -14801,20 +14606,19 @@ namespace CAFE.Core.Integration
         
         /// <summary>
         /// <para xml:lang="en">
-        ///							The generic full name of the organism including author and year
-        ///							if required.
+        ///							The full name of the organism (also including author and year)
         ///						      </para>
         /// </summary>
         [System.Xml.Serialization.XmlElementAttribute("species", Namespace="", DataType="string")]
         public string Species { get; set; }
-        
+
         /// <summary>
         /// <para xml:lang="en">
-        ///							The name of an organism
+        ///							The genus of the organism
         ///						      </para>
         /// </summary>
-        [System.Xml.Serialization.XmlElementAttribute("OrganismName", Namespace="")]
-        public OrganismName OrganismName { get; set; }
+        [System.Xml.Serialization.XmlElementAttribute("genus", Namespace = "")]
+        public Genus Genus { get; set; }
     }
     
     /// <summary>
@@ -14836,7 +14640,7 @@ namespace CAFE.Core.Integration
         
         /// <summary>
         /// </summary>
-        [System.Xml.Serialization.XmlAttributeAttribute("uri", Form=System.Xml.Schema.XmlSchemaForm.Unqualified, DataType="anyURI")]
+        [System.Xml.Serialization.XmlAttributeAttribute("uri", Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
         public string Uri { get; set; }
     }
     
@@ -14859,7 +14663,7 @@ namespace CAFE.Core.Integration
         
         /// <summary>
         /// </summary>
-        [System.Xml.Serialization.XmlAttributeAttribute("uri", Form=System.Xml.Schema.XmlSchemaForm.Unqualified, DataType="anyURI")]
+        [System.Xml.Serialization.XmlAttributeAttribute("uri", Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
         public string Uri { get; set; }
     }
     
@@ -14870,7 +14674,7 @@ namespace CAFE.Core.Integration
     /// </summary>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("XmlSchemaClassGenerator", "1.0.0.0")]
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute("KingdomVocabulary", Namespace="")]
+    [System.Xml.Serialization.XmlTypeAttribute("KingdomVocabularyBase", Namespace="")]
     public enum KingdomVocabulary
     {
         
@@ -14984,7 +14788,7 @@ namespace CAFE.Core.Integration
         
         /// <summary>
         /// </summary>
-        [System.Xml.Serialization.XmlAttributeAttribute("uri", Form=System.Xml.Schema.XmlSchemaForm.Unqualified, DataType="anyURI")]
+        [System.Xml.Serialization.XmlAttributeAttribute("uri", Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
         public string Uri { get; set; }
     }
     
@@ -15007,7 +14811,7 @@ namespace CAFE.Core.Integration
         
         /// <summary>
         /// </summary>
-        [System.Xml.Serialization.XmlAttributeAttribute("uri", Form=System.Xml.Schema.XmlSchemaForm.Unqualified, DataType="anyURI")]
+        [System.Xml.Serialization.XmlAttributeAttribute("uri", Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
         public string Uri { get; set; }
     }
     
@@ -15030,7 +14834,7 @@ namespace CAFE.Core.Integration
         
         /// <summary>
         /// </summary>
-        [System.Xml.Serialization.XmlAttributeAttribute("uri", Form=System.Xml.Schema.XmlSchemaForm.Unqualified, DataType="anyURI")]
+        [System.Xml.Serialization.XmlAttributeAttribute("uri", Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
         public string Uri { get; set; }
     }
     
@@ -15053,557 +14857,33 @@ namespace CAFE.Core.Integration
         
         /// <summary>
         /// </summary>
-        [System.Xml.Serialization.XmlAttributeAttribute("uri", Form=System.Xml.Schema.XmlSchemaForm.Unqualified, DataType="anyURI")]
+        [System.Xml.Serialization.XmlAttributeAttribute("uri", Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
         public string Uri { get; set; }
     }
-    
+
     /// <summary>
     /// </summary>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("XmlSchemaClassGenerator", "1.0.0.0")]
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute("OrganismName", Namespace="", AnonymousType=true)]
+    [System.Xml.Serialization.XmlTypeAttribute("Genus", Namespace = "")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    public partial class OrganismName
+    public partial class Genus
     {
-        
-        /// <summary>
-        /// <para xml:lang="en">
-        ///							      Atomised name with elements according to the International Code of Nomenclature
-        ///							      of Prokaryotes (ABCD)
-        ///							    </para>
-        /// </summary>
-        [System.Xml.Serialization.XmlElementAttribute("BacterialName", Namespace="")]
-        public BacterialName BacterialName { get; set; }
-        
-        /// <summary>
-        /// <para xml:lang="en">
-        ///							      The ame of a fungi
-        ///							    </para>
-        /// </summary>
-        [System.Xml.Serialization.XmlElementAttribute("FungalName", Namespace="")]
-        public FungalName FungalName { get; set; }
-        
-        /// <summary>
-        /// <para xml:lang="en">
-        ///							      Atomised name with elements according to the International Code of Botanical
-        ///							      Nomenclature or the International Code of Nomenclature for Cultivated Plants
-        ///							      (ABCD)
-        ///							    </para>
-        /// </summary>
-        [System.Xml.Serialization.XmlElementAttribute("BotanicalName", Namespace="")]
-        public BotanicalName BotanicalName { get; set; }
-        
-        /// <summary>
-        /// <para xml:lang="en">
-        ///							      Atomised name with elements according to the International Code of Zoological
-        ///							      Nomenclature (ABCD)
-        ///							    </para>
-        /// </summary>
-        [System.Xml.Serialization.XmlElementAttribute("ZoologicalName", Namespace="")]
-        public ZoologicalName ZoologicalName { get; set; }
-        
-        /// <summary>
-        /// <para xml:lang="en">
-        ///							      Atomised name with elements according to the International Committee on
-        ///							      Taxonomy of Viruses
-        ///							    </para>
-        /// </summary>
-        [System.Xml.Serialization.XmlElementAttribute("ViralName", Namespace="")]
-        public ViralName ViralName { get; set; }
-    }
-    
-    /// <summary>
-    /// </summary>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("XmlSchemaClassGenerator", "1.0.0.0")]
-    [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute("BacterialName", Namespace="", AnonymousType=true)]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    public partial class BacterialName
-    {
-        
-        /// <summary>
-        /// <para xml:lang="en">
-        ///								    An element that captures the full scientific name of the bacteria in one string.
-        ///								  </para>
-        /// </summary>
-        [System.Xml.Serialization.XmlElementAttribute("fullBacterialName", Namespace="", DataType="string")]
-        public string FullBacterialName { get; set; }
-        
-        /// <summary>
-        /// <para xml:lang="en">
-        ///								    Genus name
-        ///								  </para>
-        /// </summary>
-        [System.Xml.Serialization.XmlElementAttribute("genusOrMonomial", Namespace="", DataType="string")]
-        public string GenusOrMonomial { get; set; }
-        
-        /// <summary>
-        /// <para xml:lang="en">
-        ///								    Subgenus name
-        ///								  </para>
-        /// </summary>
-        [System.Xml.Serialization.XmlElementAttribute("subgenus", Namespace="", DataType="string")]
-        public string Subgenus { get; set; }
-        
-        /// <summary>
-        /// <para xml:lang="en">
-        ///								    Author team and year of the subgenus name
-        ///								  </para>
-        /// </summary>
-        [System.Xml.Serialization.XmlElementAttribute("subgenusAuthorAndYear", Namespace="", DataType="string")]
-        public string SubgenusAuthorAndYear { get; set; }
-        
-        /// <summary>
-        /// <para xml:lang="en">
-        ///								    A name element dependent on a genus or a species name under the
-        ///								    bacteriological, botanical, and zoological code.
-        ///								  </para>
-        /// </summary>
-        [System.Xml.Serialization.XmlElementAttribute("speciesEpithet", Namespace="", DataType="string")]
-        public string SpeciesEpithet { get; set; }
-        
-        /// <summary>
-        /// <para xml:lang="en">
-        ///								    The subsphecies epithet (Maps to Darwin Core 2: Subspecies)
-        ///								  </para>
-        /// </summary>
-        [System.Xml.Serialization.XmlElementAttribute("subspeciesEpithet", Namespace="", DataType="string")]
-        public string SubspeciesEpithet { get; set; }
-        
-        /// <summary>
-        /// <para xml:lang="en">
-        ///								    Author team and year of the basionym of a species or subspecies combination
-        ///								  </para>
-        /// </summary>
-        [System.Xml.Serialization.XmlElementAttribute("parentheticalAuthorTeamAndYear", Namespace="", DataType="string")]
-        public string ParentheticalAuthorTeamAndYear { get; set; }
-        
-        /// <summary>
-        /// <para xml:lang="en">
-        ///								    The author(s) who published the full name as it stands and its year
-        ///								  </para>
-        /// </summary>
-        [System.Xml.Serialization.XmlElementAttribute("authorTeamAndYear", Namespace="", DataType="string")]
-        public string AuthorTeamAndYear { get; set; }
-        
-        /// <summary>
-        /// <para xml:lang="en">
-        ///								    Approbation of name according to approved list, validation list,or validly
-        ///								    published, paper in IJSB after 1980
-        ///								  </para>
-        /// </summary>
-        [System.Xml.Serialization.XmlElementAttribute("nameApprobation", Namespace="", DataType="string")]
-        public string NameApprobation { get; set; }
-    }
-    
-    /// <summary>
-    /// </summary>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("XmlSchemaClassGenerator", "1.0.0.0")]
-    [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute("FungalName", Namespace="", AnonymousType=true)]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    public partial class FungalName
-    {
-        
-        /// <summary>
-        /// <para xml:lang="en">
-        ///								    An element that captures the full scientific name of the bacteria in one string.
-        ///								  </para>
-        /// </summary>
-        [System.Xml.Serialization.XmlElementAttribute("fullFungalName", Namespace="", DataType="string")]
-        public string FullFungalName { get; set; }
-    }
-    
-    /// <summary>
-    /// </summary>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("XmlSchemaClassGenerator", "1.0.0.0")]
-    [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute("BotanicalName", Namespace="", AnonymousType=true)]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    public partial class BotanicalName
-    {
-        
-        /// <summary>
-        /// <para xml:lang="en">
-        ///								    An element that captures the full botanical name in one string.
-        ///								  </para>
-        /// </summary>
-        [System.Xml.Serialization.XmlElementAttribute("fullBotanicalName", Namespace="", DataType="string")]
-        public string FullBotanicalName { get; set; }
-        
-        /// <summary>
-        /// <para xml:lang="en">
-        ///								    Genus or higher taxon name
-        ///								  </para>
-        /// </summary>
-        [System.Xml.Serialization.XmlElementAttribute("genusOrMonomial", Namespace="", DataType="string")]
-        public string GenusOrMonomial { get; set; }
-        
-        /// <summary>
-        /// <para xml:lang="en">
-        ///								    The first epithet in a botanical name combination (species epithet or the
-        ///								    epithet of the subdivision of a genus
-        ///								  </para>
-        /// </summary>
-        [System.Xml.Serialization.XmlElementAttribute("firstEpithet", Namespace="", DataType="string")]
-        public string FirstEpithet { get; set; }
-        
-        /// <summary>
-        /// <para xml:lang="en">
-        ///								    The final epithet of a botanical name of infraspecific rank
-        ///								  </para>
-        /// </summary>
-        [System.Xml.Serialization.XmlElementAttribute("infraspecificEpithet", Namespace="", DataType="string")]
-        public string InfraspecificEpithet { get; set; }
-        
-        /// <summary>
-        /// <para xml:lang="en">
-        ///								    The rank of the name where needed to form it.
-        ///								  </para>
-        /// </summary>
-        [System.Xml.Serialization.XmlElementAttribute("rank", Namespace="")]
-        public string Rank { get; set; }
-        
-        /// <summary>
-        /// <para xml:lang="de">Ruft einen Wert ab, der angibt, ob die Rank-Eigenschaft spezifiziert ist, oder legt diesen fest.</para>
-        /// <para xml:lang="en">Gets or sets a value indicating whether the Rank property is specified.</para>
-        /// </summary>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool RankSpecified { get; set; }
-        
-        /// <summary>
-        /// <para xml:lang="en">
-        ///								    Flag indicating that this is a named hybrid ("x") or a graft chimaera ("+").
-        ///								    The attribute insertionpoint defines the name element in front of which the
-        ///								    qualifier should be inserted (1 = before entire name, 2= before first epithet,
-        ///								    3 = before rank designation for second epithet.)
-        ///								  </para>
-        /// </summary>
-        [System.Xml.Serialization.XmlElementAttribute("hybridFlag", Namespace="")]
-        public HybridFlag HybridFlag { get; set; }
-        
-        /// <summary>
-        /// <para xml:lang="en">
-        ///								    Author team of the basionym of a combination
-        ///								  </para>
-        /// </summary>
-        [System.Xml.Serialization.XmlElementAttribute("authorTeamParenthesis", Namespace="", DataType="string")]
-        public string AuthorTeamParenthesis { get; set; }
-        
-        /// <summary>
-        /// <para xml:lang="en">
-        ///								    The author(s) who published the full name as it stands
-        ///								  </para>
-        /// </summary>
-        [System.Xml.Serialization.XmlElementAttribute("authorTeam", Namespace="", DataType="string")]
-        public string AuthorTeam { get; set; }
-        
-        /// <summary>
-        /// <para xml:lang="en">
-        ///								    Cultivar group name
-        ///								  </para>
-        /// </summary>
-        [System.Xml.Serialization.XmlElementAttribute("cultivarGroupName", Namespace="", DataType="string")]
-        public string CultivarGroupName { get; set; }
-        
-        /// <summary>
-        /// <para xml:lang="en">
-        ///								    Cultivar name according to the ICNCP
-        ///								  </para>
-        /// </summary>
-        [System.Xml.Serialization.XmlElementAttribute("cultivarName", Namespace="", DataType="string")]
-        public string CultivarName { get; set; }
-        
-        /// <summary>
-        /// <para xml:lang="en">
-        ///								    Container for trade names
-        ///								  </para>
-        /// </summary>
-        [System.Xml.Serialization.XmlArrayAttribute("tradeDesignationNames", Namespace="")]
-        [System.Xml.Serialization.XmlArrayItemAttribute("tradeDesignationName", Namespace="", DataType="string")]
-        public System.Collections.Generic.List<string> TradeDesignationNames { get; set; }
-        
-        /// <summary>
-        /// <para xml:lang="de">Ruft einen Wert ab, der angibt, ob die TradeDesignationNames-Collection leer ist.</para>
-        /// <para xml:lang="en">Gets a value indicating whether the TradeDesignationNames collection is empty.</para>
-        /// </summary>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool TradeDesignationNamesSpecified
-        {
-            get
-            {
-                return (this.TradeDesignationNames.Count != 0);
-            }
-        }
-        
-        /// <summary>
-        /// <para xml:lang="de">Initialisiert eine neue Instanz der <see cref="BotanicalName" /> Klasse.</para>
-        /// <para xml:lang="en">Initializes a new instance of the <see cref="BotanicalName" /> class.</para>
-        /// </summary>
-        public BotanicalName()
-        {
-            this.TradeDesignationNames = new System.Collections.Generic.List<string>();
-        }
-    }
-    
-    /// <summary>
-    /// <para xml:lang="en">
-    ///	The abbreviation of a taxonomic rank as used in (botanical) organism name strings
-    ///      </para>
-    /// </summary>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("XmlSchemaClassGenerator", "1.0.0.0")]
-    [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute("RankAbbreviation", Namespace="")]
-    public enum RankAbbreviation
-    {
-        
-        /// <summary>
-        /// <para xml:lang="en">
-        ///	    NA
-        ///	  </para>
-        /// </summary>
-        [System.Xml.Serialization.XmlEnumAttribute("subgen.")]
-        SubgenPeriod,
-        
-        /// <summary>
-        /// <para xml:lang="en">
-        ///	    NA
-        ///	  </para>
-        /// </summary>
-        [System.Xml.Serialization.XmlEnumAttribute("sect.")]
-        SectPeriod,
-        
-        /// <summary>
-        /// <para xml:lang="en">
-        ///	    NA
-        ///	  </para>
-        /// </summary>
-        [System.Xml.Serialization.XmlEnumAttribute("subsp.")]
-        SubspPeriod,
-        
-        /// <summary>
-        /// <para xml:lang="en">
-        ///	    NA
-        ///	  </para>
-        /// </summary>
-        [System.Xml.Serialization.XmlEnumAttribute("var.")]
-        VarPeriod,
-        
-        /// <summary>
-        /// <para xml:lang="en">
-        ///	    NA
-        ///	  </para>
-        /// </summary>
-        [System.Xml.Serialization.XmlEnumAttribute("subvar.")]
-        SubvarPeriod,
-        
-        /// <summary>
-        /// <para xml:lang="en">
-        ///	    NA
-        ///	  </para>
-        /// </summary>
-        [System.Xml.Serialization.XmlEnumAttribute("forma")]
-        Forma,
-        
-        /// <summary>
-        /// <para xml:lang="en">
-        ///	    NA
-        ///	  </para>
-        /// </summary>
-        [System.Xml.Serialization.XmlEnumAttribute("f.")]
-        FPeriod,
-        
-        /// <summary>
-        /// <para xml:lang="en">
-        ///	    NA
-        ///	  </para>
-        /// </summary>
-        [System.Xml.Serialization.XmlEnumAttribute("subforma")]
-        Subforma,
-        
-        /// <summary>
-        /// <para xml:lang="en">
-        ///	    NA
-        ///	  </para>
-        /// </summary>
-        [System.Xml.Serialization.XmlEnumAttribute("subf.")]
-        SubfPeriod,
-        
-        /// <summary>
-        /// <para xml:lang="en">
-        ///	    NA
-        ///	  </para>
-        /// </summary>
-        [System.Xml.Serialization.XmlEnumAttribute("f.spec.")]
-        FPeriodSpecPeriod,
-    }
-    
-    /// <summary>
-    /// </summary>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("XmlSchemaClassGenerator", "1.0.0.0")]
-    [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute("HybridFlag", Namespace="")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    public partial class HybridFlag
-    {
-        
+
         /// <summary>
         /// <para xml:lang="de">Ruft den Text ab oder legt diesen fest.</para>
         /// <para xml:lang="en">Gets or sets the text value.</para>
         /// </summary>
-        [System.Xml.Serialization.XmlTextAttribute(DataType="string")]
+        [System.Xml.Serialization.XmlTextAttribute(DataType = "string")]
         public string Value { get; set; }
-        
+
         /// <summary>
-        /// <para xml:lang="en">Minimum inclusive value: 1.</para>
-        /// <para xml:lang="en">Maximum inclusive value: 3.</para>
         /// </summary>
-        [System.Xml.Serialization.XmlAttributeAttribute("insertionpoint", Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public string Insertionpoint { get; set; }
+        [System.Xml.Serialization.XmlAttributeAttribute("uri", Form = System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public string Uri { get; set; }
     }
-    
-    /// <summary>
-    /// </summary>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("XmlSchemaClassGenerator", "1.0.0.0")]
-    [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute("ZoologicalName", Namespace="", AnonymousType=true)]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    public partial class ZoologicalName
-    {
-        
-        /// <summary>
-        /// <para xml:lang="en">
-        ///								    An element that captures the full zoological name in one string.
-        ///								  </para>
-        /// </summary>
-        [System.Xml.Serialization.XmlElementAttribute("fullZoologicalName", Namespace="", DataType="string")]
-        public string FullZoologicalName { get; set; }
-        
-        /// <summary>
-        /// <para xml:lang="en">
-        ///								    Genus or higher taxon name
-        ///								  </para>
-        /// </summary>
-        [System.Xml.Serialization.XmlElementAttribute("genusOrMonomial", Namespace="", DataType="string")]
-        public string GenusOrMonomial { get; set; }
-        
-        /// <summary>
-        /// <para xml:lang="en">
-        ///								    Subgenus name
-        ///								  </para>
-        /// </summary>
-        [System.Xml.Serialization.XmlElementAttribute("subgenus", Namespace="", DataType="string")]
-        public string Subgenus { get; set; }
-        
-        /// <summary>
-        /// <para xml:lang="en">
-        ///								    Species epithet
-        ///								  </para>
-        /// </summary>
-        [System.Xml.Serialization.XmlElementAttribute("speciesEpithet", Namespace="", DataType="string")]
-        public string SpeciesEpithet { get; set; }
-        
-        /// <summary>
-        /// <para xml:lang="en">
-        ///								    Maps to Darwin Core 2: Subspecies
-        ///								  </para>
-        /// </summary>
-        [System.Xml.Serialization.XmlElementAttribute("subspeciesEpithet", Namespace="", DataType="string")]
-        public string SubspeciesEpithet { get; set; }
-        
-        /// <summary>
-        /// <para xml:lang="en">
-        ///								    The first person(s) who validly published a species-group name and the year of
-        ///								    publication
-        ///								  </para>
-        /// </summary>
-        [System.Xml.Serialization.XmlElementAttribute("authorTeamOriginalAndYear", Namespace="", DataType="string")]
-        public string AuthorTeamOriginalAndYear { get; set; }
-        
-        /// <summary>
-        /// <para xml:lang="en">
-        ///								    The parenthetical citation of the original author when a species-group was
-        ///								    transferred to another genus and the year of the original publication
-        ///								  </para>
-        /// </summary>
-        [System.Xml.Serialization.XmlElementAttribute("authorTeamParenthesisAndYear", Namespace="", DataType="string")]
-        public string AuthorTeamParenthesisAndYear { get; set; }
-        
-        /// <summary>
-        /// <para xml:lang="en">
-        ///								    The citation of the authors responsible for the new combination and the year of
-        ///								    its publication
-        ///								  </para>
-        /// </summary>
-        [System.Xml.Serialization.XmlElementAttribute("combinationAuthorTeamAndYear", Namespace="", DataType="string")]
-        public string CombinationAuthorTeamAndYear { get; set; }
-        
-        /// <summary>
-        /// <para xml:lang="en">
-        ///								    Name of the breed of an animal
-        ///								  </para>
-        /// </summary>
-        [System.Xml.Serialization.XmlElementAttribute("breed", Namespace="", DataType="string")]
-        public string Breed { get; set; }
-        
-        /// <summary>
-        /// </summary>
-        [System.Xml.Serialization.XmlElementAttribute("namedIndividual", Namespace="", DataType="string")]
-        public string NamedIndividual { get; set; }
-    }
-    
-    /// <summary>
-    /// </summary>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("XmlSchemaClassGenerator", "1.0.0.0")]
-    [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute("ViralName", Namespace="", AnonymousType=true)]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    public partial class ViralName
-    {
-        
-        /// <summary>
-        /// <para xml:lang="en">
-        ///								    An element that captures the full viral name in one string.
-        ///								  </para>
-        /// </summary>
-        [System.Xml.Serialization.XmlElementAttribute("fullViralName", Namespace="", DataType="string")]
-        public string FullViralName { get; set; }
-        
-        /// <summary>
-        /// <para xml:lang="en">
-        ///								    Genus or higher taxon name formed according to the code and representing the
-        ///								    result of the identification. E.g. Comovirus
-        ///								  </para>
-        /// </summary>
-        [System.Xml.Serialization.XmlElementAttribute("genusOrMonomial", Namespace="", DataType="string")]
-        public string GenusOrMonomial { get; set; }
-        
-        /// <summary>
-        /// <para xml:lang="en">
-        ///								    The formal name of a viral species. Examples: vaccinia virus; human herpes
-        ///								    virus 2 (herpes simplex virus 2); poliovirus 1; Saccharomyces cerevisiae virus
-        ///								    L-A; enterobacteria phage PRD1 [Source: ICTV]
-        ///								  </para>
-        /// </summary>
-        [System.Xml.Serialization.XmlElementAttribute("viralSpeciesDesignation", Namespace="", DataType="string")]
-        public string ViralSpeciesDesignation { get; set; }
-        
-        /// <summary>
-        /// <para xml:lang="en">
-        ///								    The accepted acronym for the Virus, e.g. PCV for Peanut Clump Virus
-        ///								  </para>
-        /// </summary>
-        [System.Xml.Serialization.XmlElementAttribute("acronym", Namespace="", DataType="string")]
-        public string Acronym { get; set; }
-    }
-    
+
     /// <summary>
     /// </summary>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("XmlSchemaClassGenerator", "1.0.0.0")]
@@ -15737,7 +15017,7 @@ namespace CAFE.Core.Integration
         
         /// <summary>
         /// </summary>
-        [System.Xml.Serialization.XmlAttributeAttribute("uri", Form=System.Xml.Schema.XmlSchemaForm.Unqualified, DataType="anyURI")]
+        [System.Xml.Serialization.XmlAttributeAttribute("uri", Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
         public string Uri { get; set; }
     }
     
@@ -15748,7 +15028,7 @@ namespace CAFE.Core.Integration
     /// </summary>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("XmlSchemaClassGenerator", "1.0.0.0")]
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute("ProcessNameVocabulary", Namespace="")]
+    [System.Xml.Serialization.XmlTypeAttribute("ProcessNameVocabularyBase", Namespace="")]
     public enum ProcessNameVocabulary
     {
         
@@ -16131,7 +15411,7 @@ namespace CAFE.Core.Integration
         
         /// <summary>
         /// </summary>
-        [System.Xml.Serialization.XmlAttributeAttribute("uri", Form=System.Xml.Schema.XmlSchemaForm.Unqualified, DataType="anyURI")]
+        [System.Xml.Serialization.XmlAttributeAttribute("uri", Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
         public string Uri { get; set; }
     }
     
@@ -16142,7 +15422,7 @@ namespace CAFE.Core.Integration
     /// </summary>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("XmlSchemaClassGenerator", "1.0.0.0")]
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute("ProcessSubjectVocabulary", Namespace="")]
+    [System.Xml.Serialization.XmlTypeAttribute("ProcessSubjectVocabularyBase", Namespace="")]
     public enum ProcessSubjectVocabulary
     {
         
@@ -16275,7 +15555,7 @@ namespace CAFE.Core.Integration
         
         /// <summary>
         /// </summary>
-        [System.Xml.Serialization.XmlAttributeAttribute("uri", Form=System.Xml.Schema.XmlSchemaForm.Unqualified, DataType="anyURI")]
+        [System.Xml.Serialization.XmlAttributeAttribute("uri", Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
         public string Uri { get; set; }
     }
     
@@ -16286,7 +15566,7 @@ namespace CAFE.Core.Integration
     /// </summary>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("XmlSchemaClassGenerator", "1.0.0.0")]
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute("InteractionPartnerVocabulary", Namespace="")]
+    [System.Xml.Serialization.XmlTypeAttribute("InteractionPartnerVocabularyBase", Namespace="")]
     public enum InteractionPartnerVocabulary
     {
         
@@ -16415,7 +15695,7 @@ namespace CAFE.Core.Integration
         
         /// <summary>
         /// </summary>
-        [System.Xml.Serialization.XmlAttributeAttribute("uri", Form=System.Xml.Schema.XmlSchemaForm.Unqualified, DataType="anyURI")]
+        [System.Xml.Serialization.XmlAttributeAttribute("uri", Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
         public string Uri { get; set; }
     }
     
@@ -16430,7 +15710,7 @@ namespace CAFE.Core.Integration
     /// </summary>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("XmlSchemaClassGenerator", "1.0.0.0")]
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute("InteractionDirectionVocabulary", Namespace="")]
+    [System.Xml.Serialization.XmlTypeAttribute("InteractionDirectionVocabularyBase", Namespace="")]
     public enum InteractionDirectionVocabulary
     {
         
@@ -16486,7 +15766,7 @@ namespace CAFE.Core.Integration
         
         /// <summary>
         /// </summary>
-        [System.Xml.Serialization.XmlAttributeAttribute("uri", Form=System.Xml.Schema.XmlSchemaForm.Unqualified, DataType="anyURI")]
+        [System.Xml.Serialization.XmlAttributeAttribute("uri", Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
         public string Uri { get; set; }
     }
     
@@ -16497,7 +15777,7 @@ namespace CAFE.Core.Integration
     /// </summary>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("XmlSchemaClassGenerator", "1.0.0.0")]
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute("InteractionQualityVocabulary", Namespace="")]
+    [System.Xml.Serialization.XmlTypeAttribute("InteractionQualityVocabularyBase", Namespace="")]
     public enum InteractionQualityVocabulary
     {
         
@@ -16753,7 +16033,7 @@ namespace CAFE.Core.Integration
         
         /// <summary>
         /// </summary>
-        [System.Xml.Serialization.XmlAttributeAttribute("uri", Form=System.Xml.Schema.XmlSchemaForm.Unqualified, DataType="anyURI")]
+        [System.Xml.Serialization.XmlAttributeAttribute("uri", Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
         public string Uri { get; set; }
     }
     
@@ -17751,7 +17031,7 @@ namespace CAFE.Core.Integration
         
         /// <summary>
         /// </summary>
-        [System.Xml.Serialization.XmlAttributeAttribute("uri", Form=System.Xml.Schema.XmlSchemaForm.Unqualified, DataType="anyURI")]
+        [System.Xml.Serialization.XmlAttributeAttribute("uri", Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
         public string Uri { get; set; }
     }
     
@@ -17762,7 +17042,7 @@ namespace CAFE.Core.Integration
     /// </summary>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("XmlSchemaClassGenerator", "1.0.0.0")]
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute("IsotopeNameVocabulary", Namespace="")]
+    [System.Xml.Serialization.XmlTypeAttribute("IsotopeNameVocabularyBase", Namespace="")]
     public enum IsotopeNameVocabulary
     {
         
@@ -18428,7 +17708,7 @@ namespace CAFE.Core.Integration
         
         /// <summary>
         /// </summary>
-        [System.Xml.Serialization.XmlAttributeAttribute("uri", Form=System.Xml.Schema.XmlSchemaForm.Unqualified, DataType="anyURI")]
+        [System.Xml.Serialization.XmlAttributeAttribute("uri", Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
         public string Uri { get; set; }
     }
     
@@ -18439,7 +17719,7 @@ namespace CAFE.Core.Integration
     /// </summary>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("XmlSchemaClassGenerator", "1.0.0.0")]
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute("CompoundClassVocabulary", Namespace="")]
+    [System.Xml.Serialization.XmlTypeAttribute("CompoundClassVocabularyBase", Namespace="")]
     public enum CompoundClassVocabulary
     {
         
@@ -18531,7 +17811,7 @@ namespace CAFE.Core.Integration
         
         /// <summary>
         /// </summary>
-        [System.Xml.Serialization.XmlAttributeAttribute("uri", Form=System.Xml.Schema.XmlSchemaForm.Unqualified, DataType="anyURI")]
+        [System.Xml.Serialization.XmlAttributeAttribute("uri", Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
         public string Uri { get; set; }
     }
     
@@ -19615,7 +18895,7 @@ namespace CAFE.Core.Integration
         
         /// <summary>
         /// </summary>
-        [System.Xml.Serialization.XmlAttributeAttribute("uri", Form=System.Xml.Schema.XmlSchemaForm.Unqualified, DataType="anyURI")]
+        [System.Xml.Serialization.XmlAttributeAttribute("uri", Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
         public string Uri { get; set; }
     }
     
@@ -19626,7 +18906,7 @@ namespace CAFE.Core.Integration
     /// </summary>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("XmlSchemaClassGenerator", "1.0.0.0")]
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute("ChemicalFunctionTypeVocabulary", Namespace="")]
+    [System.Xml.Serialization.XmlTypeAttribute("ChemicalFunctionTypeVocabularyBase", Namespace="")]
     public enum ChemicalFunctionTypeVocabulary
     {
         
@@ -19909,6 +19189,7 @@ namespace CAFE.Core.Integration
         {
             this.Approaches = new System.Collections.Generic.List<Approach>();
             this.Factors = new System.Collections.Generic.List<Factor>();
+            this.OrganizationalHierarchies = new System.Collections.Generic.List<OrganizationalHierarchy>();
         }
         
         /// <summary>
@@ -19930,6 +19211,28 @@ namespace CAFE.Core.Integration
             get
             {
                 return (this.Factors.Count != 0);
+            }
+        }
+        
+        /// <summary>
+        /// <para xml:lang="en">
+        ///				      A wrapper around organizational hierarchies
+        ///				    </para>
+        /// </summary>
+        [System.Xml.Serialization.XmlArrayAttribute("OrganizationalHierarchies", Namespace="")]
+        [System.Xml.Serialization.XmlArrayItemAttribute("OrganizationalHierarchy", Namespace="")]
+        public System.Collections.Generic.List<OrganizationalHierarchy> OrganizationalHierarchies { get; set; }
+        
+        /// <summary>
+        /// <para xml:lang="de">Ruft einen Wert ab, der angibt, ob die OrganizationalHierarchies-Collection leer ist.</para>
+        /// <para xml:lang="en">Gets a value indicating whether the OrganizationalHierarchies collection is empty.</para>
+        /// </summary>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool OrganizationalHierarchiesSpecified
+        {
+            get
+            {
+                return (this.OrganizationalHierarchies.Count != 0);
             }
         }
     }
@@ -19980,7 +19283,7 @@ namespace CAFE.Core.Integration
         
         /// <summary>
         /// </summary>
-        [System.Xml.Serialization.XmlAttributeAttribute("uri", Form=System.Xml.Schema.XmlSchemaForm.Unqualified, DataType="anyURI")]
+        [System.Xml.Serialization.XmlAttributeAttribute("uri", Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
         public string Uri { get; set; }
     }
     
@@ -20036,7 +19339,7 @@ namespace CAFE.Core.Integration
         
         /// <summary>
         /// </summary>
-        [System.Xml.Serialization.XmlAttributeAttribute("uri", Form=System.Xml.Schema.XmlSchemaForm.Unqualified, DataType="anyURI")]
+        [System.Xml.Serialization.XmlAttributeAttribute("uri", Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
         public string Uri { get; set; }
     }
     
@@ -20100,6 +19403,16 @@ namespace CAFE.Core.Integration
         /// </summary>
         [System.Xml.Serialization.XmlElementAttribute("factorType", Namespace="")]
         public FactorType FactorType { get; set; }
+        
+        /// <summary>
+        /// </summary>
+        [System.Xml.Serialization.XmlAttributeAttribute("id", Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public int Id { get; set; }
+        
+        /// <summary>
+        /// </summary>
+        [System.Xml.Serialization.XmlAttributeAttribute("was", Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public string Was { get; set; }
     }
     
     /// <summary>
@@ -20121,27 +19434,21 @@ namespace CAFE.Core.Integration
         
         /// <summary>
         /// </summary>
-        [System.Xml.Serialization.XmlAttributeAttribute("uri", Form=System.Xml.Schema.XmlSchemaForm.Unqualified, DataType="anyURI")]
+        [System.Xml.Serialization.XmlAttributeAttribute("uri", Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
         public string Uri { get; set; }
-        
-        /// <summary>
-        /// </summary>
-        [System.ComponentModel.DefaultValueAttribute("Measured")]
-        [System.Xml.Serialization.XmlAttributeAttribute("was", Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public string Was { get; set; }
     }
     
     /// <summary>
     /// </summary>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("XmlSchemaClassGenerator", "1.0.0.0")]
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute("FactorNameVocabulary", Namespace="")]
+    [System.Xml.Serialization.XmlTypeAttribute("FactorNameVocabularyBase", Namespace="")]
     public enum FactorNameVocabulary
     {
         
         /// <summary>
         /// <para xml:lang="en">
-        ///	    This includes richness, functional diversity, shannon diversity, rarefaction
+        ///	    This includes e.g. richness, functional diversity, shannon diversity, rarefaction
         ///	  </para>
         /// </summary>
         [System.Xml.Serialization.XmlEnumAttribute("Producer Diversity")]
@@ -20290,6 +19597,20 @@ namespace CAFE.Core.Integration
         
         /// <summary>
         /// <para xml:lang="en">
+        ///	    Geographical features are man-made or naturally-created features of
+        ///	    the Earth. Natural geographical features consist of landforms and
+        ///	    ecosystems. For example, terrain types, physical factors of the
+        ///	    environment) are natural geographical features. Conversely, human
+        ///	    settlements or other engineered forms are considered types of
+        ///	    artificial geographical features. ( Wikipedia,
+        ///	    https://goo.gl/7N6SJk )
+        ///	  </para>
+        /// </summary>
+        [System.Xml.Serialization.XmlEnumAttribute("Geographical Feature")]
+        Geographical_Feature,
+        
+        /// <summary>
+        /// <para xml:lang="en">
         ///	    Soil texture is a qualitative classification tool used in both the field and
         ///	    laboratory to determine classes for (agricultural) soils based on their
         ///	    physical texture ( Wikipedia, https://goo.gl/dd5XK7 ).
@@ -20370,6 +19691,20 @@ namespace CAFE.Core.Integration
         
         /// <summary>
         /// <para xml:lang="en">
+        ///	    A landform is a natural feature of the solid surface of the Earth
+        ///	    or other planetary body. Landforms together make up a given
+        ///	    terrain, and their arrangement in the landscape is known as
+        ///	    topography. Typical landforms include hills, mountains, plateaus,
+        ///	    canyons, valleys, as well as shoreline features such as bays,
+        ///	    peninsulas, and seas, including submerged features such as
+        ///	    mid-ocean ridges, volcanoes, and the great ocean basins.
+        ///	  </para>
+        /// </summary>
+        [System.Xml.Serialization.XmlEnumAttribute("Land Form Characteristic")]
+        Land_Form_Characteristic,
+        
+        /// <summary>
+        /// <para xml:lang="en">
         ///	    The plot selection creates an elevation gradient. Or plots of a certain
         ///	    elevation only are selected.
         ///	  </para>
@@ -20401,39 +19736,310 @@ namespace CAFE.Core.Integration
         ///	  </para>
         /// </summary>
         Space,
-    }
-    
-    /// <summary>
-    /// </summary>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("XmlSchemaClassGenerator", "1.0.0.0")]
-    [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute("Was", Namespace="")]
-    public enum Was
-    {
         
         /// <summary>
         /// <para xml:lang="en">
-        ///		    A variable that has been manipulated as part of the study setup
-        ///		  </para>
+        ///	    NA
+        ///	  </para>
         /// </summary>
-        [System.Xml.Serialization.XmlEnumAttribute("manipulated")]
-        Manipulated,
+        [System.Xml.Serialization.XmlEnumAttribute("Air Pressure")]
+        Air_Pressure,
         
         /// <summary>
         /// <para xml:lang="en">
-        ///		    A variable that has been measured
-        ///		  </para>
+        ///	    NA
+        ///	  </para>
         /// </summary>
-        [System.Xml.Serialization.XmlEnumAttribute("measured")]
-        Measured,
+        [System.Xml.Serialization.XmlEnumAttribute("Wind Speed")]
+        Wind_Speed,
         
         /// <summary>
         /// <para xml:lang="en">
-        ///		    A variable that has been estimated
-        ///		  </para>
+        ///	    NA
+        ///	  </para>
         /// </summary>
-        [System.Xml.Serialization.XmlEnumAttribute("estimated")]
-        Estimated,
+        [System.Xml.Serialization.XmlEnumAttribute("Chemical Composition")]
+        Chemical_Composition,
+        
+        /// <summary>
+        /// <para xml:lang="en">
+        ///	    NA
+        ///	  </para>
+        /// </summary>
+        [System.Xml.Serialization.XmlEnumAttribute("Chemical Element")]
+        Chemical_Element,
+        
+        /// <summary>
+        /// <para xml:lang="en">
+        ///	    NA
+        ///	  </para>
+        /// </summary>
+        [System.Xml.Serialization.XmlEnumAttribute("Plant Trait")]
+        Plant_Trait,
+        
+        /// <summary>
+        /// <para xml:lang="en">
+        ///	    NA
+        ///	  </para>
+        /// </summary>
+        [System.Xml.Serialization.XmlEnumAttribute("Wood Trait")]
+        Wood_Trait,
+        
+        /// <summary>
+        /// <para xml:lang="en">
+        ///	    NA
+        ///	  </para>
+        /// </summary>
+        [System.Xml.Serialization.XmlEnumAttribute("Root Trait")]
+        Root_Trait,
+        
+        /// <summary>
+        /// <para xml:lang="en">
+        ///	    NA
+        ///	  </para>
+        /// </summary>
+        [System.Xml.Serialization.XmlEnumAttribute("Leaf Trait")]
+        Leaf_Trait,
+        
+        /// <summary>
+        /// <para xml:lang="en">
+        ///	    NA
+        ///	  </para>
+        /// </summary>
+        [System.Xml.Serialization.XmlEnumAttribute("Carbon Nitrogen Ratio")]
+        Carbon_Nitrogen_Ratio,
+        
+        /// <summary>
+        /// <para xml:lang="en">
+        ///	    An identity assigned to an object of measurement for later
+        ///	    identification. For example tags on trees or coarse woody
+        ///	    debirs elements which lay on a forest floor or plots.
+        ///	  </para>
+        /// </summary>
+        Identity,
+        
+        /// <summary>
+        /// <para xml:lang="en">
+        ///	    NA
+        ///	  </para>
+        /// </summary>
+        [System.Xml.Serialization.XmlEnumAttribute("Wood Density")]
+        Wood_Density,
+        
+        /// <summary>
+        /// <para xml:lang="en">
+        ///	    Bulk density is a property of powders, granules, and other
+        ///	    "divided" solids, especially used in reference to mineral
+        ///	    components (soil, gravel), chemical substances, (pharmaceutical)
+        ///	    ingredients, foodstuff, or any other masses of corpuscular or
+        ///	    particulate matter. It is defined as the weight of many particles
+        ///	    of the material divided by the total volume they occupy. The total
+        ///	    volume includes particle volume, inter-particle void volume, and
+        ///	    internal pore volume (WP, https://goo.gl/RvdJ9J)
+        ///	  </para>
+        /// </summary>
+        [System.Xml.Serialization.XmlEnumAttribute("Bulk Density")]
+        Bulk_Density,
+        
+        /// <summary>
+        /// <para xml:lang="en">
+        ///	    Living, Dead, Broken, Mature, Juvenile...
+        ///	  </para>
+        /// </summary>
+        [System.Xml.Serialization.XmlEnumAttribute("Producer Status")]
+        Producer_Status,
+        
+        /// <summary>
+        /// <para xml:lang="en">
+        ///	    Age of producers
+        ///	  </para>
+        /// </summary>
+        [System.Xml.Serialization.XmlEnumAttribute("Producer Age")]
+        Producer_Age,
+        
+        /// <summary>
+        /// <para xml:lang="en">
+        ///	    NA
+        ///	  </para>
+        /// </summary>
+        [System.Xml.Serialization.XmlEnumAttribute("Canopy Structure")]
+        Canopy_Structure,
+        
+        /// <summary>
+        /// <para xml:lang="en">
+        ///	    NA
+        ///	  </para>
+        /// </summary>
+        [System.Xml.Serialization.XmlEnumAttribute("Producer Abundance")]
+        Producer_Abundance,
+        
+        /// <summary>
+        /// <para xml:lang="en">
+        ///	    NA
+        ///	  </para>
+        /// </summary>
+        [System.Xml.Serialization.XmlEnumAttribute("Consumer Abundance")]
+        Consumer_Abundance,
+        
+        /// <summary>
+        /// <para xml:lang="en">
+        ///	    The gravimetric water content e.g of soil
+        ///	  </para>
+        /// </summary>
+        [System.Xml.Serialization.XmlEnumAttribute("Gravimetric Water Content")]
+        Gravimetric_Water_Content,
+        
+        /// <summary>
+        /// <para xml:lang="en">
+        ///	    NA
+        ///	  </para>
+        /// </summary>
+        [System.Xml.Serialization.XmlEnumAttribute("Plant Height")]
+        Plant_Height,
+        
+        /// <summary>
+        /// <para xml:lang="en">
+        ///	    NA
+        ///	  </para>
+        /// </summary>
+        [System.Xml.Serialization.XmlEnumAttribute("Bifurcation Point Height")]
+        Bifurcation_Point_Height,
+        
+        /// <summary>
+        /// <para xml:lang="en">
+        ///	    NA
+        ///	  </para>
+        /// </summary>
+        [System.Xml.Serialization.XmlEnumAttribute("Canopy Height")]
+        Canopy_Height,
+        
+        /// <summary>
+        /// <para xml:lang="en">
+        ///	    NA
+        ///	  </para>
+        /// </summary>
+        [System.Xml.Serialization.XmlEnumAttribute("Stem Morphology")]
+        Stem_Morphology,
+        
+        /// <summary>
+        /// <para xml:lang="en">
+        ///	    NA
+        ///	  </para>
+        /// </summary>
+        [System.Xml.Serialization.XmlEnumAttribute("Crown Architecture")]
+        Crown_Architecture,
+        
+        /// <summary>
+        /// <para xml:lang="en">
+        ///	    NA
+        ///	  </para>
+        /// </summary>
+        [System.Xml.Serialization.XmlEnumAttribute("Dry Weight")]
+        Dry_Weight,
+        
+        /// <summary>
+        /// <para xml:lang="en">
+        ///	    Synonymous with Fresh Weight
+        ///	  </para>
+        /// </summary>
+        [System.Xml.Serialization.XmlEnumAttribute("Wet Weight")]
+        Wet_Weight,
+        
+        /// <summary>
+        /// <para xml:lang="en">
+        ///	    Decidious, Evergreen
+        ///	  </para>
+        /// </summary>
+        [System.Xml.Serialization.XmlEnumAttribute("Leaf Habit")]
+        Leaf_Habit,
+        
+        /// <summary>
+        /// <para xml:lang="en">
+        ///	    NA
+        ///	  </para>
+        /// </summary>
+        [System.Xml.Serialization.XmlEnumAttribute("Leaf Toughness")]
+        Leaf_Toughness,
+        
+        /// <summary>
+        /// <para xml:lang="en">
+        ///	    NA
+        ///	  </para>
+        /// </summary>
+        [System.Xml.Serialization.XmlEnumAttribute("Specific Leaf Area")]
+        Specific_Leaf_Area,
+        
+        /// <summary>
+        /// <para xml:lang="en">
+        ///	    NA
+        ///	  </para>
+        /// </summary>
+        [System.Xml.Serialization.XmlEnumAttribute("Leaf Dry Matter Content")]
+        Leaf_Dry_Matter_Content,
+        
+        /// <summary>
+        /// <para xml:lang="en">
+        ///	    All sorts of structural aspects of leafes.
+        ///	  </para>
+        /// </summary>
+        [System.Xml.Serialization.XmlEnumAttribute("Leaf Structure")]
+        Leaf_Structure,
+        
+        /// <summary>
+        /// <para xml:lang="en">
+        ///	    Size of stomata e.g. length, width
+        ///	  </para>
+        /// </summary>
+        [System.Xml.Serialization.XmlEnumAttribute("Stomatal Size")]
+        Stomatal_Size,
+        
+        /// <summary>
+        /// <para xml:lang="en">
+        ///	    The density of stomata
+        ///	  </para>
+        /// </summary>
+        [System.Xml.Serialization.XmlEnumAttribute("Stomatal Density")]
+        Stomatal_Density,
+        
+        /// <summary>
+        /// <para xml:lang="en">
+        ///	    NA
+        ///	  </para>
+        /// </summary>
+        [System.Xml.Serialization.XmlEnumAttribute("Shannon Diversity")]
+        Shannon_Diversity,
+        
+        /// <summary>
+        /// <para xml:lang="en">
+        ///	    NA
+        ///	  </para>
+        /// </summary>
+        [System.Xml.Serialization.XmlEnumAttribute("Species Richness")]
+        Species_Richness,
+        
+        /// <summary>
+        /// <para xml:lang="en">
+        ///	    NA
+        ///	  </para>
+        /// </summary>
+        [System.Xml.Serialization.XmlEnumAttribute("Functional Diversity")]
+        Functional_Diversity,
+        
+        /// <summary>
+        /// <para xml:lang="en">
+        ///	    NA
+        ///	  </para>
+        /// </summary>
+        [System.Xml.Serialization.XmlEnumAttribute("Functional Dissimilarity")]
+        Functional_Dissimilarity,
+        
+        /// <summary>
+        /// <para xml:lang="en">
+        ///	    NA
+        ///	  </para>
+        /// </summary>
+        [System.Xml.Serialization.XmlEnumAttribute("Functional Evenness")]
+        Functional_Evenness,
     }
     
     /// <summary>
@@ -20455,7 +20061,7 @@ namespace CAFE.Core.Integration
         
         /// <summary>
         /// </summary>
-        [System.Xml.Serialization.XmlAttributeAttribute("uri", Form=System.Xml.Schema.XmlSchemaForm.Unqualified, DataType="anyURI")]
+        [System.Xml.Serialization.XmlAttributeAttribute("uri", Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
         public string Uri { get; set; }
     }
     
@@ -20463,7 +20069,7 @@ namespace CAFE.Core.Integration
     /// </summary>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("XmlSchemaClassGenerator", "1.0.0.0")]
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute("FactorTypeVocabulary", Namespace="")]
+    [System.Xml.Serialization.XmlTypeAttribute("FactorTypeVocabularyBase", Namespace="")]
     public enum FactorTypeVocabulary
     {
         
@@ -20528,6 +20134,239 @@ namespace CAFE.Core.Integration
         /// </summary>
         [System.Xml.Serialization.XmlEnumAttribute("Spatial Scale")]
         Spatial_Scale,
+        
+        /// <summary>
+        /// <para xml:lang="en">
+        ///	    NA
+        ///	  </para>
+        /// </summary>
+        Chemical,
+    }
+    
+    /// <summary>
+    /// </summary>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("XmlSchemaClassGenerator", "1.0.0.0")]
+    [System.SerializableAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute("Was", Namespace="")]
+    public enum WasVocabulary
+    {
+        
+        /// <summary>
+        /// <para xml:lang="en">
+        ///						    A variable that has been manipulated as part of the study setup
+        ///						  </para>
+        /// </summary>
+        [System.Xml.Serialization.XmlEnumAttribute("manipulated")]
+        Manipulated,
+        
+        /// <summary>
+        /// <para xml:lang="en">
+        ///						    A variable that has been measured
+        ///						  </para>
+        /// </summary>
+        [System.Xml.Serialization.XmlEnumAttribute("measured")]
+        Measured,
+        
+        /// <summary>
+        /// <para xml:lang="en">
+        ///						    A variable that has been estimated
+        ///						  </para>
+        /// </summary>
+        [System.Xml.Serialization.XmlEnumAttribute("estimated")]
+        Estimated,
+    }
+    
+    /// <summary>
+    /// </summary>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("XmlSchemaClassGenerator", "1.0.0.0")]
+    [System.SerializableAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute("OrganizationalHierarchy", Namespace="", AnonymousType=true)]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    public partial class OrganizationalHierarchy
+    {
+        
+        /// <summary>
+        /// <para xml:lang="en">
+        ///						  A named organizational hierarchy of life (Atom
+        ///						  Level, Molecule Level, Cell Level, ...)
+        ///						</para>
+        /// </summary>
+        [System.Xml.Serialization.XmlElementAttribute("organizationHierarchyName", Namespace="")]
+        public OrganizationHierarchyName OrganizationHierarchyName { get; set; }
+    }
+    
+    /// <summary>
+    /// </summary>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("XmlSchemaClassGenerator", "1.0.0.0")]
+    [System.SerializableAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute("OrganizationHierarchyName", Namespace="")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    public partial class OrganizationHierarchyName
+    {
+        
+        /// <summary>
+        /// <para xml:lang="de">Ruft den Text ab oder legt diesen fest.</para>
+        /// <para xml:lang="en">Gets or sets the text value.</para>
+        /// </summary>
+        [System.Xml.Serialization.XmlTextAttribute()]
+        public string Value { get; set; }
+        
+        /// <summary>
+        /// </summary>
+        [System.Xml.Serialization.XmlAttributeAttribute("uri", Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public string Uri { get; set; }
+    }
+    
+    /// <summary>
+    /// <para xml:lang="en">
+    ///	Name of an organizational hierarchy level
+    ///      </para>
+    /// </summary>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("XmlSchemaClassGenerator", "1.0.0.0")]
+    [System.SerializableAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute("OrganizationHierarchyNameVocabulary", Namespace="")]
+    public enum OrganizationHierarchyNameVocabulary
+    {
+        
+        /// <summary>
+        /// <para xml:lang="en">
+        ///	    A biome is a formation of plants and animals that have common
+        ///	    characteristics due to similar climates and can be found over a
+        ///	    range of continents. Biomes are distinct from habitats, because any
+        ///	    biome can comprise a variety of habitats (WP,
+        ///	    https://goo.gl/g7Urx4).
+        ///	  </para>
+        /// </summary>
+        [System.Xml.Serialization.XmlEnumAttribute("Biome Level")]
+        Biome_Level,
+        
+        /// <summary>
+        /// <para xml:lang="en">
+        ///	    An ecosystem is a community of living organisms in conjunction with
+        ///	    the nonliving components of their environment (things like air,
+        ///	    water and mineral soil), interacting as a system. These biotic and
+        ///	    abiotic components are regarded as linked together through nutrient
+        ///	    cycles and energy flows. As ecosystems are defined by the network
+        ///	    of interactions among organisms, and between organisms and their
+        ///	    environment, they can be of any size but usually encompass
+        ///	    specific, limited spaces (although some scientists say that the
+        ///	    entire planet is an ecosystem). (WP, https://goo.gl/88BdbP)
+        ///	  </para>
+        /// </summary>
+        [System.Xml.Serialization.XmlEnumAttribute("Ecosystem Level")]
+        Ecosystem_Level,
+        
+        /// <summary>
+        /// <para xml:lang="en">
+        ///	    A population is a summation of all the organisms of the same group
+        ///	    or species, which live in a particular geographical area, and have
+        ///	    the capability of interbreeding (WP, https://goo.gl/C2jF14).
+        ///	  </para>
+        /// </summary>
+        [System.Xml.Serialization.XmlEnumAttribute("Population Level")]
+        Population_Level,
+        
+        /// <summary>
+        /// <para xml:lang="en">
+        ///	    In biology, an organism is any contiguous living system, such as an
+        ///	    animal, plant, fungus, or bacterium. All known types of organisms
+        ///	    are capable of some degree of response to stimuli, reproduction,
+        ///	    growth and development and homeostasis. An organism consists of one
+        ///	    or more cells; when it has one cell it is known as a unicellular
+        ///	    organism; and when it has more than one it is known as a
+        ///	    multicellular organism. Most unicellular organisms are of
+        ///	    microscopic size and are thus classified as microorganisms. Humans
+        ///	    are multicellular organisms composed of many trillions of cells
+        ///	    grouped into specialized tissues and organs (WP,
+        ///	    https://goo.gl/bFZhq).
+        ///	  </para>
+        /// </summary>
+        [System.Xml.Serialization.XmlEnumAttribute("Organism Level")]
+        Organism_Level,
+        
+        /// <summary>
+        /// <para xml:lang="en">
+        ///	    A system of organs
+        ///	  </para>
+        /// </summary>
+        [System.Xml.Serialization.XmlEnumAttribute("System of Organs Level")]
+        System_Of_Organs_Level,
+        
+        /// <summary>
+        /// <para xml:lang="en">
+        ///	    In biology, an organ or viscus is a collection of tissues joined in
+        ///	    a structural unit to serve a common function. In anatomy, a viscus
+        ///	    is an internal organ, and viscera is the plural form. (WP,
+        ///	    https://goo.gl/nmTtNo)
+        ///	  </para>
+        /// </summary>
+        [System.Xml.Serialization.XmlEnumAttribute("Organ Level")]
+        Organ_Level,
+        
+        /// <summary>
+        /// <para xml:lang="en">
+        ///	    In biology, tissue is a cellular organizational level intermediate
+        ///	    between cells and a complete organ. A tissue is an ensemble of
+        ///	    similar cells from the same origin that together carry out a
+        ///	    specific function. Organs are then formed by the functional
+        ///	    grouping together of multiple tissues (WP, https://goo.gl/9Ptii9).
+        ///	  </para>
+        /// </summary>
+        [System.Xml.Serialization.XmlEnumAttribute("Tissue Level")]
+        Tissue_Level,
+        
+        /// <summary>
+        /// <para xml:lang="en">
+        ///	    The cell (from Latin cella, meaning "small room") is the basic
+        ///	    structural, functional, and biological unit of all known living
+        ///	    organisms. A cell is the smallest unit of life that can replicate
+        ///	    independently, and cells are often called the "building blocks of
+        ///	    life". The study of cells is called cell biology (WP,
+        ///	    https://goo.gl/O4nWY).
+        ///	  </para>
+        /// </summary>
+        [System.Xml.Serialization.XmlEnumAttribute("Cell Level")]
+        Cell_Level,
+        
+        /// <summary>
+        /// <para xml:lang="en">
+        ///	    In cell biology, an organelle is a specialized subunit within a
+        ///	    cell that has a specific function. Individual organelles are
+        ///	    usually separately enclosed within their own lipid bilayers (WP,
+        ///	    https://goo.gl/Dn6aVN).
+        ///	  </para>
+        /// </summary>
+        [System.Xml.Serialization.XmlEnumAttribute("Cell Organelle Level")]
+        Cell_Organelle_Level,
+        
+        /// <summary>
+        /// <para xml:lang="en">
+        ///	    A molecule is an electrically neutral group of two or more atoms
+        ///	    held together by chemical bonds. Molecules are
+        ///	    distinguished from ions by their lack of electrical charge.
+        ///	    However, in quantum physics, organic chemistry, and biochemistry,
+        ///	    the term molecule is often used less strictly, also being applied
+        ///	    to polyatomic ions (WP, https://goo.gl/iLvg0x).
+        ///	  </para>
+        /// </summary>
+        [System.Xml.Serialization.XmlEnumAttribute("Molecule Level")]
+        Molecule_Level,
+        
+        /// <summary>
+        /// <para xml:lang="en">
+        ///	    An atom is the smallest constituent unit of ordinary matter that
+        ///	    has the properties of a chemical element. Every solid, liquid, gas,
+        ///	    and plasma is composed of neutral or ionized atoms. Atoms are very
+        ///	    small; typical sizes are around 100 pm (a ten-billionth of a meter,
+        ///	    in the short scale). However, atoms do not have well-defined
+        ///	    boundaries, and there are different ways to define their size that
+        ///	    give different but close values (WP, https://goo.gl/5KGsN6).
+        ///	  </para>
+        /// </summary>
+        [System.Xml.Serialization.XmlEnumAttribute("Atmom Level")]
+        Atmom_Level,
     }
     
     /// <summary>
@@ -20640,7 +20479,7 @@ namespace CAFE.Core.Integration
         
         /// <summary>
         /// </summary>
-        [System.Xml.Serialization.XmlAttributeAttribute("uri", Form=System.Xml.Schema.XmlSchemaForm.Unqualified, DataType="anyURI")]
+        [System.Xml.Serialization.XmlAttributeAttribute("uri", Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
         public string Uri { get; set; }
     }
     
@@ -20653,7 +20492,7 @@ namespace CAFE.Core.Integration
     /// </summary>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("XmlSchemaClassGenerator", "1.0.0.0")]
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute("HosterNameVocabulary", Namespace="")]
+    [System.Xml.Serialization.XmlTypeAttribute("HosterNameVocabularyBase", Namespace="")]
     public enum HosterNameVocabulary
     {
         
@@ -20663,7 +20502,7 @@ namespace CAFE.Core.Integration
         ///	    with georeferenced data from earth system research
         ///	  </para>
         /// </summary>
-        PANGEAE,
+        PANGAEA,
         
         /// <summary>
         /// <para xml:lang="en">
@@ -20816,7 +20655,7 @@ namespace CAFE.Core.Integration
         ///      </para>
         /// <para xml:lang="en">Pattern: [^@]+@[^\.]+\..+.</para>
         /// </summary>
-        [System.ComponentModel.DataAnnotations.RegularExpressionAttribute("[^@]+@[^\\.]+\\..+")]
+        //[System.ComponentModel.DataAnnotations.RegularExpressionAttribute("[^@]+@[^\\.]+\\..+")]
         [System.Xml.Serialization.XmlElementAttribute("emailAddress", Namespace="")]
         public System.Collections.Generic.List<string> EmailAddress { get; set; }
         
@@ -20861,7 +20700,7 @@ namespace CAFE.Core.Integration
         
         /// <summary>
         /// </summary>
-        [System.Xml.Serialization.XmlAttributeAttribute("uri", Form=System.Xml.Schema.XmlSchemaForm.Unqualified, DataType="anyURI")]
+        [System.Xml.Serialization.XmlAttributeAttribute("uri", Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
         public string Uri { get; set; }
     }
     
@@ -20872,7 +20711,7 @@ namespace CAFE.Core.Integration
     /// </summary>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("XmlSchemaClassGenerator", "1.0.0.0")]
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute("PositionVocabulary", Namespace="")]
+    [System.Xml.Serialization.XmlTypeAttribute("PositionVocabularyBase", Namespace="")]
     public enum PositionVocabulary
     {
         
@@ -21034,7 +20873,7 @@ namespace CAFE.Core.Integration
         ///					    should return the raw data e.g. csv or whatever kind of data type is described.
         ///					  </para>
         /// </summary>
-        [System.Xml.Serialization.XmlElementAttribute("downloadUrl", Namespace="", DataType="anyURI")]
+        [System.Xml.Serialization.XmlElementAttribute("downloadUrl", Namespace="")]
         public string DownloadUrl { get; set; }
         
         /// <summary>
@@ -21044,7 +20883,7 @@ namespace CAFE.Core.Integration
         ///					    the object described with the annotation.
         ///					  </para>
         /// </summary>
-        [System.Xml.Serialization.XmlElementAttribute("referenceUrl", Namespace="", DataType="anyURI")]
+        [System.Xml.Serialization.XmlElementAttribute("referenceUrl", Namespace="")]
         public string ReferenceUrl { get; set; }
         
         /// <summary>
@@ -21076,7 +20915,7 @@ namespace CAFE.Core.Integration
         
         /// <summary>
         /// </summary>
-        [System.Xml.Serialization.XmlAttributeAttribute("uri", Form=System.Xml.Schema.XmlSchemaForm.Unqualified, DataType="anyURI")]
+        [System.Xml.Serialization.XmlAttributeAttribute("uri", Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
         public string Uri { get; set; }
     }
     
@@ -21088,7 +20927,7 @@ namespace CAFE.Core.Integration
     /// </summary>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("XmlSchemaClassGenerator", "1.0.0.0")]
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute("DataFormatVocabulary", Namespace="")]
+    [System.Xml.Serialization.XmlTypeAttribute("DataFormatVocabularyBase", Namespace="")]
     public enum DataFormatVocabulary
     {
         
@@ -21136,8 +20975,8 @@ namespace CAFE.Core.Integration
         ///					    A database id as reference to a dataset which is described.
         ///					  </para>
         /// </summary>
-        [System.Xml.Serialization.XmlElementAttribute("fileID", Namespace="", DataType="string")]
-        public string FileID { get; set; }
+        [System.Xml.Serialization.XmlElementAttribute("fileID", Namespace="")]
+        public int FileID { get; set; }
         
         /// <summary>
         /// <para xml:lang="en">
@@ -21269,6 +21108,98 @@ namespace CAFE.Core.Integration
     
     /// <summary>
     /// <para xml:lang="en">
+    ///	The abbreviation of a taxonomic rank as used in (botanical) organism name strings
+    ///      </para>
+    /// </summary>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("XmlSchemaClassGenerator", "1.0.0.0")]
+    [System.SerializableAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute("RankAbbreviation", Namespace="")]
+    public enum RankAbbreviation
+    {
+        
+        /// <summary>
+        /// <para xml:lang="en">
+        ///	    NA
+        ///	  </para>
+        /// </summary>
+        [System.Xml.Serialization.XmlEnumAttribute("subgen.")]
+        SubgenPeriod,
+        
+        /// <summary>
+        /// <para xml:lang="en">
+        ///	    NA
+        ///	  </para>
+        /// </summary>
+        [System.Xml.Serialization.XmlEnumAttribute("sect.")]
+        SectPeriod,
+        
+        /// <summary>
+        /// <para xml:lang="en">
+        ///	    NA
+        ///	  </para>
+        /// </summary>
+        [System.Xml.Serialization.XmlEnumAttribute("subsp.")]
+        SubspPeriod,
+        
+        /// <summary>
+        /// <para xml:lang="en">
+        ///	    NA
+        ///	  </para>
+        /// </summary>
+        [System.Xml.Serialization.XmlEnumAttribute("var.")]
+        VarPeriod,
+        
+        /// <summary>
+        /// <para xml:lang="en">
+        ///	    NA
+        ///	  </para>
+        /// </summary>
+        [System.Xml.Serialization.XmlEnumAttribute("subvar.")]
+        SubvarPeriod,
+        
+        /// <summary>
+        /// <para xml:lang="en">
+        ///	    NA
+        ///	  </para>
+        /// </summary>
+        [System.Xml.Serialization.XmlEnumAttribute("forma")]
+        Forma,
+        
+        /// <summary>
+        /// <para xml:lang="en">
+        ///	    NA
+        ///	  </para>
+        /// </summary>
+        [System.Xml.Serialization.XmlEnumAttribute("f.")]
+        FPeriod,
+        
+        /// <summary>
+        /// <para xml:lang="en">
+        ///	    NA
+        ///	  </para>
+        /// </summary>
+        [System.Xml.Serialization.XmlEnumAttribute("subforma")]
+        Subforma,
+        
+        /// <summary>
+        /// <para xml:lang="en">
+        ///	    NA
+        ///	  </para>
+        /// </summary>
+        [System.Xml.Serialization.XmlEnumAttribute("subf.")]
+        SubfPeriod,
+        
+        /// <summary>
+        /// <para xml:lang="en">
+        ///	    NA
+        ///	  </para>
+        /// </summary>
+        [System.Xml.Serialization.XmlEnumAttribute("f.spec.")]
+        FPeriodSpecPeriod,
+    }
+    
+    /// <summary>
+    /// <para xml:lang="en">
     ///	The source the scientific data is derived from (e.g. Specimen,
     ///	Literature, Multimedia (e.g. audio, video), Material Sample: e.g
     ///	Tissue; Mineral, Image: Photo or Drawing)
@@ -21276,7 +21207,7 @@ namespace CAFE.Core.Integration
     /// </summary>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("XmlSchemaClassGenerator", "1.0.0.0")]
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute("DataSourceTypeVocabulary", Namespace="")]
+    [System.Xml.Serialization.XmlTypeAttribute("DataSourceTypeVocabularyBase", Namespace="")]
     public enum DataSourceTypeVocabulary
     {
         
@@ -21313,7 +21244,7 @@ namespace CAFE.Core.Integration
     /// </summary>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("XmlSchemaClassGenerator", "1.0.0.0")]
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute("AudioMimeTypeVocabulary", Namespace="")]
+    [System.Xml.Serialization.XmlTypeAttribute("AudioMimeTypeVocabularyBase", Namespace="")]
     public enum AudioMimeTypeVocabulary
     {
         
@@ -21541,7 +21472,7 @@ namespace CAFE.Core.Integration
     /// </summary>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("XmlSchemaClassGenerator", "1.0.0.0")]
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute("ImageMimeTypeVocabulary", Namespace="")]
+    [System.Xml.Serialization.XmlTypeAttribute("ImageMimeTypeVocabularyBase", Namespace="")]
     public enum ImageMimeTypeVocabulary
     {
         
@@ -21892,7 +21823,7 @@ namespace CAFE.Core.Integration
     /// </summary>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("XmlSchemaClassGenerator", "1.0.0.0")]
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute("VideoMimeTypeVocabulary", Namespace="")]
+    [System.Xml.Serialization.XmlTypeAttribute("VideoMimeTypeVocabularyBase", Namespace="")]
     public enum VideoMimeTypeVocabulary
     {
         
@@ -22176,7 +22107,7 @@ namespace CAFE.Core.Integration
     /// </summary>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("XmlSchemaClassGenerator", "1.0.0.0")]
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute("TableMimeTypeVocabulary", Namespace="")]
+    [System.Xml.Serialization.XmlTypeAttribute("TableMimeTypeVocabularyBase", Namespace="")]
     public enum TableMimeTypeVocabulary
     {
         
@@ -22239,7 +22170,7 @@ namespace CAFE.Core.Integration
     /// </summary>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("XmlSchemaClassGenerator", "1.0.0.0")]
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute("MetadataMimeTypeVocabulary", Namespace="")]
+    [System.Xml.Serialization.XmlTypeAttribute("MetadataMimeTypeVocabularyBase", Namespace="")]
     public enum MetadataMimeTypeVocabulary
     {
         

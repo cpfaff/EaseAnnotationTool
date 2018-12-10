@@ -83,11 +83,21 @@
                 return $http.get('/Api/AnnotationItem/GetSimpleTypesVocabularies');
             };
 
+            AnnotationItemProvider.prototype.getUserHiddenHelpers = function () {
+                return $http.get('/Api/AnnotationItem/GetUserHiddenHelpers');
+            };
+
+            AnnotationItemProvider.prototype.hideUserHelper = function (helperName) {
+                return $http({
+                    method: "POST",
+                    url: '/Api/AnnotationItem/HideUserHelper',
+                    data: JSON.stringify(helperName)
+                });
+            };
 
             AnnotationItemProvider.prototype.searchUsersAndGroups = function (keyWord) {
                 return $http.post('api/UserFiles/SearchUsersAndGroups', { KeyWord: keyWord }, { headers: { 'Content-Type': 'application/json' } });
             }
-
 
             AnnotationItemProvider.prototype.initModel = function () {
                 if (!modelInstance.annotationItem) {

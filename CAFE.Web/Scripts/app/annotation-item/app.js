@@ -167,8 +167,30 @@
 
             $scope.mainMenuItems = ['Common', 'Time', 'Space', 'Sphere', 'Biome', 'Organism', 'Process', 'Chemical', 'Method'];
             $scope.errorsList = [];
+
+            $scope.hiddenHelpers = [];
+            $scope.helpers = [
+                'time-timePeriods',
+                'space-boundingBox',
+                'space-coordinates',
+                'space-locations',
+                'biome-zonoBiomes',
+                'biome-physiognomies',
+                'biome-landuses',
+                'process-processes',
+                'process-interactions',
+                'chemical-compounds',
+                'method-factors',
+            ];
+
+            $scope.HideHelper = function (helperHame) {
+                AnnotationItemProvider.hideUserHelper(helperHame);
+            }
+
             $scope.isAccessible = false;
             $rootScope.mdTabs = { selectedIndex: 0, selectedSubIndex: 0 };
+
+            $scope.helpersList = 
 
             $scope.navigateTo = function (path, e, subTabIndex) {
 
@@ -213,6 +235,10 @@
 
             AnnotationItemProvider.getSimpleTypesVocabularies().then(function (result) {
                 $scope.simpleTypesVocabularies = result.data;
+            });
+
+            AnnotationItemProvider.getUserHiddenHelpers().then(function (result) {
+                $scope.hiddenHelpers = result.data;
             });
 
             if ('' != annotationItemId) {

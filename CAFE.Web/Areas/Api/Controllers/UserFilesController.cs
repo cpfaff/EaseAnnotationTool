@@ -117,6 +117,12 @@ namespace CAFE.Web.Controllers
             return userFilesModels;
         }
 
+        private void CreateDirectoryIfNotExists(string directory)
+        {
+            if (!Directory.Exists(directory))
+                Directory.CreateDirectory(directory);
+        }
+
         /// <summary>
 		/// Adds new user file
 		/// </summary>
@@ -173,6 +179,7 @@ namespace CAFE.Web.Controllers
                     var newFileName = string.Concat(fileId, oldExtension);
                     var fileVirtualPath = userFilesPath + "/" + newFileName;
                     var userId = User.Identity.GetUserId();
+                    CreateDirectoryIfNotExists(HttpContext.Current.Server.MapPath(userFilesPath));
                     file.SaveAs(HttpContext.Current.Server.MapPath(fileVirtualPath));
 
                     var fileModel = new UserFile

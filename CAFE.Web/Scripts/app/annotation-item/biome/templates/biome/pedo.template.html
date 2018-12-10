@@ -2,7 +2,7 @@
     <div layout="row">
         <md-chips flex="90" ng-model="biomeModel.pedoBiomes" md-autocomplete-snap md-require-match="true" md-transform-chip="{pedoBiomeType: $chip}" md-removable="isAccessible">
             <md-autocomplete md-search-text="functionAutocomplete.pedo"
-                             md-items="item in querySearch(functionAutocomplete.pedo, pedoDictionary)"
+                             md-items="item in querySearch(functionAutocomplete.pedo, 'pedoBiomeType')"
                              md-min-length="0"
                              md-item-text="item.value"
                              ng-if="isAccessible"

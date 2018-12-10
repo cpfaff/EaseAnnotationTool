@@ -103,6 +103,7 @@ namespace CAFE.DAL.Models
         public virtual ICollection<DbUserFile> OwnedFiles { get; set; }
         [InverseProperty("AcceptedUsers")]
         public virtual ICollection<DbUserFile> AccessibleFiles { get; set; }
+        public virtual ICollection<DbUserHiddenHelper> HiddenHelpers { get; set; }
         //public virtual ICollection<DbAnnotationItemAccessibleUsers> AccessibleAnnotationItems { get; set; } 
         public string PhotoUrl { get; set; }
     }

@@ -5,8 +5,8 @@
         .module('usersDashboard.annotationItems')
         .component('annotationItemsList', {
             templateUrl: 'Scripts/app/users-dashboard/annotationItems/annotationItems.template.html',
-            controller: ['AnnotationItemsProvider', '$scope', '$mdDialog', '$mdToast', 'NgTableParams',
-              function (AnnotationItemsProvider, $scope, $mdDialog, $mdToast, NgTableParams) {
+            controller: ['AnnotationItemsProvider', '$scope', '$mdDialog', '$mdToast', 'NgTableParams', '$filter', '$timeout',
+                function (AnnotationItemsProvider, $scope, $mdDialog, $mdToast, NgTableParams, $filter, $timeout) {
                   var bookmark;
                   $scope.selectedAnnotationItems = [];
                   $scope.loading = true;
@@ -72,7 +72,7 @@
                   $scope.GetNormalizedDate = function (dateString) {
                       var date = new Date(dateString);
                       return date.toLocaleDateString() + ' ' + date.toLocaleTimeString();
-                  }
+                  };
 
                   $scope.AccessLevelDialog = function (event, items) {
                       $mdDialog.show({
@@ -84,7 +84,7 @@
                           locals: { itemsList: items, updateFunction: DeSelectAllAI },
                           templateUrl: 'Scripts/app/users-dashboard/annotationITems/accessModeDialog.template.html'
                       });
-                  }
+                  };
 
                   $scope.ImportDialog = function (event) {
                       $mdDialog.show({
@@ -96,22 +96,35 @@
                           locals: { UpdateFunction: $scope.getAnnotationItems },
                           templateUrl: 'Scripts/app/users-dashboard/annotationItems/importDialog.template.html'
                       });
-                  }
+                  };
+
+
+                  $scope.ImportWizardDialog = function (event) {
+                      $mdDialog.show({
+                          clickOutsideToClose: false,
+                          controller: 'AIImportWizardController',
+                          controllerAs: 'ctrl',
+                          focusOnOpen: false,
+                          targetEvent: event,
+                          locals: { UpdateFunction: $scope.getAnnotationItems },
+                          templateUrl: 'Scripts/app/users-dashboard/annotationItems/importWizardDialog.template.html'
+                      });
+                  };
 
                   $scope.CloneAnnotationItem = function (event, annotationItems) {
                       if (annotationItems.length > 1) {
                           var pinTo = $scope.getToastPosition();
                           $mdToast.show(
                               $mdToast.simple()
-                                .textContent("You can clone only one annotation item. Select one item")
-                                .position(pinTo)
-                                .hideDelay(3000)
+                                  .textContent("You can clone only one annotation item. Select one item")
+                                  .position(pinTo)
+                                  .hideDelay(3000)
                           );
                           return;
                       }
 
                       window.location.href = "/AnnotationItem/Clone?id=" + annotationItems[0].id;
-                  }
+                  };
 
                   $scope.getAnnotationItems = function () {
                       $scope.loading = true;
@@ -145,14 +158,21 @@
                            .ok('Yes')
                            .cancel('No');
 
-                      $mdDialog.show(confirm).then(function () {
+                      $mdDialog.show(confirm).then(function (e) {
                           AnnotationItemsProvider.delete($scope.selectedAnnotationItems).then(function (response) {
-                              $scope.selectedAnnotationItems.forEach(function (item) {
-                                  $scope.annotationItems.splice($scope.annotationItems.indexOf(item), 1);
-                              });
-                              $scope.selectedAnnotationItems = [];
+
+                              for (var k = 0; k < $scope.selectedAnnotationItems.length; k++) {
+                                  //setTimeout(function () {
+                                    var removingItem= $scope.selectedAnnotationItems[k];
+                                    var originalItem = $filter('filter')($scope.annotationItems, { '$id': removingItem.$id })[0];
+                                    var originalIndex = $scope.annotationItems.indexOf(originalItem);
+                                  $scope.annotationItems.splice(originalIndex, 1);
+                              }
+                              $scope.tableParams.reload();
+                                  $scope.selectedAnnotationItems = [];
+
                           });
-                      }, function () { });
+                      }, function (e) { });
                   };
 
                   $scope.ExportAnnotationItems = function () {
@@ -209,7 +229,7 @@
                 return prom.then(function (response) {
                     return response.data;
                 });
-            }
+            };
 
             $scope.model = { SelectedUsersAndGroups: [] };
 
@@ -254,7 +274,7 @@
             $scope.userFilesSearch = function (query) {
                 var results = query ? $scope.userFiles.filter(createFilterFor(query)) : $scope.userFiles;
                 return results;
-            }
+            };
 
             function createFilterFor(query) {
                 return function filterFn(item) {
@@ -454,8 +474,209 @@
                     };
                     reader.readAsDataURL($scope.ctrl.files[0].lfFile);
                 }
+            };
+
+            $scope.dialogCancel = $mdDialog.cancel;
+        });
+
+    angular.module('usersDashboard.annotationItems').
+        controller('AIImportWizardController', function (AnnotationItemsProvider, $scope, $mdDialog, UpdateFunction, $mdToast, WizardHandler, FilesProvider) {
+
+            'use strict';
+            $scope.model = {};
+            $scope.ctrl = { importType: 0, importType2: 0, itemName: '', itemDescription: '', userLinks: [], files: [] };
+
+            //WizardHandler.wizard().next();
+            $scope.userFiles = [];
+            $scope.importData = null;
+            $scope.isLoading = false;
+
+            $scope.errorMessage = null;
+            $scope.selectedUserAndGroups = [];
+            $scope.usersAndGroupsArray = '';
+
+            $scope.newFile = { AccessMode: 0 };
+
+            $scope.usersFilesData = null;
+            $scope.usingFilesMode;
+
+            $scope.updateTagsList = function () {
+                $scope.usersAndGroupsArray = JSON.stringify($scope.selectedUserAndGroups);
+            };
+
+            $scope.filesAccesModes = [
+                'Private',
+                'Explicit',
+                'Internal',
+                'Public'
+            ];
+
+            $scope.loadTags = function (query) {
+                var prom = FilesProvider.searchUsersAndGroups(query);
+                return prom.then(function (response) {
+                    return response.data;
+                });
+            };
+
+
+            AnnotationItemsProvider.getUserFiles().then(function (result) {
+                $scope.userFiles = result.data;
+                $scope.userFiles.forEach(function (item) {
+                    item.downloadURL = window.location.origin + item.downloadURL;
+                });
+            });
+
+            AnnotationItemsProvider.get().then(function (response) {
+                $scope.annotationItems = Array.isArray(response.data) ? response.data : null;
+                $scope.loading = false;
+            }, function (response) {
+                $scope.loading = false;
+            });
+
+            $scope.wizardUploadData = function () {
+                WizardHandler.wizard('customOrderWizard').goTo(1);
+            };
+
+            $scope.uploadFileAndMoveNext = function () {
+                var largefileName;
+                var maxFileSize = 1.0; // in GB
+                var files = new FormData();
+                
+
+                $scope.ctrl.files.every(function (obj) {
+                    var fileSize = ((obj.lfFile.size / 1024) / 1024 / 1024).toFixed(4); // GB
+                    if (fileSize > maxFileSize) {
+                        largefileName = obj.lfFile.name;
+                        return false;
+                    }
+
+                    files.append('files[]', obj.lfFile);
+                    return true;
+                });
+
+                if (largefileName) {
+                    $scope.errorMessage = "File " + largefileName + " has size larger than 1GB. Please select file with less size.";
+                }
+                else {
+                    files.append('Description', $scope.newFile.Description);
+                    files.append('AccessMode', $scope.newFile.AccessMode);
+                    files.append('UsersAndGroups', $scope.newFile.SelectedUsersAndGroups == undefined ? null : JSON.stringify($scope.newFile.SelectedUsersAndGroups));
+                }
+
+                $scope.usersFilesData = files;
+                $scope.usingFilesMode = 'uploading';
+                WizardHandler.wizard('customOrderWizard').goTo(2);
+            };
+
+            $scope.wizardSelectData = function () {
+
+                var data = [];
+                var selectedData = $scope.ctrl.userLinks;
+
+                if (selectedData) {
+
+                    selectedData.every(function (obj) {
+                        data.push(obj.fileId);
+                        return true;
+                    });
+                }
+                else {
+                    $scope.ctrl.error = "You must enter vaild link or select own file";
+                    $scope.isLoading = false;
+                }
+
+                $scope.usersFilesData = data;
+                $scope.usingFilesMode = 'selection';
+
+                WizardHandler.wizard('customOrderWizard').goTo(2);
+            };
+       
+            $scope.wizardWithoutData = function () {
+                WizardHandler.wizard('customOrderWizard').finish();
+
+                window.location.href = "/AnnotationItem";
+            };
+
+            $scope.createNewAIWithFileData = function () {
+                performImport(0);
+            };
+
+            $scope.wizardReuseData = function () {
+                performImport(1);
+            };
+
+            $scope.wizardUpdateData = function () {
+                performImport(2);
+            };
+
+            function performImport(behavior) {
+                var selectedItem = $scope.ctrl.selectedAnnotation;
+
+                var success = function (data) {
+                    if (data.data) {
+                        window.location.href = data.data;
+                    }
+                    UpdateFunction();
+                    $scope.isLoading = false;
+                    WizardHandler.wizard('customOrderWizard').finish();
+                    $mdDialog.hide();
+                };
+
+                var error = function() {
+                    $scope.isLoading = false;
+                    $scope.ctrl.error = result.data;
+                    WizardHandler.wizard('customOrderWizard').cancel();
+                };
+                var payloadData;
+                if ($scope.usingFilesMode == 'uploading') {
+                    payloadData = $scope.usersFilesData;
+                } else {
+                    payloadData = $scope.usersFilesData;
+                }
+
+                switch (behavior) {
+                    case 0:
+                        AnnotationItemsProvider.newWithFiles(payloadData, $scope.usingFilesMode).then(success, error);
+                        break;
+                    case 1:
+                        AnnotationItemsProvider.newWithFiles(payloadData, $scope.usingFilesMode, selectedItem.id).then(success, error);
+                        break;
+                    case 2:
+                        AnnotationItemsProvider.updateWithFiles(payloadData, $scope.usingFilesMode, selectedItem.id).then(success, error);
+                        break;
+                    default:
+                }
+                
+            }
+
+            $scope.userFilesSearch = function (query) {
+                var results = query ? $scope.userFiles.filter(createFilterFor(query)) : $scope.userFiles;
+                return results;
+            };
+
+            $scope.userAnnotaionSearch = function (query) {
+                var results = query ? $scope.annotationItems.filter(createFilterFor(query)) : $scope.annotationItems;
+                return results;
+            };
+
+            function createFilterFor(query) {
+                return function filterFn(item) {
+                    return (item.name.toLowerCase().indexOf(query.toLowerCase()) != -1);
+                };
+            }
+
+            function isUrl(s) {
+                var regexp = /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/
+                return regexp.test(s);
+            }
+
+            function isGuid(value) {
+                var regex = /[a-f0-9]{8}(?:-[a-f0-9]{4}){3}-[a-f0-9]{12}/i;
+                var match = regex.exec(value);
+                return match != null;
             }
 
             $scope.dialogCancel = $mdDialog.cancel;
         });
+
 })();

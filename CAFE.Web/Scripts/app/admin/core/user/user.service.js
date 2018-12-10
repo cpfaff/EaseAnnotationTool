@@ -38,6 +38,11 @@
                     return $http.post('Api/Users/DeleteUsers', ids);
                 }
 
+                UserProvider.prototype.deleteUserAcceptances = function (ids) {
+                    return $http.post('Api/Users/DeleteUserAcceptances', ids);
+                }
+
+
                 UserProvider.prototype.getUserAcceptance = function() {
                     return $http.post('api/Users/GetUnnacceptedUsersList');
                 }

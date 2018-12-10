@@ -72,6 +72,9 @@ namespace CAFE.Web
                 "~/Scripts/app/admin/core/masterdata/masterdata.module.js",
                 "~/Scripts/app/admin/core/masterdata/masterdata.service.js",
 
+                "~/Scripts/app/admin/core/uielements/uielements.module.js",
+                "~/Scripts/app/admin/core/uielements/uielements.service.js",
+
                 "~/Scripts/app/admin/core/core.module.js",
 
                 "~/Scripts/app/admin/users/user-list/user-list.module.js",
@@ -89,12 +92,16 @@ namespace CAFE.Web
                 "~/Scripts/app/admin/masterdata/masterdata.module.js",
                 "~/Scripts/app/admin/masterdata/masterdata.component.js",
 
+                "~/Scripts/app/admin/gfbio/bindedcontrols-list.module.js",
+                "~/Scripts/app/admin/gfbio/bindedcontrols-list.component.js",
+
                 "~/Scripts/app/admin/app.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/users-dashboard").Include(
                 "~/Scripts/libs/angular-material-fileinput-master/lf-ng-md-file-input.js",
 
                 "~/Scripts/libs/ng-tags-input/ng-tags-input.js",
+                "~/Scripts/libs/angular-wizard/angular-wizard.min.js",
 
                 "~/Scripts/app/users-dashboard/core/files/files.module.js",
                 "~/Scripts/app/users-dashboard/core/files/files.service.js",
@@ -151,7 +158,8 @@ namespace CAFE.Web
             bundles.Add(new StyleBundle("~/bundles/users-dashboard/css").Include(
                        "~/Scripts/libs/ng-tags-input/ng-tags-input.bootstrap.css",
                        "~/Scripts/libs/ng-tags-input/ng-tags-input.css",
-                       "~/Scripts/libs/angular-material-fileinput-master/lf-ng-md-file-input.css"
+                       "~/Scripts/libs/angular-material-fileinput-master/lf-ng-md-file-input.css",
+                       "~/Scripts/libs/angular-wizard/angular-wizard.min.css"
                        ));
 
 
@@ -187,7 +195,13 @@ namespace CAFE.Web
                 "~/Scripts/libs/angular-material/angular-material.min.js",
                 "~/Scripts/libs/md-data-table/md-data-table.min.js",
                 "~/Scripts/libs/ui-bootstrap/ui-bootstrap-tpls-2.2.0.js",
-                "~/Scripts/libs/np-autocomplete/np-autocomplete.min.js"));
+                "~/Scripts/libs/np-autocomplete/np-autocomplete.min.js",
+                "~/Scripts/libs/angular-slider/rzslider.min.js",
+                "~/Scripts/libs/leaflet/leaflet.js",
+                "~/Scripts/libs/leaflet/Leaflet.Editable.js",
+                "~/Scripts/libs/leaflet/Path.Drag.js",
+                "~/Scripts/libs/angular-leaflet-directive/angular-leaflet-directive.js"
+                ));
 
             bundles.Add(new ScriptBundle("~/bundles/search/app").Include(
                 "~/Scripts/app/search/app.js",
@@ -199,7 +213,10 @@ namespace CAFE.Web
 
             bundles.Add(new ScriptBundle("~/bundles/search/css").Include(
                 "~/Scripts/libs/angular-ui-select/select.min.css",
-                "~/Scripts/libs/np-autocomplete/np-autocomplete.min.css"));
+                "~/Scripts/libs/np-autocomplete/np-autocomplete.min.css",
+                "~/Scripts/libs/angular-slider/rzslider.min.css",
+                "~/Scripts/libs/leaflet/leaflet.css"
+                ));
 
 
             bundles.Add(new ScriptBundle("~/bundles/common/angular").Include(
@@ -274,6 +291,12 @@ namespace CAFE.Web
                     "~/Scripts/app/annotation-item/core/method/method.service.js",
                     //Method Core
 
+
+                //Vocabularies Core
+                "~/Scripts/app/annotation-item/core/vocabularies.module.js",
+                "~/Scripts/app/annotation-item/core/vocabularies.service.js",
+                //Vocabularies Core
+
                 "~/Scripts/app/annotation-item/core/model/annotationModel.module.js",
                 "~/Scripts/app/annotation-item/core/model/annotationModel.service.js",
                 "~/Scripts/app/annotation-item/sphere/sphere.module.js",
@@ -323,6 +346,18 @@ namespace CAFE.Web
                 "~/Scripts/app/annotation-item/process/process.module.js",
                 "~/Scripts/app/annotation-item/process/process.controller.js",
                 "~/Scripts/app/annotation-item/app.js"));
+
+
+
+            bundles.Add(new ScriptBundle("~/bundles/angular-wizard/js").Include(
+
+                "~/Scripts/lib/angular-wizard/angular-wizard.min.js"));
+
+
+
+            bundles.Add(new StyleBundle("~/bundles/angular-wizard/css").Include(
+
+                "~/Scripts/lib/angular-wizard/angular-wizard.min.css"));
         }
     }
 }

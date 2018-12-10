@@ -46,6 +46,19 @@
                     $scope.autocompleteFields[fieldName] = null;
             }
 
+            $scope.FillLocationInfo = function (model)
+            {
+                var locationTypes = $scope.querySearch(model.locationType, $scope.vocabularies.location.locationType);
+                if (locationTypes.length > 0)
+                    $scope.locationsModel.locationType = locationTypes[0];
+
+                var continentNames = $scope.querySearch(model.continentName, $scope.vocabularies.location.continentName);
+                if (continentNames.length > 0)
+                    $scope.locationsModel.continentName = continentNames[0];
+
+                $scope.locationsModel.countryName = { value: model.country };
+            }
+
             $scope.CheckNotSpecifiedArrays = function(object)
             {
                 for(var item in object)

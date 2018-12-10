@@ -10,7 +10,7 @@
               .primaryPalette('blue')
               .accentPalette('pink');
         }]).
-        controller('BiomeRootControler', function (BiomeProvider, $scope, $mdDialog, actualAnnotationModel, AnnotationItemProvider) {
+        controller('BiomeRootControler', function (BiomeProvider, $scope, $mdDialog, actualAnnotationModel, AnnotationItemProvider, VocabulariesProvider) {
 
             $scope.isAccessible = AnnotationItemProvider.getIsAccessible();
 
@@ -28,9 +28,10 @@
                 };
             }
 
-            $scope.querySearch = function (query, vocabulary) {
-                var results = query ? vocabulary.filter(createFilterFor(query)) : vocabulary;
-                return results;
+            $scope.querySearch = function (query, key) {
+                return VocabulariesProvider.search(query, key).then(function (response) {
+                    return response.data;
+                });
             }
 
             $scope.physiognomyModel =
@@ -47,7 +48,7 @@
 
             $scope.zonoModel = {
                 biomeType: null,
-                biomeZone: null,
+                biomeLatitudinalZone: null,
                 biomeHumidityType: null,
                 biomeContinentalityType: null,
                 biomeHemisphere: null

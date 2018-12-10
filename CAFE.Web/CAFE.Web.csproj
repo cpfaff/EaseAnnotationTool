@@ -28,18 +28,63 @@
     </NuGetPackageImportStamp>
     <TypeScriptToolsVersion>2.2</TypeScriptToolsVersion>
     <Use64BitIISExpress />
+    <CodeContractsAssemblyMode>0</CodeContractsAssemblyMode>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\</OutputPath>
-    <DefineConstants>TRACE;DEBUG;CONTRACTS_FULL</DefineConstants>
+    <DefineConstants>TRACE;DEBUG;CONTRACTS_NONE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <DocumentationFile>bin\CAFE.Web.XML</DocumentationFile>
     <NoWarn>1591,1592,1573,1571,1570,1572</NoWarn>
     <FilesToIncludeForPublish>OnlyFilesToRunTheApp</FilesToIncludeForPublish>
+    <CodeContractsEnableRuntimeChecking>False</CodeContractsEnableRuntimeChecking>
+    <CodeContractsRuntimeOnlyPublicSurface>False</CodeContractsRuntimeOnlyPublicSurface>
+    <CodeContractsRuntimeThrowOnFailure>True</CodeContractsRuntimeThrowOnFailure>
+    <CodeContractsRuntimeCallSiteRequires>False</CodeContractsRuntimeCallSiteRequires>
+    <CodeContractsRuntimeSkipQuantifiers>False</CodeContractsRuntimeSkipQuantifiers>
+    <CodeContractsRunCodeAnalysis>False</CodeContractsRunCodeAnalysis>
+    <CodeContractsNonNullObligations>True</CodeContractsNonNullObligations>
+    <CodeContractsBoundsObligations>True</CodeContractsBoundsObligations>
+    <CodeContractsArithmeticObligations>True</CodeContractsArithmeticObligations>
+    <CodeContractsEnumObligations>True</CodeContractsEnumObligations>
+    <CodeContractsRedundantAssumptions>True</CodeContractsRedundantAssumptions>
+    <CodeContractsAssertsToContractsCheckBox>True</CodeContractsAssertsToContractsCheckBox>
+    <CodeContractsRedundantTests>True</CodeContractsRedundantTests>
+    <CodeContractsMissingPublicRequiresAsWarnings>True</CodeContractsMissingPublicRequiresAsWarnings>
+    <CodeContractsMissingPublicEnsuresAsWarnings>False</CodeContractsMissingPublicEnsuresAsWarnings>
+    <CodeContractsInferRequires>True</CodeContractsInferRequires>
+    <CodeContractsInferEnsures>False</CodeContractsInferEnsures>
+    <CodeContractsInferEnsuresAutoProperties>True</CodeContractsInferEnsuresAutoProperties>
+    <CodeContractsInferObjectInvariants>False</CodeContractsInferObjectInvariants>
+    <CodeContractsSuggestAssumptions>False</CodeContractsSuggestAssumptions>
+    <CodeContractsSuggestAssumptionsForCallees>False</CodeContractsSuggestAssumptionsForCallees>
+    <CodeContractsSuggestRequires>False</CodeContractsSuggestRequires>
+    <CodeContractsNecessaryEnsures>True</CodeContractsNecessaryEnsures>
+    <CodeContractsSuggestObjectInvariants>False</CodeContractsSuggestObjectInvariants>
+    <CodeContractsSuggestReadonly>True</CodeContractsSuggestReadonly>
+    <CodeContractsRunInBackground>True</CodeContractsRunInBackground>
+    <CodeContractsShowSquigglies>True</CodeContractsShowSquigglies>
+    <CodeContractsUseBaseLine>False</CodeContractsUseBaseLine>
+    <CodeContractsEmitXMLDocs>False</CodeContractsEmitXMLDocs>
+    <CodeContractsCustomRewriterAssembly />
+    <CodeContractsCustomRewriterClass />
+    <CodeContractsLibPaths />
+    <CodeContractsExtraRewriteOptions />
+    <CodeContractsExtraAnalysisOptions />
+    <CodeContractsSQLServerOption />
+    <CodeContractsBaseLineFile />
+    <CodeContractsCacheAnalysisResults>True</CodeContractsCacheAnalysisResults>
+    <CodeContractsSkipAnalysisIfCannotConnectToCache>False</CodeContractsSkipAnalysisIfCannotConnectToCache>
+    <CodeContractsFailBuildOnWarnings>False</CodeContractsFailBuildOnWarnings>
+    <CodeContractsBeingOptimisticOnExternal>True</CodeContractsBeingOptimisticOnExternal>
+    <CodeContractsRuntimeCheckingLevel>Full</CodeContractsRuntimeCheckingLevel>
+    <CodeContractsReferenceAssembly>%28none%29</CodeContractsReferenceAssembly>
+    <CodeContractsAnalysisWarningLevel>0</CodeContractsAnalysisWarningLevel>
+    <LangVersion>default</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -66,6 +111,9 @@
     <Reference Include="CronDaemon, Version=0.4.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\CronDaemon.0.4.0.0\lib\net45\CronDaemon.dll</HintPath>
       <Private>True</Private>
+    </Reference>
+    <Reference Include="CsvHelper, Version=2.0.0.0, Culture=neutral, PublicKeyToken=8c4959082be5c823, processorArchitecture=MSIL">
+      <HintPath>..\packages\CsvHelper.2.16.3.0\lib\net45\CsvHelper.dll</HintPath>
     </Reference>
     <Reference Include="DocumentFormat.OpenXml, Version=2.5.5631.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\DocumentFormat.OpenXml.2.5\lib\DocumentFormat.OpenXml.dll</HintPath>
@@ -304,6 +352,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Areas\Api\Controllers\GroupsController.cs" />
     <Compile Include="Areas\Api\Controllers\SearchController.cs" />
+    <Compile Include="Areas\Api\Controllers\UIElementsController.cs" />
     <Compile Include="Areas\Api\Controllers\UserFilesController.cs" />
     <Compile Include="Areas\Api\Controllers\UsersController.cs" />
     <Compile Include="Areas\Api\Models\AccessRequestsViewModel.cs" />
@@ -323,8 +372,14 @@
     <Compile Include="Areas\Api\Models\AnnotationItemImportModel.cs" />
     <Compile Include="Areas\Api\Models\DeleteUsersModel.cs" />
     <Compile Include="Areas\Api\Models\ExtendDictionaryResult.cs" />
+    <Compile Include="Areas\Api\Models\ImportTaxonomyRowModel.cs" />
     <Compile Include="Areas\Api\Models\ManagedVocabularyValueModel.cs" />
     <Compile Include="Areas\Api\Models\Search\SearchRequestComplexFilterModel.cs" />
+    <Compile Include="Areas\Api\Models\SimpleUIElementModel.cs" />
+    <Compile Include="Areas\Api\Models\SpeciesSearchModel.cs" />
+    <Compile Include="Areas\Api\Models\TaxonomyImportModel.cs" />
+    <Compile Include="Areas\Api\Models\UIElementIdModel.cs" />
+    <Compile Include="Areas\Api\Models\UIElementModel.cs" />
     <Compile Include="Areas\Api\Models\UserGroupsViewModel.cs" />
     <Compile Include="Areas\Api\Models\ImportCollectionModel.cs" />
     <Compile Include="Areas\Api\Models\ExtendDictionariesModel.cs" />
@@ -345,6 +400,7 @@
     <Compile Include="Areas\Api\Models\VocabularyTypeSelectionModel.cs" />
     <Compile Include="Areas\Api\Models\VocabularyUserValueModel.cs" />
     <Compile Include="Areas\Api\Models\VocabularyValueModel.cs" />
+    <Compile Include="Areas\Api\Models\WizardDataModel.cs" />
     <Compile Include="Areas\HelpPage\ApiDescriptionExtensions.cs" />
     <Compile Include="Areas\HelpPage\App_Start\HelpPageConfig.cs" />
     <Compile Include="Areas\HelpPage\Controllers\HelpController.cs" />
@@ -388,6 +444,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Integration\GfBioService.cs" />
     <Compile Include="Models\Account\ResendRegistrationEmailViewModel.cs" />
     <Compile Include="Models\Account\UserProfileViewModel.cs" />
     <Compile Include="Models\Account\ExternalLoginListViewModel.cs" />
@@ -449,6 +506,15 @@
     <Content Include="Content\images\hydro_2.png" />
     <Content Include="Content\images\hydro_3.png" />
     <Content Include="Content\images\hydro_4.png" />
+    <Content Include="Content\images\icons\annotation.biome.svg" />
+    <Content Include="Content\images\icons\annotation.chemical.svg" />
+    <Content Include="Content\images\icons\annotation.common.svg" />
+    <Content Include="Content\images\icons\annotation.method.svg" />
+    <Content Include="Content\images\icons\annotation.organism.svg" />
+    <Content Include="Content\images\icons\annotation.process.svg" />
+    <Content Include="Content\images\icons\annotation.space.svg" />
+    <Content Include="Content\images\icons\annotation.sphere.svg" />
+    <Content Include="Content\images\icons\annotation.time.svg" />
     <Content Include="Content\images\logo.png" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\fontawesome-webfont.svg" />
@@ -515,6 +581,11 @@
     <Content Include="Scripts\app\admin\core\core.module.js" />
     <Content Include="Scripts\app\admin\core\masterdata\masterdata.module.js" />
     <Content Include="Scripts\app\admin\core\masterdata\masterdata.service.js" />
+    <Content Include="Scripts\app\admin\core\uielements\uielements.module.js" />
+    <Content Include="Scripts\app\admin\core\uielements\uielements.service.js" />
+    <Content Include="Scripts\app\admin\gfbio\bindedcontrols-details.template.html" />
+    <Content Include="Scripts\app\admin\gfbio\bindedcontrols-list.template.html" />
+    <Content Include="Scripts\app\admin\gfbio\bindedcontrols-list.module.js" />
     <Content Include="Scripts\app\admin\groups\group-list\group-list.component.js" />
     <Content Include="Scripts\app\admin\groups\group-list\group-list.module.js" />
     <Content Include="Scripts\app\admin\groups\group-list\group-list.template.html" />
@@ -524,11 +595,14 @@
     <Content Include="Scripts\app\admin\users\user-details\accessModeDialog.template.html" />
     <Content Include="Scripts\app\admin\users\user-details\user-details.files.switch-owner.template.html" />
     <Content Include="Scripts\app\admin\users\user-list\user-list.removeUser.template.html" />
+    <Content Include="Scripts\app\admin\views\gfbio.html" />
     <Content Include="Scripts\app\annotation-item\app.js" />
     <Content Include="Scripts\app\annotation-item\core\space\space.module.js" />
     <Content Include="Scripts\app\annotation-item\core\space\space.service.js" />
     <Content Include="Scripts\app\annotation-item\core\method\method.module.js" />
     <Content Include="Scripts\app\annotation-item\core\method\method.service.js" />
+    <Content Include="Scripts\app\annotation-item\core\vocabularies.module.js" />
+    <Content Include="Scripts\app\annotation-item\core\vocabularies.service.js" />
     <Content Include="Scripts\app\annotation-item\method\method.module.js" />
     <Content Include="Scripts\app\annotation-item\method\templates\approach.template.html" />
     <Content Include="Scripts\app\annotation-item\method\templates\factor.template.html" />
@@ -556,6 +630,8 @@
     <Content Include="Scripts\app\annotation-item\core\time\time.service.js" />
     <Content Include="Scripts\app\annotation-item\common\common.module.js" />
     <Content Include="Scripts\app\annotation-item\common\templates\common.template.html" />
+    <Content Include="Scripts\app\annotation-item\method\templates\organizational.template.html" />
+    <Content Include="Scripts\app\annotation-item\organism\templates\selectTaxonomySourceDialog.template.html" />
     <Content Include="Scripts\app\annotation-item\process\process.controller.js" />
     <Content Include="Scripts\app\annotation-item\process\process.module.js" />
     <Content Include="Scripts\app\annotation-item\process\templates\process.template.html" />
@@ -606,6 +682,7 @@
     <Content Include="Scripts\app\search\core\access-request\access-request.module.js" />
     <Content Include="Scripts\app\search\core\access-request\access-request.service.js" />
     <Content Include="Scripts\app\search\core\core.module.js" />
+    <Content Include="Scripts\app\users-dashboard\annotationItems\importWizardDialog.template.html" />
     <Content Include="Scripts\app\users-dashboard\annotationItems\importDialog.template.html" />
     <Content Include="Scripts\app\users-dashboard\core\annotationItems\annotationItems.module.js" />
     <Content Include="Scripts\app\users-dashboard\core\annotationItems\annotationItems.service.js" />
@@ -641,6 +718,7 @@
     <None Include="Properties\PublishProfiles\cafedeploy.pubxml" />
     <None Include="Properties\PublishProfiles\michaelTest.pubxml" />
     <Content Include="Scripts\app\admin\annotation\annotation-list.template.html" />
+    <Content Include="Scripts\app\admin\gfbio\bindedcontrols-list.component.js" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <None Include="Scripts\jquery-3.1.0.intellisense.js" />
     <Content Include="Scripts\app\admin\app.js" />
@@ -1186,6 +1264,10 @@
     <Content Include="Scripts\libs\angular-ui-tree\angular-ui-tree.js" />
     <Content Include="Scripts\libs\angular-ui-tree\angular-ui-tree.min.css" />
     <Content Include="Scripts\libs\angular-ui-tree\angular-ui-tree.min.js" />
+    <Content Include="Scripts\libs\angular-wizard\angular-wizard.css" />
+    <Content Include="Scripts\libs\angular-wizard\angular-wizard.js" />
+    <Content Include="Scripts\libs\angular-wizard\angular-wizard.min.css" />
+    <Content Include="Scripts\libs\angular-wizard\angular-wizard.min.js" />
     <Content Include="Scripts\libs\angular\angular-csp.css" />
     <Content Include="Scripts\libs\angular\angular.js" />
     <Content Include="Scripts\libs\angular\angular.min.js" />
@@ -1243,6 +1325,7 @@
     <Content Include="Scripts\libs\ui-bootstrap\ui-bootstrap-tpls-2.2.0.min.js" />
     <Content Include="Scripts\libs\angular-ui-select\select.min.css.map" />
     <Content Include="Scripts\libs\angular-ui-select\select.min.js.map" />
+    <Content Include="Scripts\libs\angular-wizard\angular-wizard.less" />
     <None Include="Scripts\libs\ui-grid-master\ui-grid.min.css1" />
     <None Include="Scripts\libs\ui-grid-master\ui-grid.min.js1" />
     <Content Include="Scripts\libs\ui-grid-master\ui-grid.min.css" />
@@ -1387,6 +1470,7 @@
     <Content Include="Views\Search\ResourceInfo.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Account\" />
     <Folder Include="App_Data\" />
     <Folder Include="Content\Uploads\UserAvatars\" />
     <Folder Include="Content\Uploads\UserFiles\" />
@@ -1405,6 +1489,10 @@
     <ProjectReference Include="..\CAFE.DAL\CAFE.DAL.csproj">
       <Project>{c4ba57f5-624d-440d-a2c7-6eb5d36a503d}</Project>
       <Name>CAFE.DAL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CAFE.Plugins.GlobalNameResolveService\CAFE.Plugins.GlobalNameResolveService.csproj">
+      <Project>{d7c259ba-5920-48da-bdd6-90c7547a1ced}</Project>
+      <Name>CAFE.Plugins.GlobalNameResolveService</Name>
     </ProjectReference>
     <ProjectReference Include="..\CAFE.Services\CAFE.Services.csproj">
       <Project>{bc34bfca-4317-4cf1-8160-ae5239075605}</Project>

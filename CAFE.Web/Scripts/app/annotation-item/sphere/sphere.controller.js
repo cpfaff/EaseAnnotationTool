@@ -31,6 +31,7 @@
                     else
                         $scope.ReloadSliders();
                 }
+
                 $scope.atmosphereHeight = {
                     min: -1000,
                     max: 1000,
@@ -100,9 +101,10 @@
                         hideLimitLabels: true
                     }
                 };
-                $scope.vegetationUoms = ['Millimetre', 'Centimetre', 'Metre'];
-                $scope.soilHorizonUoms = ['Millimetre', 'Centimetre', 'Metre'];
-                $scope.atmosphereElevationUoms = ['Kilometre'];
+
+                $scope.vegetationUoms = ['Millimetre', 'Centimetre', 'Metre', 'Kilometre'];
+                $scope.soilHorizonUoms = ['Millimetre', 'Centimetre', 'Metre', 'Kilometre'];
+                $scope.atmosphereElevationUoms = ['Millimetre', 'Centimetre', 'Metre', 'Kilometre'];
 
                 $scope.soilMorphologyValues = [
                     'Histosols',
@@ -234,41 +236,6 @@
                     }
                 };
 
-                $scope.organizationalModel = {
-                    bioma: {
-                        checked: false
-                    },
-                    ecosystem: {
-                        checked: false
-                    },
-                    population: {
-                        checked: false
-                    },
-                    organizm: {
-                        checked: false
-                    },
-                    systemOfOrgans: {
-                        checked: false
-                    },
-                    organ: {
-                        checked: false
-                    },
-                    tissue: {
-                        checked: false
-                    },
-                    cell: {
-                        checked: false
-                    },
-                    cellOrganelle: {
-                        checked: false
-                    },
-                    molecule: {
-                        checked: false
-                    },
-                    atom: {
-                        checked: false
-                    }
-                };
 
                 $scope.hydrosphereModel = {
                     lake:{
@@ -483,11 +450,6 @@
                             //    maximumVegetationHeight: 0,
                             //    maximumVegetationHeightUnit: { value: '', url: '' }
                             //}
-                        ],
-                        organizationalHierarchies: [
-                            //{
-                                //organizationHierarchyName: { value: '', url: '' }
-                            //}
                         ]
                     }
                     }]
@@ -597,58 +559,11 @@
                             $scope.settings.heightEnabled = true;
                         }
                     }
-                    if (ecosphere.organizationalHierarchiesSpecified || ecosphere.organizationalHierarchies) {
-                        for (var i = 0;
-                            i <
-                                ecosphere.organizationalHierarchies.length;
-                            i++) {
-
-                            var name = ecosphere.organizationalHierarchies[i].organizationHierarchyName.value;
-                            switch (name) {
-                                case 'Biome Level':
-                                    $scope.organizationalModel.bioma.checked = true;
-                                    break;
-                                case 'Ecosystem Level':
-                                    $scope.organizationalModel.ecosystem.checked = true;
-                                    break;
-                                case 'Population Level':
-                                    $scope.organizationalModel.population.checked = true;
-                                    break;
-                                case 'Organism Level':
-                                    $scope.organizationalModel.organizm.checked = true;
-                                    break;
-                                case 'System of Organs Level':
-                                    $scope.organizationalModel.systemOfOrgans.checked = true;
-                                    break;
-                                case 'Organ Level':
-                                    $scope.organizationalModel.organ.checked = true;
-                                    break;
-                                case 'Tissue Level':
-                                    $scope.organizationalModel.tissue.checked = true;
-                                    break;
-                                case 'Cell Level':
-                                    $scope.organizationalModel.cell.checked = true;
-                                    break;
-                                case 'Cell Organelle Level':
-                                    $scope.organizationalModel.cellOrganelle.checked = true;
-                                    break;
-                                case 'Molecule Level':
-                                    $scope.organizationalModel.molecule.checked = true;
-                                    break;
-                                case 'Atmom Level':
-                                    $scope.organizationalModel.atom.checked = true;
-                                    break;
-                            }
-
-                        }
-                    }
 
                     if (!ecosphere.namedEcosphereLayers)
                         ecosphere.namedEcosphereLayers = [];
                     if (!ecosphere.numericEcosphereLayers)
                         ecosphere.numericEcosphereLayers = [];
-                    if (!ecosphere.organizationalHierarchies)
-                        ecosphere.organizationalHierarchies = [];
 
                     //Fill pedosphere
                     var pedosphereSoil = $scope.sphereContext.spheres[0].pedosphere.pedosphereCompartments[0].soil;
@@ -1085,20 +1000,6 @@
                     if ($scope.settings.heightEnabled)
                         $scope.sphereContext.spheres[0].ecosphere.numericEcosphereLayers = [ addedAtmN ];
                 };
-                var addToBiosphereOrganize = function (name) {
-                    var addedAtmL = {
-                        organizationHierarchyName: {
-                            value: name,
-                            url: ''
-                        }
-                    };
-
-                    var namedObj = $filter('sphereBiosphereOrganizationalFilter')
-                        ($scope.sphereContext.spheres[0]
-                        .ecosphere.organizationalHierarchies, name);
-                    if (!namedObj)
-                        $scope.sphereContext.spheres[0].ecosphere.organizationalHierarchies.push(addedAtmL);
-                };
 
                 //Remove record from biosphere model
                 var removeFromBiosphere = function (name) {
@@ -1114,17 +1015,6 @@
 
                     $scope.sphereContext.spheres[0].ecosphere.numericEcosphereLayers.splice(
                         0, 1);
-                };
-                var removeFromBiosphereOrganize = function (name) {
-                    var namedObj = $filter('sphereBiosphereOrganizationalFilter')
-                        ($scope.sphereContext.spheres[0]
-                        .ecosphere.organizationalHierarchies, name);
-
-                    var namedIndex = $scope.sphereContext.spheres[0]
-                        .ecosphere.organizationalHierarchies.indexOf(namedObj);
-
-                    $scope.sphereContext.spheres[0].ecosphere
-                        .organizationalHierarchies.splice(namedIndex, 1);
                 };
 
                 $scope.$watch('biosphereModel.treeLayer.checked', function () {
@@ -1206,85 +1096,6 @@
                         foundRecord.minimumVegetationHeightUnit = { value: $scope.biosphereVegetation.uom, uri: '', id: 0 };
                     }
                 });
-
-                $scope.$watch('organizationalModel.bioma.checked', function () {
-                    if ($scope.organizationalModel.bioma.checked) {
-                        addToBiosphereOrganize('Biome Level');
-                    } else {
-                        removeFromBiosphereOrganize('Biome Level');
-                    }
-                });
-                $scope.$watch('organizationalModel.ecosystem.checked', function () {
-                    if ($scope.organizationalModel.ecosystem.checked) {
-                        addToBiosphereOrganize('Ecosystem Level');
-                    } else {
-                        removeFromBiosphereOrganize('Ecosystem Level');
-                    }
-                });
-                $scope.$watch('organizationalModel.population.checked', function () {
-                    if ($scope.organizationalModel.population.checked) {
-                        addToBiosphereOrganize('Population Level');
-                    } else {
-                        removeFromBiosphereOrganize('Population Level');
-                    }
-                });
-                $scope.$watch('organizationalModel.organizm.checked', function () {
-                    if ($scope.organizationalModel.organizm.checked) {
-                        addToBiosphereOrganize('Organism Level');
-                    } else {
-                        removeFromBiosphereOrganize('Organism Level');
-                    }
-                });
-                $scope.$watch('organizationalModel.systemOfOrgans.checked', function () {
-                    if ($scope.organizationalModel.systemOfOrgans.checked) {
-                        addToBiosphereOrganize('System of Organs Level');
-                    } else {
-                        removeFromBiosphereOrganize('System of Organs Level');
-                    }
-                });
-                $scope.$watch('organizationalModel.organ.checked', function () {
-                    if ($scope.organizationalModel.organ.checked) {
-                        addToBiosphereOrganize('Organ Level');
-                    } else {
-                        removeFromBiosphereOrganize('Organ Level');
-                    }
-                });
-                $scope.$watch('organizationalModel.tissue.checked', function () {
-                    if ($scope.organizationalModel.tissue.checked) {
-                        addToBiosphereOrganize('Tissue Level');
-                    } else {
-                        removeFromBiosphereOrganize('Tissue Level');
-                    }
-                });
-                $scope.$watch('organizationalModel.cell.checked', function () {
-                    if ($scope.organizationalModel.cell.checked) {
-                        addToBiosphereOrganize('Cell Level');
-                    } else {
-                        removeFromBiosphereOrganize('Cell Level');
-                    }
-                });
-                $scope.$watch('organizationalModel.cellOrganelle.checked', function () {
-                    if ($scope.organizationalModel.cellOrganelle.checked) {
-                        addToBiosphereOrganize('Cell Organelle Level');
-                    } else {
-                        removeFromBiosphereOrganize('Cell Organelle Level');
-                    }
-                });
-                $scope.$watch('organizationalModel.molecule.checked', function () {
-                    if ($scope.organizationalModel.molecule.checked) {
-                        addToBiosphereOrganize('Molecule Level');
-                    } else {
-                        removeFromBiosphereOrganize('Molecule Level');
-                    }
-                });
-                $scope.$watch('organizationalModel.atom.checked', function () {
-                    if ($scope.organizationalModel.atom.checked) {
-                        addToBiosphereOrganize('Atmom Level');
-                    } else {
-                        removeFromBiosphereOrganize('Atmom Level');
-                    }
-                });
-
                 
 
                 /////////////////////////////////////////////////

@@ -89,6 +89,42 @@
             </summary>
             <returns>Bool</returns>
         </member>
+        <member name="M:CAFE.Web.Areas.Api.Controllers.AnnotationItemController.AddFromNewFiles">
+            <summary>
+            Create new AI from uploads user's files
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:CAFE.Web.Areas.Api.Controllers.AnnotationItemController.AddFromExistingFiles(CAFE.Web.Areas.Api.Models.WizardDataModel)">
+            <summary>
+            Create new AI from existing user's files
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:CAFE.Web.Areas.Api.Controllers.AnnotationItemController.AddFromNewFilesAndExistingAnnotaions(System.String)">
+            <summary>
+            Create new AI from uploads user's files and existing AI data
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:CAFE.Web.Areas.Api.Controllers.AnnotationItemController.AddFromExistingFilesAndExistingAnnotaions(CAFE.Web.Areas.Api.Models.WizardDataModel)">
+            <summary>
+            Create new AI from existing user's files and existing AI data
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:CAFE.Web.Areas.Api.Controllers.AnnotationItemController.UpdateFromNewFiles(System.String)">
+            <summary>
+            Update existing AI from uploads user's files
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:CAFE.Web.Areas.Api.Controllers.AnnotationItemController.UpdateFromExistingFiles(CAFE.Web.Areas.Api.Models.WizardDataModel)">
+            <summary>
+            Update existing AI from existing uses's files
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:CAFE.Web.Areas.Api.Controllers.AnnotationItemController.SetAnnotationItemsAccessMode(CAFE.Web.Models.Dashboard.AIAccessModeChangeModel)">
             <summary>
             Updates Annotation Item
@@ -204,6 +240,37 @@
             </summary>
             <param name="exception">Catched exception</param>
             <returns>Http error message</returns>
+        </member>
+        <member name="M:CAFE.Web.Areas.Api.Controllers.UIElementsController.Get">
+            <summary>
+            Returns all UI elements
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:CAFE.Web.Areas.Api.Controllers.UIElementsController.Search(System.String)">
+            <summary>
+            Find existing UI elements id's by query
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:CAFE.Web.Areas.Api.Controllers.UIElementsController.Add(CAFE.Web.Areas.Api.Models.UIElementModel)">
+            <summary>
+            Adds new UI element
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CAFE.Web.Areas.Api.Controllers.UIElementsController.Update(CAFE.Web.Areas.Api.Models.UIElementModel)">
+            <summary>
+            Updates existing UI element
+            </summary>
+            <param name="model"></param>
+        </member>
+        <member name="M:CAFE.Web.Areas.Api.Controllers.UIElementsController.DeleteElements(System.Collections.Generic.IEnumerable{CAFE.Web.Areas.Api.Models.SimpleUIElementModel})">
+            <summary>
+            Removes existing UI element
+            </summary>
+            <param name="model"></param>
         </member>
         <member name="T:CAFE.Web.Areas.Api.Models.AccessResources.AccessibleResourceModel">
             <summary>
@@ -423,6 +490,26 @@
         <member name="P:CAFE.Web.Areas.Api.Models.AccessResources.MessageModel.Receiver">
             <summary>
             User that received this message
+            </summary>
+        </member>
+        <member name="T:CAFE.Web.Areas.Api.Models.UIElementModel">
+            <summary>
+            Contains data about UI element on Annotation Item form and relation with it Resource url for get data
+            </summary>
+        </member>
+        <member name="P:CAFE.Web.Areas.Api.Models.UIElementModel.ElementIdOnUI">
+            <summary>
+            Element identifier on Annotation Form
+            </summary>
+        </member>
+        <member name="P:CAFE.Web.Areas.Api.Models.UIElementModel.UrlForGetData">
+            <summary>
+            Url for get data to load in UI element
+            </summary>
+        </member>
+        <member name="P:CAFE.Web.Areas.Api.Models.UIElementModel.Id">
+            <summary>
+            Element key in db
             </summary>
         </member>
         <member name="M:CAFE.Web.Areas.HelpPage.ApiDescriptionExtensions.GetFriendlyId(System.Web.Http.Description.ApiDescription)">
@@ -982,6 +1069,12 @@
             </summary>
             <returns>Index view</returns>
         </member>
+        <member name="M:CAFE.Web.Controllers.AnnotationItemController.CreateFromTemplate(System.String,System.Nullable{System.Guid})">
+            <summary>
+            Returns main action
+            </summary>
+            <returns>Index view</returns>
+        </member>
         <member name="M:CAFE.Web.Controllers.ManageController.ExportData">
             <summary>
             Export user's data
@@ -1001,17 +1094,11 @@
                  </para>
             </summary>
         </member>
-        <member name="P:CAFE.Web.Models.AnnotationItemModel.Id">
-            <summary>
-            <para xml:lang="de">Ruft einen Wert ab, der diese Entität eindeutig identifiziert, oder legt diesen fest.</para>
-            <para xml:lang="en">Gets or sets a value uniquely identifying this entity.</para>
-            </summary>
-        </member>
         <member name="P:CAFE.Web.Models.AnnotationItemModel.Object">
             <summary>
             <para xml:lang="en">
                   The Object wraps all information stored in an annotation.
-                  It contains context information for the data but also the
+                  It links context information for the data but also the
                   references and the resources which allow to acccess the
                   data described.
                 </para>
@@ -1074,7 +1161,7 @@
             <para xml:lang="en">
             			The time context allows to capture the
             			quantitative and qualitative temporal aspects
-            			that describe the the object.
+            			that describe a search object.
             		      </para>
             </summary>
         </member>
@@ -1530,6 +1617,10 @@
             					  the setup the object comes from (e.g. Second, Minute, Hour, Day, Week,
             					  ...).
             					</para>
+            </summary>
+        </member>
+        <member name="P:CAFE.Web.Models.TemporalResolutionModel.FactorPeriodId">
+            <summary>
             </summary>
         </member>
         <member name="T:CAFE.Web.Models.TemporalExtentTypeModel">
@@ -3041,19 +3132,6 @@
             <para xml:lang="en">Gets a value indicating whether the NumericEcosphereLayers collection is empty.</para>
             </summary>
         </member>
-        <member name="P:CAFE.Web.Models.EcosphereModel.OrganizationalHierarchies">
-            <summary>
-            <para xml:lang="en">
-            						A wrapper around organizational hierarchies
-            					      </para>
-            </summary>
-        </member>
-        <member name="P:CAFE.Web.Models.EcosphereModel.OrganizationalHierarchiesSpecified">
-            <summary>
-            <para xml:lang="de">Ruft einen Wert ab, der angibt, ob die OrganizationalHierarchies-Collection leer ist.</para>
-            <para xml:lang="en">Gets a value indicating whether the OrganizationalHierarchies collection is empty.</para>
-            </summary>
-        </member>
         <member name="T:CAFE.Web.Models.NamedEcosphereLayerModel">
             <summary>
             </summary>
@@ -3150,44 +3228,6 @@
             </summary>
         </member>
         <member name="P:CAFE.Web.Models.VegetationHeightUnitModel.Uri">
-            <summary>
-            </summary>
-        </member>
-        <member name="T:CAFE.Web.Models.OrganizationalHierarchyModel">
-            <summary>
-            </summary>
-        </member>
-        <member name="P:CAFE.Web.Models.OrganizationalHierarchyModel.Id">
-            <summary>
-            <para xml:lang="de">Ruft einen Wert ab, der diese Entität eindeutig identifiziert, oder legt diesen fest.</para>
-            <para xml:lang="en">Gets or sets a value uniquely identifying this entity.</para>
-            </summary>
-        </member>
-        <member name="P:CAFE.Web.Models.OrganizationalHierarchyModel.OrganizationHierarchyName">
-            <summary>
-            <para xml:lang="en">
-            							    A named organizational hierarchy of life (Atom
-            							    Level, Molecule Level, Cell Level, ...)
-            							  </para>
-            </summary>
-        </member>
-        <member name="T:CAFE.Web.Models.OrganizationHierarchyNameModel">
-            <summary>
-            </summary>
-        </member>
-        <member name="P:CAFE.Web.Models.OrganizationHierarchyNameModel.Value">
-            <summary>
-            <para xml:lang="de">Ruft den Text ab oder legt diesen fest.</para>
-            <para xml:lang="en">Gets or sets the text value.</para>
-            </summary>
-        </member>
-        <member name="P:CAFE.Web.Models.OrganizationHierarchyNameModel.Id">
-            <summary>
-            <para xml:lang="de">Ruft einen Wert ab, der diese Entität eindeutig identifiziert, oder legt diesen fest.</para>
-            <para xml:lang="en">Gets or sets a value uniquely identifying this entity.</para>
-            </summary>
-        </member>
-        <member name="P:CAFE.Web.Models.OrganizationHierarchyNameModel.Uri">
             <summary>
             </summary>
         </member>
@@ -3289,7 +3329,7 @@
             					</para>
             </summary>
         </member>
-        <member name="P:CAFE.Web.Models.ZonoBiomeModel.BiomeZone">
+        <member name="P:CAFE.Web.Models.ZonoBiomeModel.BiomeLatitudinalZone">
             <summary>
             <para xml:lang="en">
             					  The name of a biome zone (Polar, Boreal, Temperate, Subtropic, Tropic)
@@ -3337,23 +3377,23 @@
             <summary>
             </summary>
         </member>
-        <member name="T:CAFE.Web.Models.BiomeZoneModel">
+        <member name="T:CAFE.Web.Models.BiomeLatitudinalZoneModel">
             <summary>
             </summary>
         </member>
-        <member name="P:CAFE.Web.Models.BiomeZoneModel.Value">
+        <member name="P:CAFE.Web.Models.BiomeLatitudinalZoneModel.Value">
             <summary>
             <para xml:lang="de">Ruft den Text ab oder legt diesen fest.</para>
             <para xml:lang="en">Gets or sets the text value.</para>
             </summary>
         </member>
-        <member name="P:CAFE.Web.Models.BiomeZoneModel.Id">
+        <member name="P:CAFE.Web.Models.BiomeLatitudinalZoneModel.Id">
             <summary>
             <para xml:lang="de">Ruft einen Wert ab, der diese Entität eindeutig identifiziert, oder legt diesen fest.</para>
             <para xml:lang="en">Gets or sets a value uniquely identifying this entity.</para>
             </summary>
         </member>
-        <member name="P:CAFE.Web.Models.BiomeZoneModel.Uri">
+        <member name="P:CAFE.Web.Models.BiomeLatitudinalZoneModel.Uri">
             <summary>
             </summary>
         </member>
@@ -3870,15 +3910,14 @@
         <member name="P:CAFE.Web.Models.TaxonomyModel.Species">
             <summary>
             <para xml:lang="en">
-            						The generic full name of the organism including author and year
-            						if required.
+            						The full name of the organism (also including author and year)
             					      </para>
             </summary>
         </member>
-        <member name="P:CAFE.Web.Models.TaxonomyModel.OrganismName">
+        <member name="P:CAFE.Web.Models.TaxonomyModel.Genus">
             <summary>
             <para xml:lang="en">
-            						The name of an organism
+            						The genus of the organism
             					      </para>
             </summary>
         </member>
@@ -4002,395 +4041,24 @@
             <summary>
             </summary>
         </member>
-        <member name="T:CAFE.Web.Models.OrganismNameModel">
+        <member name="T:CAFE.Web.Models.GenusModel">
             <summary>
             </summary>
         </member>
-        <member name="P:CAFE.Web.Models.OrganismNameModel.Id">
-            <summary>
-            <para xml:lang="de">Ruft einen Wert ab, der diese Entität eindeutig identifiziert, oder legt diesen fest.</para>
-            <para xml:lang="en">Gets or sets a value uniquely identifying this entity.</para>
-            </summary>
-        </member>
-        <member name="P:CAFE.Web.Models.OrganismNameModel.BacterialName">
-            <summary>
-            <para xml:lang="en">
-            						      Atomised name with elements according to the International Code of Nomenclature
-            						      of Prokaryotes (ABCD)
-            						    </para>
-            </summary>
-        </member>
-        <member name="P:CAFE.Web.Models.OrganismNameModel.FungalName">
-            <summary>
-            <para xml:lang="en">
-            						      The ame of a fungi
-            						    </para>
-            </summary>
-        </member>
-        <member name="P:CAFE.Web.Models.OrganismNameModel.BotanicalName">
-            <summary>
-            <para xml:lang="en">
-            						      Atomised name with elements according to the International Code of Botanical
-            						      Nomenclature or the International Code of Nomenclature for Cultivated Plants
-            						      (ABCD)
-            						    </para>
-            </summary>
-        </member>
-        <member name="P:CAFE.Web.Models.OrganismNameModel.ZoologicalName">
-            <summary>
-            <para xml:lang="en">
-            						      Atomised name with elements according to the International Code of Zoological
-            						      Nomenclature (ABCD)
-            						    </para>
-            </summary>
-        </member>
-        <member name="P:CAFE.Web.Models.OrganismNameModel.ViralName">
-            <summary>
-            <para xml:lang="en">
-            						      Atomised name with elements according to the International Committee on
-            						      Taxonomy of Viruses
-            						    </para>
-            </summary>
-        </member>
-        <member name="T:CAFE.Web.Models.BacterialNameModel">
-            <summary>
-            </summary>
-        </member>
-        <member name="P:CAFE.Web.Models.BacterialNameModel.Id">
-            <summary>
-            <para xml:lang="de">Ruft einen Wert ab, der diese Entität eindeutig identifiziert, oder legt diesen fest.</para>
-            <para xml:lang="en">Gets or sets a value uniquely identifying this entity.</para>
-            </summary>
-        </member>
-        <member name="P:CAFE.Web.Models.BacterialNameModel.FullBacterialName">
-            <summary>
-            <para xml:lang="en">
-            							    An element that captures the full scientific name of the bacteria in one string.
-            							  </para>
-            </summary>
-        </member>
-        <member name="P:CAFE.Web.Models.BacterialNameModel.GenusOrMonomial">
-            <summary>
-            <para xml:lang="en">
-            							    Genus name
-            							  </para>
-            </summary>
-        </member>
-        <member name="P:CAFE.Web.Models.BacterialNameModel.Subgenus">
-            <summary>
-            <para xml:lang="en">
-            							    Subgenus name
-            							  </para>
-            </summary>
-        </member>
-        <member name="P:CAFE.Web.Models.BacterialNameModel.SubgenusAuthorAndYear">
-            <summary>
-            <para xml:lang="en">
-            							    Author team and year of the subgenus name
-            							  </para>
-            </summary>
-        </member>
-        <member name="P:CAFE.Web.Models.BacterialNameModel.SpeciesEpithet">
-            <summary>
-            <para xml:lang="en">
-            							    A name element dependent on a genus or a species name under the
-            							    bacteriological, botanical, and zoological code.
-            							  </para>
-            </summary>
-        </member>
-        <member name="P:CAFE.Web.Models.BacterialNameModel.SubspeciesEpithet">
-            <summary>
-            <para xml:lang="en">
-            							    The subsphecies epithet (Maps to Darwin Core 2: Subspecies)
-            							  </para>
-            </summary>
-        </member>
-        <member name="P:CAFE.Web.Models.BacterialNameModel.ParentheticalAuthorTeamAndYear">
-            <summary>
-            <para xml:lang="en">
-            							    Author team and year of the basionym of a species or subspecies combination
-            							  </para>
-            </summary>
-        </member>
-        <member name="P:CAFE.Web.Models.BacterialNameModel.AuthorTeamAndYear">
-            <summary>
-            <para xml:lang="en">
-            							    The author(s) who published the full name as it stands and its year
-            							  </para>
-            </summary>
-        </member>
-        <member name="P:CAFE.Web.Models.BacterialNameModel.NameApprobation">
-            <summary>
-            <para xml:lang="en">
-            							    Approbation of name according to approved list, validation list,or validly
-            							    published, paper in IJSB after 1980
-            							  </para>
-            </summary>
-        </member>
-        <member name="T:CAFE.Web.Models.FungalNameModel">
-            <summary>
-            </summary>
-        </member>
-        <member name="P:CAFE.Web.Models.FungalNameModel.Id">
-            <summary>
-            <para xml:lang="de">Ruft einen Wert ab, der diese Entität eindeutig identifiziert, oder legt diesen fest.</para>
-            <para xml:lang="en">Gets or sets a value uniquely identifying this entity.</para>
-            </summary>
-        </member>
-        <member name="P:CAFE.Web.Models.FungalNameModel.FullFungalName">
-            <summary>
-            <para xml:lang="en">
-            							    An element that captures the full scientific name of the bacteria in one string.
-            							  </para>
-            </summary>
-        </member>
-        <member name="T:CAFE.Web.Models.BotanicalNameModel">
-            <summary>
-            </summary>
-        </member>
-        <member name="P:CAFE.Web.Models.BotanicalNameModel.Id">
-            <summary>
-            <para xml:lang="de">Ruft einen Wert ab, der diese Entität eindeutig identifiziert, oder legt diesen fest.</para>
-            <para xml:lang="en">Gets or sets a value uniquely identifying this entity.</para>
-            </summary>
-        </member>
-        <member name="P:CAFE.Web.Models.BotanicalNameModel.FullBotanicalName">
-            <summary>
-            <para xml:lang="en">
-            							    An element that captures the full botanical name in one string.
-            							  </para>
-            </summary>
-        </member>
-        <member name="P:CAFE.Web.Models.BotanicalNameModel.GenusOrMonomial">
-            <summary>
-            <para xml:lang="en">
-            							    Genus or higher taxon name
-            							  </para>
-            </summary>
-        </member>
-        <member name="P:CAFE.Web.Models.BotanicalNameModel.FirstEpithet">
-            <summary>
-            <para xml:lang="en">
-            							    The first epithet in a botanical name combination (species epithet or the
-            							    epithet of the subdivision of a genus
-            							  </para>
-            </summary>
-        </member>
-        <member name="P:CAFE.Web.Models.BotanicalNameModel.InfraspecificEpithet">
-            <summary>
-            <para xml:lang="en">
-            							    The final epithet of a botanical name of infraspecific rank
-            							  </para>
-            </summary>
-        </member>
-        <member name="P:CAFE.Web.Models.BotanicalNameModel.Rank">
-            <summary>
-            <para xml:lang="en">
-            							    The rank of the name where needed to form it.
-            							  </para>
-            <para xml:lang="en">
-            The abbreviation of a taxonomic rank as used in (botanical) organism name strings
-                 </para>
-            </summary>
-        </member>
-        <member name="P:CAFE.Web.Models.BotanicalNameModel.HybridFlag">
-            <summary>
-            <para xml:lang="en">
-            							    Flag indicating that this is a named hybrid ("x") or a graft chimaera ("+").
-            							    The attribute insertionpoint defines the name element in front of which the
-            							    qualifier should be inserted (1 = before entire name, 2= before first epithet,
-            							    3 = before rank designation for second epithet.)
-            							  </para>
-            </summary>
-        </member>
-        <member name="P:CAFE.Web.Models.BotanicalNameModel.AuthorTeamParenthesis">
-            <summary>
-            <para xml:lang="en">
-            							    Author team of the basionym of a combination
-            							  </para>
-            </summary>
-        </member>
-        <member name="P:CAFE.Web.Models.BotanicalNameModel.AuthorTeam">
-            <summary>
-            <para xml:lang="en">
-            							    The author(s) who published the full name as it stands
-            							  </para>
-            </summary>
-        </member>
-        <member name="P:CAFE.Web.Models.BotanicalNameModel.CultivarGroupName">
-            <summary>
-            <para xml:lang="en">
-            							    Cultivar group name
-            							  </para>
-            </summary>
-        </member>
-        <member name="P:CAFE.Web.Models.BotanicalNameModel.CultivarName">
-            <summary>
-            <para xml:lang="en">
-            							    Cultivar name according to the ICNCP
-            							  </para>
-            </summary>
-        </member>
-        <member name="P:CAFE.Web.Models.BotanicalNameModel.TradeDesignationNames">
-            <summary>
-            <para xml:lang="en">
-            							    Container for trade names
-            							  </para>
-            </summary>
-        </member>
-        <member name="P:CAFE.Web.Models.BotanicalNameModel.TradeDesignationNamesSpecified">
-            <summary>
-            <para xml:lang="de">Ruft einen Wert ab, der angibt, ob die TradeDesignationNames-Collection leer ist.</para>
-            <para xml:lang="en">Gets a value indicating whether the TradeDesignationNames collection is empty.</para>
-            </summary>
-        </member>
-        <member name="M:CAFE.Web.Models.BotanicalNameModel.#ctor">
-            <summary>
-            <para xml:lang="de">Initialisiert eine neue Instanz der <see cref="!:BotanicalName" /> Klasse.</para>
-            <para xml:lang="en">Initializes a new instance of the <see cref="!:BotanicalName" /> class.</para>
-            </summary>
-        </member>
-        <member name="T:CAFE.Web.Models.HybridFlagModel">
-            <summary>
-            </summary>
-        </member>
-        <member name="P:CAFE.Web.Models.HybridFlagModel.Value">
+        <member name="P:CAFE.Web.Models.GenusModel.Value">
             <summary>
             <para xml:lang="de">Ruft den Text ab oder legt diesen fest.</para>
             <para xml:lang="en">Gets or sets the text value.</para>
             </summary>
         </member>
-        <member name="P:CAFE.Web.Models.HybridFlagModel.Id">
+        <member name="P:CAFE.Web.Models.GenusModel.Id">
             <summary>
             <para xml:lang="de">Ruft einen Wert ab, der diese Entität eindeutig identifiziert, oder legt diesen fest.</para>
             <para xml:lang="en">Gets or sets a value uniquely identifying this entity.</para>
             </summary>
         </member>
-        <member name="P:CAFE.Web.Models.HybridFlagModel.Insertionpoint">
+        <member name="P:CAFE.Web.Models.GenusModel.Uri">
             <summary>
-            <para xml:lang="en">Minimum inclusive value: 1.</para>
-            <para xml:lang="en">Maximum inclusive value: 3.</para>
-            </summary>
-        </member>
-        <member name="T:CAFE.Web.Models.ZoologicalNameModel">
-            <summary>
-            </summary>
-        </member>
-        <member name="P:CAFE.Web.Models.ZoologicalNameModel.Id">
-            <summary>
-            <para xml:lang="de">Ruft einen Wert ab, der diese Entität eindeutig identifiziert, oder legt diesen fest.</para>
-            <para xml:lang="en">Gets or sets a value uniquely identifying this entity.</para>
-            </summary>
-        </member>
-        <member name="P:CAFE.Web.Models.ZoologicalNameModel.FullZoologicalName">
-            <summary>
-            <para xml:lang="en">
-            							    An element that captures the full zoological name in one string.
-            							  </para>
-            </summary>
-        </member>
-        <member name="P:CAFE.Web.Models.ZoologicalNameModel.GenusOrMonomial">
-            <summary>
-            <para xml:lang="en">
-            							    Genus or higher taxon name
-            							  </para>
-            </summary>
-        </member>
-        <member name="P:CAFE.Web.Models.ZoologicalNameModel.Subgenus">
-            <summary>
-            <para xml:lang="en">
-            							    Subgenus name
-            							  </para>
-            </summary>
-        </member>
-        <member name="P:CAFE.Web.Models.ZoologicalNameModel.SpeciesEpithet">
-            <summary>
-            <para xml:lang="en">
-            							    Species epithet
-            							  </para>
-            </summary>
-        </member>
-        <member name="P:CAFE.Web.Models.ZoologicalNameModel.SubspeciesEpithet">
-            <summary>
-            <para xml:lang="en">
-            							    Maps to Darwin Core 2: Subspecies
-            							  </para>
-            </summary>
-        </member>
-        <member name="P:CAFE.Web.Models.ZoologicalNameModel.AuthorTeamOriginalAndYear">
-            <summary>
-            <para xml:lang="en">
-            							    The first person(s) who validly published a species-group name and the year of
-            							    publication
-            							  </para>
-            </summary>
-        </member>
-        <member name="P:CAFE.Web.Models.ZoologicalNameModel.AuthorTeamParenthesisAndYear">
-            <summary>
-            <para xml:lang="en">
-            							    The parenthetical citation of the original author when a species-group was
-            							    transferred to another genus and the year of the original publication
-            							  </para>
-            </summary>
-        </member>
-        <member name="P:CAFE.Web.Models.ZoologicalNameModel.CombinationAuthorTeamAndYear">
-            <summary>
-            <para xml:lang="en">
-            							    The citation of the authors responsible for the new combination and the year of
-            							    its publication
-            							  </para>
-            </summary>
-        </member>
-        <member name="P:CAFE.Web.Models.ZoologicalNameModel.Breed">
-            <summary>
-            <para xml:lang="en">
-            							    Name of the breed of an animal
-            							  </para>
-            </summary>
-        </member>
-        <member name="P:CAFE.Web.Models.ZoologicalNameModel.NamedIndividual">
-            <summary>
-            </summary>
-        </member>
-        <member name="T:CAFE.Web.Models.ViralNameModel">
-            <summary>
-            </summary>
-        </member>
-        <member name="P:CAFE.Web.Models.ViralNameModel.Id">
-            <summary>
-            <para xml:lang="de">Ruft einen Wert ab, der diese Entität eindeutig identifiziert, oder legt diesen fest.</para>
-            <para xml:lang="en">Gets or sets a value uniquely identifying this entity.</para>
-            </summary>
-        </member>
-        <member name="P:CAFE.Web.Models.ViralNameModel.FullViralName">
-            <summary>
-            <para xml:lang="en">
-            							    An element that captures the full viral name in one string.
-            							  </para>
-            </summary>
-        </member>
-        <member name="P:CAFE.Web.Models.ViralNameModel.GenusOrMonomial">
-            <summary>
-            <para xml:lang="en">
-            							    Genus or higher taxon name formed according to the code and representing the
-            							    result of the identification. E.g. Comovirus
-            							  </para>
-            </summary>
-        </member>
-        <member name="P:CAFE.Web.Models.ViralNameModel.ViralSpeciesDesignation">
-            <summary>
-            <para xml:lang="en">
-            							    The formal name of a viral species. Examples: vaccinia virus; human herpes
-            							    virus 2 (herpes simplex virus 2); poliovirus 1; Saccharomyces cerevisiae virus
-            							    L-A; enterobacteria phage PRD1 [Source: ICTV]
-            							  </para>
-            </summary>
-        </member>
-        <member name="P:CAFE.Web.Models.ViralNameModel.Acronym">
-            <summary>
-            <para xml:lang="en">
-            							    The accepted acronym for the Virus, e.g. PCV for Peanut Clump Virus
-            							  </para>
             </summary>
         </member>
         <member name="T:CAFE.Web.Models.ProcessContextModel">
@@ -4933,6 +4601,19 @@
             <para xml:lang="en">Gets a value indicating whether the Factors collection is empty.</para>
             </summary>
         </member>
+        <member name="P:CAFE.Web.Models.MethodContextModel.OrganizationalHierarchies">
+            <summary>
+            <para xml:lang="en">
+            			      A wrapper around organizational hierarchies
+            			    </para>
+            </summary>
+        </member>
+        <member name="P:CAFE.Web.Models.MethodContextModel.OrganizationalHierarchiesSpecified">
+            <summary>
+            <para xml:lang="de">Ruft einen Wert ab, der angibt, ob die OrganizationalHierarchies-Collection leer ist.</para>
+            <para xml:lang="en">Gets a value indicating whether the OrganizationalHierarchies collection is empty.</para>
+            </summary>
+        </member>
         <member name="T:CAFE.Web.Models.ApproachModel">
             <summary>
             </summary>
@@ -5001,12 +4682,6 @@
             <summary>
             </summary>
         </member>
-        <member name="P:CAFE.Web.Models.FactorModel.Id">
-            <summary>
-            <para xml:lang="de">Ruft einen Wert ab, der diese Entität eindeutig identifiziert, oder legt diesen fest.</para>
-            <para xml:lang="en">Gets or sets a value uniquely identifying this entity.</para>
-            </summary>
-        </member>
         <member name="P:CAFE.Web.Models.FactorModel.FactorName">
             <summary>
             <para xml:lang="en">
@@ -5021,6 +4696,14 @@
             <para xml:lang="en">
             					  The type of given factor (Biotic, Abiotic, Disturbance, ...)
             					</para>
+            </summary>
+        </member>
+        <member name="P:CAFE.Web.Models.FactorModel.Id">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:CAFE.Web.Models.FactorModel.Was">
+            <summary>
             </summary>
         </member>
         <member name="T:CAFE.Web.Models.FactorNameModel">
@@ -5043,10 +4726,6 @@
             <summary>
             </summary>
         </member>
-        <member name="P:CAFE.Web.Models.FactorNameModel.Was">
-            <summary>
-            </summary>
-        </member>
         <member name="T:CAFE.Web.Models.FactorTypeModel">
             <summary>
             </summary>
@@ -5064,6 +4743,44 @@
             </summary>
         </member>
         <member name="P:CAFE.Web.Models.FactorTypeModel.Uri">
+            <summary>
+            </summary>
+        </member>
+        <member name="T:CAFE.Web.Models.OrganizationalHierarchyModel">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:CAFE.Web.Models.OrganizationalHierarchyModel.Id">
+            <summary>
+            <para xml:lang="de">Ruft einen Wert ab, der diese Entität eindeutig identifiziert, oder legt diesen fest.</para>
+            <para xml:lang="en">Gets or sets a value uniquely identifying this entity.</para>
+            </summary>
+        </member>
+        <member name="P:CAFE.Web.Models.OrganizationalHierarchyModel.OrganizationHierarchyName">
+            <summary>
+            <para xml:lang="en">
+            					  A named organizational hierarchy of life (Atom
+            					  Level, Molecule Level, Cell Level, ...)
+            					</para>
+            </summary>
+        </member>
+        <member name="T:CAFE.Web.Models.OrganizationHierarchyNameModel">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:CAFE.Web.Models.OrganizationHierarchyNameModel.Value">
+            <summary>
+            <para xml:lang="de">Ruft den Text ab oder legt diesen fest.</para>
+            <para xml:lang="en">Gets or sets the text value.</para>
+            </summary>
+        </member>
+        <member name="P:CAFE.Web.Models.OrganizationHierarchyNameModel.Id">
+            <summary>
+            <para xml:lang="de">Ruft einen Wert ab, der diese Entität eindeutig identifiziert, oder legt diesen fest.</para>
+            <para xml:lang="en">Gets or sets a value uniquely identifying this entity.</para>
+            </summary>
+        </member>
+        <member name="P:CAFE.Web.Models.OrganizationHierarchyNameModel.Uri">
             <summary>
             </summary>
         </member>
@@ -5649,6 +5366,11 @@
             </summary>
             <param name="configuration">Configuration for sync</param>
             <typeparam name="T">Configuration type</typeparam>
+        </member>
+        <member name="T:CAFE.Web.Integration.GfBioServiceClient">
+            <summary>
+            Client for interact with GfBio Service API
+            </summary>
         </member>
         <member name="T:CAFE.Web.Shared.Extensions.MvcExtensions">
             <summary>

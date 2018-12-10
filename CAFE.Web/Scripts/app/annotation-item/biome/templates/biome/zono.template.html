@@ -13,7 +13,7 @@
                     <md-autocomplete flex="80"
                                      md-selected-item="zonoModel.biomeType"
                                      md-search-text="autocompleteFields.biomeType"
-                                     md-items="subItem in querySearch(autocompleteFields.biomeType, zonoDictionaries.biomeType)"
+                                     md-items="subItem in querySearch(autocompleteFields.biomeType, 'biomeType')"
                                      md-item-text="subItem.value"
                                      placeholder="Search for a Biome Type"
                                      md-require-match="true"
@@ -34,29 +34,29 @@
             <div class="biome-margin" flex="33">
                 <p>
                     <b>Biome Zone</b>
-                    <md-button class="md-icon-button md-primary" aria-label="{{simpleTypesVocabularies.biomeZone}}" ng-show="simpleTypesVocabularies.biomeZone">
-                        <md-tooltip class="tt-multiline" md-direction="right">{{simpleTypesVocabularies.biomeZone}}</md-tooltip>
+                    <md-button class="md-icon-button md-primary" aria-label="{{simpleTypesVocabularies.biomeLatitudinalZone}}" ng-show="simpleTypesVocabularies.biomeLatitudinalZone">
+                        <md-tooltip class="tt-multiline" md-direction="right">{{simpleTypesVocabularies.biomeLatitudinalZone}}</md-tooltip>
                         <i class="material-icons">help_outline</i>
                     </md-button>
                 </p>
                 <div layout="row">
                     <md-autocomplete flex="80"
-                                     md-selected-item="zonoModel.biomeZone"
-                                     md-search-text="autocompleteFields.biomeZone"
-                                     md-items="subItem in querySearch(autocompleteFields.biomeZone, zonoDictionaries.biomeZone)"
+                                     md-selected-item="zonoModel.biomeLatitudinalZone"
+                                     md-search-text="autocompleteFields.biomeLatitudinalZone"
+                                     md-items="subItem in querySearch(autocompleteFields.biomeLatitudinalZone, 'biomeLatitudinalZone')"
                                      md-item-text="subItem.value"
                                      placeholder="Search for a Biome Zone"
                                      md-require-match="true"
                                      md-min-length="0">
                         <md-item-template>
-                            <span md-highlight-text="autocompleteFields.biomeZone">{{subItem.value}}</span>
+                            <span md-highlight-text="autocompleteFields.biomeLatitudinalZone">{{subItem.value}}</span>
                             <md-button class="md-icon-button md-primary" aria-label="{{subItem.description}}" ng-show="subItem.description">
                                 <md-tooltip class="tt-multiline" md-direction="right">{{subItem.description}}</md-tooltip>
                                 <i class="material-icons">help_outline</i>
                             </md-button>
                         </md-item-template>
                     </md-autocomplete>
-                    <md-button class="md-icon-button import" aria-label="Add/Import new" ng-click="ImportDialogOpen('biomeZone', zonoDictionaries.biomeZone, $event, zonoModel)">
+                    <md-button class="md-icon-button import" aria-label="Add/Import new" ng-click="ImportDialogOpen('biomeLatitudinalZone', zonoDictionaries.biomeLatitudinalZone, $event, zonoModel)">
                         <i class="material-icons md-24" title="Add/Import new">library_add</i>
                     </md-button>
                 </div>
@@ -73,7 +73,7 @@
                     <md-autocomplete flex="80"
                                      md-selected-item="zonoModel.biomeHumidityType"
                                      md-search-text="autocompleteFields.biomeHumidityType"
-                                     md-items="subItem in querySearch(autocompleteFields.biomeHumidityType, zonoDictionaries.biomeHumidityType)"
+                                     md-items="subItem in querySearch(autocompleteFields.biomeHumidityType, 'biomeHumidityType')"
                                      md-item-text="subItem.value"
                                      placeholder="Search for a Climate"
                                      md-require-match="true"
@@ -105,7 +105,7 @@
                     <md-autocomplete flex="80"
                                      md-selected-item="zonoModel.biomeContinentalityType"
                                      md-search-text="autocompleteFields.biomeContinentalityType"
-                                     md-items="subItem in querySearch(autocompleteFields.biomeContinentalityType, zonoDictionaries.biomeContinentalityType)"
+                                     md-items="subItem in querySearch(autocompleteFields.biomeContinentalityType, 'biomeContinentalityType')"
                                      md-item-text="subItem.value"
                                      placeholder="Search for a Continentality type"
                                      md-require-match="true"
@@ -135,7 +135,7 @@
                     <md-autocomplete flex="80"
                                      md-selected-item="zonoModel.biomeHemisphere"
                                      md-search-text="autocompleteFields.biomeHemisphere"
-                                     md-items="subItem in querySearch(autocompleteFields.biomeHemisphere, zonoDictionaries.biomeHemisphere)"
+                                     md-items="subItem in querySearch(autocompleteFields.biomeHemisphere, 'biomeHemisphere')"
                                      md-item-text="subItem.value"
                                      placeholder="Search for a Hemisphere"
                                      md-require-match="true"
@@ -164,8 +164,8 @@
             <md-list layout-margin>
                 <md-list-item ng-repeat="zono in biomeModel.zonoBiomes track by $index" style="margin-bottom: 15px;">
                     <div class="md-list-item-text" layout="column" style="width: 300px;">
-                        <p><b>Biome Type:</b> {{ zono.biomeType.value }}</p>
-                        <p><b>Biome Zone:</b> {{ zono.biomeZone.value }}</p>
+                        <p><b>Biome Type:</b> {{ zono.biomeLatitudinalZone.value }}</p>
+                        <p><b>Biome Zone:</b> {{ zono.biomeLatitudinalZone.value }}</p>
                         <p><b>Biome Hemisphere:</b> {{ zono.biomeHemisphere.value}}</p>
                         <p><b>Biome Humidity Type:</b> {{ zono.biomeHumidityType.value }}</p>
                         <p><b>Biome Continentality Type:</b> {{ zono.biomeContinentalityType.value }}</p>

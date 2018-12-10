@@ -36,6 +36,16 @@ using static CAFE.Web.Areas.Api.Models.ImportCollectionModel;
 using System.Linq.Expressions;
 using CAFE.Services.Integration;
 using System.ComponentModel.DataAnnotations;
+using System.Text;
+using System.Threading.Tasks;
+using System.Web.Http.Results;
+using System.Web.Http.Routing;
+using CAFE.Core.Plugins;
+using CAFE.Web.Integration;
+using CsvHelper;
+using Microsoft.Ajax.Utilities;
+using Newtonsoft.Json;
+using System.Diagnostics;
 
 namespace CAFE.Web.Areas.Api.Controllers
 {
@@ -50,22 +60,27 @@ namespace CAFE.Web.Areas.Api.Controllers
         private readonly IRepository<DAL.Models.DbAnnotationItemAccessibleGroups> _annotationItemAccessibleGroups;
         private readonly IVocabularyService _vocabularyService;
         private readonly ISecurityService _securityService;
+        private readonly ISecurityServiceAsync _securityServiceAsync;
+        private readonly IPluginsProvider _pluginsProvider;
+        private readonly IRepository<DbUIElement> _uiElementsRepository;
         private readonly IAnnotationItemIntegrationService _AIintegtationService;
-        private readonly ISecurityService _userFilesService;
         private readonly Core.Configuration.IConfigurationProvider _configurationProvider;
 
         public AnnotationItemController(
-            IRepository<DAL.Models.DbAnnotationItem> annotationRepository,
-            IRepository<DAL.Models.DbAnnotationItemAccessibleUsers> annotationItemAccessibleUsers,
-            IRepository<DAL.Models.DbAnnotationItemAccessibleGroups> annotationItemAccessibleGroups,
-            IVocabularyService vocabularyService,
-            ISecurityService securityService,
-            IAnnotationItemIntegrationService AIintegtationService,
-            ISecurityService userFilesService,
-            Core.Configuration.IConfigurationProvider configurationProvider,
-            IRepository<DAL.Models.DbUser> usersRepository,
-            IRepository<DAL.Models.DbRole> groupsRepository,
-            IUserDataIntegrationService userDataIntegrationService
+                IRepository<DAL.Models.DbAnnotationItem> annotationRepository,
+                IRepository<DAL.Models.DbAnnotationItemAccessibleUsers> annotationItemAccessibleUsers,
+                IRepository<DAL.Models.DbAnnotationItemAccessibleGroups> annotationItemAccessibleGroups,
+                IVocabularyService vocabularyService,
+                ISecurityService securityService,
+                IAnnotationItemIntegrationService AIintegtationService,
+                ISecurityService userFilesService,
+                Core.Configuration.IConfigurationProvider configurationProvider,
+                IRepository<DAL.Models.DbUser> usersRepository,
+                IRepository<DAL.Models.DbRole> groupsRepository,
+                IUserDataIntegrationService userDataIntegrationService,
+                ISecurityServiceAsync securityServiceAsync,
+                IPluginsProvider pluginsProvider,
+                IRepository<DbUIElement> uiElementsRepository
             )
         {
             _annotationItemAccessibleUsers = annotationItemAccessibleUsers;
@@ -74,11 +89,13 @@ namespace CAFE.Web.Areas.Api.Controllers
             _vocabularyService = vocabularyService;
             _securityService = securityService;
             _AIintegtationService = AIintegtationService;
-            _userFilesService = userFilesService;
             _configurationProvider = configurationProvider;
             _usersRepository = usersRepository;
             _groupsRepository = groupsRepository;
             _userDataIntegrationService = userDataIntegrationService;
+            _securityServiceAsync = securityServiceAsync;
+            _pluginsProvider = pluginsProvider;
+            _uiElementsRepository = uiElementsRepository;
         }
 
         /// <summary>
@@ -292,7 +309,7 @@ namespace CAFE.Web.Areas.Api.Controllers
                         filesToAdd.Add(transformationFileModel);
                     }
 
-                    _userFilesService.AddUserFiles(filesToAdd);
+                    _securityService.AddUserFiles(filesToAdd);
                 }
                 
                 var annotationItem = _AIintegtationService.ImportWithTransform(extendableFile, !model.UseTransormation ? transformationFile : null);
@@ -306,14 +323,53 @@ namespace CAFE.Web.Areas.Api.Controllers
                 if (!isValid)
                     throw new Exception("Invalid model.");
 
-                var dbAnnotationItem = Mapper.Map(annotationItem, new DbAnnotationItem());
-                dbAnnotationItem.Id = Guid.NewGuid();
-                dbAnnotationItem.OwnerId = currentUser.Id;
-                dbAnnotationItem.OwnerName = currentUser.UserName;
+                if(model.BehaviorType.HasValue)
+                {
+                    switch(model.BehaviorType)
+                    {
+                        case AIImportBehavior.CreateClean:
+                            var dbAnnotationItem = Mapper.Map(annotationItem, new DbAnnotationItem());
+                            dbAnnotationItem.Id = Guid.NewGuid();
+                            dbAnnotationItem.OwnerId = currentUser.Id;
+                            dbAnnotationItem.OwnerName = currentUser.UserName;
 
-                dbAnnotationItem.CreationDate = DateTime.Now;
+                            dbAnnotationItem.CreationDate = DateTime.Now;
 
-                _annotationRepository.Insert(dbAnnotationItem);
+                            _annotationRepository.Insert(dbAnnotationItem);
+
+                            break;
+                        case AIImportBehavior.CopyFromExisting:
+                            var existingAnnotation = _annotationRepository.Find(f => f.Id == model.CopyFromId);
+                            var mappedExistingAnnotation = Mapper.Map(annotationItem, existingAnnotation);
+                            var mappedAnnotationItem = Mapper.Map(existingAnnotation, new AnnotationItem());
+                            var dbCopiedAnnotationItem = Mapper.Map(mappedAnnotationItem, new DbAnnotationItem());
+                            dbCopiedAnnotationItem.Id = Guid.NewGuid();
+                            dbCopiedAnnotationItem.OwnerId = currentUser.Id;
+                            dbCopiedAnnotationItem.OwnerName = currentUser.UserName;
+
+                            dbCopiedAnnotationItem.CreationDate = DateTime.Now;
+
+                            _annotationRepository.Insert(dbCopiedAnnotationItem);
+                            break;
+                        case AIImportBehavior.UpdateExisting:
+                            var existingAnnotation1 = _annotationRepository.Find(f => f.Id == model.CopyFromId);
+                            var mappedExistingAnnotation1 = Mapper.Map(annotationItem, existingAnnotation1);
+                            _annotationRepository.Update(mappedExistingAnnotation1);
+                            break;
+                    }
+                }
+                else
+                {
+                    var dbAnnotationItem = Mapper.Map(annotationItem, new DbAnnotationItem());
+                    dbAnnotationItem.Id = Guid.NewGuid();
+                    dbAnnotationItem.OwnerId = currentUser.Id;
+                    dbAnnotationItem.OwnerName = currentUser.UserName;
+
+                    dbAnnotationItem.CreationDate = DateTime.Now;
+
+                    _annotationRepository.Insert(dbAnnotationItem);
+                }
+
             }
             catch(DeserializeSchemaException ex)
             {
@@ -326,6 +382,140 @@ namespace CAFE.Web.Areas.Api.Controllers
                 throw new HttpResponseException(message);
             }
             return true;
+        }
+
+
+        //CreateFromTemplate(Guid[] filesId, Guid? cloningId)
+
+        /// <summary>
+        /// Create new AI from uploads user's files
+        /// </summary>
+        /// <returns></returns>
+        [Authorize]
+        [HttpPost]
+        public async Task<string> AddFromNewFiles()
+        {
+            var guids = await UploadFilesAsync();
+            var uri = Url.Link("Default", new { controller = "AnnotationItem", area = "", action = "CreateFromTemplate", filesIds = string.Join(",", guids) });
+
+            return uri;
+        }
+
+        /// <summary>
+        /// Create new AI from existing user's files
+        /// </summary>
+        /// <returns></returns>
+        [Authorize]
+        [HttpPost]
+        public async Task<string> AddFromExistingFiles(WizardDataModel model)
+        {
+            var guids = model.FilesIds;
+            await Task.Delay(0);
+            var uri = Url.Link("Default", new { controller = "AnnotationItem", area = "", action = "CreateFromTemplate", filesIds = string.Join(",", guids) });
+
+            return uri;
+        }
+
+        /// <summary>
+        /// Create new AI from uploads user's files and existing AI data
+        /// </summary>
+        /// <returns></returns>
+        [Authorize]
+        [HttpPost]
+        public async Task<string> AddFromNewFilesAndExistingAnnotaions(string id)
+        {
+            var guids = await UploadFilesAsync();
+            var cloneId = id;
+            var uri = Url.Link("Default", new { controller = "AnnotationItem", area = "", action = "CreateFromTemplate", filesIds = string.Join(",", guids), cloningId = cloneId });
+
+            return uri;
+        }
+
+        /// <summary>
+        /// Create new AI from existing user's files and existing AI data
+        /// </summary>
+        /// <returns></returns>
+        [Authorize]
+        [HttpPost]
+        public async Task<string> AddFromExistingFilesAndExistingAnnotaions(WizardDataModel model)
+        {
+            var guids = model.FilesIds;
+            var cloneId = model.AnnotationItemId;
+            var uri = Url.Link("Default", new { controller = "AnnotationItem", area = "", action = "CreateFromTemplate", filesIds = string.Join(",", guids), cloningId = cloneId });
+
+            await Task.Delay(0);
+            return uri;
+        }
+
+        /// <summary>
+        /// Update existing AI from uploads user's files
+        /// </summary>
+        /// <returns></returns>
+        [Authorize]
+        [HttpPost]
+        public async Task UpdateFromNewFiles(string id)
+        {
+            var guids = await UploadFilesAsync();
+            await UpdateIAWithFiles(Guid.Parse(id), guids);
+        }
+
+        /// <summary>
+        /// Update existing AI from existing uses's files
+        /// </summary>
+        /// <returns></returns>
+        [Authorize]
+        [HttpPost]
+        public async Task UpdateFromExistingFiles(WizardDataModel model)
+        {
+            var guids = model.FilesIds;
+            await UpdateIAWithFiles(Guid.Parse(model.AnnotationItemId), guids.Select(s=> int.Parse(s)));
+        }
+
+
+        private async Task UpdateIAWithFiles(Guid id, IEnumerable<int> filesIds)
+        {
+            var existingAi = _annotationRepository.Find(f => f.Id == id);
+            if (existingAi != null)
+            {
+                DbResource resource;
+                if (existingAi.Object.Resources.Any())
+                {
+                    resource = existingAi.Object.Resources.First();
+                }
+                else
+                {
+                    resource = new DbResource();
+                    existingAi.Object.Resources.Add(resource);
+                }
+                if (resource.OfflineResources == null)
+                {
+                    resource.OfflineResources = new List<DbOfflineResource>();
+                }
+                foreach (var guid in filesIds)
+                {
+
+                    var file = await _securityServiceAsync.GetUserFileByIdAsync(guid.ToString());
+                    if (file != null)
+                    {
+                        resource.OfflineResources.Add(new DbOfflineResource()
+                        {
+                            FileID = guid,
+                            FileName = file.Name,
+                            FilePath = GetUserFilePath(guid.ToString()),
+                            MimeType = file.Type.ToString(),
+                            DataFormat = new DataFormat()
+                            {
+                                Uri = "",
+                                Value = MimeMapping.GetMimeMapping(GetUserFilePath(guid.ToString()))
+                            }
+                        });
+                    }
+                }
+
+
+                _annotationRepository.Update(existingAi);
+            }
+            await Task.Delay(0);
         }
 
         /// <summary>
@@ -764,7 +954,14 @@ namespace CAFE.Web.Areas.Api.Controllers
                     var type = System.Type.GetType("CAFE.Core.Integration." + property.PropertyType.Name + "Vocabulary, CAFE.Core", false, true);
                     if (type != null)
                     {
-                        propertyEnumElements = _vocabularyService.GetVocabularyValues(type, System.Web.HttpContext.Current.User.Identity.GetUserId()).ToList();
+                        try
+                        {
+                            propertyEnumElements = _vocabularyService.GetVocabularyValues(type, System.Web.HttpContext.Current.User.Identity.GetUserId()).ToList();
+                        }
+                        catch (Exception ex)
+                        {
+                            throw;
+                        }
                     }
                     else
                         propertyEnumElements = String.Empty;
@@ -813,10 +1010,43 @@ namespace CAFE.Web.Areas.Api.Controllers
             return values;
         }
 
+
+        private IEnumerable<VocabularyValueModel> GetVocabularies(string vocabularyType, string searchToken)
+        {
+            var typeName = vocabularyType.First().ToString().ToUpper() + vocabularyType.Substring(1) + "Vocabulary";
+            var annotationItemType = typeof(AnnotationItem);
+            var annotationItemAsm = annotationItemType.Assembly;
+
+
+            //var types = annotationItemAsm.GetTypes();
+            //var vocabulatyTypes = types.Where(t => t.Name.EndsWith("Vocabulary"));
+            //foreach(var voc in vocabulatyTypes)
+            //{
+            //    Trace.WriteLine(voc.Name);
+            //}
+
+            var type = annotationItemAsm.GetType(string.Concat(annotationItemType.Namespace, ".", typeName));
+            var values = _vocabularyService.GetVocabularyValues(type, System.Web.HttpContext.Current.User.Identity.GetUserId(), searchToken);
+            return Mapper.Map<IEnumerable<VocabularyValue>, IEnumerable<VocabularyValueModel>>(values);
+        }
+
         [HttpGet]
         public Dictionary<string, string> GetSimpleTypesVocabularies()
         {
             return _vocabularyService.GetSimpleTypesDescriptions();
+        }
+
+        [HttpGet]
+        public List<string> GetUserHiddenHelpers()
+        {
+            var currentUser = _securityService.GetUserById(System.Web.HttpContext.Current.User.Identity.GetUserId());
+            return currentUser.HiddenHelpers.Select(h => h.Name).ToList();
+        }
+
+        [HttpPost]
+        public void HideUserHelper([FromBody]string helpername)
+        {
+            _securityService.AddOreRemoveUserHiddenHelper(Guid.Parse(HttpContext.Current.User.Identity.GetUserId()), helpername);
         }
 
         private IEnumerable<VocabularyValueModel> GetVocabularies_<T>()
@@ -836,13 +1066,179 @@ namespace CAFE.Web.Areas.Api.Controllers
             return values;
         }
 
-        [HttpPost]
-        public IEnumerable<VocabularyValue> SearchOrganismProperyValues([FromBody]Models.LocationSearchModel data)
-        {
-            var type = System.Type.GetType("CAFE.Core.Integration." + data.Type + "Vocabulary, CAFE.Core", false, true);
-            var values = _vocabularyService.GetVocabularyValuesExtended(type, data.Type, data.Search, System.Web.HttpContext.Current.User.Identity.GetUserId());
+        //[HttpPost]
+        //public IEnumerable<VocabularyValue> SearchOrganismProperyValues([FromBody]Models.LocationSearchModel data)
+        //{
+        //    var type = System.Type.GetType("CAFE.Core.Integration." + data.Type + "Vocabulary, CAFE.Core", false, true);
+        //    var values = _vocabularyService.GetVocabularyValuesExtended(type, data.Type, data.Search, System.Web.HttpContext.Current.User.Identity.GetUserId());
 
-            return values;
+        //    return values;
+        //}
+
+
+        [HttpPost]
+        public IEnumerable<SpeciesResolveValue> SearchOrganismSpecifies([FromBody]SpeciesSearchModel data)
+        {
+            List<SpeciesResolveValue> serviceData = new List<SpeciesResolveValue>();
+            var speciesPlugin = _pluginsProvider.GetPluginsFor(typeof(SpeciesVocabulary)).FirstOrDefault();
+            if (speciesPlugin != null)
+            {
+                var speciesTypedPlugin = speciesPlugin as IVocabularyExternalSourcePlugin<SpeciesResolveValue>;
+                if(speciesTypedPlugin != null)
+                {
+                    serviceData = speciesTypedPlugin.GetValuesExtended(data.Search, "Species").DistinctBy(d => d.Species).ToList();
+                }
+            }
+
+            if (data.Import != null)
+            {
+                var importedData = ImportTaxonomyClassification(data.Import);
+                foreach (var importTaxonomyRowModel in importedData.Where(w => w.Species.Contains(data.Search)))
+                {
+                    serviceData.Add(new SpeciesResolveValue()
+                    {
+                        Score = importTaxonomyRowModel.Score,
+                        Species = importTaxonomyRowModel.Species,
+                        Names = new List<GlobalNamesRankValue>()
+                        {
+                            new GlobalNamesRankValue(){ Rank = "class", Value = importTaxonomyRowModel.Class},
+                            new GlobalNamesRankValue(){ Rank = "division", Value = importTaxonomyRowModel.Division},
+                            new GlobalNamesRankValue(){ Rank = "family", Value = importTaxonomyRowModel.Family},
+                            new GlobalNamesRankValue(){ Rank = "genus", Value = importTaxonomyRowModel.Genus},
+                            new GlobalNamesRankValue(){ Rank = "order", Value = importTaxonomyRowModel.Order}
+                        }
+                    });
+                }
+            }
+
+            var scoredResources = new List<SpeciesResolveValue>();
+            scoredResources.AddRange(serviceData.Where(s => s.Score >= (data.MinScore / 100))
+                .OrderByDescending(o => o.Score).ThenBy(o => o.Species).Take(10));
+
+            if (scoredResources.Count < 10)
+            {
+                var needCount = 10 - scoredResources.Count;
+                scoredResources.AddRange(serviceData.Where(s => s.Score < (data.MinScore / 100))
+                    .OrderByDescending(o => o.Score).ThenBy(o => o.Species).Take(needCount));
+            }
+            return scoredResources.OrderByDescending(o => o.Score).ThenBy(o => o.Species);
+        }
+
+        private IEnumerable<ImportTaxonomyRowModel> ImportTaxonomyClassification(TaxonomyImportModel model)
+        {
+            List<ImportTaxonomyRowModel> result = new List<ImportTaxonomyRowModel>();
+            try
+            {
+                var bytesArray = new byte[] { };
+                var importFileData = model.ExtendableData;
+
+                var importFileType = model.DataType;
+
+                if (importFileType == AIImportTypes.FileFromURL)
+                    bytesArray = new System.Net.WebClient().DownloadData(importFileData);
+                else if (importFileType == AIImportTypes.FromUserFiles)
+                {
+                    var userFilePath = GetUserFilePath(importFileData);
+                    if (null == userFilePath)
+                        throw new Exception("File not found");
+
+                    bytesArray = new System.Net.WebClient().DownloadData(userFilePath);
+                }
+                else if (importFileType == AIImportTypes.UploadedFile)
+                {
+                    var fileInfo = new Regex(@"^data:(.*);base64,").Match(importFileData);
+                    bytesArray = Convert.FromBase64String(importFileData.Replace(fileInfo.Groups[0].Value, String.Empty));
+                }
+
+                //var extendableFile = System.Text.Encoding.Default.GetString(bytesArray);
+
+                if (model.SaveFileAfterUpload)
+                {
+                    var appConfig = _configurationProvider.Get<Core.Configuration.ApplicationConfiguration>();
+                    var basePath = appConfig.ApploadsRoot;
+                    var userFilesPath = Path.Combine(basePath, "UserFiles");
+                    var userId = User.Identity.GetUserId();
+
+                    var extendableFileId = Guid.NewGuid();
+                    var oldExtension = Path.GetExtension(model.ExtendableDataName);
+                    var newFileName = string.Concat(extendableFileId, oldExtension);
+                    var fileVirtualPath = userFilesPath + "/" + newFileName;
+                    File.WriteAllBytes(HttpContext.Current.Server.MapPath(fileVirtualPath), bytesArray);
+                    var filesToAdd = new List<UserFile> { };
+
+                    var extendableFileModel = new UserFile
+                    {
+                        Id = extendableFileId,
+                        Name = model.ExtendableDataName,
+                        Owner = new User { Id = userId },
+                        OwnerId = userId,
+                        CreationDate = DateTime.Now,
+                        Type = UserFile.FileType.Other
+                    };
+                    filesToAdd.Add(extendableFileModel);
+
+                    _securityService.AddUserFiles(filesToAdd);
+                }
+                using (var memoryStream = new MemoryStream(bytesArray))
+                using (var textReader = new StreamReader(memoryStream, Encoding.Default))
+                {
+                    var csv = new CsvReader(textReader);
+                    var row = 0;
+                    while (csv.Read())
+                    {
+                        row++;
+
+                        var taxonomy = new ImportTaxonomyRowModel();
+
+                        taxonomy.Species = csv.GetField<string>("species");
+                        taxonomy.Score = csv.GetField<double>("score");
+                        taxonomy.Class = csv.GetField<string>("class");
+                        taxonomy.Division = csv.GetField<string>("division");
+                        taxonomy.Domain = csv.GetField<string>("domain");
+                        taxonomy.Family = csv.GetField<string>("family");
+                        taxonomy.Genus = csv.GetField<string>("genus");
+                        taxonomy.Order = csv.GetField<string>("order");
+
+                        result.Add(taxonomy);
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+                var message = Request.CreateErrorResponse(HttpStatusCode.InternalServerError, "Error occurred while importing csv file. Please contact Your administrator and provide following details for an error: " + ex.Message);
+                throw new HttpResponseException(message);
+            }
+            return result;
+
+        }
+
+
+        [HttpGet]
+        public IEnumerable<VocabularyValueModel> SearchVocabularies(string searchToken, string elementId)
+        {
+            List<VocabularyValueModel> vocabularyValues = new List<VocabularyValueModel>();
+
+            if (!string.IsNullOrEmpty(elementId))
+            {
+                //elementId = elementId.First().ToString().ToUpper() + elementId.Substring(1);
+                vocabularyValues.AddRange(GetVocabularies(elementId, searchToken));
+
+                if (searchToken != null && searchToken.Length >= 3)
+                {
+                    var uiElement = _uiElementsRepository.Find(f => f.ElementIdOnUI.ToLower() == elementId.ToLower());
+                    if (uiElement != null)
+                    {
+                        var gfbioClient = new GfBioServiceClient();
+                        var gfbioResults = gfbioClient.Search(searchToken, uiElement.UrlForGetData);
+                        vocabularyValues.AddRange(gfbioResults.Select(s =>
+                            new VocabularyValueModel { Value = s.Label, Uri = s.Uri }));
+                    }
+                }
+
+            }
+
+            return vocabularyValues;
         }
 
         [HttpGet]
@@ -862,9 +1258,9 @@ namespace CAFE.Web.Areas.Api.Controllers
             return new
             {
                 GeologicalTimePeriods = GetAnnotationItemClassProperties<GeologicalTimePeriod>(),
-                TimeZonesVocabulary = GetVocabularies_<TimezoneVocabulary>(),
-                TemporalExtentTypeVocabulary = GetVocabularies<TemporalExtentTypeVocabulary>(),
-                TemporalResolutionTypeVocabulary = GetVocabularies<TemporalExtentTypeVocabulary>()
+                //TimeZonesVocabulary = GetVocabularies_<TimezoneVocabulary>(),
+                //TemporalExtentTypeVocabulary = GetVocabularies<TemporalExtentTypeVocabulary>(),
+                //TemporalResolutionTypeVocabulary = GetVocabularies<TemporalExtentTypeVocabulary>()
             };
         }
 
@@ -1206,7 +1602,7 @@ namespace CAFE.Web.Areas.Api.Controllers
         private string GetUserFilePath(string id)
         {
             var currentUserId = User.Identity.GetUserId();
-            var fileModel = _userFilesService.GetUserFileById(id);
+            var fileModel = _securityService.GetUserFileById(id);
             var userHasAccess = fileModel.AcceptedUsers.FirstOrDefault(u => u.Id == currentUserId);
             var usersGroupHasAccess = fileModel.AcceptedUsers.FirstOrDefault(u => u.Id == currentUserId);
 
@@ -1228,5 +1624,92 @@ namespace CAFE.Web.Areas.Api.Controllers
             var filePath = System.Web.Hosting.HostingEnvironment.ApplicationPhysicalPath + basePath + fileModel.Id + fileExtension;
             return filePath;
         }
+
+        private async Task<IEnumerable<int>> UploadFilesAsync()
+        {
+            HttpRequestMessage request = this.Request;
+            if (!request.Content.IsMimeMultipartContent())
+            {
+                throw new System.Web.Http.HttpResponseException(new HttpResponseMessage((System.Net.HttpStatusCode.UnsupportedMediaType)));
+            }
+
+            var context = HttpContext.Current.Request;
+            var accessMode = (Core.Resources.AccessModes)int.Parse(context.Form["AccessMode"]);
+            var fileDescription = context.Form["Description"];
+            var selectedUSersAndGroups = context.Form["UsersAndGroups"];
+
+            var appConfig = _configurationProvider.Get<Core.Configuration.ApplicationConfiguration>();
+            var basePath = appConfig.ApploadsRoot;
+            var userFilesPath = Path.Combine(basePath, "UserFiles");
+
+            var acceptedUsers = new List<User>();
+            var acceptedGroups = new List<Core.Security.Group>();
+            var userFilesListToAdd = new List<UserFile>();
+
+            if (!String.IsNullOrEmpty(selectedUSersAndGroups) && accessMode == Core.Resources.AccessModes.Explicit)
+            {
+                var usersAndGroups = JsonConvert.DeserializeObject<List<UsersAndGroupsSearchResultsModel>>(selectedUSersAndGroups);
+                foreach (var item in usersAndGroups)
+                {
+                    if (item.IsGroup)
+                        acceptedGroups.Add(new Core.Security.Group { Id = item.Id });
+
+                    else
+                        acceptedUsers.Add(new Core.Security.User { Id = item.Id });
+                }
+            }
+            else
+            {
+                acceptedGroups = new List<Core.Security.Group>();
+                acceptedUsers = new List<Core.Security.User>();
+            }
+
+            if (context.Files.Count > 0)
+                for (var i = 0; i < context.Files.Count; i++)
+                {
+                    var file = context.Files[i];
+
+                    var fileId = Guid.NewGuid();
+                    var oldExtension = Path.GetExtension(file.FileName);
+
+                    var newFileName = string.Concat(fileId, oldExtension);
+                    var fileVirtualPath = userFilesPath + "/" + newFileName;
+                    var userId = User.Identity.GetUserId();
+                    file.SaveAs(HttpContext.Current.Server.MapPath(fileVirtualPath));
+
+                    var fileModel = new UserFile
+                    {
+                        Id = fileId,
+                        Name = file.FileName,
+                        Description = fileDescription,
+                        AcceptedUsers = acceptedUsers,
+                        AcceptedGroups = acceptedGroups,
+                        Owner = new User { Id = userId },
+                        OwnerId = userId,
+                        CreationDate = DateTime.Now,
+                        AccessMode = accessMode,
+                        Type = GetFileContentType(file.ContentType)
+                    };
+                    userFilesListToAdd.Add(fileModel);
+                }
+
+            await _securityServiceAsync.AddUserFilesAsync(userFilesListToAdd);
+            return userFilesListToAdd.Select(s => s.FileId);
+
+        }
+        private UserFile.FileType GetFileContentType(string MIMEType)
+        {
+            if (MIMEType.Contains("audio/"))
+                return UserFile.FileType.Audio;
+            else if (MIMEType.Contains("video/"))
+                return UserFile.FileType.Video;
+            else if (MIMEType.Contains("application/vnd.ms-excel"))
+                return UserFile.FileType.Tabular;
+            else if (MIMEType.Contains("image/"))
+                return UserFile.FileType.Image;
+            else
+                return UserFile.FileType.Other;
+        }
+
     }
 }

@@ -4,7 +4,7 @@
             <div layout="row">
                 <md-chips flex="90" md-removable="isAccessible" ng-model="chemicalContext.elements" md-transform-chip="{elementName: $chip}"  md-autocomplete-snap md-require-match="true">
                     <md-autocomplete md-search-text="functionAutocomplete.searchText"
-                                     md-items="item in querySearch(functionAutocomplete.searchText, chemicalDictionaries.elementNameVocabulary)"
+                                     md-items="item in querySearch(functionAutocomplete.searchText, 'elementName')"
                                      md-min-length="0"
                                      md-item-text="item.value"
                                      ng-if="isAccessible"
@@ -34,7 +34,7 @@
             <div layout="row">
                 <md-chips flex="90" md-removable="isAccessible" ng-model="chemicalContext.isotopes" md-transform-chip="{isotopeName: $chip}" md-autocomplete-snap md-require-match="true">
                     <md-autocomplete md-search-text="functionAutocomplete.searchText2"
-                                     md-items="item in querySearch(functionAutocomplete.searchText2, chemicalDictionaries.isotopeNameVocabulary)"
+                                     md-items="item in querySearch(functionAutocomplete.searchText2, 'isotopeName')"
                                      md-item-text="item.value"
                                      md-min-length="0"
                                      ng-if="isAccessible"

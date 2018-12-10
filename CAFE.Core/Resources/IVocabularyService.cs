@@ -83,6 +83,15 @@ namespace CAFE.Core.Resources
         IEnumerable<VocabularyValue> GetVocabularyValues(Type vocabularyType, string userId);
 
         /// <summary>
+        /// Returns list of vocabulary values
+        /// </summary>
+        /// <param name="vocabularyType">Type of vocabulary</param>
+        /// <param name="searchToken">Search by this value</param>
+        /// <returns>List of vocabulary values</returns>
+        IEnumerable<VocabularyValue> GetVocabularyValues(Type vocabularyType, string searchToken, string userId);
+
+
+        /// <summary>
         ///  Returns list of vocabulary values
         /// </summary>
         /// <param name="vocabularyType">Type of vocabulary</param>

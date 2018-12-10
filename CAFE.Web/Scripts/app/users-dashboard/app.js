@@ -5,18 +5,19 @@
       'ui.router',
       'ngAnimate',
       'ngMaterial',
-        "ngTable",
+      "ngTable",
       'lfNgMdFileInput',
       'ngTagsInput',
       'usersDashboard.acceptRequests',
       'usersDashboard.filesList',
       'usersDashboard.unacceptedUsers',
-      'usersDashboard.annotationItems'
+      'usersDashboard.annotationItems',
+      'mgo-angular-wizard'
     ]);
 
     app.controller('userDashboardController', [
         '$scope', '$state', '$http', function ($scope, $state, $http) {
-
+            $scope.openedCommunications = false;
         }
     ]);
 })();

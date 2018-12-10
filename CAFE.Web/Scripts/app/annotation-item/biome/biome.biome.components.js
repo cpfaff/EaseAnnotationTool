@@ -24,7 +24,7 @@
                 $scope.ChangeBiomeZone = function (newZoneIndex, hemisphereIndex)
                 {
                     $scope.biomeZones[(0 == hemisphereIndex ? 'biomeZone2' : 'biomeZone1')] = null;
-                    $scope.zonoModel.BiomeZone = newZoneIndex;
+                    $scope.zonoModel.BiomeLatitudinalZone = newZoneIndex;
                     $scope.zonoModel.BiomeHemisphere = hemisphereIndex;
                 }
                 

@@ -13,7 +13,7 @@
                     <md-autocomplete flex
                                      md-selected-item="factorModel.factorName"
                                      md-search-text="autocompleteFields.factorName"
-                                     md-items="item in querySearch(autocompleteFields.factorName, methodDictionaries.factors[0].factorName)"
+                                     md-items="item in querySearch(autocompleteFields.factorName, 'factorName')"
                                      md-item-text="item.value"
                                      placeholder="Search for a factor name"
                                      md-min-length="0"
@@ -43,7 +43,7 @@
                     <md-autocomplete flex
                                      md-selected-item="factorModel.factorType"
                                      md-search-text="autocompleteFields.factorType"
-                                     md-items="item in querySearch(autocompleteFields.factorType, methodDictionaries.factors[0].factorType)"
+                                     md-items="item in querySearch(autocompleteFields.factorType, 'factorType')"
                                      md-item-text="item.value"
                                      placeholder="Search for a factor type"
                                      md-min-length="0"

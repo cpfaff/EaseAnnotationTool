@@ -10,7 +10,7 @@
               .primaryPalette('blue')
               .accentPalette('pink');
         }]).
-        controller('annotationChemicalController', function (ChemicalProvider, $scope, $mdDialog, actualAnnotationModel, AnnotationItemProvider) {
+        controller('annotationChemicalController', function (ChemicalProvider, $scope, $mdDialog, actualAnnotationModel, AnnotationItemProvider, VocabulariesProvider) {
             $scope.chemicalContext = actualAnnotationModel.annotationItem.object.contexts[0].chemicalContext;
             
             $scope.isAccessible = AnnotationItemProvider.getIsAccessible();
@@ -74,9 +74,9 @@
             }
 
             $scope.querySearch = function (query, vocabulary) {
-                $scope.chemicalContext
-                var results = query ? vocabulary.filter(createFilterFor(query)) : vocabulary;
-                return results;
+                return VocabulariesProvider.search(query, vocabulary).then(function (response) {
+                    return response.data;
+                });
             }
 
             $scope.autocompleteFields = { searchText: null }

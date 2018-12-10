@@ -24,9 +24,6 @@
         </thead>
         <tbody>
             <tr ng-repeat="request in $data">
-                <td>
-                    <input type="checkbox" ng-model="request.selected" ng-click="checkRequest(request)" />
-                </td>
                 <td title="'Type'" filter="{ type: 'text'}" sortable="'type'">
                     {{request.type == 0 ? 'Incoming' : 'Outgoing'}}
                 </td>

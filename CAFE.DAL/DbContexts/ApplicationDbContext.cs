@@ -16,6 +16,8 @@ namespace CAFE.DAL.DbContexts
             //base.Configuration.LazyLoadingEnabled = false;
             base.Configuration.ProxyCreationEnabled = true;
             base.Configuration.LazyLoadingEnabled = true;
+
+            
         }
 
         /// <summary>
@@ -97,6 +99,11 @@ namespace CAFE.DAL.DbContexts
         /// Descriptions for each Annotation schema element
         /// </summary>
         public DbSet<DbSchemaItemDescription> SchemaItemDescriptions { get; set; }
+
+        /// <summary>
+        /// UI elements in Annotation Item form and related resources with it
+        /// </summary>
+        public DbSet<DbUIElement> UIElements { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
 	    {

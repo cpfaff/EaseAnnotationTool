@@ -7,6 +7,6 @@ namespace CAFE.Web.Areas.Api.Models.Search
     {
         public string Name { get; set; }
         public List<SearchRequestFilterModel> Items { get; set; } = new List<SearchRequestFilterModel>();
-
+        public string Tooltip { get; set; }
     }
 }

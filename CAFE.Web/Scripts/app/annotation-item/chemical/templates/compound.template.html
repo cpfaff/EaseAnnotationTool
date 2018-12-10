@@ -13,14 +13,14 @@
                     <div layout="row">
                         <md-chips flex="90" ng-model="compondModel.compoundClass" md-transform-chip="$chip.value" md-autocomplete-snap md-require-match="true">
                             <md-autocomplete md-search-text="functionAutocomplete.searchText1"
-                                             md-items="item in querySearch(functionAutocomplete.searchText1, chemicalDictionaries.compoundClassVocabulary)"
-                                             md-item-text="item.value.value"
+                                             md-items="item in querySearch(functionAutocomplete.searchText1, 'compoundClass')"
+                                             md-item-text="item.value"
                                              md-min-length="0"
                                              placeholder="Search for a class">
                                 <md-item-template>
-                                    <span md-highlight-text="functionAutocomplete.searchText1">{{item.value.value}}</span>
-                                    <md-button class="md-icon-button md-primary" aria-label="{{item.value.description}}" ng-show="item.value.description">
-                                        <md-tooltip class="tt-multiline" md-direction="right">{{item.value.description}}</md-tooltip>
+                                    <span md-highlight-text="functionAutocomplete.searchText1">{{item.value}}</span>
+                                    <md-button class="md-icon-button md-primary" aria-label="{{item.description}}" ng-show="item.description">
+                                        <md-tooltip class="tt-multiline" md-direction="right">{{item.description}}</md-tooltip>
                                         <i class="material-icons">help_outline</i>
                                     </md-button>
                                 </md-item-template>
@@ -43,14 +43,14 @@
                     <div layout="row">
                         <md-chips flex="90" ng-model="compondModel.compoundType" md-transform-chip="$chip.value" md-autocomplete-snap md-require-match="true">
                             <md-autocomplete md-search-text="functionAutocomplete.searchText2"
-                                             md-items="item in querySearch(functionAutocomplete.searchText2, chemicalDictionaries.compoundTypeVocabulary)"
-                                             md-item-text="item.value.value"
+                                             md-items="item in querySearch(functionAutocomplete.searchText2, 'compoundType')"
+                                             md-item-text="item.value"
                                              md-min-length="0"
                                              placeholder="Search for a type">
                                 <md-item-template>
-                                    <span md-highlight-text="functionAutocomplete.searchText2">{{item.value.value}}</span>
-                                    <md-button class="md-icon-button md-primary" aria-label="{{item.value.description}}" ng-show="item.value.description">
-                                        <md-tooltip class="tt-multiline" md-direction="right">{{item.value.description}}</md-tooltip>
+                                    <span md-highlight-text="functionAutocomplete.searchText2">{{item.value}}</span>
+                                    <md-button class="md-icon-button md-primary" aria-label="{{item.description}}" ng-show="item.description">
+                                        <md-tooltip class="tt-multiline" md-direction="right">{{item.description}}</md-tooltip>
                                         <i class="material-icons">help_outline</i>
                                     </md-button>
                                 </md-item-template>

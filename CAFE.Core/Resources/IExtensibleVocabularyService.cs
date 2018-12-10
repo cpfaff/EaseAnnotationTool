@@ -30,6 +30,14 @@ namespace CAFE.Core.Resources
         /// <returns>Collection of extended values</returns>
         IEnumerable<VocabularyValue> GetAllExtenededValues(Type vocabularyType, string userId);
 
+        /// <summary>
+        /// Returns all(globaly) filtered extended values for vocabulary type T (that inherited from enum)
+        /// </summary>
+        /// <param name="vocabularyType">Type of vocabulary</param>
+        /// <param name="searchToken">Filtered by this value</param>
+        /// <returns>Collection of extended values</returns>
+        IEnumerable<VocabularyValue> GetAllExtenededValues(Type vocabularyType, string searchToken, string userId);
+
         Dictionary<string, string> GetAllSimpleTypesVocabularies();
         /// <summary>
         /// Returns all(globaly) extended values
@@ -66,6 +74,16 @@ namespace CAFE.Core.Resources
         /// <param name="vocabularyType">Type of vocabulary</param>
         /// <returns>Collection of extended values</returns>
         IEnumerable<VocabularyValue> GetExtenededValuesBy(string by, Type vocabularyType);
+
+
+        /// <summary>
+        /// Returns user's defined extended filtered values for vocabulary type T (that inherited from enum)
+        /// </summary>
+        /// <param name="by">User's id that added extended values</param>
+        /// <param name="vocabularyType">Type of vocabulary</param>
+        /// <param name="searchToken">Filtered by this value</param>
+        /// <returns>Collection of extended values</returns>
+        IEnumerable<VocabularyValue> GetExtenededValuesBy(string by, Type vocabularyType, string searchToken);
 
         /// <summary>
         /// Returns user's defined extended values for vocabulary type T (that inherited from enum)

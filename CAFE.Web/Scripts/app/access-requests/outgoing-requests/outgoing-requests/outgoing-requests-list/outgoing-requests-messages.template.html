@@ -6,7 +6,7 @@
         <md-toolbar class="md-toolbar-tools extended-toolbar">
             <h4>Subject: {{subject}}</h4>
         </md-toolbar>
-        <md-list flex style="overflow-y: scroll; height: 400px; margin-bottom: 20px;">
+        <md-list flex style="margin-bottom: 20px;">
             <md-list-item class="md-3-line" ng-repeat="message in messages" ng-click="null">
                 <div class="md-list-item-text" layout="column">
                     <h4><b>{{message.sender}}:</b> {{message.text}}</h4>

@@ -34,6 +34,7 @@ namespace CAFE.Core.Configuration
         public string Type { get; set; }
 
         public string BasePath { get; set; }
+        public string Tooltip { get; set; }
 
         public IEnumerable<Complex.FilterElement> ComplexFiltersCollection { get; set; } = new List<Complex.FilterElement>();
 

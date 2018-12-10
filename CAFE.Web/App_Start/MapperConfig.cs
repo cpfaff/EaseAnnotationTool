@@ -68,6 +68,11 @@ namespace CAFE.Web
                 c.CreateMap<UserFile, UserFilesViewModel>(MemberList.Source);
                 c.CreateMap<UserFilesViewModel, UserFile>(MemberList.Destination);
 
+                c.CreateMap<UserHiddenHelper, DbUserHiddenHelper>(MemberList.Source);
+                c.CreateMap<DbUserHiddenHelper, UserHiddenHelper>(MemberList.Destination);
+
+                
+
                 c.CreateMap<DbUserFile, UserFile>(MemberList.Destination).MaxDepth(2).PreserveReferences();
                 c.CreateMap<DbRole, Group>(MemberList.Destination).
                 MaxDepth(2).PreserveReferences();
@@ -263,7 +268,7 @@ namespace CAFE.Web
                 c.CreateMap<BiomeContextModel, DbBiomeContext>();
                 c.CreateMap<ZonoBiomeModel, DbZonoBiome>();
                 c.CreateMap<BiomeTypeModel, DbBiomeType>();
-                c.CreateMap<BiomeZoneModel, DbBiomeZone>();
+                c.CreateMap<BiomeLatitudinalZoneModel, DbBiomeLatitudinalZone>();
                 c.CreateMap<BiomeHumidityTypeModel, DbBiomeHumidityType>();
                 c.CreateMap<BiomeContinentalityTypeModel, DbBiomeContinentalityType>();
                 c.CreateMap<BiomeHemisphereModel, DbBiomeHemisphere>();
@@ -289,13 +294,6 @@ namespace CAFE.Web
                 c.CreateMap<DomainModel, DbDomain>();
                 c.CreateMap<KingdomModel, DbKingdom>();
                 c.CreateMap<DivisionModel, DbDivision>();
-                c.CreateMap<OrganismNameModel, DbOrganismName>();
-                c.CreateMap<BacterialNameModel, DbBacterialName>();
-                c.CreateMap<FungalNameModel, DbFungalName>();
-                c.CreateMap<BotanicalNameModel, DbBotanicalName>();
-                c.CreateMap<HybridFlagModel, DbHybridFlag>();
-                c.CreateMap<ZoologicalNameModel, DbZoologicalName>();
-                c.CreateMap<ViralNameModel, DbViralName>();
                 c.CreateMap<ProcessContextModel, DbProcessContext>();
                 c.CreateMap<ProcessModel, DbProcess>();
                 c.CreateMap<ProcessNameModel, DbProcessName>();
@@ -412,7 +410,7 @@ namespace CAFE.Web
                 c.CreateMap<DbBiomeContext, BiomeContextModel>();
                 c.CreateMap<DbZonoBiome, ZonoBiomeModel>();
                 c.CreateMap<DbBiomeType, BiomeTypeModel>();
-                c.CreateMap<DbBiomeZone, BiomeZoneModel>();
+                c.CreateMap<DbBiomeLatitudinalZone, BiomeLatitudinalZoneModel>();
                 c.CreateMap<DbBiomeHumidityType, BiomeHumidityTypeModel>();
                 c.CreateMap<DbBiomeContinentalityType, BiomeContinentalityTypeModel>();
                 c.CreateMap<DbBiomeHemisphere, BiomeHemisphereModel>();
@@ -438,13 +436,6 @@ namespace CAFE.Web
                 c.CreateMap<DbDomain, DomainModel>();
                 c.CreateMap<DbKingdom, KingdomModel>();
                 c.CreateMap<DbDivision, DivisionModel>();
-                c.CreateMap<DbOrganismName, OrganismNameModel>();
-                c.CreateMap<DbBacterialName, BacterialNameModel>();
-                c.CreateMap<DbFungalName, FungalNameModel>();
-                c.CreateMap<DbBotanicalName, BotanicalNameModel>();
-                c.CreateMap<DbHybridFlag, HybridFlagModel>();
-                c.CreateMap<DbZoologicalName, ZoologicalNameModel>();
-                c.CreateMap<DbViralName, ViralNameModel>();
                 c.CreateMap<DbProcessContext, ProcessContextModel>();
                 c.CreateMap<DbProcess, ProcessModel>();
                 c.CreateMap<DbProcessName, ProcessNameModel>();
@@ -492,9 +483,15 @@ namespace CAFE.Web
                 c.CreateMap<OrderModel, DbOrder>();
                 c.CreateMap<DbFamily, FamilyModel>();
                 c.CreateMap<FamilyModel, DbFamily>();
-
+                c.CreateMap<DbGenus, GenusModel>();
+                c.CreateMap<GenusModel, DbGenus>();
+                c.CreateMap<DataFormat, DataFormatModel>();
+                c.CreateMap<DataFormatModel, DataFormat>();
                 //c.CreateMap<DbUri, UriModel>();
                 //c.CreateMap<UriModel, DbUri>();
+
+                c.CreateMap<DbUIElement, UIElementModel>();
+                c.CreateMap<UIElementModel, DbUIElement>();
 
                 c.CreateMap<DbAnnotationItem, ShortAnnotationItemModel>(MemberList.Destination);
                 Services.Mapping.MapperConfig.Init(c);

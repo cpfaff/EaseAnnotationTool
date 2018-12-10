@@ -107,6 +107,12 @@ namespace CAFE.Core.Security
         public bool IsAccepted { get; set; }
         public DateTime? AcceptanceDate { get; set; }
         public string PhotoUrl { get; set; }
+
+        /// <summary>
+        /// User's hidden helpers
+        /// </summary>
+        public List<UserHiddenHelper> HiddenHelpers { get; set; }
+
         /// <summary>
         /// User's groups
         /// </summary>

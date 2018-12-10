@@ -33,8 +33,14 @@ namespace CAFE.DAL.Models
         /// <summary>
         /// File's unique identifier
         /// </summary>
-        [Key, Required]
+        [Required]
         public Guid Id { get; set; }
+
+        /// <summary>
+        /// DB Unique Identity number
+        /// </summary>
+        [Key, Required]
+        public int FileId { get; set; }
 
         /// <summary>
         /// File's name

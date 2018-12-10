@@ -291,7 +291,7 @@ namespace XmlSchemaClassGenerator
                     {
                         ChangeTypeNamesDependentOfTypeOfModel(type, codeNamespace.Types);
                     }
-                    if(IsThatTypeUsed(type, types))
+                    if(IsThatTypeUsed(type, types) || type.IsEnum)
                     {
                         codeNamespace.Types.Add(type);
                     }
@@ -345,7 +345,7 @@ namespace XmlSchemaClassGenerator
                 {
                     if (type.IsEnum)
                     {
-                        ChangeTypeToString(type, codeNamespace.Types);
+                        //ChangeTypeToString(type, codeNamespace.Types);
                     }      
                 }
 
@@ -915,6 +915,13 @@ namespace XmlSchemaClassGenerator
                         var name = ToTitleCase(qualifiedName.Name);
                         if (namespaceModel != null) name = namespaceModel.GetUniqueTypeName(name);
 
+                        var correctName = name;
+                        if (qualifiedName.Name.EndsWith("VocabularyBase"))
+                        {
+                            correctName = name.Replace("VocabularyBase", "Vocabulary");
+                        }
+                        name = correctName;
+
                         var enumModel = new EnumModel(_configuration)
                         {
                             Name = name,
@@ -1014,6 +1021,11 @@ namespace XmlSchemaClassGenerator
                     XmlSchemaType = simpleType,
                     ValueType = simpleType.Datatype.GetEffectiveType(_configuration),
                 };
+
+                if (qualifiedName.Name.Contains("VocabularyExtension"))
+                {
+                    return simpleModel;
+                }
 
                 simpleModel.Documentation.AddRange(docs);
                 simpleModel.Restrictions.AddRange(restrictions);

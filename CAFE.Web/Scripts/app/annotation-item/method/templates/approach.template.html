@@ -13,7 +13,7 @@
                     <md-autocomplete flex
                                      md-selected-item="approachModel.approachType"
                                      md-search-text="autocompleteFields.approachType"
-                                     md-items="subItem in querySearch(autocompleteFields.approachType, methodDictionaries.approaches[0].approachType)"
+                                     md-items="subItem in querySearch(autocompleteFields.approachType, 'approachType')"
                                      md-item-text="subItem.value"
                                      placeholder="Search for an Approach type"
                                      md-require-match="true"
@@ -44,7 +44,7 @@
                     <md-autocomplete flex
                                      md-selected-item="approachModel.approachLocalization"
                                      md-search-text="autocompleteFields.approachLocalization"
-                                     md-items="subItem in querySearch(autocompleteFields.approachLocalization, methodDictionaries.approaches[0].approachLocalization)"
+                                     md-items="subItem in querySearch(autocompleteFields.approachLocalization, 'approachLocalization')"
                                      md-item-text="subItem.value"
                                      placeholder="Search for an Approach localization"
                                      md-require-match="true"

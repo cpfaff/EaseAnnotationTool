@@ -742,3 +742,27 @@ md-list-item.md-no-proxy {
 .ui-select-choices {
     width: auto !important;
 }
+
+.search-filter.panel-group div.panel-default > div.panel-heading.collapsed:before {
+    content: "\0271A";
+    float: right;
+}
+
+.search-filter.panel-group div.panel-default > div.panel-heading:before {
+    content: "\0268A";
+    float: right;
+}
+.ng-table th {
+    text-align: left;
+}
+
+.duration-modifyer {
+    min-width: 140px;
+    margin-top: 0;
+}
+
+
+.md-virtual-repeat-container.md-autocomplete-suggestions-container {
+    width: 560px !important;
+    max-width: 700px !important;
+}

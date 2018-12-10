@@ -2,7 +2,7 @@
     <div layout="row">
         <md-chips flex="90" md-removable="isAccessible" ng-model="chemicalContext.functions" md-autocomplete-snap md-require-match="true" md-transform-chip="{ chemicalFunctionType: $chip }">
             <md-autocomplete md-search-text="functionAutocomplete.searchText"
-                             md-items="item in querySearch(functionAutocomplete.searchText, chemicalDictionaries.chemicalFunctionTypeVocabulary)"
+                             md-items="item in querySearch(functionAutocomplete.searchText, 'chemicalFunctionType')"
                              md-item-text="item.value"
                              md-min-length="0"
                              ng-if="isAccessible"

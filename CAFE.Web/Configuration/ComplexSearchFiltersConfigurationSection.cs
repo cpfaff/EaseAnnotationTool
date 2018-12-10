@@ -44,6 +44,19 @@ namespace CAFE.Web.Configuration
                 }
             }
 
+            [ConfigurationProperty("tooltip", IsKey = true, IsRequired = false)]
+            public string Tooltip
+            {
+                get
+                {
+                    return base["tooltip"] as string;
+                }
+                set
+                {
+                    base["tooltip"] = value;
+                }
+            }
+
             [ConfigurationProperty("ComplexFiltersCollection")]
             public ConfigSubElementsCollection ComplexFiltersCollection
             {

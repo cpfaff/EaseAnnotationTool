@@ -18,6 +18,10 @@
                 return $http.post('/Api/AnnotationItem/SearchOrganismProperyValues', params);
             }
 
+            OrganismProvider.prototype.getOrganisms = function (params) {
+                return $http.post('/Api/AnnotationItem/SearchOrganismSpecifies', params);
+            }
+            
             return new OrganismProvider();
         }]);
 

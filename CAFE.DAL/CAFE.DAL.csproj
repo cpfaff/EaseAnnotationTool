@@ -61,21 +61,17 @@
     <Compile Include="DbContexts\ApplicationDbContext.cs" />
     <Compile Include="DbContexts\CongigureContexts.cs" />
     <Compile Include="Interfaces\IRepository.cs" />
-    <Compile Include="Migrations\201703091901345_init.cs" />
-    <Compile Include="Migrations\201703091901345_init.Designer.cs">
-      <DependentUpon>201703091901345_init.cs</DependentUpon>
+    <Compile Include="Migrations\201804011928254_Init.cs" />
+    <Compile Include="Migrations\201804011928254_Init.Designer.cs">
+      <DependentUpon>201804011928254_Init.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201705310910030_AfterPluralizingOff.cs" />
-    <Compile Include="Migrations\201705310910030_AfterPluralizingOff.Designer.cs">
-      <DependentUpon>201705310910030_AfterPluralizingOff.cs</DependentUpon>
+    <Compile Include="Migrations\201807170748275_UI Elements added.cs" />
+    <Compile Include="Migrations\201807170748275_UI Elements added.Designer.cs">
+      <DependentUpon>201807170748275_UI Elements added.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201705310916327_AfterPluralizingOff2.cs" />
-    <Compile Include="Migrations\201705310916327_AfterPluralizingOff2.Designer.cs">
-      <DependentUpon>201705310916327_AfterPluralizingOff2.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201708161533530_Added schema elements description.cs" />
-    <Compile Include="Migrations\201708161533530_Added schema elements description.Designer.cs">
-      <DependentUpon>201708161533530_Added schema elements description.cs</DependentUpon>
+    <Compile Include="Migrations\201807230556364_Fix DbPerson DB structure.cs" />
+    <Compile Include="Migrations\201807230556364_Fix DbPerson DB structure.Designer.cs">
+      <DependentUpon>201807230556364_Fix DbPerson DB structure.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\CafeMigrator.cs" />
     <Compile Include="Migrations\Configuration.cs" />
@@ -84,7 +80,9 @@
     <Compile Include="Models\DbSchemaItemDescription.cs" />
     <Compile Include="Models\DbSearchFilterCachedItem.cs" />
     <Compile Include="Models\DbAnnotationItemAccessibleUsers.cs" />
+    <Compile Include="Models\DbUIElement.cs" />
     <Compile Include="Models\DbUserAnnotationItem.cs" />
+    <Compile Include="Models\DbUserHiddenHelper.cs" />
     <Compile Include="Models\Messaging\DbConversation.cs" />
     <Compile Include="Models\Messaging\DbMessage.cs" />
     <Compile Include="Models\Resources\DbAccessibleResource.cs" />
@@ -116,17 +114,14 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201703091901345_init.resx">
-      <DependentUpon>201703091901345_init.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201804011928254_Init.resx">
+      <DependentUpon>201804011928254_Init.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201705310910030_AfterPluralizingOff.resx">
-      <DependentUpon>201705310910030_AfterPluralizingOff.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201807170748275_UI Elements added.resx">
+      <DependentUpon>201807170748275_UI Elements added.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201705310916327_AfterPluralizingOff2.resx">
-      <DependentUpon>201705310916327_AfterPluralizingOff2.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201708161533530_Added schema elements description.resx">
-      <DependentUpon>201708161533530_Added schema elements description.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201807230556364_Fix DbPerson DB structure.resx">
+      <DependentUpon>201807230556364_Fix DbPerson DB structure.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

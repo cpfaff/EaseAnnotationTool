@@ -52,6 +52,62 @@
                     return $http.post('api/UserFiles/SearchUsersAndGroups', { KeyWord: keyWord }, { headers: { 'Content-Type': 'application/json' } });
                 }
 
+                AnnotationItemsProvider.prototype.newWithFiles = function (data, mode, id) {
+                    if (mode && mode == 'uploading') {
+                        if (id) {
+                            return $http({
+                                method: 'POST',
+                                url: "api/AnnotationItem/AddFromNewFilesAndExistingAnnotaions?id=" + id,
+                                data: data,
+                                transformRequest: angular.identity,
+                                headers: { 'Content-Type': undefined }
+                            });
+                        } else {
+                            return $http({
+                                method: 'POST',
+                                url: "api/AnnotationItem/AddFromNewFiles",
+                                data: data,
+                                transformRequest: angular.identity,
+                                headers: { 'Content-Type': undefined }
+                            });
+                        }
+                    } else if (mode && mode == 'selection') {
+                        if (id) {
+                            return $http({
+                                method: 'POST',
+                                url: "api/AnnotationItem/AddFromExistingFilesAndExistingAnnotaions",
+                                data: { filesIds: data, annotationItemId: id }
+                            });
+                        } else {
+                            return $http({
+                                method: 'POST',
+                                url: "api/AnnotationItem/AddFromExistingFiles",
+                                data: { filesIds: data }
+                            });
+                        }
+                    } else {
+                        return null;
+                    }
+                }
+                AnnotationItemsProvider.prototype.updateWithFiles = function (data, mode, id) {
+                    if (mode && mode == 'uploading') {
+                        return $http({
+                            method: 'POST',
+                            url: "api/AnnotationItem/UpdateFromNewFiles?id=" + id,
+                            data: data,
+                            transformRequest: angular.identity,
+                            headers: { 'Content-Type': undefined }
+                        });
+                    } else if (mode && mode == 'selection') {
+                        return $http({
+                            method: 'POST',
+                            url: "api/AnnotationItem/UpdateFromExistingFiles",
+                            data: { filesIds: data, annotationItemId: id }
+                        });
+                    } else {
+                        return null;
+                    }
+                }
             };
             return new AnnotationItemsProvider();
         }]);

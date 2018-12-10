@@ -1,5 +1,7 @@
 ﻿
 
+using CAFE.Core.Integration;
+
 namespace CAFE.Core.Resources
 {
 
@@ -24,5 +26,9 @@ namespace CAFE.Core.Resources
         /// The resource identifier for value
         /// </summary>
         public string Description { get; set; }
+        public string Country { get; set; }
+        public string LocationType { get; set; }
+        public string ContinentName { get; set; }
+        public string FullValue { get; set; }
     }
 }

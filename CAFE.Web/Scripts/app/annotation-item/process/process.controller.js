@@ -2,7 +2,7 @@
     'use strict';
 
     angular.module('annotationItem.process')
-        .controller('annotationProcessController', function ($scope, AnnotationItemProvider, actualAnnotationModel, $rootScope) {
+        .controller('annotationProcessController', function ($scope, AnnotationItemProvider, actualAnnotationModel, $rootScope, VocabulariesProvider) {
 
             $scope.autocompleteFields = {};
 
@@ -96,8 +96,11 @@
             }
 
             $scope.querySearch = function (query, vocabulary) {
-                var results = query ? vocabulary.filter(createFilterFor(query)) : vocabulary;
-                return results;
+                //var results = query ? vocabulary.filter(createFilterFor(query)) : vocabulary;
+                //return results;
+                return VocabulariesProvider.search(query, vocabulary).then(function (response) {
+                    return response.data;
+                });
             }
 
             $scope.GetNormalizedName = function (name) {

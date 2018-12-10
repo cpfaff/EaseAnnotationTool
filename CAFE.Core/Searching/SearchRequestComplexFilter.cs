@@ -21,6 +21,10 @@ namespace CAFE.Core.Searching
         /// </summary>
         public List<SearchRequestFilterItem> Items { get; set; } = new List<SearchRequestFilterItem>();
 
+        /// <summary>
+        /// A filter tooltip
+        /// </summary>
+        public string Tooltip { get; set; }
 
         /// <summary>
         /// Convert ComplexFilterScope to SearchRequestComplexFilter
@@ -32,8 +36,8 @@ namespace CAFE.Core.Searching
             var complexFilter = new SearchRequestComplexFilter();
             complexFilter.Name = filterScope.Type;
             complexFilter.Items = new List<SearchRequestFilterItem>();
+            complexFilter.Tooltip = filterScope.Tooltip;
 
-            
             //enumerate compound filter kes
             foreach (var filterElement in filterScope.ComplexFiltersCollection)
             {

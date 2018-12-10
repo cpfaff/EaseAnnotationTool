@@ -9,6 +9,7 @@ using CAFE.Web.Areas.Api.Models;
 using System.Web.Security;
 using System.Web;
 using Microsoft.AspNet.Identity.Owin;
+using System;
 
 namespace CAFE.Web.Areas.Api.Controllers
 {
@@ -114,6 +115,14 @@ namespace CAFE.Web.Areas.Api.Controllers
             foreach (var userId in model.UsersIds)
                 await _securityServiceAsync.RemoveUserAsync(await _securityServiceAsync.GetUserByIdAsync(userId), model.RemoveOwnData);
 
+            return Ok();
+        }
+
+
+        [HttpPost]
+        public async Task<IHttpActionResult> DeleteUserAcceptances([FromBody]List<Guid> usersIds)
+        {
+            await _securityServiceAsync.RemoveUserAcceptancesAsync(usersIds);
             return Ok();
         }
     }

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace CAFE.Core.Security
@@ -19,8 +20,10 @@ namespace CAFE.Core.Security
         Task<User> SaveUserAsync(User user);
         Task SaveUserBatchAsync(IEnumerable<User> users);
         Task<bool> RemoveUserAsync(User user, bool removeOwnData);
+        Task RemoveUserAcceptancesAsync(IEnumerable<Guid> userIds);
         Task<User> AcceptUserAsync(string userId);
         Task<IEnumerable<User>> SearchUsersAsync(string keyWord);
+        Task AddUserHiddenHelperAsync(Guid userId, string helperName);
 
         #endregion
 
