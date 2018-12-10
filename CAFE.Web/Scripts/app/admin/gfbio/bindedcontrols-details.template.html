@@ -1,0 +1,46 @@
+﻿<md-dialog add-item-dialog style="min-width: 840px;">
+    <md-dialog-content class="md-dialog-content">
+
+        <h2 class="md-title">{{uielement.elementid}}</h2>
+
+        <p ng-if="item.form.$submitted && item.form.$invalid" class="md-warn" layout="row" layout-align="start center">
+            <i class="material-icons">error_outline</i>
+            <span>&nbsp; All fields are required.</span>
+        </p>
+
+        <form name="item.form">
+            <div layout="row" class="input-row">
+                <md-autocomplete 
+                                 md-search-text="functionAutocomplete.elementSearch"
+                                 md-items="item in searchUIElements(functionAutocomplete.elementSearch)"
+                                 md-item-text="item.title"
+                                 md-selected-item="functionAutocomplete.selectedItem"
+                                 md-selected-item-change="selectedUIElementChanged(item)"
+                                 md-min-length="0"
+                                 placeholder="Search for a ui element"
+                                 
+                                 flex>
+                    <md-item-template>
+                        <span md-highlight-text="functionAutocomplete.elementSearch">{{item.title}}</span>
+                    </md-item-template>
+                </md-autocomplete>
+
+                
+                <!--ng-init="functionAutocomplete.elementSearch=functionAutocomplete.selectedItem.title"-->
+
+            </div>
+            <div layout="row" class="input-row">
+                <md-input-container flex>
+                    <label>Data Access URL</label>
+                    <input name="url" ng-model="uielement.url" required>
+                </md-input-container>
+            </div>
+        </form>
+    </md-dialog-content>
+
+    <div class="md-actions">
+        <md-button class="md-primary" ng-click="ctrl.save()" ng-disabled="item.form.$invalid">Save</md-button>
+        <md-button class="md-primary" ng-click="ctrl.cancel()">Cancel</md-button>
+    </div>
+
+</md-dialog>

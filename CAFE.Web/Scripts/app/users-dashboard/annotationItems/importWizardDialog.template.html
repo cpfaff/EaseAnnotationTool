@@ -1,0 +1,176 @@
+﻿<md-dialog add-item-dialog style="min-width: 840px; max-height: 100%;">
+    <div ng-show="isLoading" layout="row" layout-sm="column" layout-align="space-around" style="position: absolute; width: 100%; height: 100%; overflow: hidden; z-index: 9999; background-color: rgba(255, 255, 255, 0.71);">
+        <md-progress-circular md-mode="indeterminate" style="margin-top: auto;margin-bottom: auto;"></md-progress-circular>
+    </div>
+
+    <md-toolbar>
+        <div class="md-toolbar-tools">
+            <h2>Annotation Item Import</h2>
+            <span flex></span>
+            <md-button class="md-icon-button" ng-click="dialogCancel()">
+                <i class="material-icons">clear</i>
+            </md-button>
+        </div>
+    </md-toolbar>
+    <md-dialog-content>
+        <div class="md-dialog-content" layout="column">
+            <wizard on-finish="finished()"  indicators-position="top" name="customOrderWizard">
+                <wz-step wz-title="Data" wz-order="1">
+                    <br/>
+                    <div>
+                        <h3>* New Data:</h3>
+                        <p>Do you want to annotate a new dataset which has both been uploaded yet to the EASE tool?</p>
+                        <md-button class="md-raised" ng-click="wizardUploadData()">
+                            Upload
+                        </md-button>
+                        <hr/>
+                        <br/>
+                    </div>
+                    <div>
+                        <h3>* Existing Data:</h3>
+                        <p>Do you want to annotate a dataset which has already been uploaded to the EASE tool?</p>
+                        <div>
+                            <p>Select from your files:</p>                        
+                            <div flex>
+                                <md-input-container flex>
+                                    <md-chips ng-model="ctrl.userLinks" md-require-match="true">
+                                        <md-autocomplete md-search-text="ctrl.selectedLink1"
+                                                         md-items="item in userFilesSearch(ctrl.selectedLink1)"
+                                                         md-item-text="item.name"
+                                                         placeholder="Enter file name...">
+                                            <md-item-template>
+                                                {{item.name}}
+                                            </md-item-template>
+                                            <span md-highlight-text="ctrl.selectedLink1">{{item.name}}</span>
+                                        </md-autocomplete>
+                                        <md-chip-template>
+                                            <span>
+                                                <strong>{{$chip.name}}</strong>
+                                            </span>
+                                        </md-chip-template>
+                                    </md-chips>
+                                </md-input-container>
+                            </div>
+
+                            <md-button class="md-raised" ng-click="wizardSelectData()">
+                                Select
+                            </md-button>
+                        </div>
+                        <hr/>
+                        <br/>
+                    </div>
+                    <div>
+                        <h3>* Without Data:</h3>
+                        <p>None of these options. I Just want to create a metadata template without data. Click to create.</p>
+                        <md-button class="md-raised" ng-click="wizardWithoutData()">
+                            Create
+                        </md-button>
+                        <br/>
+                        <br/>
+                    </div>
+                    <!--<div>
+                        <md-button class="md-raised md-primary" wz-next ng-click="dialogCancel()">
+                            NEXT
+                        </md-button>
+                    </div>-->
+                </wz-step>
+                <wz-step wz-title="Upload" wz-order="2">
+                    <br />
+                    <div layout="row" class="input-row">
+                        <md-input-container flex>
+                            <div layout="column" ng-show="errorMessage" style="color:red;margin-bottom: 10px;" ng-bind="errorMessage"></div>
+                            <lf-ng-md-file-input lf-files="ctrl.files" multiple progress></lf-ng-md-file-input>
+                        </md-input-container>
+                    </div>
+                    <div layout="row" class="input-row">
+                        <md-input-container flex>
+                            <label>Access Mode</label>
+                            <md-select ng-model="newFile.AccessMode" name="AccessMode" required>
+                                <md-option ng-value="$index" ng-repeat="opt in filesAccesModes">{{ opt }}</md-option>
+                            </md-select>
+                        </md-input-container>
+                    </div>
+                    <div layout="row" class="input-row" ng-show="newFile.AccessMode == 1">
+                        <md-input-container flex>
+                            <md-chips ng-model="newFile.SelectedUsersAndGroups" md-require-match="true">
+                                <md-autocomplete md-search-text="functionAutocomplete.searchText1"
+                                                 md-items="item in loadTags(functionAutocomplete.searchText1)"
+                                                 md-item-text="item.name"
+                                                 md-min-length="1"
+                                                 placeholder="Enter name of user or group">
+                                    <md-item-template>
+                                        {{item.name}}
+                                    </md-item-template>
+                                </md-autocomplete>
+                                <md-chip-template>
+                                    <span>
+                                        <strong>{{$chip.name}}</strong>
+                                    </span>
+                                </md-chip-template>
+                            </md-chips>
+                        </md-input-container>
+                    </div>
+                    <md-button class="md-raised md-primary" ng-disabled="fileForm.$invalid" ng-click="uploadFileAndMoveNext()">
+                        NEXT
+                    </md-button>
+                </wz-step>
+                <wz-step wz-title="Metadata" wz-order="3">
+                    <br />
+                    <div>
+                        <h3>* New Annotation:</h3>
+                        <p>Do you want to create a new annotation item of your data?</p>
+                        <md-button class="md-raised" ng-click="createNewAIWithFileData()">
+                            Create
+                        </md-button>
+                        <hr/>
+                        <br/>
+                    </div>
+                    <div>
+                        <h3>* Reuse Annotation:</h3>
+                        <p>Do you want to annotate your data using an existing annotation item? And adapt to you needs.</p>
+                        <div>
+                            <p>Select from your annotations:</p>
+                            <div flex>
+                                <md-autocomplete md-selected-item="ctrl.selectedAnnotation"
+                                                 placeholder="Enter annotation name..."
+                                                 md-search-text="ctrl.selectedAnnotation1"
+                                                 md-items="item in userAnnotaionSearch(ctrl.selectedAnnotation1)"
+                                                 md-item-text="item.name">
+                                    <span md-highlight-text="ctrl.selectedAnnotation1">{{item.name}}</span>
+                                </md-autocomplete>
+                            </div>
+                            <md-button class="md-raised" ng-click="wizardReuseData()">
+                                Reuse
+                            </md-button>
+                        </div>
+                        <hr/>
+                        <br/>
+                    </div>
+                    <div>
+                        <h3>* Update project:</h3>
+                        <p>Do you want to update an annotation which already been don no matter if it has data attached or not.</p>
+                        <div>
+                            <p>Select from your annotations:</p>
+                            <div flex>
+                                <md-autocomplete md-selected-item="ctrl.selectedAnnotation"
+                                                 placeholder="Enter annotation name..."
+                                                 md-search-text="ctrl.selectedAnnotation1"
+                                                 md-items="item in userAnnotaionSearch(ctrl.selectedAnnotation1)"
+                                                 md-item-text="item.name">
+                                    <span md-highlight-text="ctrl.selectedAnnotation1">{{item.name}}</span>
+                                </md-autocomplete>
+                            </div>
+                            <md-button class="md-raised" ng-click="wizardUpdateData()">
+                                Update
+                            </md-button>
+                        </div>
+                        <hr/>
+                        <br/>
+                    </div>
+                </wz-step>
+            </wizard>
+        </div>
+    </md-dialog-content>
+    <div class="md-actions">
+    </div>
+</md-dialog>

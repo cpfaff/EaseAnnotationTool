@@ -1,0 +1,78 @@
+﻿<md-dialog add-item-dialog style="min-width: 840px; max-height: 100%;">
+    <div ng-show="isLoading" layout="row" layout-sm="column" layout-align="space-around" style="position: absolute; width: 100%; height: 100%; overflow: hidden; z-index: 9999; background-color: rgba(255, 255, 255, 0.71);">
+        <md-progress-circular md-mode="indeterminate" style="margin-top: auto;margin-bottom: auto;"></md-progress-circular>
+    </div>
+
+    <md-toolbar>
+        <div class="md-toolbar-tools">
+            <h2>Taxonomy Import</h2>
+            <span flex></span>
+            <md-button class="md-icon-button" ng-click="dialogCancel()">
+                <i class="material-icons">clear</i>
+            </md-button>
+        </div>
+    </md-toolbar>
+    <md-dialog-content>
+        <div class="md-dialog-content" layout="column">
+
+            <div layout="row" ng-model="ctrl.error" ng-show="ctrl.error" ng-bind="ctrl.error" style="color: red; margin-top: 10px;"></div>
+
+            <div layout="row" layout-margin>Select your data or upload</div>
+            <div layout="column" ng-switch="ctrl.importType">
+                <md-radio-group layout="row" ng-model="ctrl.importType" style="margin: 10px 0;">
+                    <md-radio-button value=0 class="md-primary">Select from uploaded files or put URL</md-radio-button>
+                    <md-radio-button value=1>Upload</md-radio-button>
+                </md-radio-group>
+
+                <div flex ng-switch-when="0" style="margin: 10px 0px 40px 0px;">
+                    <md-autocomplete
+                        md-selected-item="ctrl.userLink"
+                        placeholder="Enter file name..."
+                        md-search-text="ctrl.selectedLink1"
+                        md-items="item in userFilesSearch(ctrl.selectedLink1)"
+                        md-item-text="item.name">
+                        <span md-highlight-text="ctrl.selectedLink1">{{item.name}}</span>
+                    </md-autocomplete>
+                </div>
+
+                <md-input-container flex ng-switch-when="1">
+                    <lf-ng-md-file-input lf-files="ctrl.files" lf-placeholder="Select file" progress></lf-ng-md-file-input>
+                </md-input-container>
+            </div>
+
+            <div md-layout="column" ng-show="ctrl.useTransformation">
+                <div layout="row" layout-margin>Select your transformation file or upload</div>
+                <div layout="column" ng-switch="ctrl.importType2">
+                    <md-radio-group layout="row" ng-model="ctrl.importType2" style="margin: 10px 0;">
+                        <md-radio-button value=0 class="md-primary">Select from uploaded files or put URL</md-radio-button>
+                        <md-radio-button value=1>Upload</md-radio-button>
+                    </md-radio-group>
+
+                    <div flex ng-switch-when="0" style="margin: 10px 0px 40px 0px;">
+                        <md-autocomplete
+                            md-selected-item="ctrl.userLink2"
+                            placeholder="Enter file name..."
+                            md-search-text="ctrl.selectedLink2"
+                            md-items="item in userFilesSearch(ctrl.selectedLink2)"
+                            md-item-text="item.name">
+                            <span md-highlight-text="ctrl.selectedLink2">{{item.name}}</span>
+                        </md-autocomplete>
+                    </div>
+
+                    <md-input-container flex ng-switch-when="1">
+                        <lf-ng-md-file-input lf-files="ctrl.files2" lf-placeholder="Select file" progress></lf-ng-md-file-input>
+                    </md-input-container>
+                </div>
+            </div>
+
+            <!--<md-checkbox ng-model="ctrl.saveFilesAfterUpload" aria-label="Use transformation" style="margin: 15px 0;">
+                Save files after upload
+            </md-checkbox>-->
+        </div>
+
+    </md-dialog-content>
+    <div class="md-actions">
+        <md-button class="md-primary" ng-click="Import()" ng-disabled="fileForm.$invalid">Save</md-button>
+        <md-button class="md-primary" ng-click="dialogCancel()">Cancel</md-button>
+    </div>
+</md-dialog>

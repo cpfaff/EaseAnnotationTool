@@ -1,0 +1,60 @@
+﻿<md-toolbar class="md-table-toolbar md-default" ng-hide="selected.length || filter.show">
+    <div class="md-toolbar-tools">
+        <h2 class="md-title">UI Elements list</h2>
+        <div flex></div>
+        <md-button class="md-icon-button" ng-click="filter.show = true">
+            <md-icon>filter_list</md-icon>
+        </md-button>
+    </div>
+</md-toolbar>
+
+<md-toolbar class="md-table-toolbar md-default" ng-show="filter.show && !selected.length">
+    <div class="md-toolbar-tools">
+        <md-icon>search</md-icon>
+        <form flex name="filter.form">
+            <input type="text" ng-model="query.filter" ng-model-options="filter.options" placeholder="search">
+        </form>
+        <md-button class="md-icon-button" ng-click="removeFilter()">
+            <md-icon>close</md-icon>
+        </md-button>
+    </div>
+</md-toolbar>
+
+<md-toolbar class="md-table-toolbar alternate" ng-show="selected.length">
+    <div class="md-toolbar-tools" layout-align="space-between">
+        <div>{{selected.length}} {{selected.length > 1 ? 'items' : 'item'}} selected</div>
+        <div flex></div>
+        <md-button class="md-button" ng-click="delete(selected, $event)">
+            Delete selected
+        </md-button>
+    </div>
+</md-toolbar>
+<md-toolbar class="md-table-toolbar md-default" >
+    <div class="md-toolbar-tools" ng-click="addNew($event)">
+        <md-button class="md-raised md-primary" style="color: #ffffff;">
+            Add New
+        </md-button>
+    </div>
+</md-toolbar>
+<md-table-container>
+    <table md-table md-row-select multiple ng-model="selected" md-progress="promise">
+        <thead md-head md-order="query.order" md-on-reorder="getUIElements">
+            <tr md-row>
+                <th md-column md-order-by="id"><span>UI Element ID</span></th>
+                <th md-column md-order-by="url"><span>Data Access URL</span></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody md-body>
+            <tr md-row md-select="uielement" md-select-id="id" md-auto-select ng-repeat="uielement in uielements | orderBy: query.order | limitTo: query.limit: (query.page - 1) * query.limit">
+                <td md-cell>{{uielement.elementid}}</td>
+                <td md-cell>{{uielement.url}}</td>
+                <td md-cell>
+                    <md-button class="md-primary" ng-click="showDetails($index, $event)">Details</md-button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</md-table-container>
+
+<md-table-pagination md-limit="query.limit" md-limit-options="[10, 20, 50]" md-page="query.page" md-total="{{uielements.length}}" md-page-select></md-table-pagination>
